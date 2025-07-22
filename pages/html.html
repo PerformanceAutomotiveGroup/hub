@@ -45,9 +45,10 @@
     </div>
 
     <div class="main">
+      <h1>HTML Forms</h1>
       <div class="green-box">
-        <h2>Screen</h2>shot
-        <p>HTML is the standard markup language for Web pages.</p>
+        <h2>Screenshot</h2>
+        <p>An HTML form is used to collect user input. The user input is most often sent to a server for processing.</p>
         <p>With HTML you can create your own Website.</p>
         <p>HTML is easy to learn - You will enjoy it!</p>
         <a href="#" class="green-btn">Start learning HTML now &raquo;</a>
@@ -57,19 +58,17 @@
         <p><strong>Example</strong></p>
         <div class="code-box">
 <pre><code>
-<html>
+&lt;h2&gt;HTML Forms&lt;/h2&gt;
 
-<h2>HTML Forms</h2>
+&lt;form action="/action_page.php"&gt;
+  &lt;label for="fname"&gt;First name:&lt;/label>&lt;br&gt;
+  &lt;input type="text" id="fname" name="fname" value="John"&gt;&lt;br&gt;
+  &lt;label for="lname"&gt;Last name:&lt;/label>&lt;br&gt;
+  &lt;input type="text" id="lname" name="lname" value="Doe"&gt;&lt;br&gt;&lt;br&gt;
+  &lt;input type="submit" value="Submit"&gt;
+&lt;/form&gt; 
 
-<form action="/action_page.php">
-  <label for="fname">First name:</label><br>
-  <input type="text" id="fname" name="fname" value="John"><br>
-  <label for="lname">Last name:</label><br>
-  <input type="text" id="lname" name="lname" value="Doe"><br><br>
-  <input type="submit" value="Submit">
-</form> 
-
-<p>If you click the "Submit" button, the form-data will be sent to a page called "/action_page.php".</p>
+&lt;p&gt;If you click the "Submit" button, the form-data will be sent to a page called "/action_page.php".&lt;/p&gt;
 
 </code></pre>
         </div>
