@@ -114,8 +114,8 @@ body {
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
-  gap: 20px;
-  padding: 40px;
+  gap: 30px;
+  padding: 50px;
   max-width: 1200px;
   margin: auto;
 }
@@ -123,7 +123,7 @@ body {
 .card {
   background-color: #fff;
   color: #111;
-  padding: 30px;
+  padding: 50px;
   border-radius: 12px;
   text-align: center;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
