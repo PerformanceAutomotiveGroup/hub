@@ -249,6 +249,20 @@ body {
   border-radius: 4px;
 }
 
+.screenshot-gallery {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.screenshot-gallery img {
+  max-width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
 /* Code example section */
 .code-example {
   background-color: #f1f1f1;
