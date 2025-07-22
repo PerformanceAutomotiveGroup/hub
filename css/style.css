@@ -182,3 +182,32 @@ body {
   overflow-x: auto;
   border-radius: 5px;
 }
+
+.site-footer {
+  background-color: #1a1a1a;
+  color: #ccc;
+  padding: 20px 0;
+  font-size: 14px;
+  text-align: center;
+}
+
+.footer-content {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.footer-links {
+  margin-top: 10px;
+}
+
+.footer-links a {
+  color: #ccc;
+  margin: 0 10px;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  color: #fff;
+}
+
