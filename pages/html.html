@@ -8,11 +8,11 @@
 </head>
 <body>
 <div data-include="../nav/topnav.html"></div>
-
    <div class="content">
-
  <div data-include="../nav/htmlsidenav.html"></div>
-
+     
+<! ------- EDIT START ------- >
+     
     <div class="main">
       <h1>HTML Forms</h1>
       <div class="green-box">
@@ -24,30 +24,74 @@
         </div>
         <a href="#" class="green-btn">View Live</a>
       </div>
+      <h2>HTML Example</h2>
+      <p>This is a basic example of a valid HTML document:</p>
 
-      <div class="code-example">
-        <p><strong>Example</strong></p>
-        <div class="code-box">
-<pre><code>
-&lt;h2&gt;HTML Forms&lt;/h2&gt;
+      <!-- Code Snippet Display -->
+      <pre><code id="html-basic-snippet" class="language-html"></code></pre>
 
-&lt;form action="/action_page.php"&gt;
-  &lt;label for="fname"&gt;First name:&lt;/label>&lt;br&gt;
-  &lt;input type="text" id="fname" name="fname" value="John"&gt;&lt;br&gt;
-  &lt;label for="lname"&gt;Last name:&lt;/label>&lt;br&gt;
-  &lt;input type="text" id="lname" name="lname" value="Doe"&gt;&lt;br&gt;&lt;br&gt;
-  &lt;input type="submit" value="Submit"&gt;
-&lt;/form&gt; 
+      <!-- Hidden Template With Raw HTML Code -->
+      <template id="html-basic-template">
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My First Page</title>
+</head>
+<body>
 
-&lt;p&gt;If you click the "Submit" button, the form-data will be sent to a page called "/action_page.php".&lt;/p&gt;
+  <h1>Hello World!</h1>
+  <p>This is a basic HTML document.</p>
 
-</code></pre>
-        </div>
-        <a href="#" class="green-btn">Get Full Code</a>
-      </div>
+</body>
+</html>
+      </template>
+
+      <h2>HTML Form Example</h2>
+      <p>Here's how a simple HTML form works:</p>
+
+      <pre><code id="html-form-snippet" class="language-html"></code></pre>
+
+      <template id="html-form-template">
+<h2>HTML Forms</h2>
+
+<form action="/action_page.php">
+  <label for="fname">First name:</label><br>
+  <input type="text" id="fname" name="fname" value="John"><br>
+  <label for="lname">Last name:</label><br>
+  <input type="text" id="lname" name="lname" value="Doe"><br><br>
+  <input type="submit" value="Submit">
+</form>
+
+<p>If you click the "Submit" button, the form-data will be sent to a page called "/action_page.php".</p>
+      </template>
+
     </div>
   </div>
- <div data-include="../nav/footernav.html"></div>
+
+  <!-- Prism.js syntax highlighting -->
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.js"></script>
+
+  <!-- Your JS include handler (loads navs) -->
+  <script src="../js/include.js"></script>
+
+  <!-- Load and insert raw code from templates -->
+  <script>
+    const snippets = [
+      { id: 'html-basic' },
+      { id: 'html-form' }
+    ];
+
+    snippets.forEach(snippet => {
+      const template = document.getElementById(`${snippet.id}-template`).innerHTML.trim();
+      const codeBlock = document.getElementById(`${snippet.id}-snippet`);
+      codeBlock.textContent = template;
+      Prism.highlightElement(codeBlock);
+    });
+  </script>
+  
+<! ------- END START ------- >
+  
+<div data-include="../nav/footernav.html"></div>
 <script src="../js/include.js"></script>
 </body>
 </html>
