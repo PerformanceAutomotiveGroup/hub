@@ -15,7 +15,7 @@
      
      <! ------- Screenshot ----- >
     <div class="main">
-      <h1>HTML Forms</h1>
+      <h1>Auto Trader Form (WordPress)</h1>
       <div class="green-box">
         <h2>Screenshots</h2>
         <div class="screenshot-gallery">
@@ -31,19 +31,28 @@
       <! ------- Code  ----- >
 <div class="code-section">
   <div class="code-header">
-    <span>CODE Example</span> 
+    <span>Form Code</span> 
   </div>
   <pre><code id="html-form-snippet" class="language-html"></code></pre>
 
 <!-- ADD Your Template -Hidden- -->
 <template id="html-form-template"> 
-<form action="/action_page.php">
-  <label for="fname">First name:</label><br>
-  <input type="text" id="fname" name="fname" value="John"><br>
-  <label for="lname">Last name:</label><br>
-  <input type="text" id="lname" name="lname" value="Doe"><br><br>
-  <input type="submit" value="Submit">
-</form>
+[honeypot email-pot class:cf7-honeypot validautocomplete:true]
+[honeypot name-pot class:cf7-honeypot validautocomplete:true]
+<h3>Performance Auto Parts Registration Form</h3>
+[input_group label="Customer Name*" size="md"][text* full-name akismet:author placeholder "Jane Doe"][/input_group]
+[input_group label="Business Name*" size="md"][text* BusinessName placeholder "Performance Auto Group"][/input_group]
+[input_group label="Email*" size="md"][email* email akismet:author_email class:email class:validation placeholder "jane@gmail.com"][/input_group]
+[input_group label="Phone Number*" size="md"][text phone class:phone class:validation placeholder "(123) 456-7890"][/input_group]
+[input_group label="Business Address*" size="lg"][text* BusinessAddress placeholder "105 Van Kirk Drive  Brampton, ON L7A 1A4"][/input_group]
+[input_group label="Would you like to apply for PAG delivery?*" size="md"][radio PAGdelivery use_label_element default:1 "Yes" "No"][/input_group]
+[input_group label="Optional Message" size="lg"][textarea message maxlength:500 placeholder "Tell us about your needs"][/input_group]
+[input_group size="lg"][acceptance communication optional]I agree to receive periodical offers, newsletter, safety and recall updates from the dealership. Consent can be withdrawn at any time.[/acceptance][/input_group]
+[input_group size="lg"][acceptance communication optional]By clicking the 'Send' button below, you are agreeing to be bound by the <a href="https://www.performance.ca/wholesale-parts-terms-and-conditions/">Wholesale Terms and Conditions</a>.[/acceptance][/input_group] 
+<input type="hidden" name="lead-type" value="parts">
+[hidden is_vdp default:shortcode_attr]
+[hidden is_vehicle default:shortcode_attr]
+[input_group][submit "Send"][/input_group]
 </template>
   <button class="copy-btn" onclick="copyCode('html-form-snippet')">Copy Code</button>
   </div>
@@ -52,19 +61,59 @@
       <! ------- Code  ----- >
 <div class="code-section">
   <div class="code-header">
-    <span>CODE Example 2</span> 
+    <span>Autoresponder delivered Mail Code</span> 
   </div>
   <pre><code id="html-form-snippet2" class="language-html"></code></pre>
 
 <!-- ADD Your Template -Hidden- -->
 <template id="html-form-template2"> 
-<form action="/action_page.php">
-  <label for="fname">First name:</label><br>
-  <input type="text" id="fname" name="fname" value="John"><br>
-  <label for="lname">Last name:</label><br>
-  <input type="text" id="lname" name="lname" value="Doe"><br><br>
-  <input type="submit" value="Submit">
-</form>
+<strong>Customer Name:</strong> [full-name]
+<br/>
+<strong>Email Address:</strong> [email]
+<br/>
+<strong>Phone Number:</strong> [phone]
+<br/>
+<strong>Electronic Communication:</strong> [communication]
+<br/>
+<br/>
+Hello [full-name],
+<br/><br/>
+We appreciate that you took the time to contact us. Our team will review your submission and get in touch with you as soon as possible. To ensure we have all the information you intended, please take note of your message.<br/>
+<br/>
+<div style="background-color: #f4f5f9; border-radius: 3px; padding: 21px 21px 27px 21px;">
+    <pre style="font-family: Helvetica, Arial, sans-serif; margin: 0; padding:0;">"[message]"</pre>
+</div>
+<hr style="border: 0;border-top: 1px solid #ececec;height: 1px;color: #ececec;background:#ececec;margin: 34px 0 0;">
+
+<table cellpadding="0" cellspacing="0" style="border-collapse: collapse; font-size: 16px; line-height: 1.8;" width="100%">
+    <tbody style="vertical-align: top;">
+        <tr>
+            <td colspan="2" height="48" style="font-size: 0; line-height: 0; text-align: center; width: 100%; min-width: 100%;"></td>
+        </tr>
+        <tr style="line-height: 25px;">
+            <th style="text-align: left;">Customer Name:</th>
+            <td style="text-align: right;">[full-name]</td>
+        </tr>
+        <tr style="line-height: 25px;">
+            <th style="text-align: left;">Business Name:</th>
+            <td style="text-align: right;">[BusinessName]</td>
+        </tr>
+        <tr style="line-height: 25px;">
+            <th style="text-align: left;">Phone Number:</th>
+            <td style="text-align: right;">[phone]</td>
+        </tr>
+        <tr style="line-height: 25px;">
+            <th style="text-align: left;">Email Address:</th>
+            <td style="text-align: right;">[email]</td>
+        </tr>
+       <tr style="line-height: 25px;">
+            <th style="text-align: left;">Business Address:</th>
+            <td style="text-align: right;">[BusinessAddress]</td>
+        </tr>
+    </tbody>
+</table>
+
+[vehicledata]
 </template>
   <button class="copy-btn" onclick="copyCode('html-form-snippet2')">Copy Code</button>
   </div>
