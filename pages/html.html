@@ -13,6 +13,7 @@
      
 <! ------- EDIT START ------- >
      
+     <! ------- Screenshot ----- >
     <div class="main">
       <h1>HTML Forms</h1>
       <div class="green-box">
@@ -24,36 +25,19 @@
         </div>
         <a href="#" class="green-btn">View Live</a>
       </div>
-      <h2>HTML Example</h2>
-      <p>This is a basic example of a valid HTML document:</p>
+      <! ------- Screenshot END ----- >
 
-      <!-- Code Snippet Display -->
-      <pre><code id="html-basic-snippet" class="language-html"></code></pre>
+      <! ------- Code  ----- >
+<div class="code-section">
+  <div class="code-header">
+    <span>Example</span>
+  </div>
+  <pre><code id="html-form-snippet" class="language-html"></code></pre>
+</div>
 
-      <!-- Hidden Template With Raw HTML Code -->
-      <template id="html-basic-template">
-<!DOCTYPE html>
-<html>
-<head>
-  <title>My First Page</title>
-</head>
-<body>
-
-  <h1>Hello World!</h1>
-  <p>This is a basic HTML document.</p>
-
-</body>
-</html>
-      </template>
-
-      <h2>HTML Form Example</h2>
-      <p>Here's how a simple HTML form works:</p>
-
-      <pre><code id="html-form-snippet" class="language-html"></code></pre>
-
-      <template id="html-form-template">
-<h2>HTML Forms</h2>
-
+<!-- Hidden Template -->
+      
+<template id="html-form-template">
 <form action="/action_page.php">
   <label for="fname">First name:</label><br>
   <input type="text" id="fname" name="fname" value="John"><br>
@@ -61,36 +45,23 @@
   <input type="text" id="lname" name="lname" value="Doe"><br><br>
   <input type="submit" value="Submit">
 </form>
-
-<p>If you click the "Submit" button, the form-data will be sent to a page called "/action_page.php".</p>
-      </template>
-
-    </div>
-  </div>
-
-  <!-- Prism.js syntax highlighting -->
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.js"></script>
-
-  <!-- Your JS include handler (loads navs) -->
-  <script src="../js/include.js"></script>
-
-  <!-- Load and insert raw code from templates -->
-  <script>
-    const snippets = [
-      { id: 'html-basic' },
-      { id: 'html-form' }
-    ];
-
-    snippets.forEach(snippet => {
-      const template = document.getElementById(`${snippet.id}-template`).innerHTML.trim();
-      const codeBlock = document.getElementById(`${snippet.id}-snippet`);
-      codeBlock.textContent = template;
-      Prism.highlightElement(codeBlock);
-    });
-  </script>
+</template>
+      
+<button class="copy-btn" onclick="copyCode('html-form-snippet')">Copy</button>
+      
+<! ------- Code END ----- >
   
 <! ------- END START ------- >
-  
+ <script>
+function copyCode(button) {
+  const code = button.closest(".code-example").querySelector("code").innerText;
+  navigator.clipboard.writeText(code).then(() => {
+    button.textContent = "Copied!";
+    setTimeout(() => button.textContent = "Copy", 1500);
+  });
+}
+</script>
+ 
 <div data-include="../nav/footernav.html"></div>
 <script src="../js/include.js"></script>
 </body>
