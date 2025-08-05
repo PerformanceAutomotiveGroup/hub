@@ -286,6 +286,28 @@ body {
   display: block;
 }
 
+.code-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.copy-btn {
+  background-color: #04AA6D;
+  border: none;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.copy-btn:hover {
+  background-color: #03985d;
+}
 /* Pages Card */
 .lesson-card {
   background-color: #e6f4ea;
