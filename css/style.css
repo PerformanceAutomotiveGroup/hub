@@ -191,7 +191,7 @@ body {
 
 .sidenav a.active {
   color: white;
-  background-color: #04AA6D;
+  background-color: #2c68b5;
   padding-left: 10px;
   border-radius: 4px;
 }
@@ -277,6 +277,7 @@ pre[class*="language-"] {
   margin: 30px 0;
   background-color: #f1f1f1;
   border-left: 4px solid #2c68b5;
+  padding: 20px;
 }
 
 .code-example {
@@ -304,7 +305,6 @@ pre[class*="language-"] {
 .code-header {
   display: flex;
   justify-content: space-between;
-  background: #e7e9eb;
   color: #111;
   font-weight: bold;
   font-size: 16px;
