@@ -35,9 +35,9 @@
   <pre><code id="html-form-snippet" class="language-html"></code></pre>
 </div>
 
-<!-- Hidden Template -->
-      
+<!-- ADD Your Template -Hidden- -->
 <template id="html-form-template">
+  
 <form action="/action_page.php">
   <label for="fname">First name:</label><br>
   <input type="text" id="fname" name="fname" value="John"><br>
@@ -45,23 +45,14 @@
   <input type="text" id="lname" name="lname" value="Doe"><br><br>
   <input type="submit" value="Submit">
 </form>
+  
 </template>
-      
-<button class="copy-btn" onclick="copyCode('html-form-snippet')">Copy</button>
-      
+  
 <! ------- Code END ----- >
   
-<! ------- END START ------- >
- <script>
-function copyCode(button) {
-  const code = button.closest(".code-example").querySelector("code").innerText;
-  navigator.clipboard.writeText(code).then(() => {
-    button.textContent = "Copied!";
-    setTimeout(() => button.textContent = "Copy", 1500);
-  });
-}
-</script>
- 
+<! ------- EDIT END ------- >
+ <button class="copy-btn" onclick="copyCode('html-form-snippet')">Copy</button>     
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.js"></script>
 <div data-include="../nav/footernav.html"></div>
 <script src="../js/include.js"></script>
 </body>
