@@ -19,22 +19,16 @@ function includeHTML() {
 document.addEventListener("DOMContentLoaded", includeHTML);
 
 // ---------- Prism Code Snippet Loader ----------
-document.addEventListener("DOMContentLoaded", () => {
-  const snippets = [
-    { id: 'html-form' },
-    { id: 'html-basic' },
-    // Add more snippet IDs here
-  ];
-
-  snippets.forEach(snippet => {
-    const template = document.getElementById(`${snippet.id}-template`);
-    const codeBlock = document.getElementById(`${snippet.id}-snippet`);
-    if (template && codeBlock) {
-      codeBlock.textContent = template.innerHTML.trim();
-      Prism.highlightElement(codeBlock);
-    }
-  });
+document.querySelectorAll('template[id$="-template"]').forEach(template => {
+  const baseId = template.id.replace('-template', '');
+  const codeBlock = document.getElementById(`${baseId}-snippet`);
+  
+  if (codeBlock) {
+    codeBlock.textContent = template.innerHTML.trim();
+    Prism.highlightElement(codeBlock);
+  }
 });
+
 
 // ---------- Copy to Clipboard ----------
 function copyCode(id) {
