@@ -279,6 +279,20 @@ pre[class*="language-"] {
   padding: 20px;
 }
 
+.code-container pre {
+  margin: 0;
+  font-size: 0.9rem;
+  white-space: pre-wrap; /* wraps long lines for better mobile view */
+  word-wrap: break-word;
+}
+
+.code-container pre {
+  margin: 0;
+  font-size: 0.9rem;
+  white-space: pre-wrap; /* wraps long lines for better mobile view */
+  word-wrap: break-word;
+}
+
 .code-example {
   background-color: #f1f1f1;
   padding: 20px;
@@ -377,6 +391,10 @@ pre[class*="language-"] {
 @media screen and (max-width: 768px) {
   .content {
     flex-direction: column;
+  }
+
+    .code-container {
+    padding: 0.75rem;
   }
 
   .sidenav {
