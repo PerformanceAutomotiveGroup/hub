@@ -15,6 +15,7 @@ body {
   background-color: #333;
   overflow: hidden;
   padding: 10px 0;
+  width: 100%;
 }
 
 .topnav a {
@@ -205,6 +206,7 @@ body {
 .main {
   flex-grow: 1;
   padding: 30px;
+  width: 80%;
 }
 
 .main h1 {
@@ -366,6 +368,7 @@ pre[class*="language-"] {
   padding: 20px 0;
   font-size: 14px;
   text-align: center;
+  width: 100%;
 }
 
 .footer-content {
