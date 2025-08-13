@@ -335,6 +335,7 @@ pre[class*="language-"] {
   padding: 10px 20px;
   font-size: 13px;
   cursor: pointer;
+  margin: 10px;
 }
 
 .copy-btn:hover {
