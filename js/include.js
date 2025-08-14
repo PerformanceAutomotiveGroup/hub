@@ -1,3 +1,39 @@
+// Load HTML from data-include attribute
+function loadIncludes(callback) {
+  const elements = document.querySelectorAll('[data-include]');
+  let loadedCount = 0;
+
+  elements.forEach(el => {
+    const file = el.getAttribute('data-include');
+    fetch(file)
+      .then(response => response.text())
+      .then(data => {
+        el.innerHTML = data;
+        loadedCount++;
+        if (loadedCount === elements.length && callback) {
+          callback();
+        }
+      });
+  });
+}
+
+// Highlight active link in sidenav
+function highlightActiveLink() {
+  const currentPage = window.location.pathname.split("/").pop();
+  document.querySelectorAll('.sidenav a').forEach(link => {
+    const linkPage = link.getAttribute('href');
+    if (linkPage === currentPage) {
+      link.classList.add('active');
+    }
+  });
+}
+
+// Run everything
+document.addEventListener("DOMContentLoaded", function () {
+  loadIncludes(highlightActiveLink);
+});
+
+
 function includeHTML() {
   const elements = document.querySelectorAll("[data-include]");
   elements.forEach(el => {
