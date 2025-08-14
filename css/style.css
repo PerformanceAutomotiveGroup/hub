@@ -272,6 +272,7 @@ pre[class*="language-"] {
   margin: 0;
   overflow: auto;
   position: relative;
+  text-wrap: auto;
 }
 
 /* Wrapper for each code section */
