@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Ensures proper rendering and touch zooming on mobile devices -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HTML - Performance Hub</title>
+  <!-- Link to the main site-wide CSS stylesheet -->
+  <link rel="stylesheet" href="../../css/style.css" />
+</head>
+<body>
+
+<!-- Include top navigation bar -->
+<div data-include="../../nav/topnav.html"></div>
+
+<!-- Page content wrapper -->
+<div class="content">
+
+  <!-- Include section side navigation -->
+  <div data-include="../../nav/htmlsidenav.html"></div>
+     
+  <! ------- EDIT START HERE ------- >
+     
+  <!-- Main content section -->
+  <div class="main">
+    <h1>HTML Div Element</h1>
+
+    <!-- Screenshot container -->
+    <div class="blue-box">
+      <h2>Screenshots</h2>
+      <div class="screenshot-gallery">
+        <!-- Example screenshot image -->
+        <img src="../../images/Wholesale-Auto-Parts-Form.png" alt="HTML Form Screenshot">
+      </div>
+      <!-- Link to live form page -->
+      <a href="https://www.performance.ca/wholesaleautoparts/" target="_blank" class="blue-btn">View Live</a>
+    </div>
+    <!-- END Screenshot section -->
+
+    <!-- YOUR Code section 1 -->
+    <div class="code-section">
+      <div class="code-header">
+        <span>Div Float</span> 
+      </div>
+
+      <!-- Code snippet display area (Prism.js highlights this) -->
+      <pre><code id="html-form-snippet" class="language-html"></code></pre>
+
+      <!-- Hidden - containing YOUR code -->
+      <template id="html-form-template"> 
+        <style>
+          div.mycontainer {
+            width:100%;
+            overflow:auto;
+          }
+          div.mycontainer div {
+            width:33%;  
+            float:left;
+          }
+          </style>
+        
+          <div class="mycontainer">
+            <div style="background-color:#FFF4A3;">
+              <h2>Float</h2>
+              <p>use float to align div elements side by side</p>
+              <p>use float to align div elements side by side</p>
+            </div>
+            <div style="background-color:#FFC0C7;">
+              <h2>Float</h2>
+              <p>use float to align div elements side by side</p>
+              <p>use float to align div elements side by side</p>
+            </div>
+            <div style="background-color:#D9EEE1;">
+              <h2>Float</h2>
+              <p>use float to align div elements side by side</p>
+              <p>use float to align div elements side by side</p>
+            </div>
+          </div>
+      </template>
+
+      <!-- Button to copy the template code to clipboard -->
+      <button class="copy-btn" onclick="copyCode('html-form-snippet')">Copy Code</button>
+    </div>
+    <!-- END Code section -->
+
+    <!-- YOUR Code section 2 -->
+    <div class="code-section">
+      <div class="code-header">
+        <span>Div Inline-block</span> 
+      </div>
+      <pre><code id="html-form2-snippet" class="language-html"></code></pre>
+
+      <!-- Hidden - containing YOUR code -->
+      <template id="html-form2-template"> 
+        <style>
+        div {
+          width:30%;  
+          display:inline-block;
+        }
+        </style>
+        <div style="background-color:#FFF4A3;">
+          <h2>Inline-block</h2>
+          <p>inline-block to align div elements side by side</p>
+          <p>inline-block to align div elements side by side</p>
+        </div>
+        <div style="background-color:#FFC0C7;">
+          <h2>Inline-block</h2>
+          <p>inline-block to align div elements side by side</p>
+          <p>inline-block to align div elements side by side</p>
+        </div>
+        <div style="background-color:#D9EEE1;">
+          <h2>Inline-block</h2>
+          <p>inline-block to align div elements side by side</p>
+          <p>inline-block to align div elements side by side</p>
+        </div>
+      </template>
+
+      <button class="copy-btn" onclick="copyCode('html-form2-snippet')">Copy Code</button>
+    </div>
+    <!-- END Code section -->
+
+    <!-- YOUR Code section 3 -->
+    <div class="code-section">
+      <div class="code-header">
+        <span>Div Flexbox</span> 
+      </div>
+      <pre><code id="html-form3-snippet" class="language-html"></code></pre>
+
+      <!-- Hidden - containing YOUR code -->
+      <template id="html-form3-template"> 
+     <style>
+    .mycontainer {
+      display: flex;
+    }
+    .mycontainer > div {
+      width:33%;
+    }
+    </style>
+
+    <div class="mycontainer">
+      <div style="background-color:#FFF4A3;">
+        <h2>Flexbox Example</h2>
+        <p>Align three DIV elements side by side.</p>
+        <p>Align three DIV elements side by side.</p>
+      </div>
+      <div style="background-color:#FFC0C7;">
+        <h2>Flexbox Example</h2>
+        <p>Align three DIV elements side by side.</p>
+        <p>Align three DIV elements side by side.</p>
+      </div>
+      <div style="background-color:#D9EEE1;">
+        <h2>Flexbox Example</h2>
+        <p>Align three DIV elements side by side.</p>
+        <p>Align three DIV elements side by side.</p>
+      </div>
+    </div>
+      </template>
+      <button class="copy-btn" onclick="copyCode('html-form3-snippet')">Copy Code</button>
+    </div>
+    <!-- END Code section -->
+
+    <!-- YOUR Code section 4 -->
+    <div class="code-section">
+      <div class="code-header">
+        <span>Trader Bootstrap</span> 
+      </div>
+      <pre><code id="html-form4-snippet" class="language-html"></code></pre>
+
+      <!-- Hidden - containing YOUR code -->
+      <template id="html-form4-template"> 
+        <div class="wrapper">
+        <div class="row"> 
+        <div class="col-lg-3 col-sm-6 col-xs-12" style="background-color:#FFF4A3;">
+        <h2>Trader Bootstrap Example</h2>
+        <p>Align three DIV elements side by side.</p>
+        <p>Align three DIV elements side by side.</p>
+      </div>
+      <div class="col-lg-3 col-sm-6 col-xs-12" style="background-color:#FFC0C7;">
+        <h2>Trader Bootstrap Example</h2>
+        <p>Align three DIV elements side by side.</p>
+        <p>Align three DIV elements side by side.</p>
+      </div>
+      <div class="col-lg-3 col-sm-6 col-xs-12" style="background-color:#D9EEE1;">
+        <h2>Trader Bootstrap Example</h2>
+        <p>Align three DIV elements side by side.</p>
+        <p>Align three DIV elements side by side.</p>
+      </div>
+      </div>
+    </div>
+      </template>
+      <button class="copy-btn" onclick="copyCode('html-form3-snippet')">Copy Code</button>
+    </div>
+    <!-- END Code section -->
+  </div> 
+</div> <! ------- EDIT END HERE ------- >
+
+<!-- Prism.js for syntax highlighting -->
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.js"></script>
+
+<!-- Include footer navigation -->
+<div data-include="../../nav/footernav.html"></div>
+
+<!-- Script to handle HTML partial includes -->
+<script src="../../js/include.js"></script>
+</body>
+</html>
