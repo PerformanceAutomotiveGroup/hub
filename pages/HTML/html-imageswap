@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Ensures proper rendering and touch zooming on mobile devices -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HTML - Performance Hub</title>
+  <!-- Link to the main site-wide CSS stylesheet -->
+  <link rel="stylesheet" href="../../css/style.css" />
+</head>
+<body>
+
+<!-- Include top navigation bar -->
+<div data-include="../../nav/topnav.html"></div>
+
+<!-- Page content wrapper -->
+<div class="content">
+
+  <!-- Include side navigation -->
+  <div data-include="../../nav/htmlsidenav.html"></div>
+     
+  <! ------- EDIT START HERE ------- >
+     
+  <!-- Main content section -->
+  <div class="main">
+    <h1>Responsive Image Swap</h1>
+    <p>This HTML code uses the <picture> element to display different images based on the browser’s width, ensuring an optimized and responsive viewing experience for users on various devices.</p>
+    <!-- Screenshot container -->
+    <div class="blue-box">
+      <h2>Screenshots</h2>
+      <div class="screenshot-gallery">
+        <!-- Example screenshot image -->
+        <img src="../../images/html-map.png" alt="HTML Map"><img src="../../images/html-map-hover2.png" alt="HTML Map">
+      </div>
+      <!-- Link to live form page -->
+      <a href="#" target="_blank" class="blue-btn">NO LIVE VIEW</a>
+    </div>
+    <!-- END Screenshot section -->
+
+    <!-- YOUR Code section 1 -->
+    <div class="code-section">
+      <div class="code-header">
+        <span>HTML Code</span> 
+      </div>
+
+      <!-- Code snippet display area (Prism.js highlights this) -->
+      <pre><code id="html-form-snippet" class="language-html"></code></pre>
+
+      <!-- Hidden - containing YOUR code -->
+      <template id="html-form-template"> 
+          <picture>
+            <source srcset="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/05/Family-Road-Trip-New-SUV.jpeg" 
+              media="(max-width: 600px)">
+            <source srcset="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/05/Family-Road-Trip-New-Car.jpeg" 
+              media="(max-width: 1500px)">
+           
+            <source srcset="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/04/2025-Hyundai-elantra_safety_hc_01-copy.jpg">
+          
+            <img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/05/Family-Road-Trip-New-Car.jpeg" alt="A family enjoying a road trip in a new car" />
+          </picture>
+      </template>
+
+      <!-- Button to copy the template code to clipboard -->
+      <button class="copy-btn" onclick="copyCode('html-form-snippet')">Copy Code</button>
+    </div>
+    <!-- END Code section -->
+
+    <!-- YOUR Code section 2 -->
+    <div class="code-section">
+      <div class="code-header">
+        <span>CSS Code</span> 
+      </div>
+      <pre><code id="html-form2-snippet" class="language-html"></code></pre>
+
+      <!-- Hidden - containing YOUR code -->
+      <template id="html-form2-template"> 
+        picture img { max-width: 100%; height: auto; display: block; margin: 1rem auto; border-radius: 8px; }
+      </template>
+
+      <button class="copy-btn" onclick="copyCode('html-form2-snippet')">Copy Code</button>
+    </div>
+    <!-- END Code section -->
+  </div> 
+</div> <! ------- EDIT END HERE ------- >
+
+<!-- Prism.js for syntax highlighting -->
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.js"></script>
+
+<!-- Include footer navigation -->
+<div data-include="../../nav/footernav.html"></div>
+
+<!-- Script to handle HTML partial includes -->
+<script src="../../js/include.js"></script>
+</body>
+</html>
