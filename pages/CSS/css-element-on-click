@@ -30,7 +30,7 @@
       <h2>Screenshots</h2>
       <div class="screenshot-gallery">
         <!-- Example screenshot image -->
-        <img src="../../images/Image gallery example.png" alt="Image gallery example"><img src="../../images/Image gallery example-view.png" alt="Image gallery example">
+        <img src="../../images/element-on-click2.png" alt="Element on click"><img src="../../images/element-on-click2.png" alt="Element on click">
       </div>
       <!-- Link to live form page -->
       <a href="#" target="_blank" class="blue-btn">NO LIVE VIEW</a>
