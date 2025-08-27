@@ -1,1 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Ensures proper rendering and touch zooming on mobile devices -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HTML - Performance Hub</title>
+  <!-- Link to the main site-wide CSS stylesheet -->
+  <link rel="stylesheet" href="../../css/style.css" />
+</head>
+<body>
 
+<!-- Include top navigation bar -->
+<div data-include="../../nav/topnav.html"></div>
+
+<!-- Page content wrapper -->
+<div class="content">
+
+  <!-- Include HTML section side navigation -->
+  <div data-include="../../nav/htmlsidenav.html"></div>
+     
+  <! ------- EDIT START HERE ------- >
+     
+  <!-- Main content section -->
+  <div class="main">
+    <h1>CSS Element On-click</h1>
+      <p>How it works: When the user clicks on the p element, a function called myFunction() is executed, which changes the style of the div with id="panel" from display:none (hidden) to display:block (visible).</p>
+    <!-- Screenshot container -->
+    <div class="blue-box">
+      <h2>Screenshots</h2>
+      <div class="screenshot-gallery">
+        <!-- Example screenshot image -->
+        <img src="../../images/Image gallery example.png" alt="Image gallery example"><img src="../../images/Image gallery example-view.png" alt="Image gallery example">
+      </div>
+      <!-- Link to live form page -->
+      <a href="#" target="_blank" class="blue-btn">NO LIVE VIEW</a>
+    </div>
+    <!-- END Screenshot section -->
+
+    <!-- YOUR Code section 1 -->
+    <div class="code-section">
+      <div class="code-header">
+        <span>HTML Code</span> 
+      </div>
+
+      <!-- Code snippet display area (Prism.js highlights this) -->
+      <pre><code id="html-form-snippet" class="language-html"></code></pre>
+
+      <!-- Hidden - containing YOUR code -->
+      <template id="html-form-template"> 
+  <p class="flip" onclick="myFunction()">Driven by Excellence for Over 50 Years</p>
+
+<div id="panel">
+  <p>Since 1964, Performance Auto Group has grown into one of Canada’s premier automotive groups. Our dealerships are among the highest-volume in Ontario and are consistently recognized for delivering outstanding customer care.
+
+We’re committed to providing a premium experience at every stage of the customer journey. With advanced facilities and a dedicated, highly trained team, we ensure every guest receives exceptional service.
+
+Our founder, Sam Alizadeh, believed that “every customer is entitled to the same great experience.” This mindset continues to guide our operations and defines our reputation for excellence in customer care.</p>
+</div>
+
+<script>
+function myFunction() {
+  document.getElementById("panel").style.display = "block";
+}
+</script>
+      </template>
+
+      <!-- Button to copy the template code to clipboard -->
+      <button class="copy-btn" onclick="copyCode('html-form-snippet')">Copy Code</button>
+    </div>
+    <!-- END Code section -->
+
+    <!-- YOUR Code section 2 -->
+    <div class="code-section">
+      <div class="code-header">
+        <span>CSS Code</span> 
+      </div>
+      <pre><code id="html-form2-snippet" class="language-html"></code></pre>
+
+      <!-- Hidden - containing YOUR code -->
+      <template id="html-form2-template"> 
+#panel, .flip { padding: 10px; text-align: center; background-color: #2c68b5; color: white; border: solid 1px #2c68b5; margin: auto; cursor:pointer; } #panel { display: none; }
+</template>
+
+      <button class="copy-btn" onclick="copyCode('html-form2-snippet')">Copy Code</button>
+    </div>
+    <!-- END Code section -->
+  </div> 
+</div> <! ------- EDIT END HERE ------- >
+
+<!-- Prism.js for syntax highlighting -->
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.js"></script>
+
+<!-- Include footer navigation -->
+<div data-include="../../nav/footernav.html"></div>
+
+<!-- Script to handle HTML partial includes -->
+<script src="../../js/include.js"></script>
+</body>
+</html>
