@@ -1,1 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Ensures proper rendering and touch zooming on mobile devices -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CSS - Performance Hub</title>
+  <!-- Link to the main site-wide CSS stylesheet -->
+  <link rel="stylesheet" href="../../css/style.css" />
+</head>
+<body>
 
+<!-- Include top navigation bar -->
+<div data-include="../../nav/topnav.html"></div>
+
+<!-- Page content wrapper -->
+<div class="content">
+
+  <!-- Include HTML section side navigation -->
+  <div data-include="../../nav/htmlsidenav.html"></div>
+     
+  <! ------- EDIT START HERE ------- >
+     
+  <!-- Main content section -->
+  <div class="main">
+    <h1>CSS Hoverable Dropdown</h1>
+      <p>Move the mouse over the text "Answer" to open the dropdown content.</p>
+    <!-- Screenshot container -->
+    <div class="blue-box">
+      <h2>Screenshots</h2>
+      <div class="screenshot-gallery">
+        <!-- Example screenshot image -->
+        <img src="../../images/hoverable-dropdown1.png" alt="Element on click"><img src="../../images/hoverable-dropdown2.png" alt="Hoverable Dropdown">
+      </div>
+      <!-- Link to live form page -->
+      <a href="#" target="_blank" class="blue-btn">NO LIVE VIEW</a>
+    </div>
+    <!-- END Screenshot section -->
+
+    <!-- YOUR Code section 1 -->
+    <div class="code-section">
+      <div class="code-header">
+        <span>HTML Code</span> 
+      </div>
+
+      <!-- Code snippet display area (Prism.js highlights this) -->
+      <pre><code id="html-form-snippet" class="language-html"></code></pre>
+
+      <!-- Hidden - containing YOUR code -->
+      <template id="html-form-template"> 
+      <h2>Hoverable Dropdown</h2>
+<h3>Question: What does “ABS” stand for in cars?</h3>
+<div class="pag-dropdown">
+  <span>Answer</span>
+  <div class="pag-dropdown-content">
+  <p>Anti-lock Braking System – it prevents the wheels from locking up during hard braking.</p>
+  </div>
+      </template>
+
+      <!-- Button to copy the template code to clipboard -->
+      <button class="copy-btn" onclick="copyCode('html-form-snippet')">Copy Code</button>
+    </div>
+    <!-- END Code section -->
+
+    <!-- YOUR Code section 2 -->
+    <div class="code-section">
+      <div class="code-header">
+        <span>CSS Code</span> 
+      </div>
+      <pre><code id="html-form2-snippet" class="language-html"></code></pre>
+
+      <!-- Hidden - containing YOUR code -->
+      <template id="html-form2-template"> 
+.pag-dropdown { position: relative; display: inline-block; } .pag-dropdown-content { display: none; position: absolute; background-color: #f9f9f9; min-width: 360px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); padding: 12px 16px; z-index: 1; } .pag-dropdown:hover .pag-dropdown-content { display: block; }
+</template>
+
+      <button class="copy-btn" onclick="copyCode('html-form2-snippet')">Copy Code</button>
+    </div>
+    <!-- END Code section -->
+  </div> 
+</div> <! ------- EDIT END HERE ------- >
+
+<!-- Prism.js for syntax highlighting -->
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.js"></script>
+
+<!-- Include footer navigation -->
+<div data-include="../../nav/footernav.html"></div>
+
+<!-- Script to handle HTML partial includes -->
+<script src="../../js/include.js"></script>
+</body>
+</html>
