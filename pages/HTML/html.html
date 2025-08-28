@@ -1,1 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Ensures proper rendering and touch zooming on mobile devices -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HTML - Performance Hub</title>
+  <!-- Link to the main site-wide CSS stylesheet -->
+  <link rel="stylesheet" href="../../css/style.css" />
+</head>
+<body>
 
+<!-- Include top navigation bar -->
+<div data-include="../../nav/topnav.html"></div>
+
+<!-- Page content wrapper -->
+<div class="content">
+
+  <!-- Include section side navigation -->
+  <div data-include="../../nav/htmlsidenav.html"></div>
+     
+  <! ------- EDIT START HERE ------- >
+     
+  <!-- Main content section -->
+  <div class="main">
+    <section class="hero">
+      <h1>HTML Snippet Library</h1>
+      <p>Welcome to the HTML resource hub. This section is designed to give you ready-to-use snippets 
+      for building web pages faster. Whether you’re setting up a form, a table, or a layout, you’ll 
+      find clean and reusable examples here. Add your own snippets to grow our shared library.</p>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <h3>Basic Elements</h3>
+        <p>Headings, paragraphs, lists, links, and semantic tags.</p>
+      </div>
+      <div class="card">
+        <h3>Forms</h3>
+        <p>Inputs, buttons, checkboxes, validation-ready form structures.</p>
+      </div>
+      <div class="card">
+        <h3>Tables</h3>
+        <p>Clean, responsive table snippets for structured data.</p>
+      </div>
+      <div class="card">
+        <h3>Layouts</h3>
+        <p>Flexbox, grid, and multi-column layout snippets.</p>
+      </div>
+      <div class="card">
+        <h3>Templates</h3>
+        <p>Starter templates for pages, dashboards, and landing pages.</p>
+      </div>
+    </section>
+  </div>
+
+<!-- Prism.js for syntax highlighting -->
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.js"></script>
+
+<!-- Include footer navigation -->
+<div data-include="../../nav/footernav.html"></div>
+
+<!-- Script to handle HTML partial includes -->
+<script src="../../js/include.js"></script>
+</body>
+</html>
