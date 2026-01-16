@@ -1,87 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<!-- Ensures proper rendering and touch zooming on mobile devices -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>TEMPLATES - Performance Hub</title>
-<!-- Link to the main site-wide CSS stylesheet -->
-<link rel="stylesheet" href="../../css/style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Templates – Performance Hub</title>
+
+  <!-- Shared hub styles -->
+  <link rel="stylesheet" href="../../css/style.css" />
 </head>
 <body>
 
-<!-- Include top navigation bar -->
-<div data-include="../../nav/topnav.html"></div>
+  <!-- Top navigation -->
+  <div data-include="../../nav/topnav.html"></div>
 
-<!-- Page content wrapper -->
-<div class="content">
+  <div class="content">
 
-<!-- Include section side navigation -->
-<div data-include="../../nav/templatessidenav.html"></div>
+    <!-- Templates side navigation -->
+    <div data-include="../../nav/templatessidenav.html"></div>
 
-<! ------- EDIT START HERE ------- >
+    <!-- Main content -->
+    <main class="main">
 
-<!-- Main content section -->
-<div class="main">
-<section class="hero">
-<h1>Template Library</h1>
-<p>Welcome to the Templates section. This hub provides pre-built starting points for common 
-website layouts and project types. From landing pages to dashboards, you’ll find clean and 
-reusable structures to save time. Add your own templates so our team always has fresh 
-starting points to build on.</p>
-</section>
+      <!-- Hero -->
+      <section class="hero">
+        <h1>Template Library</h1>
+        <p>
+          The Template Library is a catalogue of approved page layouts created in WordPress
+          and shared here for reuse across Performance projects.
+        </p>
+        <p>
+          Templates are stored in GitHub as cleaned, reusable reference implementations.
+          Use these templates to copy structure, layout, and supporting code when building
+          new pages.
+        </p>
+      </section>
 
-<section class="cards">
-<div class="card">
-<h3>Landing Page</h3>
-<p>Simple one-page layouts with hero sections, features, and call-to-action buttons.</p>
-</div>
+      <!-- How it works -->
+      <section class="usage">
+        <h2>How Templates Are Used</h2>
+        <ol>
+          <li>Templates are created and validated in WordPress projects.</li>
+          <li>The reusable structure (HTML, CSS, JS) is added to GitHub.</li>
+          <li>Templates are listed here so the team can discover and reuse them.</li>
+        </ol>
 
-<div class="card">
-<h3>Portfolio</h3>
-<p>Showcase work or projects with gallery sections, about pages, and contact forms.</p>
-</div>
+        <p class="note">
+          <strong>GitHub is the source of truth for copying templates.</strong>
+          WordPress pages may be linked as live examples, but code should always be copied
+          from GitHub.
+        </p>
+      </section>
 
-<div class="card">
-<h3>Business Website</h3>
-<p>Multi-page layouts for companies with services, testimonials, and team pages.</p>
-</div>
+      <!-- How to copy -->
+      <section class="usage">
+        <h2>How to Use a Template</h2>
+        <ol>
+          <li>Select a template that matches your page type.</li>
+          <li>Open the template’s GitHub link.</li>
+          <li>Copy the sections or full layout you need.</li>
+          <li>Adapt the content, styling, and scripts for your project.</li>
+        </ol>
+      </section>
 
-<div class="card">
-<h3>E-commerce</h3>
-<p>Starter shop templates with product listings, shopping carts, and checkout flow.</p>
-</div>
+      <!-- Template categories -->
+      <section class="cards">
 
-<div class="card">
-<h3>Dashboard</h3>
-<p>Admin panel layouts featuring navigation bars, tables, charts, and widgets.</p>
-</div>
+        <div class="card">
+          <h3>Landing Pages</h3>
+          <p>
+            Campaign and promotional layouts with clear messaging,
+            calls to action, and supporting sections.
+          </p>
+        </div>
 
-<div class="card">
-<h3>Blog</h3>
-<p>Content-focused layouts with posts, categories, author profiles, and comments.</p>
-</div>
+        <div class="card">
+          <h3>Business Pages</h3>
+          <p>
+            Standard multi-section layouts for services, departments,
+            and informational content.
+          </p>
+        </div>
 
-<div class="card">
-<h3>Event Page</h3>
-<p>Pages for events or conferences, including schedule, speakers, and registration.</p>
-</div>
+        <div class="card">
+          <h3>Forms & Lead Capture</h3>
+          <p>
+            Page layouts focused on form submission, lead generation,
+            and user input.
+          </p>
+        </div>
 
-<div class="card">
-<h3>Newsletter</h3>
-<p>Email-style layouts and sign-up landing pages for campaigns and updates.</p>
-</div>
-</section>
-</div>
-</div>
+        <div class="card">
+          <h3>Content Pages</h3>
+          <p>
+            Blog-style and editorial layouts designed for longer-form
+            content and readability.
+          </p>
+        </div>
 
-<!-- Prism.js for syntax highlighting -->
-<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.js"></script>
+        <div class="card">
+          <h3>Dashboards & Utilities</h3>
+          <p>
+            Internal or utility-style layouts that support data display,
+            tools, or workflows.
+          </p>
+        </div>
 
-<!-- Include footer navigation -->
-<div data-include="../../nav/footernav.html"></div>
+      </section>
 
-<!-- Script to handle HTML partial includes -->
-<script src="../../js/include.js"></script>
+      <!-- Contributing -->
+      <section class="contribute">
+        <h2>Adding a Template</h2>
+        <p>
+          Team members are encouraged to contribute templates that represent
+          reusable, real-world page layouts.
+        </p>
+
+        <ul>
+          <li>Templates should originate from an actual WordPress page.</li>
+          <li>Remove site-specific content and unnecessary dependencies.</li>
+          <li>Add the cleaned template to the Templates folder in GitHub.</li>
+          <li>Optionally include a link to the original WordPress page as a live reference.</li>
+        </ul>
+
+        <p class="note">
+          Follow the contribution guidelines to keep templates consistent,
+          readable and useful for the entire team.
+        </p>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <div data-include="../../nav/footernav.html"></div>
+
+  <!-- Includes script -->
+  <script src="../../js/include.js"></script>
+
 </body>
 </html>
