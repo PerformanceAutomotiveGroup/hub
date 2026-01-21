@@ -133,20 +133,5 @@ Remove unused sections and adjust spacing as needed.
 <!-- Include handler -->
 <script src="../../../js/include.js"></script>
 
-<!-- Copy button logic -->
-<script>
-document.querySelectorAll('.copy-btn').forEach(button => {
-button.addEventListener('click', () => {
-const targetId = button.getAttribute('data-copy');
-const code = document.getElementById(targetId).innerText;
-
-navigator.clipboard.writeText(code).then(() => {
-button.textContent = 'Copied!';
-setTimeout(() => button.textContent = 'Copy', 1500);
-});
-});
-});
-</script>
-
 </body>
 </html>
