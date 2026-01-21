@@ -1,6 +1,6 @@
 # Performance Hub
 
-The Performance Hub is an internal reference for web layouts, UI patterns, and approved page compositions used across Performance Automotive Group projects.
+The Performance Hub is an internal reference for web layouts, UI patterns, and approved page compositions used across Performance Auto Group projects.
 
 It exists to improve consistency, speed, and clarity when designing, building, or reviewing web pages and features.
 
