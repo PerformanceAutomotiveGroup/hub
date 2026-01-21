@@ -82,3 +82,16 @@ function copyCode(id) {
   }
   document.body.removeChild(textarea);
 }
+
+// ---------- Copy button logic ----------
+document.querySelectorAll('.copy-btn').forEach(button => {
+button.addEventListener('click', () => {
+const targetId = button.getAttribute('data-copy');
+const code = document.getElementById(targetId).innerText;
+
+navigator.clipboard.writeText(code).then(() => {
+button.textContent = 'Copied!';
+setTimeout(() => button.textContent = 'Copy', 1500);
+});
+});
+});
