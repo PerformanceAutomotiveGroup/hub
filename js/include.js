@@ -44,7 +44,6 @@ function initPrismTemplates() {
   document.querySelectorAll('template[id$="-template"]').forEach(template => {
     const baseId = template.id.replace('-template', '');
     const codeBlock = document.getElementById(`${baseId}-snippet`);
-
     if (codeBlock) {
       codeBlock.textContent = template.innerHTML.trim();
       Prism.highlightElement(codeBlock);
@@ -53,15 +52,15 @@ function initPrismTemplates() {
 }
 
 // ===============================
-// Copy Buttons (HTML / CSS / JS)
+// Copy Buttons
 // ===============================
 function initCopyButtons() {
+  // Individual copy
   document.querySelectorAll('.copy-btn[data-copy]').forEach(btn => {
     btn.addEventListener('click', () => {
       const id = btn.getAttribute('data-copy');
       const code = document.querySelector(`#${id} code`)?.textContent;
       if (!code) return;
-
       navigator.clipboard.writeText(code).then(() => {
         btn.textContent = 'Copied!';
         setTimeout(() => (btn.textContent = 'Copy'), 1500);
@@ -69,14 +68,13 @@ function initCopyButtons() {
     });
   });
 
-  // Copy ALL
+  // Copy All
   const copyAllBtn = document.querySelector('[data-copy-all]');
   if (copyAllBtn) {
     copyAllBtn.addEventListener('click', () => {
       const html = document.querySelector('#html-code code')?.textContent || '';
       const css  = document.querySelector('#css-code code')?.textContent || '';
       const js   = document.querySelector('#js-code code')?.textContent || '';
-
       const combined = `
 <!-- HTML -->
 ${html}
@@ -90,8 +88,7 @@ ${css}
 <script>
 ${js}
 <\/script>
-`.trim();
-
+      `.trim();
       navigator.clipboard.writeText(combined).then(() => {
         copyAllBtn.textContent = 'All Copied!';
         setTimeout(() => (copyAllBtn.textContent = 'Copy All'), 2000);
