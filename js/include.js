@@ -4,18 +4,24 @@
 function loadIncludes(callback) {
 const elements = document.querySelectorAll('[data-include]');
 let loaded = 0;
+
 if (elements.length === 0 && callback) callback();
 
 elements.forEach(el => {
 const file = el.getAttribute('data-include');
 fetch(file)
-.then(res => { if (!res.ok) throw new Error(`Could not fetch ${file}`); return res.text(); })
+.then(res => {
+if (!res.ok) throw new Error(`Could not fetch ${file}`);
+return res.text();
+})
 .then(html => {
 el.innerHTML = html;
 loaded++;
 if (loaded === elements.length && callback) callback();
 })
-.catch(err => { el.innerHTML = `<p style="color:red;">Include error: ${err.message}</p>`; });
+.catch(err => {
+el.innerHTML = `<p style="color:red;">Include error: ${err.message}</p>`;
+});
 });
 }
 
@@ -25,7 +31,9 @@ if (loaded === elements.length && callback) callback();
 function highlightActiveLink() {
 const currentPage = window.location.pathname.split('/').pop();
 document.querySelectorAll('.sidenav a').forEach(link => {
-if (link.getAttribute('href') === currentPage) link.classList.add('active');
+if (link.getAttribute('href') === currentPage) {
+link.classList.add('active');
+}
 });
 }
 
@@ -49,14 +57,16 @@ if (window.Prism) Prism.highlightElement(codeEl);
 // ===============================
 function renderLivePreview() {
 const previewContainer = document.getElementById('live-preview');
-const template = document.querySelector('#html-template');
+const template = document.getElementById('html-template');
 if (previewContainer && template) {
-previewContainer.innerHTML = template.innerHTML;
+previewContainer.innerHTML = ''; // clear previous
+const clone = template.content.cloneNode(true); // proper template rendering
+previewContainer.appendChild(clone);
 }
 }
 
 // ===============================
-// Copy Buttons
+// Copy Buttons (HTML / CSS / JS)
 // ===============================
 function initCopyButtons() {
 document.querySelectorAll('.copy-btn[data-copy]').forEach(btn => {
@@ -109,6 +119,6 @@ loadIncludes(() => {
 highlightActiveLink();
 initPrismTemplates();
 initCopyButtons();
-renderLivePreview(); // Single live preview
+renderLivePreview(); // <-- Single live preview
 });
 });
