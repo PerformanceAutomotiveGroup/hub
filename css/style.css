@@ -183,6 +183,13 @@ white-space: pre-wrap!important;
 word-wrap: break-word!important;       
 overflow-x: auto!important;           
 }
+/* Prism code blocks wrapping */
+pre[class*="language-"] {
+  white-space: pre-wrap!important;
+  word-wrap: break-word!important;
+  overflow-x: auto!important;
+}
+
 
 /* Homepage Cards */
 .card-grid {
