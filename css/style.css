@@ -176,6 +176,14 @@ align-items: center;
 cursor: pointer;
 }
 
+/* Prism code blocks wrapping */
+pre[class*="language-"] {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-x: auto;
+}
+
+
 /* Homepage Cards */
 .card-grid {
   display: grid;
