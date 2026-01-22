@@ -37,8 +37,9 @@ function initPrismTemplates() {
     const template = block.querySelector('template');
     const codeEl = block.querySelector('pre code');
     if (template && codeEl) {
-      codeEl.textContent = template.innerHTML.trim();
-      Prism.highlightElement(codeEl);
+      const lines = template.innerHTML.split('\n').map(line => line.trim());
+      codeEl.textContent = lines.join('\n');
+      if (window.Prism) Prism.highlightElement(codeEl);
     }
   });
 }
