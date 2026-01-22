@@ -54,13 +54,25 @@ function initPrismTemplates() {
 // ===============================
 // Copy Buttons
 // ===============================
+function decodeHtmlEntities(str) {
+  const txt = document.createElement('textarea');
+  txt.innerHTML = str;
+  return txt.value;
+}
+
 function initCopyButtons() {
   // Individual copy
   document.querySelectorAll('.copy-btn[data-copy]').forEach(btn => {
     btn.addEventListener('click', () => {
       const id = btn.getAttribute('data-copy');
-      const code = document.querySelector(`#${id} code`)?.textContent;
-      if (!code) return;
+      const codeEl = document.querySelector(`#${id} code`);
+      if (!codeEl) return;
+
+      let code = codeEl.textContent;
+
+      // Decode HTML entities only for HTML section
+      if (id === 'html-code') code = decodeHtmlEntities(code);
+
       navigator.clipboard.writeText(code).then(() => {
         btn.textContent = 'Copied!';
         setTimeout(() => (btn.textContent = 'Copy'), 1500);
@@ -72,9 +84,12 @@ function initCopyButtons() {
   const copyAllBtn = document.querySelector('[data-copy-all]');
   if (copyAllBtn) {
     copyAllBtn.addEventListener('click', () => {
-      const html = document.querySelector('#html-code code')?.textContent || '';
-      const css  = document.querySelector('#css-code code')?.textContent || '';
-      const js   = document.querySelector('#js-code code')?.textContent || '';
+      let html = document.querySelector('#html-code code')?.textContent || '';
+      let css  = document.querySelector('#css-code code')?.textContent || '';
+      let js   = document.querySelector('#js-code code')?.textContent || '';
+
+      html = decodeHtmlEntities(html); // decode HTML section
+
       const combined = `
 <!-- HTML -->
 ${html}
@@ -89,6 +104,7 @@ ${css}
 ${js}
 <\/script>
       `.trim();
+
       navigator.clipboard.writeText(combined).then(() => {
         copyAllBtn.textContent = 'All Copied!';
         setTimeout(() => (copyAllBtn.textContent = 'Copy All'), 2000);
@@ -96,6 +112,7 @@ ${js}
     });
   }
 }
+
 
 // ===============================
 // Init Everything
