@@ -1,50 +1,23 @@
-// Load HTML from data-include attribute
+// ===============================
+// HTML Includes
+// ===============================
 function loadIncludes(callback) {
   const elements = document.querySelectorAll('[data-include]');
-  let loadedCount = 0;
+  let loaded = 0;
+
+  if (elements.length === 0 && callback) callback();
 
   elements.forEach(el => {
     const file = el.getAttribute('data-include');
-    fetch(file)
-      .then(response => response.text())
-      .then(data => {
-        el.innerHTML = data;
-        loadedCount++;
-        if (loadedCount === elements.length && callback) {
-          callback();
-        }
-      });
-  });
-}
-
-// Highlight active link in sidenav
-function highlightActiveLink() {
-  const currentPage = window.location.pathname.split("/").pop();
-  document.querySelectorAll('.sidenav a').forEach(link => {
-    const linkPage = link.getAttribute('href');
-    if (linkPage === currentPage) {
-      link.classList.add('active');
-    }
-  });
-}
-
-// Run everything
-document.addEventListener("DOMContentLoaded", function () {
-  loadIncludes(highlightActiveLink);
-});
-
-
-function includeHTML() {
-  const elements = document.querySelectorAll("[data-include]");
-  elements.forEach(el => {
-    const file = el.getAttribute("data-include");
     fetch(file)
       .then(res => {
         if (!res.ok) throw new Error(`Could not fetch ${file}`);
         return res.text();
       })
-      .then(data => {
-        el.innerHTML = data;
+      .then(html => {
+        el.innerHTML = html;
+        loaded++;
+        if (loaded === elements.length && callback) callback();
       })
       .catch(err => {
         el.innerHTML = `<p style="color:red;">Include error: ${err.message}</p>`;
@@ -52,46 +25,88 @@ function includeHTML() {
   });
 }
 
-document.addEventListener("DOMContentLoaded", includeHTML);
-
-// ---------- Prism Code Snippet Loader ----------
-document.querySelectorAll('template[id$="-template"]').forEach(template => {
-  const baseId = template.id.replace('-template', '');
-  const codeBlock = document.getElementById(`${baseId}-snippet`);
-  
-  if (codeBlock) {
-    codeBlock.textContent = template.innerHTML.trim();
-    Prism.highlightElement(codeBlock);
-  }
-});
-
-
-// ---------- Copy to Clipboard ----------
-function copyCode(id) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  const textarea = document.createElement('textarea');
-  textarea.value = el.textContent;
-  document.body.appendChild(textarea);
-  textarea.select();
-  try {
-    document.execCommand('copy');
-    alert('Code copied!');
-  } catch (err) {
-    alert('Failed to copy code.');
-  }
-  document.body.removeChild(textarea);
+// ===============================
+// Active Sidenav Highlight
+// ===============================
+function highlightActiveLink() {
+  const currentPage = window.location.pathname.split('/').pop();
+  document.querySelectorAll('.sidenav a').forEach(link => {
+    if (link.getAttribute('href') === currentPage) {
+      link.classList.add('active');
+    }
+  });
 }
 
-// ---------- Copy button logic ----------
-document.querySelectorAll('.copy-btn').forEach(button => {
-button.addEventListener('click', () => {
-const targetId = button.getAttribute('data-copy');
-const code = document.getElementById(targetId).innerText;
+// ===============================
+// Prism Template Loader
+// ===============================
+function initPrismTemplates() {
+  document.querySelectorAll('template[id$="-template"]').forEach(template => {
+    const baseId = template.id.replace('-template', '');
+    const codeBlock = document.getElementById(`${baseId}-snippet`);
 
-navigator.clipboard.writeText(code).then(() => {
-button.textContent = 'Copied!';
-setTimeout(() => button.textContent = 'Copy', 1500);
-});
-});
+    if (codeBlock) {
+      codeBlock.textContent = template.innerHTML.trim();
+      Prism.highlightElement(codeBlock);
+    }
+  });
+}
+
+// ===============================
+// Copy Buttons (HTML / CSS / JS)
+// ===============================
+function initCopyButtons() {
+  document.querySelectorAll('.copy-btn[data-copy]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-copy');
+      const code = document.querySelector(`#${id} code`)?.textContent;
+      if (!code) return;
+
+      navigator.clipboard.writeText(code).then(() => {
+        btn.textContent = 'Copied!';
+        setTimeout(() => (btn.textContent = 'Copy'), 1500);
+      });
+    });
+  });
+
+  // Copy ALL
+  const copyAllBtn = document.querySelector('[data-copy-all]');
+  if (copyAllBtn) {
+    copyAllBtn.addEventListener('click', () => {
+      const html = document.querySelector('#html-code code')?.textContent || '';
+      const css  = document.querySelector('#css-code code')?.textContent || '';
+      const js   = document.querySelector('#js-code code')?.textContent || '';
+
+      const combined = `
+<!-- HTML -->
+${html}
+
+<!-- CSS -->
+<style>
+${css}
+</style>
+
+<!-- JS -->
+<script>
+${js}
+<\/script>
+`.trim();
+
+      navigator.clipboard.writeText(combined).then(() => {
+        copyAllBtn.textContent = 'All Copied!';
+        setTimeout(() => (copyAllBtn.textContent = 'Copy All'), 2000);
+      });
+    });
+  }
+}
+
+// ===============================
+// Init Everything
+// ===============================
+document.addEventListener('DOMContentLoaded', () => {
+  loadIncludes(() => {
+    highlightActiveLink();
+    initPrismTemplates();
+    initCopyButtons();
+  });
 });
