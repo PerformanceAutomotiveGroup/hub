@@ -158,6 +158,24 @@ body {
       color: #555;
     }
 
+/* Collapsible code blocks */
+.collapsible {
+max-height: 0;
+overflow: hidden;
+transition: max-height 0.3s ease;
+}
+
+.template-code-block.open .collapsible {
+max-height: 1000px; 
+}
+
+.toggle-btn {
+display: flex;
+justify-content: space-between;
+align-items: center;
+cursor: pointer;
+}
+
 /* Homepage Cards */
 .card-grid {
   display: grid;
