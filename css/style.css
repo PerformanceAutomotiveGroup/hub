@@ -179,9 +179,9 @@ cursor: pointer;
 /* Ensure code lines wrap inside code blocks */
 .code-box pre,
 .template-code-block pre {
-white-space: pre-wrap;      
-word-wrap: break-word;       
-overflow-x: auto;           
+white-space: pre-wrap!important;      
+word-wrap: break-word!important;       
+overflow-x: auto!important;           
 }
 
 /* Homepage Cards */
