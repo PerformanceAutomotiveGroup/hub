@@ -5,7 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Landing Page – Template</title>
 
+<!-- Styles -->
 <link rel="stylesheet" href="../../../css/style.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/themes/prism.min.css" />
+
 </head>
 <body>
 
@@ -14,124 +17,126 @@
 
 <div class="content">
 
-<!-- Side Navigation -->
-<div data-include="../../../nav/templatessidenav.html"></div>
+  <!-- Side Navigation -->
+  <div data-include="../../../nav/templatessidenav.html"></div>
 
-<!-- Main Content -->
-<div class="main">
+  <!-- Main Content -->
+  <div class="main">
 
-<!-- Title -->
-<h1>Landing Page Template</h1>
-<p>
-A clean, conversion-focused landing page layout used across Performance
-marketing campaigns.
-</p>
+    <!-- Title -->
+    <h1>Landing Page Template</h1>
+    <p>A clean, conversion-focused landing page layout used across Performance marketing campaigns.</p>
 
-<!-- Screenshot Gallery -->
-<div class="blue-box">
-<h2>Screenshots</h2>
+    <!-- Screenshot Gallery -->
+    <div class="blue-box">
+      <h2>Screenshots</h2>
+      <div class="screenshot-gallery">
+        <img src="../../../images/landing-template-1.png" alt="Landing page hero section">
+        <img src="../../../images/landing-template-2.png" alt="Landing page content sections">
+      </div>
+    </div>
 
-<div class="screenshot-gallery">
-<img src="../../../images/landing-template-1.png" alt="Landing page hero section">
-<img src="../../../images/landing-template-2.png" alt="Landing page content sections">
-</div>
-</div>
+    <!-- Usage -->
+    <div class="blue-box">
+      <h2>When to Use This Template</h2>
+      <p>Use this template for campaigns, promotions, lead capture, or short-term initiatives.</p>
+    </div>
 
-<!-- Usage -->
-<div class="blue-box">
-<h2>When to Use This Template</h2>
-<p>
-Use this template when you need a focused page with a clear message.
-Common use cases include campaigns, promotions, lead capture,
-and short-term initiatives.
-</p>
-</div>
-
-<!-- HTML Code -->
-<div class="code-section">
-<div class="code-header">
-<span>HTML Structure</span>
-<button class="copy-btn" data-copy="html-code">Copy</button>
-</div>
-
-<div class="code-box">
-<pre id="html-code"><code>
+    <!-- HTML Code -->
+    <section class="template-code-block" id="html-code">
+      <div class="code-header">
+        <h3>HTML Structure</h3>
+        <button class="copy-btn" data-copy="html-code">Copy HTML</button>
+      </div>
+      <pre><code class="language-html">
 <section class="hero">
-<h1>Main Headline</h1>
-<p>Supporting value proposition</p>
-<a href="#form" class="btn">Get Started</a>
+  <h1>Main Headline</h1>
+  <p>Supporting value proposition</p>
+  <a href="#form" class="btn">Get Started</a>
 </section>
 
 <section class="features">
-<div class="grid">
-<div class="card">
-<h3>Feature One</h3>
-<p>Description</p>
-</div>
-<div class="card">
-<h3>Feature Two</h3>
-<p>Description</p>
-</div>
-</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Feature One</h3>
+      <p>Description</p>
+    </div>
+    <div class="card">
+      <h3>Feature Two</h3>
+      <p>Description</p>
+    </div>
+  </div>
 </section>
-</code></pre>
-</div>
-</div>
+      </code></pre>
+    </section>
 
-<!-- CSS Code -->
-<div class="code-section">
-<div class="code-header">
-<span>CSS (Optional)</span>
-<button class="copy-btn" data-copy="css-code">Copy</button>
-</div>
-
-<div class="code-box">
-<pre id="css-code"><code>
-.features {
-margin: 50px 0;
+    <!-- CSS Code -->
+    <section class="template-code-block" id="css-code">
+      <div class="code-header">
+        <h3>CSS (Optional)</h3>
+        <button class="copy-btn" data-copy="css-code">Copy CSS</button>
+      </div>
+      <pre><code class="language-css">
+.hero {
+  background: linear-gradient(135deg, #0077b6, #00b4d8);
+  color: white;
+  padding: 50px 30px;
+  border-radius: 12px;
+  margin-bottom: 30px;
 }
-.features .card {
-text-align: center;
+.hero h1 { margin: 0; font-size: 2.2rem; }
+.hero p { margin-top: 10px; font-size: 1.1rem; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
 }
-</code></pre>
-</div>
-</div>
+.card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+.card:hover { transform: translateY(-5px); box-shadow: 0 6px 12px rgba(0,0,0,0.15); }
+.card h3 { color: #0077b6; margin-bottom: 8px; }
+.card p { color: #555; }
+      </code></pre>
+    </section>
 
-<!-- JS Code -->
-<div class="code-section">
-<div class="code-header">
-<span>JavaScript (Optional)</span>
-<button class="copy-btn" data-copy="js-code">Copy</button>
-</div>
-
-<div class="code-box">
-<pre id="js-code"><code>
+    <!-- JS Code -->
+    <section class="template-code-block" id="js-code">
+      <div class="code-header">
+        <h3>JavaScript (Optional)</h3>
+        <button class="copy-btn" data-copy="js-code">Copy JS</button>
+      </div>
+      <pre><code class="language-js">
 document.querySelectorAll('.btn').forEach(btn => {
-btn.addEventListener('click', () => {
-console.log('CTA clicked');
+  btn.addEventListener('click', () => {
+    console.log('CTA clicked');
+  });
 });
-});
-</code></pre>
-</div>
-</div>
+      </code></pre>
+    </section>
 
-<!-- Notes -->
-<div class="blue-box">
-<h2>Notes</h2>
-<p>
-This template assumes standard styles.
-Remove unused sections and adjust spacing as needed.
-</p>
-</div>
+    <!-- Copy All Button -->
+    <div style="margin: 20px 0;">
+      <button class="copy-btn" data-copy-all>Copy All</button>
+    </div>
 
-</div>
-</div>
+  </div> <!-- .main -->
+
+</div> <!-- .content -->
 
 <!-- Footer -->
 <div data-include="../../../nav/footernav.html"></div>
 
-<!-- Include handler -->
+<!-- JS Includes -->
 <script src="../../../js/include.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"></script>
+<script src="../../../js/template-hub.js"></script>
 
 </body>
 </html>
