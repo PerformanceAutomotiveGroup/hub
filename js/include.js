@@ -54,25 +54,27 @@ function initPrismTemplates() {
 // ===============================
 // Copy Buttons
 // ===============================
-function decodeHtmlEntities(str) {
-  const txt = document.createElement('textarea');
-  txt.innerHTML = str;
-  return txt.value;
+function initPrismTemplates() {
+  document.querySelectorAll('section.template-code-block').forEach(block => {
+    const template = block.querySelector('template');
+    const codeEl = block.querySelector('pre code');
+
+    if (template && codeEl) {
+      codeEl.textContent = template.innerHTML.trim(); // Prism gets highlighted text
+      Prism.highlightElement(codeEl);
+    }
+  });
 }
 
 function initCopyButtons() {
-  // Individual copy
   document.querySelectorAll('.copy-btn[data-copy]').forEach(btn => {
     btn.addEventListener('click', () => {
-      const id = btn.getAttribute('data-copy');
-      const codeEl = document.querySelector(`#${id} code`);
-      if (!codeEl) return;
+      const block = btn.closest('section.template-code-block');
+      const template = block.querySelector('template');
 
-      let code = codeEl.textContent;
+      if (!template) return;
 
-      // Decode HTML entities only for HTML section
-      if (id === 'html-code') code = decodeHtmlEntities(code);
-
+      const code = template.innerHTML.trim(); // raw HTML from template
       navigator.clipboard.writeText(code).then(() => {
         btn.textContent = 'Copied!';
         setTimeout(() => (btn.textContent = 'Copy'), 1500);
@@ -84,11 +86,11 @@ function initCopyButtons() {
   const copyAllBtn = document.querySelector('[data-copy-all]');
   if (copyAllBtn) {
     copyAllBtn.addEventListener('click', () => {
-      let html = document.querySelector('#html-code code')?.textContent || '';
-      let css  = document.querySelector('#css-code code')?.textContent || '';
-      let js   = document.querySelector('#js-code code')?.textContent || '';
+      const htmlTemplate = document.querySelector('#html-code template');
+      const cssCode  = document.querySelector('#css-code code')?.textContent || '';
+      const jsCode   = document.querySelector('#js-code code')?.textContent || '';
 
-      html = decodeHtmlEntities(html); // decode HTML section
+      const html = htmlTemplate ? htmlTemplate.innerHTML.trim() : '';
 
       const combined = `
 <!-- HTML -->
@@ -96,12 +98,12 @@ ${html}
 
 <!-- CSS -->
 <style>
-${css}
+${cssCode}
 </style>
 
 <!-- JS -->
 <script>
-${js}
+${jsCode}
 <\/script>
       `.trim();
 
@@ -112,6 +114,7 @@ ${js}
     });
   }
 }
+
 
 
 // ===============================
