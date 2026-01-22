@@ -5,10 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Landing Page – Template</title>
 
-<!-- Styles -->
 <link rel="stylesheet" href="../../../css/style.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/themes/prism.min.css" />
 
+<style>
+/* Collapsible code blocks */
+.collapsible {
+max-height: 0;
+overflow: hidden;
+transition: max-height 0.3s ease;
+}
+.template-code-block.open .collapsible {
+max-height: 1000px;
+}
+.toggle-btn {
+display: flex;
+justify-content: space-between;
+align-items: center;
+cursor: pointer;
+}
+</style>
 </head>
 <body>
 
@@ -41,7 +57,7 @@
 <h2>Live Preview</h2>
 <div id="live-preview"></div>
 <p style="font-size:0.9em; color:#555; margin-top:10px;">
-Usage: Preview renders the template HTML. Copy the sections below for WordPress or other projects.
+Usage: Preview renders the template HTML, CSS, and JS. Copy the sections below for WordPress or other projects.
 </p>
 </div>
 
@@ -49,10 +65,9 @@ Usage: Preview renders the template HTML. Copy the sections below for WordPress 
 <section class="template-code-block" id="html-code">
 <div class="code-header toggle-btn">
 <h3>HTML Structure</h3>
-<button class="copy-btn" data-copy="html-code">Copy/Expand</button>
+<button class="copy-btn" data-copy="html-code">Copy HTML</button>
 </div>
 
-<!-- Template holding raw HTML -->
 <template id="html-template">
 <section>
 <div class="key-highlights">
@@ -118,13 +133,12 @@ Usage: Preview renders the template HTML. Copy the sections below for WordPress 
 
 <section class="tpe-sections">
 <div class="tpe-cta">
-  <h2 style="color:#fff;">Experience the Performance Difference</h2>
-  <a href="http://shop.performance.ca/" target="_blank" class="tpe-cta-link">Build & Price</a><a href="/contact" class="tpe-cta-link">Contact Us</a>
+<h2 style="color:#fff;">Experience the Performance Difference</h2>
+<a href="http://shop.performance.ca/" target="_blank" class="tpe-cta-link">Build & Price</a><a href="/contact" class="tpe-cta-link">Contact Us</a>
 </div>
 </section>
 </template>
 
-<!-- Prism Code Block -->
 <pre class="collapsible"><code class="language-html"></code></pre>
 </section>
 
@@ -132,7 +146,7 @@ Usage: Preview renders the template HTML. Copy the sections below for WordPress 
 <section class="template-code-block" id="css-code">
 <div class="code-header toggle-btn">
 <h3>CSS (Optional)</h3>
-<button class="copy-btn" data-copy="css-code">Copy/Expand</button>
+<button class="copy-btn" data-copy="css-code">Copy CSS</button>
 </div>
 <pre class="collapsible"><code class="language-css">
 body {
@@ -288,7 +302,7 @@ color: #fff;
 <section class="template-code-block" id="js-code">
 <div class="code-header toggle-btn">
 <h3>JavaScript (Optional)</h3>
-<button class="copy-btn" data-copy="js-code">Copy/Expand</button>
+<button class="copy-btn" data-copy="js-code">Copy JS</button>
 </div>
 <pre class="collapsible"><code class="language-js">
 // Fade in cards on scroll
