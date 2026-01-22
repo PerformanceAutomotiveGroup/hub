@@ -178,7 +178,7 @@ cursor: pointer;
 
 /* Ensure code lines wrap inside code blocks */
 .code-box pre,
-.template-code-block pre {
+.template-code-block pre, #html-code > pre > code {
 white-space: pre-wrap!important;      
 word-wrap: break-word!important;       
 overflow-x: auto!important;           
@@ -189,7 +189,6 @@ pre[class*="language-"] {
   word-wrap: break-word!important;
   overflow-x: auto!important;
 }
-
 
 /* Homepage Cards */
 .card-grid {
