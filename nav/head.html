@@ -1,26 +1,14 @@
+<!-- head.html -->
+
 <!-- Site-wide CSS -->
 <link rel="stylesheet" href="../../css/style.css" />
 
-<!-- Prism CSS for code highlighting -->
+<!-- Prism Syntax Highlighting CSS -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/themes/prism.min.css" />
 
-<!-- Optional: Prism plugins if needed -->
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/line-numbers/prism-line-numbers.min.css" /> -->
+<!-- Meta tags (optional, can be added here if not in main HTML) -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<!-- Site-wide JS (can be empty here, include main JS in include.js) -->
-<script>
-  // Collapsible code sections logic (works on all pages)
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.template-code-block .toggle-btn').forEach(header => {
-      header.addEventListener('click', () => {
-        const block = header.closest('.template-code-block');
-        block.classList.toggle('open');
-      });
-    });
-  });
-</script>
-
-<!-- Prism JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"></script>
-<!-- Optional: Prism plugins if needed -->
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/line-numbers/prism-line-numbers.min.js"></script> -->
+<!-- Optional: favicon -->
+<link rel="icon" href="../../images/favicon.ico" type="image/x-icon" />
