@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>HTML Image Maps – Performance Hub</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>HTML Image Maps – Performance Hub</title>
 
-  <link rel="stylesheet" href="../../css/style.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/themes/prism.min.css" />
-  
+<div data-include="../../nav/head.html"></div>
+
 </head>
 <body>
 
@@ -15,114 +14,114 @@
 
 <div class="content">
 
-  <div data-include="../../nav/htmlsidenav.html"></div>
+<div data-include="../../nav/htmlsidenav.html"></div>
 
-  <div class="main">
+<div class="main">
 
-    <h1>HTML Image Maps</h1>
-    <p>
-      Interactive image map example with hover labels.
-    </p>
+<h1>HTML Image Maps</h1>
+<p>
+Interactive image map example with hover labels.
+</p>
 
-    <!-- NO Screenshots -->
-    <div style="display:none;" class="blue-box">
-      <h2>Screenshots</h2>
-      <div class="screenshot-gallery">
-        <img src="../../images/html-map.png" alt="HTML Map">
-        <img src="../../images/html-map-hover2.png" alt="HTML Map Hover">
-      </div>
-    </div>
-
-    <!-- Live Preview -->
-    <div class="blue-box">
-      <h2>Live Preview</h2>
-      <div id="live-preview"></div>
-    </div>
-
-    <!-- ================= HTML ================= -->
-    <section class="code-section" id="html-code">
-      <div class="code-header">
-        <span>HTML</span>
-        <button class="copy-btn" data-copy="html-code">Copy HTML</button>
-      </div>
-      <pre><code class="language-html"></code></pre>
-
-      <template id="html-template">
-<div class="image-map">
-  <img src="https://performance.performanceautodev.com/wp-content/uploads/sites/40/2020/06/xcommunity.jpg.pagespeed.ic.GzF73iD-5F.webp" alt="Community Map">
-
-  <a href="#" class="hotspot" style="top:1%; left:4%; width:18%; height:21%;">
-    <span>Area 1</span>
-  </a>
-
-  <a href="#" class="hotspot" style="top:15%; left:23%; width:39%; height:55%;">
-    <span>Area 2</span>
-  </a>
-
-  <a href="#" class="hotspot" style="top:7%; left:72%; width:23%; height:28%;">
-    <span>Area 3</span>
-  </a>
+<!-- NO Screenshots -->
+<div style="display:none;" class="blue-box">
+<h2>Screenshots</h2>
+<div class="screenshot-gallery">
+<img src="../../images/html-map.png" alt="HTML Map">
+<img src="../../images/html-map-hover2.png" alt="HTML Map Hover">
 </div>
-      </template>
-    </section>
+</div>
 
-    <!-- ================= CSS ================= -->
-    <section class="code-section" id="css-code">
-      <div class="code-header">
-        <span>CSS</span>
-        <button class="copy-btn" data-copy="css-code">Copy CSS</button>
-      </div>
-      <pre><code class="language-css"></code></pre>
+<!-- Live Preview -->
+<div class="blue-box">
+<h2>Live Preview</h2>
+<div id="live-preview"></div>
+</div>
 
-      <template id="css-template">
+<!-- ================= HTML ================= -->
+<section class="code-section" id="html-code">
+<div class="code-header">
+<span>HTML</span>
+<button class="copy-btn" data-copy="html-code">Copy HTML</button>
+</div>
+<pre><code class="language-html"></code></pre>
+
+<template id="html-template">
+<div class="image-map">
+<img src="https://performance.performanceautodev.com/wp-content/uploads/sites/40/2020/06/xcommunity.jpg.pagespeed.ic.GzF73iD-5F.webp" alt="Community Map">
+
+<a href="#" class="hotspot" style="top:1%; left:4%; width:18%; height:21%;">
+<span>Area 1</span>
+</a>
+
+<a href="#" class="hotspot" style="top:15%; left:23%; width:39%; height:55%;">
+<span>Area 2</span>
+</a>
+
+<a href="#" class="hotspot" style="top:7%; left:72%; width:23%; height:28%;">
+<span>Area 3</span>
+</a>
+</div>
+</template>
+</section>
+
+<!-- ================= CSS ================= -->
+<section class="code-section" id="css-code">
+<div class="code-header">
+<span>CSS</span>
+<button class="copy-btn" data-copy="css-code">Copy CSS</button>
+</div>
+<pre><code class="language-css"></code></pre>
+
+<template id="css-template">
 .image-map {
-  position: relative;
-  max-width: 900px;
-  margin: auto;
+position: relative;
+max-width: 900px;
+margin: auto;
 }
 
 .image-map img {
-  width: 100%;
-  display: block;
+width: 100%;
+display: block;
 }
 
 .hotspot {
-  position: absolute;
+position: absolute;
 }
 
 .hotspot span {
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0,0,0,.8);
-  color: #fff;
-  padding: 5px 10px;
-  border-radius: 4px;
-  opacity: 0;
-  transition: opacity .2s;
+position: absolute;
+bottom: 100%;
+left: 50%;
+transform: translateX(-50%);
+background: rgba(0,0,0,.8);
+color: #fff;
+padding: 5px 10px;
+border-radius: 4px;
+opacity: 0;
+transition: opacity .2s;
 }
 
 .hotspot:hover span {
-  opacity: 1;
+opacity: 1;
 }
-      </template>
-    </section>
+</template>
+</section>
 
-    <!-- ================= JS ================= -->
-    <section class="code-section" id="js-code">
-      <div class="code-header">
-        <span>JavaScript</span>
-        <button class="copy-btn" data-copy="js-code">Copy JS</button>
-      </div>
-      <pre><code class="language-js"></code></pre>
+<!-- ================= JS ================= -->
+<section class="code-section" id="js-code">
+<div class="code-header">
+<span>JavaScript</span>
+<button class="copy-btn" data-copy="js-code">Copy JS</button>
+</div>
+<pre><code class="language-js"></code></pre>
 
-      <template id="js-template">
+<template id="js-template">
 console.log('Image map loaded');
-      </template>
-    </section>
+</template>
+</section>
 
-  </div>
+</div>
 </div>
 
 <div data-include="../../nav/footernav.html"></div>
