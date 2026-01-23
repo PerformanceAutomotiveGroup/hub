@@ -44,7 +44,7 @@ Interactive image map example with hover labels.
 <span>HTML</span>
 <button class="copy-btn" data-copy="html-code">Copy HTML</button>
 </div>
-<pre><code class="language-html"></code></pre>
+<pre><code class="language-html" id="html-snippet"></code></pre>
 
 <template id="html-template">
 <div class="image-map">
@@ -71,7 +71,7 @@ Interactive image map example with hover labels.
 <span>CSS</span>
 <button class="copy-btn" data-copy="css-code">Copy CSS</button>
 </div>
-<pre><code class="language-css"></code></pre>
+<pre><code class="language-css" id="css-snippet"></code></pre>
 
 <template id="css-template">
 .image-map {
@@ -114,21 +114,20 @@ opacity: 1;
 <span>JavaScript</span>
 <button class="copy-btn" data-copy="js-code">Copy JS</button>
 </div>
-<pre><code class="language-js"></code></pre>
+<pre><code class="language-js" id="js-snippet"></code></pre>
 
 <template id="js-template">
-console.log('Image map loaded');
+NO JS
 </template>
 </section>
 
 </div>
 </div>
 
+<!-- Footer -->
 <div data-include="../../nav/footernav.html"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.js"></script>
-
-<!-- Include handler (existing) -->
+<!-- Include handler  -->
 <script src="../../js/include.js"></script>
 
 <!-- Prism JS -->
