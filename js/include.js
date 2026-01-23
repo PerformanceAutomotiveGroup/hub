@@ -1,14 +1,4 @@
 // ===============================
-// Inject head.html into <head>
-// ===============================
-
-fetch('../../nav/head.html')
-  .then(res => res.text())
-  .then(html => document.head.insertAdjacentHTML('beforeend', html))
-  .catch(err => console.error('Failed to load head.html:', err));
-
-
-// ===============================
 // HTML Includes
 // ===============================
 function loadIncludes(callback) {
