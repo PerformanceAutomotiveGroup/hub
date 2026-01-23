@@ -31,7 +31,9 @@ function loadIncludes(callback) {
 function highlightActiveLink() {
   const currentPage = window.location.pathname.split('/').pop();
   document.querySelectorAll('.sidenav a').forEach(link => {
-    if (link.getAttribute('href') === currentPage) link.classList.add('active');
+    if (link.getAttribute('href') === currentPage) {
+      link.classList.add('active');
+    }
   });
 }
 
@@ -42,9 +44,10 @@ function initPrismTemplates() {
   document.querySelectorAll('template[id$="-template"]').forEach(template => {
     const baseId = template.id.replace('-template', '');
     const codeBlock = document.querySelector(`#${baseId}-code code`);
+
     if (codeBlock) {
       codeBlock.textContent = template.innerHTML.trim();
-      Prism.highlightElement(codeBlock); // Highlight code immediately
+      Prism.highlightElement(codeBlock);
     }
   });
 }
@@ -58,6 +61,7 @@ function initCopyButtons() {
       const id = btn.getAttribute('data-copy');
       const code = document.querySelector(`#${id} code`)?.textContent;
       if (!code) return;
+
       navigator.clipboard.writeText(code).then(() => {
         btn.textContent = 'Copied!';
         setTimeout(() => (btn.textContent = 'Copy'), 1500);
@@ -65,6 +69,7 @@ function initCopyButtons() {
     });
   });
 
+  // Copy ALL
   const copyAllBtn = document.querySelector('[data-copy-all]');
   if (copyAllBtn) {
     copyAllBtn.addEventListener('click', () => {
@@ -128,18 +133,6 @@ function renderLivePreview() {
 }
 
 // ===============================
-// Collapsible code sections
-// ===============================
-function initCollapsibleCode() {
-  document.querySelectorAll('.template-code-block .toggle-btn').forEach(header => {
-    header.addEventListener('click', () => {
-      const block = header.closest('.template-code-block');
-      block.classList.toggle('open');
-    });
-  });
-}
-
-// ===============================
 // Initialize Everything
 // ===============================
 document.addEventListener('DOMContentLoaded', () => {
@@ -147,7 +140,6 @@ document.addEventListener('DOMContentLoaded', () => {
     highlightActiveLink();
     initPrismTemplates();
     initCopyButtons();
-    initCollapsibleCode();
     renderLivePreview();
   });
 });
