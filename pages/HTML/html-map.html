@@ -9,21 +9,17 @@
 </head>
 <body>
 
-<!-- Top Navigation -->
 <div data-include="../../nav/topnav.html"></div>
 
 <div class="content">
 
-  <!-- Side Navigation -->
   <div data-include="../../nav/htmlsidenav.html"></div>
 
-  <!-- Main Content -->
   <div class="main">
 
     <h1>HTML Image Maps</h1>
     <p>
-      This example demonstrates an interactive image divided into clickable
-      areas with hover labels.
+      Interactive image map example with hover labels.
     </p>
 
     <!-- Screenshots -->
@@ -33,7 +29,6 @@
         <img src="../../images/html-map.png" alt="HTML Map">
         <img src="../../images/html-map-hover2.png" alt="HTML Map Hover">
       </div>
-      <a href="#" class="blue-btn">No Live Page</a>
     </div>
 
     <!-- Live Preview -->
@@ -42,53 +37,39 @@
       <div id="live-preview"></div>
     </div>
 
-    <!-- ========================= -->
-    <!-- HTML CODE -->
-    <!-- ========================= -->
+    <!-- ================= HTML ================= -->
     <section class="code-section" id="html-code">
       <div class="code-header">
         <span>HTML</span>
         <button class="copy-btn" data-copy="html-code">Copy HTML</button>
       </div>
-
       <pre><code class="language-html"></code></pre>
 
       <template id="html-template">
 <div class="image-map">
   <img src="https://performance.performanceautodev.com/wp-content/uploads/sites/40/2020/06/xcommunity.jpg.pagespeed.ic.GzF73iD-5F.webp" alt="Community Map">
 
-  <a href="#area1" class="hotspot" style="top:1%; left:4%; width:18%; height:21%;">
-    <span>Area 1 Title</span>
+  <a href="#" class="hotspot" style="top:1%; left:4%; width:18%; height:21%;">
+    <span>Area 1</span>
   </a>
 
-  <a href="#area2" class="hotspot" style="top:15%; left:23%; width:39%; height:55%;">
-    <span>Area 2 Title</span>
+  <a href="#" class="hotspot" style="top:15%; left:23%; width:39%; height:55%;">
+    <span>Area 2</span>
   </a>
 
-  <a href="#area3" class="hotspot" style="top:7%; left:72%; width:23%; height:28%;">
-    <span>Area 3 Title</span>
-  </a>
-
-  <a href="#area4" class="hotspot" style="top:58%; left:2%; width:19%; height:23%;">
-    <span>Area 4 Title</span>
-  </a>
-
-  <a href="#area5" class="hotspot" style="top:53%; left:75%; width:14%; height:17%;">
-    <span>Area 5 Title</span>
+  <a href="#" class="hotspot" style="top:7%; left:72%; width:23%; height:28%;">
+    <span>Area 3</span>
   </a>
 </div>
       </template>
     </section>
 
-    <!-- ========================= -->
-    <!-- CSS CODE -->
-    <!-- ========================= -->
+    <!-- ================= CSS ================= -->
     <section class="code-section" id="css-code">
       <div class="code-header">
         <span>CSS</span>
         <button class="copy-btn" data-copy="css-code">Copy CSS</button>
       </div>
-
       <pre><code class="language-css"></code></pre>
 
       <template id="css-template">
@@ -100,13 +81,11 @@
 
 .image-map img {
   width: 100%;
-  height: auto;
   display: block;
 }
 
 .hotspot {
   position: absolute;
-  border-radius: 50px;
 }
 
 .hotspot span {
@@ -114,14 +93,12 @@
   bottom: 100%;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(0,0,0,0.8);
+  background: rgba(0,0,0,.8);
   color: #fff;
   padding: 5px 10px;
   border-radius: 4px;
-  font-size: 14px;
-  white-space: nowrap;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity .2s;
 }
 
 .hotspot:hover span {
@@ -130,16 +107,25 @@
       </template>
     </section>
 
+    <!-- ================= JS ================= -->
+    <section class="code-section" id="js-code">
+      <div class="code-header">
+        <span>JavaScript</span>
+        <button class="copy-btn" data-copy="js-code">Copy JS</button>
+      </div>
+      <pre><code class="language-js"></code></pre>
+
+      <template id="js-template">
+console.log('Image map loaded');
+      </template>
+    </section>
+
   </div>
 </div>
 
-<!-- Footer -->
 <div data-include="../../nav/footernav.html"></div>
 
-<!-- Prism -->
 <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.js"></script>
-
-<!-- Core JS -->
 <script src="../../js/include.js"></script>
 
 </body>
