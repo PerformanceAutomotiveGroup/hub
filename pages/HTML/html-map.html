@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>HTML Image Maps – Performance Hub</title>
 
-<!-- Inject head.html content dynamically -->
+<!-- Inject head.html dynamically -->
 <script>
 fetch('../../nav/head.html')
 .then(res => res.text())
@@ -25,7 +23,6 @@ fetch('../../nav/head.html')
 
 <!-- Main Content -->
 <div class="main">
-
 <h1>HTML Image Maps</h1>
 <p>This HTML image map example displays an interactive image divided into five clickable areas. Each area highlights on hover and shows a label with its title.</p>
 
@@ -41,10 +38,9 @@ Usage: Preview renders the HTML, CSS, and JS. Copy sections below for WordPress 
 <!-- HTML Code Section -->
 <section class="template-code-block" id="html-code">
 <div class="code-header toggle-btn">
-<h3>HTML Structure > <span style="font-size:0.9em; color:#555;">Click to expand</span></h3>
+<h3>HTML Structure <span style="font-size:0.9em; color:#555;">Click to expand</span></h3>
 <button class="copy-btn" data-copy="html-template">Copy HTML</button>
 </div>
-
 <template id="html-template">
 <div class="image-map">
 <img src="https://performance.performanceautodev.com/wp-content/uploads/sites/40/2020/06/xcommunity.jpg.pagespeed.ic.GzF73iD-5F.webp" alt="Community Map">
@@ -70,17 +66,15 @@ Usage: Preview renders the HTML, CSS, and JS. Copy sections below for WordPress 
 </a>
 </div>
 </template>
-
 <pre><code id="html-template" class="language-html"></code></pre>
 </section>
 
 <!-- CSS Code Section -->
 <section class="template-code-block" id="css-code">
 <div class="code-header toggle-btn">
-<h3>CSS > <span style="font-size:0.9em; color:#555;">Click to expand</span></h3>
+<h3>CSS <span style="font-size:0.9em; color:#555;">Click to expand</span></h3>
 <button class="copy-btn" data-copy="css-template">Copy CSS</button>
 </div>
-
 <template id="css-template">
 .image-map { position: relative; max-width: 900px; margin: auto; }
 .image-map img { width: 100%; height: auto; display: block; }
@@ -91,7 +85,7 @@ position: absolute;
 bottom: 100%;
 left: 50%;
 transform: translateX(-50%);
-background: rgba(0,0,0,0.8);
+background: rgba(0, 0, 0, 0.8);
 color: #fff;
 padding: 5px 10px;
 border-radius: 4px;
@@ -103,24 +97,21 @@ transition: opacity 0.3s ease;
 }
 .hotspot:hover span { opacity: 1; }
 </template>
-
 <pre><code id="css-template" class="language-css"></code></pre>
 </section>
 
 <!-- JS Code Section -->
 <section class="template-code-block" id="js-code">
 <div class="code-header toggle-btn">
-<h3>JavaScript > <span style="font-size:0.9em; color:#555;">Click to expand</span></h3>
+<h3>JavaScript <span style="font-size:0.9em; color:#555;">Click to expand</span></h3>
 <button class="copy-btn" data-copy="js-template">Copy JS</button>
 </div>
-
 <template id="js-template">
 document.querySelectorAll('.hotspot').forEach(hotspot => {
 hotspot.addEventListener('mouseenter', () => hotspot.querySelector('span').style.opacity = 1);
 hotspot.addEventListener('mouseleave', () => hotspot.querySelector('span').style.opacity = 0);
 });
 </template>
-
 <pre><code id="js-template" class="language-js"></code></pre>
 </section>
 
