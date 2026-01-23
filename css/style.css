@@ -190,6 +190,10 @@ pre[class*="language-"] {
   overflow-x: auto!important;
 }
 
+/* Live Preview */
+#live-preview{
+  max-width: 1200px;
+}
 /* Homepage Cards */
 .card-grid {
 display: grid;
