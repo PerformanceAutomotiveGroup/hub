@@ -2,112 +2,145 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- Ensures proper rendering and touch zooming on mobile devices -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>HTML - Performance Hub</title>
-  <!-- Link to the main site-wide CSS stylesheet -->
+  <title>HTML Image Maps – Performance Hub</title>
+
   <link rel="stylesheet" href="../../css/style.css" />
 </head>
 <body>
 
-<!-- Include top navigation bar -->
+<!-- Top Navigation -->
 <div data-include="../../nav/topnav.html"></div>
 
-<!-- Page content wrapper -->
 <div class="content">
 
-  <!-- Include HTML section side navigation -->
+  <!-- Side Navigation -->
   <div data-include="../../nav/htmlsidenav.html"></div>
-     
-  <! ------- EDIT START HERE ------- >
-     
-  <!-- Main content section -->
+
+  <!-- Main Content -->
   <div class="main">
+
     <h1>HTML Image Maps</h1>
-    <p>This HTML image map example displays an interactive image divided into five clickable areas. Each area highlights on hover and shows a label with its title.</p>
-    <!-- Screenshot container -->
+    <p>
+      This example demonstrates an interactive image divided into clickable
+      areas with hover labels.
+    </p>
+
+    <!-- Screenshots -->
     <div class="blue-box">
       <h2>Screenshots</h2>
       <div class="screenshot-gallery">
-        <!-- Example screenshot image -->
-        <img src="../../images/html-map.png" alt="HTML Map"><img src="../../images/html-map-hover2.png" alt="HTML Map">
+        <img src="../../images/html-map.png" alt="HTML Map">
+        <img src="../../images/html-map-hover2.png" alt="HTML Map Hover">
       </div>
-      <!-- Link to live form page -->
-      <a href="#" target="_blank" class="blue-btn">NO LIVE VIEW</a>
+      <a href="#" class="blue-btn">No Live Page</a>
     </div>
-    <!-- END Screenshot section -->
 
-    <!-- YOUR Code section 1 -->
-    <div class="code-section">
+    <!-- Live Preview -->
+    <div class="blue-box">
+      <h2>Live Preview</h2>
+      <div id="live-preview"></div>
+    </div>
+
+    <!-- ========================= -->
+    <!-- HTML CODE -->
+    <!-- ========================= -->
+    <section class="code-section" id="html-code">
       <div class="code-header">
-        <span>HTML Code</span> 
+        <span>HTML</span>
+        <button class="copy-btn" data-copy="html-code">Copy HTML</button>
       </div>
 
-      <!-- Code snippet display area (Prism.js highlights this) -->
-      <pre><code id="html-form-snippet" class="language-html"></code></pre>
+      <pre><code class="language-html"></code></pre>
 
-      <!-- Hidden - containing YOUR code -->
-      <template id="html-form-template"> 
-        <div class="image-map">
-    <img src="https://performance.performanceautodev.com/wp-content/uploads/sites/40/2020/06/xcommunity.jpg.pagespeed.ic.GzF73iD-5F.webp" alt="Community Map">
+      <template id="html-template">
+<div class="image-map">
+  <img src="https://performance.performanceautodev.com/wp-content/uploads/sites/40/2020/06/xcommunity.jpg.pagespeed.ic.GzF73iD-5F.webp" alt="Community Map">
 
-    <!-- Area 1 -->
-    <a href="#area1" class="hotspot" style="top:1%; left:4%; width:18%; height:21%;">
-        <span>Area 1 Title</span>
-    </a>
+  <a href="#area1" class="hotspot" style="top:1%; left:4%; width:18%; height:21%;">
+    <span>Area 1 Title</span>
+  </a>
 
-    <!-- Area 2 -->
-    <a href="#area2" class="hotspot" style="top:15%; left:23%; width:39%; height:55%;">
-        <span>Area 2 Title</span>
-    </a>
+  <a href="#area2" class="hotspot" style="top:15%; left:23%; width:39%; height:55%;">
+    <span>Area 2 Title</span>
+  </a>
 
-    <!-- Area 3 -->
-    <a href="#area3" class="hotspot" style="top:7%; left:72%; width:23%; height:28%;">
-        <span>Area 3 Title</span>
-    </a>
+  <a href="#area3" class="hotspot" style="top:7%; left:72%; width:23%; height:28%;">
+    <span>Area 3 Title</span>
+  </a>
 
-    <!-- Area 4 -->
-    <a href="#area4" class="hotspot" style="top:58%; left:2%; width:19%; height:23%;">
-        <span>Area 4 Title</span>
-    </a>
+  <a href="#area4" class="hotspot" style="top:58%; left:2%; width:19%; height:23%;">
+    <span>Area 4 Title</span>
+  </a>
 
-    <!-- Area 5 -->
-    <a href="#area5" class="hotspot" style="top:53%; left:75%; width:14%; height:17%;">
-        <span>Area 5 Title</span>
-    </a>
+  <a href="#area5" class="hotspot" style="top:53%; left:75%; width:14%; height:17%;">
+    <span>Area 5 Title</span>
+  </a>
 </div>
       </template>
+    </section>
 
-      <!-- Button to copy the template code to clipboard -->
-      <button class="copy-btn" onclick="copyCode('html-form-snippet')">Copy Code</button>
-    </div>
-    <!-- END Code section -->
-
-    <!-- YOUR Code section 2 -->
-    <div class="code-section">
+    <!-- ========================= -->
+    <!-- CSS CODE -->
+    <!-- ========================= -->
+    <section class="code-section" id="css-code">
       <div class="code-header">
-        <span>CSS Code</span> 
+        <span>CSS</span>
+        <button class="copy-btn" data-copy="css-code">Copy CSS</button>
       </div>
-      <pre><code id="html-form2-snippet" class="language-html"></code></pre>
 
-      <!-- Hidden - containing YOUR code -->
-      <template id="html-form2-template"> 
-        .image-map { position: relative; max-width: 900px; margin: auto; } .image-map img { width: 100%; height: auto; display: block; } .hotspot { position: absolute; border: 2px solid transparent; transition: all 0.3s ease; border-radius: 74px; } .hotspot:hover { background-color: none; } .hotspot span { position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); background: rgba(0, 0, 0, 0.8); color: #fff; padding: 5px 10px; border-radius: 4px; font-size: 14px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; } .hotspot:hover span { opacity: 1; }
+      <pre><code class="language-css"></code></pre>
+
+      <template id="css-template">
+.image-map {
+  position: relative;
+  max-width: 900px;
+  margin: auto;
+}
+
+.image-map img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.hotspot {
+  position: absolute;
+  border-radius: 50px;
+}
+
+.hotspot span {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.8);
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.hotspot:hover span {
+  opacity: 1;
+}
       </template>
+    </section>
 
-      <button class="copy-btn" onclick="copyCode('html-form2-snippet')">Copy Code</button>
-    </div>
-    <!-- END Code section -->
-  </div> 
-</div> <! ------- EDIT END HERE ------- >
+  </div>
+</div>
 
-<!-- Prism.js for syntax highlighting -->
-<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.js"></script>
-
-<!-- Include footer navigation -->
+<!-- Footer -->
 <div data-include="../../nav/footernav.html"></div>
 
-<!-- Script to handle HTML partial includes -->
+<!-- Prism -->
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.js"></script>
+
+<!-- Core JS -->
 <script src="../../js/include.js"></script>
+
 </body>
 </html>
