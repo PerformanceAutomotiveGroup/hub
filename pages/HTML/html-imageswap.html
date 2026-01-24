@@ -43,10 +43,27 @@ Usage: Preview renders the template HTML, CSS, and JS. Copy the sections below f
 </div>
 
 <template id="html-template"><!--  Your HTML code goes within HERE  -->
-<picture><source srcset="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/05/Family-Road-Trip-New-SUV.jpeg" media="(max-width: 600px)">
-<source srcset="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/05/Family-Road-Trip-New-Car.jpeg" media="(max-width: 1500px)">
-<source srcset="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/04/2025-Hyundai-elantra_safety_hc_01-copy.jpg">
-<img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/05/Family-Road-Trip-New-Car.jpeg" alt="A family enjoying a road trip in a new car" /></picture>
+<picture class="responsive-picture">
+<!-- Mobile: up to 600px wide -->
+<source 
+srcset="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/05/Family-Road-Trip-New-SUV.jpeg" 
+media="(max-width: 600px)">
+
+<!-- Tablet / small desktop: up to 1500px wide -->
+<source 
+srcset="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/05/Family-Road-Trip-New-Car.jpeg" 
+media="(max-width: 1500px)">
+
+<!-- Large desktop: default image -->
+<source 
+srcset="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/04/2025-Hyundai-elantra_safety_hc_01-copy.jpg">
+
+<!-- Fallback image for browsers that don’t support <picture> -->
+<img 
+src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/05/Family-Road-Trip-New-Car.jpeg" 
+alt="A family enjoying a road trip in a new car"
+class="responsive-img">
+</picture>
 </template>
 
 <pre class="collapsible"><code class="language-html"></code></pre>
@@ -59,7 +76,14 @@ Usage: Preview renders the template HTML, CSS, and JS. Copy the sections below f
 <button class="copy-btn" data-copy="css-code">Copy CSS</button>
 </div>
 <pre class="collapsible"><code class="language-css"><!--  Your CSS code goes within HERE  -->
-.picture img { max-width: 100%; height: auto; display: block; margin: 1rem auto; border-radius: 8px; }
+.responsive-picture img {
+max-width: 100%;
+height: auto;
+display: block;
+margin: 1rem auto;
+border-radius: 8px;
+box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
 </code></pre>
 </section>
 
@@ -71,7 +95,6 @@ Usage: Preview renders the template HTML, CSS, and JS. Copy the sections below f
 </div>
 <pre class="collapsible"><code class="language-js"> <!--  Your JS code goes within HERE  -->
 
-});
 </code></pre>
 </section>
 
