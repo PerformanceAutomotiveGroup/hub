@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Landing Page – Template</title>
 
-<link rel="stylesheet" href="../../../css/style.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/themes/prism.min.css" />
-
+<head> 
+<meta charset="UTF-8" /> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+<title>Landing Page – Template</title> <link rel="stylesheet" href="../../../css/style.css" /> 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/themes/prism.min.css" /> 
 </head>
-<body>
+
+<body> 
 
 <!-- Top Navigation -->
 <div data-include="../../../nav/topnav.html"></div>
@@ -47,7 +46,7 @@ Usage: Preview renders the template HTML, CSS, and JS. Copy the sections below f
 <!-- HTML Code Section -->
 <section class="template-code-block" id="html-code">
 <div class="code-header toggle-btn">
-<h3>HTML Structure > Click to expand</h3>
+<h3>HTML Structure > <span style="font-size:0.9em; color:#555;">Click to expand</span></h3>
 <button class="copy-btn" data-copy="html-code">Copy HTML</button>
 </div>
 
@@ -78,7 +77,7 @@ Usage: Preview renders the template HTML, CSS, and JS. Copy the sections below f
 <!-- CSS Code Section -->
 <section class="template-code-block" id="css-code">
 <div class="code-header toggle-btn">
-<h3>CSS > Click to expand</h3>
+<h3>CSS > <span style="font-size:0.9em; color:#555;">Click to expand</span></h3>
 <button class="copy-btn" data-copy="css-code">Copy CSS</button>
 </div>
 <pre class="collapsible"><code class="language-css">
@@ -114,7 +113,7 @@ cursor: pointer;
 <!-- JS Code Section -->
 <section class="template-code-block" id="js-code">
 <div class="code-header toggle-btn">
-<h3>JavaScript > Click to expand</h3>
+<h3>JavaScript > <span style="font-size:0.9em; color:#555;">Click to expand</span></h3>
 <button class="copy-btn" data-copy="js-code">Copy JS</button>
 </div>
 <pre class="collapsible"><code class="language-js">
@@ -141,16 +140,6 @@ console.log('CTA clicked');
 <!-- JS Includes -->
 <script src="../../../js/include.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"></script>
-
-<script>
-// Collapsible code sections
-document.querySelectorAll('.template-code-block .toggle-btn').forEach(header => {
-header.addEventListener('click', () => {
-const block = header.closest('.template-code-block');
-block.classList.toggle('open');
-});
-});
-</script>
 
 </body>
 </html>
