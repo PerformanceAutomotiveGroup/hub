@@ -190,7 +190,7 @@ pre[class*="language-"] {
   overflow-x: auto!important;
 }
 
-#html-code > pre{
+#html-code > pre, #css-code > pre, #js-code > pre{
  padding: 0em!important; 
 }
 
