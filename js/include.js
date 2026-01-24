@@ -145,6 +145,31 @@ function initCollapsibleCode() {
 }
 
 // ===============================
+// Search code sections
+// ===============================
+function initHubSearch() {
+  const input = document.getElementById('hub-search');
+  if (!input) return;
+
+  const items = document.querySelectorAll('.hub-card');
+
+  input.addEventListener('input', () => {
+    const query = input.value.toLowerCase().trim();
+
+    items.forEach(item => {
+      const text = (
+        item.textContent +
+        ' ' +
+        (item.dataset.keywords || '')
+      ).toLowerCase();
+
+      item.style.display = text.includes(query) ? '' : 'none';
+    });
+  });
+}
+
+
+// ===============================
 // Initialize Everything
 // ===============================
 document.addEventListener('DOMContentLoaded', () => {
@@ -154,5 +179,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initCopyButtons();
     renderLivePreview();
     initCollapsibleCode();
+    initHubSearch();
   });
 });
