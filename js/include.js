@@ -154,5 +154,9 @@ document.addEventListener('DOMContentLoaded', () => {
     initCopyButtons();
     renderLivePreview();
     initCollapsibleCode();
+
+     // Page-specific title override
+    const pageTitle = document.body.getAttribute('data-title');
+    if (pageTitle) document.title = pageTitle;
   });
 });
