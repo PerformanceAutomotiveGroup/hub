@@ -279,14 +279,15 @@ font-size: 14px;
 }
 
 .sidenav a.active {
-color: white;
+color: #fff;
 background-color: #2c68b5;
 padding-left: 10px;
 border-radius: 4px;
 }
 
 .sidenav a:hover {
-background-color: #ddd;
+background-color: #2c68b5;
+color:#fff;
 padding-left: 10px;
 }
 
