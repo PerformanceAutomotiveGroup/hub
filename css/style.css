@@ -252,6 +252,7 @@ background-color: #333;
 /* Layout */
 .content {
 display: flex;
+position: relative;
 }
 
 /* Side navigation */
@@ -458,6 +459,7 @@ padding: 20px 0;
 font-size: 14px;
 text-align: center;
 width: 100%;
+position: absolute;
 }
 
 .footer-content {
@@ -491,7 +493,7 @@ padding: 0.75rem;
 
 .sidenav {
 width: 100%;
-height: auto;
+height: 100%;
 border-right: none;
 border-bottom: 1px solid #ccc;
 }
