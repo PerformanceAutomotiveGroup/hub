@@ -153,5 +153,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initPrismTemplates();
     initCopyButtons();
     renderLivePreview();
+    initCollapsibleCode();
   });
 });
