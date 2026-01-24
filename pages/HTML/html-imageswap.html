@@ -1,89 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <!-- Ensures proper rendering and touch zooming on mobile devices -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>HTML - Performance Hub</title>
-  <!-- Link to the main site-wide CSS stylesheet -->
-  <link rel="stylesheet" href="../../css/style.css" />
-</head>
-<body>
 
-<!-- Include top navigation bar -->
+<head> 
+<meta charset="UTF-8" /> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+<title>Landing Page – Template</title> <link rel="stylesheet" href="../../../css/style.css" /> <!--  Change title HERE  -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/themes/prism.min.css" /> 
+</head>
+
+<body> 
+
+<!-- Top Navigation -->
 <div data-include="../../nav/topnav.html"></div>
 
-<!-- Page content wrapper -->
 <div class="content">
 
-  <!-- Include side navigation -->
-  <div data-include="../../nav/htmlsidenav.html"></div>
-     
-  <! ------- EDIT START HERE ------- >
-     
-  <!-- Main content section -->
-  <div class="main">
-    <h1>Responsive Image Swap</h1>
-    <p>This HTML code uses the <picture> element to display different images based on the browser’s width, ensuring an optimized and responsive viewing experience for users on various devices.</p>
-    <!-- Screenshot container -->
-    <div class="blue-box">
-      <h2>Screenshots</h2>
-      <div class="screenshot-gallery">
-        <!-- Example screenshot image -->
-        <img src="../../images/Responsive Image Swap1.png" alt="Image Swap"><img src="../../images/Responsive Image Swap2.png" alt="Image Swap"><img src="../../images/Responsive Image Swap3.png" alt="Image Swap">
-      </div>
-      <!-- Link to live form page -->
-      <a href="#" target="_blank" class="blue-btn">NO LIVE VIEW</a>
-    </div>
-    <!-- END Screenshot section -->
+<!-- Side Navigation -->
+<div data-include="../../nav/htmlsidenav.html"></div>
 
-    <!-- YOUR Code section 1 -->
-    <div class="code-section">
-      <div class="code-header">
-        <span>HTML Code</span> 
-      </div>
+<!-- Main Content -->
+<div class="main">
 
-      <!-- Code snippet display area (Prism.js highlights this) -->
-      <pre><code id="html-form-snippet" class="language-html"></code></pre>
+<!-- Title -->
+<h1>Responsive Image Swap</h1>
+<p>This HTML code uses the <picture> element to display different images based on the browser’s width, ensuring an optimized and responsive viewing experience for users on various devices.</p>
 
-      <!-- Hidden - containing YOUR code -->
-      <template id="html-form-template"> 
-        <picture><source srcset="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/05/Family-Road-Trip-New-SUV.jpeg" media="(max-width: 600px)">
-        <source srcset="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/05/Family-Road-Trip-New-Car.jpeg" media="(max-width: 1500px)">
-        <source srcset="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/04/2025-Hyundai-elantra_safety_hc_01-copy.jpg">
-        <img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/05/Family-Road-Trip-New-Car.jpeg" alt="A family enjoying a road trip in a new car" /></picture>
-      </template>
+<!-- Screenshot Gallery if needed-->
+<div class="blue-box">
+<h2>Screenshots</h2>
+<div class="screenshot-gallery">
+<img src="../../../images/landing-template-1.png" alt="Landing page hero section">
+<img src="../../../images/landing-template-2.png" alt="Landing page content sections">
+</div>
+</div>
 
-      <!-- Button to copy the template code to clipboard -->
-      <button class="copy-btn" onclick="copyCode('html-form-snippet')">Copy Code</button>
-    </div>
-    <!-- END Code section -->
+<!-- Live Preview -->
+<div class="blue-box">
+<h2>Live Preview</h2>
+<div id="live-preview"></div>
+<p style="font-size:0.9em; color:#555; margin-top:10px;">
+Usage: Preview renders the template HTML, CSS, and JS. Copy the sections below for WordPress or other projects.
+</p>
+</div>
 
-    <!-- YOUR Code section 2 -->
-    <div class="code-section">
-      <div class="code-header">
-        <span>CSS Code</span> 
-      </div>
-      <pre><code id="html-form2-snippet" class="language-html"></code></pre>
+<!-- ########## HTML Code Section ########## -->
+<section class="template-code-block" id="html-code">
+<div class="code-header toggle-btn">
+<h3>HTML Structure > <span style="font-size:15px; color:#555;">Click to expand</span></h3>
+<button class="copy-btn" data-copy="html-code">Copy HTML</button>
+</div>
 
-      <!-- Hidden - containing YOUR code -->
-      <template id="html-form2-template"> 
-        .picture img { max-width: 100%; height: auto; display: block; margin: 1rem auto; border-radius: 8px; }
-      </template>
+<template id="html-template"><!--  Your HTML code goes within HERE  -->
+<picture><source srcset="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/05/Family-Road-Trip-New-SUV.jpeg" media="(max-width: 600px)">
+<source srcset="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/05/Family-Road-Trip-New-Car.jpeg" media="(max-width: 1500px)">
+<source srcset="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/04/2025-Hyundai-elantra_safety_hc_01-copy.jpg">
+<img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/05/Family-Road-Trip-New-Car.jpeg" alt="A family enjoying a road trip in a new car" /></picture>
+</template>
 
-      <button class="copy-btn" onclick="copyCode('html-form2-snippet')">Copy Code</button>
-    </div>
-    <!-- END Code section -->
-  </div> 
-</div> <! ------- EDIT END HERE ------- >
+<pre class="collapsible"><code class="language-html"></code></pre>
+</section>
 
-<!-- Prism.js for syntax highlighting -->
-<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.js"></script>
+<!-- ########## CSS Code Section ########## -->
+<section class="template-code-block" id="css-code">
+<div class="code-header toggle-btn">
+<h3>CSS > <span style="font-size:15px; color:#555;">Click to expand</span></h3>
+<button class="copy-btn" data-copy="css-code">Copy CSS</button>
+</div>
+<pre class="collapsible"><code class="language-css"><!--  Your CSS code goes within HERE  -->
+.picture img { max-width: 100%; height: auto; display: block; margin: 1rem auto; border-radius: 8px; }
+</code></pre>
+</section>
 
-<!-- Include footer navigation -->
+<!-- ########## JS Code Section ########## -->
+<section class="template-code-block" id="js-code">
+<div class="code-header toggle-btn">
+<h3>JavaScript > <span style="font-size:15px; color:#555;">Click to expand</span></h3>
+<button class="copy-btn" data-copy="js-code">Copy JS</button>
+</div>
+<pre class="collapsible"><code class="language-js"> <!--  Your JS code goes within HERE  -->
+NO JS
+</code></pre>
+</section>
+
+<!-- Copy All Button -->
+<div style="margin: 20px 0;">
+<button class="copy-btn" data-copy-all>Copy All</button>
+</div>
+
+</div> <!-- .main -->
+
+</div> <!-- .content -->
+
+<!-- Footer -->
 <div data-include="../../nav/footernav.html"></div>
 
-<!-- Script to handle HTML partial includes -->
+<!-- JS Includes -->
 <script src="../../js/include.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"></script>
+
 </body>
 </html>
