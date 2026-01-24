@@ -191,7 +191,7 @@ pre[class*="language-"] {
 }
 
 #html-code > pre, #css-code > pre, #js-code > pre{
- padding: 0em!important; 
+ padding: 0em 1em!important; 
 }
 
 /* Live Preview */
