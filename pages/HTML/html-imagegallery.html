@@ -1,112 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <!-- Ensures proper rendering and touch zooming on mobile devices -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>HTML - Performance Hub</title>
-  <!-- Link to the main site-wide CSS stylesheet -->
-  <link rel="stylesheet" href="../../css/style.css" />
-</head>
-<body>
 
-<!-- Include top navigation bar -->
+<head> 
+<meta charset="UTF-8" /> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+<title>HTML Image gallery – Performance Hub</title> <!--  Change title HERE  -->
+<link rel="stylesheet" href="../../css/style.css" /> 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/themes/prism.min.css" /> 
+</head>
+
+<body> 
+
+<!-- Top Navigation -->
 <div data-include="../../nav/topnav.html"></div>
 
-<!-- Page content wrapper -->
 <div class="content">
 
-  <!-- Include HTML section side navigation -->
-  <div data-include="../../nav/htmlsidenav.html"></div>
-     
-  <! ------- EDIT START HERE ------- >
-     
-  <!-- Main content section -->
-  <div class="main">
-    <h1>HTML Image gallery</h1>
-    <p>This HTML image map example displays an interactive image divided into five clickable areas. Each area highlights on hover and shows a label with its title.</p>
-    <!-- Screenshot container -->
-    <div class="blue-box">
-      <h2>Screenshots</h2>
-      <div class="screenshot-gallery">
-        <!-- Example screenshot image -->
-        <img src="../../images/Image gallery example.png" alt="Image gallery example"><img src="../../images/Image gallery example-view.png" alt="Image gallery example">
-      </div>
-      <!-- Link to live form page -->
-      <a href="#" target="_blank" class="blue-btn">NO LIVE VIEW</a>
-    </div>
-    <!-- END Screenshot section -->
+<!-- Side Navigation -->
+<div data-include="../../nav/htmlsidenav.html"></div>
 
-    <!-- YOUR Code section 1 -->
-    <div class="code-section">
-      <div class="code-header">
-        <span>HTML Code</span> 
-      </div>
+<!-- Main Content -->
+<div class="main">
 
-      <!-- Code snippet display area (Prism.js highlights this) -->
-      <pre><code id="html-form-snippet" class="language-html"></code></pre>
+<!-- Title -->
+<h1>HTML Image gallery</h1>
+<p>This HTML image map example displays an interactive image divided into five clickable areas. Each area highlights on hover and shows a label with its title.</p>
 
-      <!-- Hidden - containing YOUR code -->
-      <template id="html-form-template"> 
-  <div class="gallery">
-  <a target="_blank" href="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/08/2025-Mazda-CX-30.jpg">
-    <img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/08/2025-Mazda-CX-30.jpg" alt="Mazda-CX-30" width="600" height="400">
-  </a>
-  <div class="desc">Add a description here</div>
+<!-- Live Preview -->
+<div class="blue-box">
+<h2>Live Preview</h2>
+<div id="live-preview"></div>
+<p style="font-size:0.9em; color:#555; margin-top:10px;">
+Usage: Preview renders the template HTML, CSS, and JS. Copy the sections below for WordPress or other projects.
+</p>
+</div>
+
+<!-- ########## HTML Code Section ########## -->
+<section class="template-code-block" id="html-code">
+<div class="code-header toggle-btn">
+<h3>HTML Structure > <span style="font-size:15px; color:#555;">Click to expand</span></h3>
+<button class="copy-btn" data-copy="html-code">Copy HTML</button>
+</div>
+
+<template id="html-template"><!--  Your HTML code goes within HERE  -->
+<div class="gallery">
+<a target="_blank" href="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/08/2025-Mazda-CX-30.jpg">
+<img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/08/2025-Mazda-CX-30.jpg" alt="Mazda-CX-30" width="600" height="400">
+</a>
+<div class="desc">Add a description here</div>
 </div>
 
 <div class="gallery">
-  <a target="_blank" href="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/08/2025-Kia-K4.jpg">
-    <img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/08/2025-Kia-K4.jpg" alt="Kia-K4" width="600" height="400">
-  </a>
-  <div class="desc">Add a description here</div>
+<a target="_blank" href="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/08/2025-Kia-K4.jpg">
+<img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/08/2025-Kia-K4.jpg" alt="Kia-K4" width="600" height="400">
+</a>
+<div class="desc">Add a description here</div>
 </div>
 
 <div class="gallery">
-  <a target="_blank" href="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/08/2025-Hyundai-Kona.jpg">
-    <img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/08/2025-Hyundai-Kona.jpg" alt="Hyundai-Kona" width="600" height="400">
-  </a>
-  <div class="desc">Add a description here</div>
+<a target="_blank" href="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/08/2025-Hyundai-Kona.jpg">
+<img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/08/2025-Hyundai-Kona.jpg" alt="Hyundai-Kona" width="600" height="400">
+</a>
+<div class="desc">Add a description here</div>
 </div>
 
 <div class="gallery">
-  <a target="_blank" href="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/08/2025-Honda-Civic.jpg">
-    <img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/08/2025-Honda-Civic.jpg" alt="Honda-Civic" width="600" height="400">
-  </a>
-  <div class="desc">Add a description here</div>
+<a target="_blank" href="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/08/2025-Honda-Civic.jpg">
+<img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/08/2025-Honda-Civic.jpg" alt="Honda-Civic" width="600" height="400">
+</a>
+<div class="desc">Add a description here</div>
 </div>
-      </template>
+</template>
 
-      <!-- Button to copy the template code to clipboard -->
-      <button class="copy-btn" onclick="copyCode('html-form-snippet')">Copy Code</button>
-    </div>
-    <!-- END Code section -->
+<pre class="collapsible"><code class="language-html"></code></pre>
+</section>
 
-    <!-- YOUR Code section 2 -->
-    <div class="code-section">
-      <div class="code-header">
-        <span>CSS Code</span> 
-      </div>
-      <pre><code id="html-form2-snippet" class="language-html"></code></pre>
+<!-- ########## CSS Code Section ########## -->
+<section class="template-code-block" id="css-code">
+<div class="code-header toggle-btn">
+<h3>CSS > <span style="font-size:15px; color:#555;">Click to expand</span></h3>
+<button class="copy-btn" data-copy="css-code">Copy CSS</button>
+</div>
+<pre class="collapsible"><code class="language-css"><!--  Your CSS code goes within HERE  -->
+div.gallery { margin: 5px; border: 1px solid #ccc; float: left; width: 260px; } div.gallery:hover { border: 1px solid #777; } div.gallery img { width: 100%; height: auto; } div.desc { padding: 15px; text-align: center; }
+</code></pre>
+</section>
 
-      <!-- Hidden - containing YOUR code -->
-      <template id="html-form2-template"> 
-        div.gallery { margin: 5px; border: 1px solid #ccc; float: left; width: 260px; } div.gallery:hover { border: 1px solid #777; } div.gallery img { width: 100%; height: auto; } div.desc { padding: 15px; text-align: center; }
-      </template>
+<!-- ########## JS Code Section ########## -->
+<section class="template-code-block" id="js-code">
+<div class="code-header toggle-btn">
+<h3>JavaScript > <span style="font-size:15px; color:#555;">Click to expand</span></h3>
+<button class="copy-btn" data-copy="js-code">Copy JS</button>
+</div>
+<pre class="collapsible"><code class="language-js"> <!--  Your JS code goes within HERE  -->
 
-      <button class="copy-btn" onclick="copyCode('html-form2-snippet')">Copy Code</button>
-    </div>
-    <!-- END Code section -->
-  </div> 
-</div> <! ------- EDIT END HERE ------- >
+</code></pre>
+</section>
 
-<!-- Prism.js for syntax highlighting -->
-<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.js"></script>
+<!-- Copy All Button -->
+<div style="margin: 20px 0;">
+<button class="copy-btn" data-copy-all>Copy All</button>
+</div>
 
-<!-- Include footer navigation -->
+</div> <!-- .main -->
+
+</div> <!-- .content -->
+
+<!-- Footer -->
 <div data-include="../../nav/footernav.html"></div>
 
-<!-- Script to handle HTML partial includes -->
+<!-- JS Includes -->
 <script src="../../js/include.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"></script>
+
 </body>
 </html>
