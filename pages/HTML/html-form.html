@@ -276,7 +276,19 @@ Usage: Preview renders the template HTML, CSS, and JS. Copy the sections below f
 <button class="copy-btn" data-copy="js-code">Copy JS</button>
 </div>
 <pre class="collapsible"><code class="language-js"> <!--  Your JS code goes within HERE  -->
-
+ /*Overide the NEW form maxiwidth*/
+  .medium .modal-content { max-width: 85rem!important; } 
+  /*REMOVE the NEW title*/ 
+  .sr-only {display:none;} 
+  .form-section-title { margin-top: 25px; margin-bottom: 15px; padding-bottom: 6px; padding: 5px 10px; border-radius: 3px; margin-bottom: 15px; background: #2c68b530; font-size: 17px;} 
+  .form-title{font-size: 2.4rem!important;} 
+  .form-label { font-weight: 500; font-size: 1.5rem; } 
+  input[type="text"], input[type="email"], input[type="tel"], input[type="url"], input[type="number"], select, textarea { width: 100%; height: 4.2rem; background: #f4f4f4; font-size: 1.4rem; border: 0; border-radius: 3px; padding: .4rem .8rem; box-shadow: inset 0 1px 3px rgba(0,0,0,0.15); transition: box-shadow .2s, border 0.2s; } 
+  textarea { /*padding-top: .6rem!important;*/ } 
+  input:focus, select:focus, textarea:focus { outline: none; box-shadow: 0 0 0 3px rgba(0, 80, 179, 0.45); } 
+  .input-group { margin-bottom: 15px; } .wpcf7-list-item { display: block; margin-bottom: 6px !important; margin-top: 5px !important; } 
+  .wpcf7-list-item-label {font-size: 1.5rem!important;} 
+  input[type="radio"] { margin-right: 8px; vertical-align: middle; } 
 </code></pre>
 </section>
 
