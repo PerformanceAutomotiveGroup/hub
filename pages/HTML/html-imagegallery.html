@@ -43,33 +43,33 @@ Usage: Preview renders the template HTML, CSS, and JS. Copy the sections below f
 </div>
 
 <template id="html-template"> <!--  Your HTML code goes within HERE  -->
-<div>
-<div class="gallery">
-<a target="_blank" href="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/08/2025-Mazda-CX-30.jpg">
-<img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/08/2025-Mazda-CX-30.jpg" alt="Mazda-CX-30" width="600" height="400">
+<div class="gallery-grid">
+<div class="gallery-item">
+<a href="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/08/2025-Mazda-CX-30.jpg" target="_blank">
+<img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/08/2025-Mazda-CX-30.jpg" alt="Mazda CX-30">
 </a>
-<div class="desc">Add a description here</div>
+<div class="desc">Mazda CX-30 – Sleek and modern SUV</div>
 </div>
 
-<div class="gallery">
-<a target="_blank" href="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/08/2025-Kia-K4.jpg">
-<img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/08/2025-Kia-K4.jpg" alt="Kia-K4" width="600" height="400">
+<div class="gallery-item">
+<a href="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/08/2025-Kia-K4.jpg" target="_blank">
+<img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/08/2025-Kia-K4.jpg" alt="Kia K4">
 </a>
-<div class="desc">Add a description here</div>
+<div class="desc">Kia K4 – Stylish and efficient</div>
 </div>
 
-<div class="gallery">
-<a target="_blank" href="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/08/2025-Hyundai-Kona.jpg">
-<img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/08/2025-Hyundai-Kona.jpg" alt="Hyundai-Kona" width="600" height="400">
+<div class="gallery-item">
+<a href="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/08/2025-Hyundai-Kona.jpg" target="_blank">
+<img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/08/2025-Hyundai-Kona.jpg" alt="Hyundai Kona">
 </a>
-<div class="desc">Add a description here</div>
+<div class="desc">Hyundai Kona – Compact SUV for city and adventure</div>
 </div>
 
-<div class="gallery">
-<a target="_blank" href="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/08/2025-Honda-Civic.jpg">
-<img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/08/2025-Honda-Civic.jpg" alt="Honda-Civic" width="600" height="400">
+<div class="gallery-item">
+<a href="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/08/2025-Honda-Civic.jpg" target="_blank">
+<img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/08/2025-Honda-Civic.jpg" alt="Honda Civic">
 </a>
-<div class="desc">Add a description here</div>
+<div class="desc">Honda Civic – Reliable and iconic</div>
 </div>
 </div>
 </template>
@@ -84,7 +84,51 @@ Usage: Preview renders the template HTML, CSS, and JS. Copy the sections below f
 <button class="copy-btn" data-copy="css-code">Copy CSS</button>
 </div>
 <pre class="collapsible"><code class="language-css"><!--  Your CSS code goes within HERE  -->
-div.gallery { margin: 5px; border: 1px solid #ccc; float: left; width: 260px; } div.gallery:hover { border: 1px solid #777; } div.gallery img { width: 100%; height: auto; } div.desc { padding: 15px; text-align: center; }
+/* Grid container */
+.gallery-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+gap: 20px;
+margin: 20px 0;
+}
+
+/* Each gallery item */
+.gallery-item {
+border: 1px solid #ccc;
+border-radius: 8px;
+overflow: hidden;
+background-color: #fff;
+transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+
+/* Hover effect */
+.gallery-item:hover {
+transform: translateY(-5px);
+box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+border-color: #777;
+}
+
+/* Image inside gallery */
+.gallery-item img {
+width: 100%;
+height: auto;
+display: block;
+transition: transform 0.3s;
+}
+
+/* Optional image zoom on hover */
+.gallery-item:hover img {
+transform: scale(1.05);
+}
+
+/* Description below each image */
+.gallery-item .desc {
+padding: 12px;
+text-align: center;
+font-size: 0.95rem;
+color: #333;
+}
+
 </code></pre>
 </section>
 
