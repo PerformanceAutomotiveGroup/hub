@@ -190,6 +190,10 @@ pre[class*="language-"] {
   overflow-x: auto!important;
 }
 
+#html-code > pre{
+ padding: 0em!important; 
+}
+
 /* Live Preview */
 #live-preview{
   max-width: 1200px;
