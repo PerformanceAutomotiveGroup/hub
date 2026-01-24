@@ -1,45 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>HTML Image Maps – Performance Hub</title>
 
-<link rel="stylesheet" href="../../css/style.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/themes/prism.min.css" />
-
+<head> 
+<meta charset="UTF-8" /> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+<title>HTML Image Maps – Performance Hub</title> <!--  Change title HERE  -->
+<link rel="stylesheet" href="../../../css/style.css" /> 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/themes/prism.min.css" /> 
 </head>
-<body>
+
+<body> 
 
 <!-- Top Navigation -->
-<div data-include="../../nav/topnav.html"></div>
+<div data-include="../../../nav/topnav.html"></div>
 
 <div class="content">
 
 <!-- Side Navigation -->
-<div data-include="../../nav/htmlsidenav.html"></div>
+<div data-include="../../../nav/templatessidenav.html"></div>
 
 <!-- Main Content -->
 <div class="main">
+
+<!-- Title -->
 <h1>HTML Image Maps</h1>
 <p>This HTML image map example displays an interactive image divided into five clickable areas. Each area highlights on hover and shows a label with its title.</p>
+  
+<!-- Screenshot Gallery if needed-->
+<div class="blue-box">
+<h2>Screenshots</h2>
+<div class="screenshot-gallery">
+<img src="../../../images/landing-template-1.png" alt="Landing page hero section">
+<img src="../../../images/landing-template-2.png" alt="Landing page content sections">
+</div>
+</div>
 
 <!-- Live Preview -->
 <div class="blue-box">
 <h2>Live Preview</h2>
 <div id="live-preview"></div>
 <p style="font-size:0.9em; color:#555; margin-top:10px;">
-Usage: Preview renders the HTML, CSS, and JS. Copy sections below for WordPress or other projects.
+Usage: Preview renders the template HTML, CSS, and JS. Copy the sections below for WordPress or other projects.
 </p>
 </div>
 
-<!-- HTML Code Section -->
+<!-- ########## HTML Code Section ########## -->
 <section class="template-code-block" id="html-code">
 <div class="code-header toggle-btn">
-<h3>HTML Structure <span style="font-size:0.9em; color:#555;">Click to expand</span></h3>
-<button class="copy-btn" data-copy="html-template">Copy HTML</button>
+<h3>HTML Structure > <span style="font-size:15px; color:#555;">Click to expand</span></h3>
+<button class="copy-btn" data-copy="html-code">Copy HTML</button>
 </div>
-<template id="html-template">
+
+<template id="html-template"><!--  Your HTML code goes within HERE  -->
 <div class="image-map">
 <img src="https://performance.performanceautodev.com/wp-content/uploads/sites/40/2020/06/xcommunity.jpg.pagespeed.ic.GzF73iD-5F.webp" alt="Community Map">
 
@@ -64,16 +76,17 @@ Usage: Preview renders the HTML, CSS, and JS. Copy sections below for WordPress 
 </a>
 </div>
 </template>
-<pre><code id="html-template" class="language-html"></code></pre>
+
+<pre class="collapsible"><code class="language-html"></code></pre>
 </section>
 
-<!-- CSS Code Section -->
+<!-- ########## CSS Code Section ########## -->
 <section class="template-code-block" id="css-code">
 <div class="code-header toggle-btn">
-<h3>CSS <span style="font-size:0.9em; color:#555;">Click to expand</span></h3>
-<button class="copy-btn" data-copy="css-template">Copy CSS</button>
+<h3>CSS > <span style="font-size:15px; color:#555;">Click to expand</span></h3>
+<button class="copy-btn" data-copy="css-code">Copy CSS</button>
 </div>
-<template id="css-template">
+<pre class="collapsible"><code class="language-css"><!--  Your CSS code goes within HERE  -->
 .image-map { position: relative; max-width: 900px; margin: auto; }
 .image-map img { width: 100%; height: auto; display: block; }
 .hotspot { position: absolute; border: 2px solid transparent; transition: all 0.3s ease; border-radius: 74px; }
@@ -94,27 +107,25 @@ pointer-events: none;
 transition: opacity 0.3s ease;
 }
 .hotspot:hover span { opacity: 1; }
-</template>
-<pre><code id="css-template" class="language-css"></code></pre>
+</code></pre>
 </section>
 
-<!-- JS Code Section -->
+<!-- ########## JS Code Section ########## -->
 <section class="template-code-block" id="js-code">
 <div class="code-header toggle-btn">
-<h3>JavaScript <span style="font-size:0.9em; color:#555;">Click to expand</span></h3>
-<button class="copy-btn" data-copy="js-template">Copy JS</button>
+<h3>JavaScript > <span style="font-size:15px; color:#555;">Click to expand</span></h3>
+<button class="copy-btn" data-copy="js-code">Copy JS</button>
 </div>
-<template id="js-template">
+<pre class="collapsible"><code class="language-js"> <!--  Your JS code goes within HERE  -->
 document.querySelectorAll('.hotspot').forEach(hotspot => {
 hotspot.addEventListener('mouseenter', () => hotspot.querySelector('span').style.opacity = 1);
 hotspot.addEventListener('mouseleave', () => hotspot.querySelector('span').style.opacity = 0);
 });
-</template>
-<pre><code id="js-template" class="language-js"></code></pre>
+</code></pre>
 </section>
 
 <!-- Copy All Button -->
-<div style="margin:20px 0;">
+<div style="margin: 20px 0;">
 <button class="copy-btn" data-copy-all>Copy All</button>
 </div>
 
@@ -123,10 +134,11 @@ hotspot.addEventListener('mouseleave', () => hotspot.querySelector('span').style
 </div> <!-- .content -->
 
 <!-- Footer -->
-<div data-include="../../nav/footernav.html"></div>
+<div data-include="../../../nav/footernav.html"></div>
 
 <!-- JS Includes -->
-<script src="../../js/include.js"></script>
+<script src="../../../js/include.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"></script>
 
 </body>
 </html>
