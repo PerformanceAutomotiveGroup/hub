@@ -1,144 +1,302 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <!-- Ensures proper rendering and touch zooming on mobile devices -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>HTML - Performance Hub</title>
-  <!-- Link to the main site-wide CSS stylesheet -->
-  <link rel="stylesheet" href="../../css/style.css" />
-</head>
-<body>
 
-<!-- Include top navigation bar -->
+<head> 
+<meta charset="UTF-8" /> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+<title>HTML Trader Form – Performance Hub</title> <!--  Change title HERE  -->
+<link rel="stylesheet" href="../../css/style.css" /> 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/themes/prism.min.css" /> 
+</head>
+
+<body> 
+
+<!-- Top Navigation -->
 <div data-include="../../nav/topnav.html"></div>
 
-<!-- Page content wrapper -->
 <div class="content">
 
-  <!-- Include HTML section side navigation -->
-  <div data-include="../../nav/htmlsidenav.html"></div>
-     
-  <! ------- EDIT START HERE ------- >
-     
-  <!-- Main content section -->
-  <div class="main">
-    <h1>Auto Trader Form (WordPress)</h1>
+<!-- Side Navigation -->
+<div data-include="../../nav/htmlsidenav.html"></div>
 
-    <!-- Screenshot container -->
-    <div class="blue-box">
-      <h2>Screenshots</h2>
-      <div class="screenshot-gallery">
-        <!-- Example screenshot image -->
-        <img src="../../images/Wholesale-Auto-Parts-Form.png" alt="HTML Form Screenshot">
-      </div>
-      <!-- Link to live form page -->
-      <a href="https://www.performance.ca/wholesaleautoparts/" target="_blank" class="blue-btn">View Live</a>
-    </div>
-    <!-- END Screenshot section -->
+<!-- Main Content -->
+<div class="main">
 
-    <!-- YOUR Code section 1 -->
-    <div class="code-section">
-      <div class="code-header">
-        <span>Form Code</span> 
-      </div>
+<!-- Title -->
+<h1>HTML Trader Form</h1>
+<p>Basic template design for a form using Trader Contact Form 7</p>
 
-      <!-- Code snippet display area (Prism.js highlights this) -->
-      <pre><code id="html-form-snippet" class="language-html"></code></pre>
+<!-- Screenshot Gallery if needed-->
+<div class="blue-box">
+<h2>Screenshots</h2>
+<div class="screenshot-gallery">
+<img src="../../../images/landing-template-1.png" alt="Landing page hero section">
+<img src="../../../images/landing-template-2.png" alt="Landing page content sections">
+</div>
+</div>
 
-      <!-- Hidden - containing YOUR code -->
-      <template id="html-form-template"> 
-        [honeypot email-pot class:cf7-honeypot validautocomplete:true]
-        [honeypot name-pot class:cf7-honeypot validautocomplete:true]
-        <h3>Performance Auto Parts Registration Form</h3>
-        [input_group label="Customer Name*" size="md"][text* full-name akismet:author placeholder "Jane Doe"][/input_group]
-        [input_group label="Business Name*" size="md"][text* BusinessName placeholder "Performance Auto Group"][/input_group]
-        [input_group label="Email*" size="md"][email* email akismet:author_email class:email class:validation placeholder "jane@gmail.com"][/input_group]
-        [input_group label="Phone Number*" size="md"][text phone class:phone class:validation placeholder "(123) 456-7890"][/input_group]
-        [input_group label="Business Address*" size="lg"][text* BusinessAddress placeholder "105 Van Kirk Drive  Brampton, ON L7A 1A4"][/input_group]
-        [input_group label="Would you like to apply for PAG delivery?*" size="md"][radio PAGdelivery use_label_element default:1 "Yes" "No"][/input_group]
-        [input_group label="Optional Message" size="lg"][textarea message maxlength:500 placeholder "Tell us about your needs"][/input_group]
-        [input_group size="lg"][acceptance communication optional]I agree to receive periodical offers, newsletter, safety and recall updates from the dealership. Consent can be withdrawn at any time.[/acceptance][/input_group]
-        [input_group size="lg"][acceptance communication optional]By clicking the 'Send' button below, you are agreeing to be bound by the <a href="https://www.performance.ca/wholesale-parts-terms-and-conditions/">Wholesale Terms and Conditions</a>.[/acceptance][/input_group] 
-        <input type="hidden" name="lead-type" value="parts">
-        [hidden is_vdp default:shortcode_attr]
-        [hidden is_vehicle default:shortcode_attr]
-        [input_group][submit "Send"][/input_group]
-      </template>
+<!-- Live Preview -->
+<div style="display:none;" class="blue-box">
+<h2>Live Preview</h2>
+<div id="live-preview"></div>
+<p style="font-size:0.9em; color:#555; margin-top:10px;">
+Usage: Preview renders the template HTML, CSS, and JS. Copy the sections below for WordPress or other projects.
+</p>
+</div>
 
-      <!-- Button to copy the template code to clipboard -->
-      <button class="copy-btn" onclick="copyCode('html-form-snippet')">Copy Code</button>
-    </div>
-    <!-- END Code section -->
+<!-- ########## HTML Code Section ########## -->
+<section class="template-code-block" id="html-code">
+<div class="code-header toggle-btn">
+<h3>HTML Structure > <span style="font-size:15px; color:#555;">Click to expand</span></h3>
+<button class="copy-btn" data-copy="html-code">Copy HTML</button>
+</div>
 
-    <!-- YOUR Code section 2 -->
-    <div class="code-section">
-      <div class="code-header">
-        <span>Autoresponder delivered Mail Code</span> 
-      </div>
-      <pre><code id="html-form2-snippet" class="language-html"></code></pre>
+<template id="html-template"><!--  Your HTML code goes within HERE  -->
+<!-- Email Template -->
+<table style="width:100%; max-width:600px; margin:auto; font-family: Arial, sans-serif; border:1px solid #ddd; border-radius:6px; overflow:hidden;">
+<tr style="background-color:#2c68b5; text-align:center;">
+<td style="padding:20px;">
+<img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2021/08/01APGI-LOGO-2.png" alt="Performance Auto Parts" style="max-width:200px;">
+</td>
+</tr>
+<tr style="background-color:#dbe2ec; color:#000;">
+<td style="padding:20px; text-align:center; font-size:20px;">
+<strong>Performance Auto Parts Registration</strong>
+</td>
+</tr>
+<tr>
+<td style="padding:20px;">
 
-      <!-- Hidden - containing YOUR code -->
-      <template id="html-form2-template"> 
-        <strong>Customer Name:</strong> [full-name]
-        <br/>
-        <strong>Email Address:</strong> [email]
-        <br/>
-        <strong>Phone Number:</strong> [phone]
-        <br/>
-        <strong>Electronic Communication:</strong> [communication]
-        <br/><br/>
-        Hello [full-name],
-        <br/><br/>
-        We appreciate that you took the time to contact us. Our team will review your submission and get in touch with you as soon as possible. To ensure we have all the information you intended, please take note of your message.<br/><br/>
-        <div style="background-color: #f4f5f9; border-radius: 3px; padding: 21px 21px 27px 21px;">
-          <pre style="font-family: Helvetica, Arial, sans-serif; margin: 0; padding:0;">"[message]"</pre>
-        </div>
-        <hr style="border: 0;border-top: 1px solid #ececec;height: 1px;color: #ececec;background:#ececec;margin: 34px 0 0;">
-        <table cellpadding="0" cellspacing="0" style="border-collapse: collapse; font-size: 16px; line-height: 1.8;" width="100%">
-          <tbody style="vertical-align: top;">
-            <tr><td colspan="2" height="48"></td></tr>
-            <tr><th>Customer Name:</th><td style="text-align: right;">[full-name]</td></tr>
-            <tr><th>Business Name:</th><td style="text-align: right;">[BusinessName]</td></tr>
-            <tr><th>Phone Number:</th><td style="text-align: right;">[phone]</td></tr>
-            <tr><th>Email Address:</th><td style="text-align: right;">[email]</td></tr>
-            <tr><th>Business Address:</th><td style="text-align: right;">[BusinessAddress]</td></tr>
-          </tbody>
-        </table>
-        [vehicledata]
-      </template>
+<p>Thank you for registering, <strong>[primary-contact-name]</strong>!</p>
+<p>We appreciate that you took the time to contact us. Our team will review your submission and get in touch with you as soon as possible. To ensure we have all the information you intended, please take note of your message.</p><br/>
 
-      <button class="copy-btn" onclick="copyCode('html-form2-snippet')">Copy Code</button>
-    </div>
-    <!-- END Code section -->
+<table style="width:100%; border-collapse: collapse;">
+<tr style="background-color:#dbe2ec;">
+<th colspan="2" style="text-align:left; padding:8px;">Business Identification</th>
+</tr>
+<tr>
+<td style="padding:8px; border-bottom:1px solid #ddd;"><strong>Primary Contact Name</strong></td>
+<td style="padding:8px; border-bottom:1px solid #ddd;">[primary-contact-name]</td>
+</tr>
+<tr>
+<td style="padding:8px; border-bottom:1px solid #ddd;"><strong>Legal Business Name</strong></td>
+<td style="padding:8px; border-bottom:1px solid #ddd;">[legal-business-name]</td>
+</tr>
+<tr>
+<td style="padding:8px; border-bottom:1px solid #ddd;"><strong>Operating/Trade Name</strong></td>
+<td style="padding:8px; border-bottom:1px solid #ddd;">[operating-name]</td>
+</tr>
+<tr>
+<td style="padding:8px; border-bottom:1px solid #ddd;"><strong>Business Type</strong></td>
+<td style="padding:8px; border-bottom:1px solid #ddd;">[business-type]</td>
+</tr>
 
-    <!-- YOUR Code section 3 -->
-    <div class="code-section">
-      <div class="code-header">
-        <span>Add Model to Page - Code</span> 
-      </div>
-      <pre><code id="html-form3-snippet" class="language-html"></code></pre>
+<tr style="background-color:#dbe2ec;">
+<th colspan="2" style="text-align:left; padding:8px;">Business Contact Information</th>
+</tr>
+<tr>
+<td style="padding:8px; border-bottom:1px solid #ddd;"><strong>Street Number</strong></td>
+<td style="padding:8px; border-bottom:1px solid #ddd;">[street-number]</td>
+</tr>
+<tr>
+<td style="padding:8px; border-bottom:1px solid #ddd;"><strong>Street Name</strong></td>
+<td style="padding:8px; border-bottom:1px solid #ddd;">[street-name]</td>
+</tr>
+<tr>
+<td style="padding:8px; border-bottom:1px solid #ddd;"><strong>City</strong></td>
+<td style="padding:8px; border-bottom:1px solid #ddd;">[city]</td>
+</tr>
+<tr>
+<td style="padding:8px; border-bottom:1px solid #ddd;"><strong>Province</strong></td>
+<td style="padding:8px; border-bottom:1px solid #ddd;">[province]</td>
+</tr>
+<tr>
+<td style="padding:8px; border-bottom:1px solid #ddd;"><strong>Postal Code</strong></td>
+<td style="padding:8px; border-bottom:1px solid #ddd;">[postal-code]</td>
+</tr>
+<tr>
+<td style="padding:8px; border-bottom:1px solid #ddd;"><strong>Business Phone</strong></td>
+<td style="padding:8px; border-bottom:1px solid #ddd;">[business-phone]</td>
+</tr>
+<tr>
+<td style="padding:8px; border-bottom:1px solid #ddd;"><strong>Business Email</strong></td>
+<td style="padding:8px; border-bottom:1px solid #ddd;">[business-email]</td>
+</tr>
+<tr>
+<td style="padding:8px; border-bottom:1px solid #ddd;"><strong>Website</strong></td>
+<td style="padding:8px; border-bottom:1px solid #ddd;">[website]</td>
+</tr>
 
-      <!-- Hidden - containing YOUR code -->
-      <template id="html-form3-template"> 
-        <a class="pag-tracking button button--centered pag-career-btn pag-career-btn-primary ev-header-btn btn-outline-primary outline-primary2 modal-trigger" data-saletracking="Register" data-target="Performance Auto Parts">Register</a>
-        <div id="Performance Auto Parts" class="modal medium">
-          <div class="modal-content">[custom_form title="Performance Auto Parts"]</div>
-        </div>
-      </template>
-      <button class="copy-btn" onclick="copyCode('html-form3-snippet')">Copy Code</button>
-    </div>
-    <!-- END Code section -->
-  </div> 
-</div> <! ------- EDIT END HERE ------- >
+<tr style="background-color:#dbe2ec;">
+<th colspan="2" style="text-align:left; padding:8px;">Wholesale Account Details</th>
+</tr>
+<tr>
+<td style="padding:8px; border-bottom:1px solid #ddd;"><strong>Preferred Payment Method</strong></td>
+<td style="padding:8px; border-bottom:1px solid #ddd;">[PaymentMethod]</td>
+</tr>
+<tr>
+<td style="padding:8px; border-bottom:1px solid #ddd;"><strong>Estimated Monthly Parts Spend</strong></td>
+<td style="padding:8px; border-bottom:1px solid #ddd;">[EstimatedMonthly]</td>
+</tr>
+<tr style="background-color:#dbe2ec;">
+<th colspan="2" style="text-align:left; padding:8px;">Optional Message</th>
+</tr>
+<tr>
+<td colspan="2" style="padding:8px; border-bottom:1px solid #ddd;">[message]</td>
+</tr>
 
-<!-- Prism.js for syntax highlighting -->
-<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.js"></script>
+<tr style="background-color:#dbe2ec;">
+<th colspan="2" style="text-align:left; padding:8px;">Agreements</th>
+</tr>
+<tr>
+<td style="padding:8px; border-bottom:1px solid #ddd;"><strong>Newsletter / Offers Consent</strong></td>
+<td style="padding:8px; border-bottom:1px solid #ddd;">[communication]</td>
+</tr>
+<tr>
+<td style="padding:8px; border-bottom:1px solid #ddd;"><strong>Terms & Conditions Agreement</strong></td>
+<td style="padding:8px; border-bottom:1px solid #ddd;">[acceptance]</td>
+</tr>
+</table>
 
-<!-- Include footer navigation -->
+<!-- FORM -->
+[honeypot email-pot class:cf7-honeypot validautocomplete:true]
+[honeypot name-pot class:cf7-honeypot validautocomplete:true]
+
+[input_group size="lg"]
+<h3 class="form-title">Performance Auto Parts Registration Form</h3>
+[/input_group]
+
+
+[input_group size="lg"]
+<h4 class="form-section-title">Business Identification</h4>
+[/input_group]
+
+[input_group label="Primary Contact Name*" size="md"]
+[text* primary-contact-name class:form-input placeholder "Jane Doe"]
+[/input_group]
+
+[input_group label="Legal Business Name*" size="md"]
+[text* legal-business-name class:form-input placeholder "Performance Auto Group"]
+[/input_group]
+
+[input_group label="Operating/Trade Name (if different)" size="md"]
+[text operating-name class:form-input placeholder "Trade or operating name"]
+[/input_group]
+
+[input_group label="Business Type*" size="md"]
+[select* business-type class:form-input  include_blank "Collision Center" "Dealership" "Independent Garage" "Other"]
+[/input_group]
+
+[input_group size="lg"]
+<h4 class="form-section-title">Business Contact Information</h4>
+[/input_group]
+
+[input_group label="Street Number*" size="sm"]
+[text* street-number class:form-input placeholder "105"]
+[/input_group]
+
+[input_group label="Street Name*" size="md"]
+[text* street-name class:form-input placeholder "Van Kirk Drive"]
+[/input_group]
+
+[input_group label="City*" size="md"]
+[text* city class:form-input placeholder "Brampton"]
+[/input_group]
+
+[input_group label="Province*" size="md"]
+[select* province class:form-input include_blank "ON" "QC" "BC" "AB" "MB" "SK" "NB" "NS" "PE" "NL" "YT" "NT" "NU"]
+[/input_group]
+
+[input_group label="Postal Code*" size="md"]
+[text* postal-code class:form-input placeholder "L7A 1A4"]
+[/input_group]
+
+[input_group label="Business Phone Number*" size="md"]
+[tel* business-phone  placeholder "(123) 456-7890"]
+[/input_group]
+
+[input_group label="Business Email Address*" size="md"]
+[email* business-email class:form-input placeholder "email@example.com"]
+[/input_group]
+
+[input_group label="Website (optional)" size="md"]
+[url website class:pag-form-input placeholder "https://"]
+[/input_group]
+
+[input_group size="lg"]
+<h4 class="form-section-title">Wholesale Account Details</h4>
+[/input_group]
+
+[input_group label="Preferred Payment Method*" size="md"][radio PaymentMethod  use_label_element default:1 "Charge Account (Net 30 days)" "COD (cash/credit on delivery)"][/input_group]
+
+[input_group label="Estimated Monthly Parts Spend*" size="md"]
+[select* EstimatedMonthly class:form-input include_blank "< $5,000" "$5,000–$15,000" "$15,000+"]
+[/input_group]
+
+[input_group label="Optional Message" size="lg"]
+[textarea message class:form-input maxlength:500 placeholder "Tell us about your needs"]
+[/input_group]
+
+[input_group size="lg"]
+<h4 class="form-section-title">Agreements</h4>
+[/input_group]
+
+[input_group size="lg"][acceptance communication optional]I agree to receive periodical offers, newsletter, safety and recall updates from the dealership. Consent can be withdrawn at any time.[/acceptance][/input_group]
+[input_group size="lg"][acceptance communication optional]By clicking the 'Send' button below, you are agreeing to be bound by the <a href="https://www.performance.ca/wholesale-parts-terms-and-conditions/">Wholesale Terms and Conditions</a>.[/acceptance][/input_group] 
+<input type="hidden" name="lead-type" value="parts">
+[hidden is_vdp default:shortcode_attr]
+[hidden is_vehicle default:shortcode_attr]
+[input_group][submit "Send"][/input_group]
+<br/><br/>
+<p>We will contact you shortly regarding your wholesale account. If you have any questions, please reach out to us at <a href="mailto:aftersales.accounts@performance.ca">aftersales.accounts@performance.ca </a>.</p>
+
+<p>Thank you,  
+<br>Performance Auto Parts Team</p>
+</td>
+</tr>
+</table>
+</template>
+
+<pre class="collapsible"><code class="language-html"></code></pre>
+</section>
+
+<!-- ########## CSS Code Section ########## -->
+<section class="template-code-block" id="css-code">
+<div class="code-header toggle-btn">
+<h3>CSS > <span style="font-size:15px; color:#555;">Click to expand</span></h3>
+<button class="copy-btn" data-copy="css-code">Copy CSS</button>
+</div>
+<pre class="collapsible"><code class="language-css"><!--  Your CSS code goes within HERE  -->
+
+</code></pre>
+</section>
+
+<!-- ########## JS Code Section ########## -->
+<section class="template-code-block" id="js-code">
+<div class="code-header toggle-btn">
+<h3>JavaScript > <span style="font-size:15px; color:#555;">Click to expand</span></h3>
+<button class="copy-btn" data-copy="js-code">Copy JS</button>
+</div>
+<pre class="collapsible"><code class="language-js"> <!--  Your JS code goes within HERE  -->
+
+</code></pre>
+</section>
+
+<!-- Copy All Button -->
+<div style="margin: 20px 0;">
+<button class="copy-btn" data-copy-all>Copy All</button>
+</div>
+
+</div> <!-- .main -->
+
+</div> <!-- .content -->
+
+<!-- Footer -->
 <div data-include="../../nav/footernav.html"></div>
 
-<!-- Script to handle HTML partial includes -->
+<!-- JS Includes -->
 <script src="../../js/include.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"></script>
+
 </body>
 </html>
