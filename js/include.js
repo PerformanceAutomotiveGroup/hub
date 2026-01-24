@@ -133,6 +133,18 @@ function renderLivePreview() {
 }
 
 // ===============================
+// Collapsible code sections
+// ===============================
+function initCollapsibleCode() {
+  document.querySelectorAll('.template-code-block .toggle-btn').forEach(header => {
+    header.addEventListener('click', () => {
+      const block = header.closest('.template-code-block');
+      block.classList.toggle('open');
+    });
+  });
+}
+
+// ===============================
 // Initialize Everything
 // ===============================
 document.addEventListener('DOMContentLoaded', () => {
