@@ -1,208 +1,252 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <!-- Ensures proper rendering and touch zooming on mobile devices -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>HTML - Performance Hub</title>
-  <!-- Link to the main site-wide CSS stylesheet -->
-  <link rel="stylesheet" href="../../css/style.css" />
-</head>
-<body>
 
-<!-- Include top navigation bar -->
+<head> 
+<meta charset="UTF-8" /> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+<title>HTML Image gallery – Performance Hub</title> <!--  Change title HERE  -->
+<link rel="stylesheet" href="../../css/style.css" /> 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/themes/prism.min.css" /> 
+</head>
+
+<body> 
+
+<!-- Top Navigation -->
 <div data-include="../../nav/topnav.html"></div>
 
-<!-- Page content wrapper -->
 <div class="content">
 
-  <!-- Include section side navigation -->
-  <div data-include="../../nav/htmlsidenav.html"></div>
-     
-  <! ------- EDIT START HERE ------- >
-     
-  <!-- Main content section -->
-  <div class="main">
-    <h1>HTML - Div Element</h1>
+<!-- Side Navigation -->
+<div data-include="../../nav/htmlsidenav.html"></div>
 
-    <!-- Screenshot container -->
-    <div class="blue-box">
-      <h2>Screenshots</h2>
-      <div class="screenshot-gallery">
-        <!-- Example screenshot image -->
-        <img src="../../images/html-div.png" alt="HTML DIVs">
-      </div>
-      <!-- Link to live form page -->
-      <a href="#" target="_blank" class="blue-btn">NO LIVE VIEW</a>
-    </div>
-    <!-- END Screenshot section -->
+<!-- Main Content -->
+<div class="main">
 
-    <!-- YOUR Code section 1 -->
-    <div class="code-section">
-      <div class="code-header">
-        <span>Div - Float</span> 
-      </div>
+<!-- Title -->
+<h1>HTML lightbox Gallery</h1>
+<p> When an image is clicked, it opens in full-screen mode with next/previous navigation and a caption.</p>
 
-      <!-- Code snippet display area (Prism.js highlights this) -->
-      <pre><code id="html-form-snippet" class="language-html"></code></pre>
+<!-- Live Preview -->
+<div class="blue-box">
+<h2>Live Preview</h2>
+<div id="live-preview"></div>
+<p style="font-size:0.9em; color:#555; margin-top:10px;">
+Usage: Preview renders the template HTML, CSS, and JS. Copy the sections below for WordPress or other projects.
+</p>
+</div>
 
-      <!-- Hidden - containing YOUR code -->
-      <template id="html-form-template"> 
-        <style>
-          div.mycontainer {
-            width:100%;
-            overflow:auto;
-          }
-          div.mycontainer div {
-            width:33%;  
-            float:left;
-          }
-          </style>
-        
-          <div class="mycontainer">
-            <div style="background-color:#FFF4A3;">
-              <h2>Float</h2>
-              <p>use float to align div elements side by side</p>
-              <p>use float to align div elements side by side</p>
-            </div>
-            <div style="background-color:#FFC0C7;">
-              <h2>Float</h2>
-              <p>use float to align div elements side by side</p>
-              <p>use float to align div elements side by side</p>
-            </div>
-            <div style="background-color:#D9EEE1;">
-              <h2>Float</h2>
-              <p>use float to align div elements side by side</p>
-              <p>use float to align div elements side by side</p>
-            </div>
-          </div>
-      </template>
+<!-- ########## HTML Code Section ########## -->
+<section class="template-code-block" id="html-code">
+<div class="code-header toggle-btn">
+<h3>HTML Structure > <span style="font-size:15px; color:#555;">Click to expand</span></h3>
+<button class="copy-btn" data-copy="html-code">Copy HTML</button>
+</div>
 
-      <!-- Button to copy the template code to clipboard -->
-      <button class="copy-btn" onclick="copyCode('html-form-snippet')">Copy Code</button>
-    </div>
-    <!-- END Code section -->
+<template id="html-template"> <!--  Your HTML code goes within HERE  -->
+<div class="gallery-grid">
+  <div class="gallery-item">
+    <img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/08/2025-Mazda-CX-30.jpg" alt="Mazda CX-30" data-caption="Mazda CX-30 – Sleek and modern SUV">
+  </div>
+  <div class="gallery-item">
+    <img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/08/2025-Kia-K4.jpg" alt="Kia K4" data-caption="Kia K4 – Stylish and efficient">
+  </div>
+  <div class="gallery-item">
+    <img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/08/2025-Hyundai-Kona.jpg" alt="Hyundai Kona" data-caption="Hyundai Kona – Compact SUV for city and adventure">
+  </div>
+  <div class="gallery-item">
+    <img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/08/2025-Honda-Civic.jpg" alt="Honda Civic" data-caption="Honda Civic – Reliable and iconic">
+  </div>
+</div>
 
-    <!-- YOUR Code section 2 -->
-    <div class="code-section">
-      <div class="code-header">
-        <span>Div - Inline-block</span> 
-      </div>
-      <pre><code id="html-form2-snippet" class="language-html"></code></pre>
+<!-- Lightbox Modal -->
+<div id="lightbox" class="lightbox">
+  <span class="close">&times;</span>
+  <img class="lightbox-content" id="lightbox-img">
+  <div id="lightbox-caption"></div>
+  <a class="prev">&#10094;</a>
+  <a class="next">&#10095;</a>
+</div>
 
-      <!-- Hidden - containing YOUR code -->
-      <template id="html-form2-template"> 
-        <style>
-        div {
-          width:30%;  
-          display:inline-block;
-        }
-        </style>
-        <div class="mycontainer">
-        <div style="background-color:#FFF4A3;">
-          <h2>Inline-block</h2>
-          <p>inline-block to align div elements side by side</p>
-          <p>inline-block to align div elements side by side</p>
-        </div>
-        <div style="background-color:#FFC0C7;">
-          <h2>Inline-block</h2>
-          <p>inline-block to align div elements side by side</p>
-          <p>inline-block to align div elements side by side</p>
-        </div>
-        <div style="background-color:#D9EEE1;">
-          <h2>Inline-block</h2>
-          <p>inline-block to align div elements side by side</p>
-          <p>inline-block to align div elements side by side</p>
-        </div>
-        </div>
-      </template>
+</template>
 
-      <button class="copy-btn" onclick="copyCode('html-form2-snippet')">Copy Code</button>
-    </div>
-    <!-- END Code section -->
+<pre class="collapsible"><code class="language-html"></code></pre>
+</section>
 
-    <!-- YOUR Code section 3 -->
-    <div class="code-section">
-      <div class="code-header">
-        <span>Div - Flexbox</span> 
-      </div>
-      <pre><code id="html-form3-snippet" class="language-html"></code></pre>
+<!-- ########## CSS Code Section ########## -->
+<section class="template-code-block" id="css-code">
+<div class="code-header toggle-btn">
+<h3>CSS > <span style="font-size:15px; color:#555;">Click to expand</span></h3>
+<button class="copy-btn" data-copy="css-code">Copy CSS</button>
+</div>
+<pre class="collapsible"><code class="language-css"><!--  Your CSS code goes within HERE  -->
+/* Grid layout */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin: 20px 0;
+}
 
-      <!-- Hidden - containing YOUR code -->
-      <template id="html-form3-template"> 
-     <style>
-    .mycontainer {
-      display: flex;
-    }
-    .mycontainer > div {
-      width:33%;
-    }
-    </style>
+.gallery-item {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
 
-    <div class="mycontainer">
-      <div style="background-color:#FFF4A3;">
-        <h2>Flexbox Example</h2>
-        <p>Align three DIV elements side by side.</p>
-        <p>Align three DIV elements side by side.</p>
-      </div>
-      <div style="background-color:#FFC0C7;">
-        <h2>Flexbox Example</h2>
-        <p>Align three DIV elements side by side.</p>
-        <p>Align three DIV elements side by side.</p>
-      </div>
-      <div style="background-color:#D9EEE1;">
-        <h2>Flexbox Example</h2>
-        <p>Align three DIV elements side by side.</p>
-        <p>Align three DIV elements side by side.</p>
-      </div>
-    </div>
-      </template>
-      <button class="copy-btn" onclick="copyCode('html-form3-snippet')">Copy Code</button>
-    </div>
-    <!-- END Code section -->
+.gallery-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  border-color: #777;
+}
 
-    <!-- YOUR Code section 4 -->
-    <div class="code-section">
-      <div class="code-header">
-        <span>Div - Trader Bootstrap Grid</span> 
-      </div>
-      <pre><code id="html-form4-snippet" class="language-html"></code></pre>
+.gallery-item img {
+  width: 100%;
+  display: block;
+  transition: transform 0.3s;
+}
 
-      <!-- Hidden - containing YOUR code -->
-      <template id="html-form4-template"> 
-        <div class="wrapper">
-        <div class="row"> 
-        <div class="col-lg-3 col-sm-6 col-xs-12" style="background-color:#FFF4A3;">
-        <h2>Trader Bootstrap Example</h2>
-        <p>Align three DIV elements side by side.</p>
-        <p>Align three DIV elements side by side.</p>
-      </div>
-      <div class="col-lg-3 col-sm-6 col-xs-12" style="background-color:#FFC0C7;">
-        <h2>Trader Bootstrap Example</h2>
-        <p>Align three DIV elements side by side.</p>
-        <p>Align three DIV elements side by side.</p>
-      </div>
-      <div class="col-lg-3 col-sm-6 col-xs-12" style="background-color:#D9EEE1;">
-        <h2>Trader Bootstrap Example</h2>
-        <p>Align three DIV elements side by side.</p>
-        <p>Align three DIV elements side by side.</p>
-      </div>
-      </div>
-    </div>
-      </template>
-      <button class="copy-btn" onclick="copyCode('html-form3-snippet')">Copy Code</button>
-    </div>
-    <!-- END Code section -->
-  </div> 
-</div> <! ------- EDIT END HERE ------- >
+.gallery-item:hover img {
+  transform: scale(1.05);
+}
 
-<!-- Prism.js for syntax highlighting -->
-<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.js"></script>
+/* Lightbox */
+.lightbox {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  padding-top: 60px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.9);
+}
 
-<!-- Include footer navigation -->
+.lightbox-content {
+  margin: auto;
+  display: block;
+  max-width: 90%;
+  max-height: 80%;
+}
+
+#lightbox-caption {
+  text-align: center;
+  color: #fff;
+  font-size: 1rem;
+  margin: 15px 0;
+}
+
+.close {
+  position: absolute;
+  top: 20px;
+  right: 35px;
+  color: #fff;
+  font-size: 40px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.close:hover {
+  color: #bbb;
+}
+
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  padding: 16px;
+  color: #fff;
+  font-weight: bold;
+  font-size: 30px;
+  user-select: none;
+  transition: color 0.3s;
+}
+
+.prev { left: 0; }
+.next { right: 0; }
+
+.prev:hover, .next:hover {
+  color: #bbb;
+}
+
+
+</code></pre>
+</section>
+
+<!-- ########## JS Code Section ########## -->
+<section class="template-code-block" id="js-code">
+<div class="code-header toggle-btn">
+<h3>JavaScript > <span style="font-size:15px; color:#555;">Click to expand</span></h3>
+<button class="copy-btn" data-copy="js-code">Copy JS</button>
+</div>
+<pre class="collapsible"><code class="language-js"> <!--  Your JS code goes within HERE  -->
+const galleryItems = document.querySelectorAll('.gallery-item img');
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const caption = document.getElementById('lightbox-caption');
+const closeBtn = document.querySelector('.close');
+const prevBtn = document.querySelector('.prev');
+const nextBtn = document.querySelector('.next');
+
+let currentIndex = 0;
+
+// Open lightbox
+galleryItems.forEach((img, index) => {
+  img.addEventListener('click', () => {
+    currentIndex = index;
+    showImage(currentIndex);
+    lightbox.style.display = 'block';
+  });
+});
+
+// Close lightbox
+closeBtn.addEventListener('click', () => {
+  lightbox.style.display = 'none';
+});
+
+// Navigate images
+prevBtn.addEventListener('click', () => {
+  currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
+  showImage(currentIndex);
+});
+
+nextBtn.addEventListener('click', () => {
+  currentIndex = (currentIndex + 1) % galleryItems.length;
+  showImage(currentIndex);
+});
+
+// Show image function
+function showImage(index) {
+  lightboxImg.src = galleryItems[index].src;
+  caption.textContent = galleryItems[index].dataset.caption;
+}
+
+// Close lightbox when clicking outside image
+lightbox.addEventListener('click', e => {
+  if (e.target === lightbox) lightbox.style.display = 'none';
+});
+
+</code></pre>
+</section>
+
+<!-- Copy All Button -->
+<div style="margin: 20px 0;">
+<button class="copy-btn" data-copy-all>Copy All</button>
+</div>
+
+</div> <!-- .main -->
+
+</div> <!-- .content -->
+
+<!-- Footer -->
 <div data-include="../../nav/footernav.html"></div>
 
-<!-- Script to handle HTML partial includes -->
+<!-- JS Includes -->
 <script src="../../js/include.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"></script>
+
 </body>
 </html>
