@@ -63,6 +63,3 @@
         console.log("EV Map: Google already exists, triggering manually.");
         initPerformanceEVMap();
     }
-    data-cfasync="false" 
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnIAUc5IWnvW2CVEySXEJBeQExpCEQ8-Q&v=beta&libraries=places&callback=initPerformanceEVMap">
-</script>
