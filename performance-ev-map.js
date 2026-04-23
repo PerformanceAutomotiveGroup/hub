@@ -19,13 +19,15 @@
                 if (!bounds) return;
                 const request = {
                     textQuery: "EV Charging Station",
-                    fields: ["displayName", "location", "formattedAddress"],
+                    fields: ["displayName", "location", "formattedAddress", "evChargeOptions", "rating"],
                     locationRestriction: {
                         south: bounds.getSouthWest().lat(),
                         west: bounds.getSouthWest().lng(),
                         north: bounds.getNorthEast().lat(),
                         east: bounds.getNorthEast().lng(),
                     }
+
+                    maxResultCount: 50
                 };
                 try {
                     const { places } = await Place.searchByText(request);
@@ -46,9 +48,22 @@
                 position: place.location,
                 title: place.displayName
             });
-            const card = document.createElement('div');
-            card.className = 'ev-location-card';
-            card.innerHTML = `<h5>${place.displayName}</h5><p>${place.formattedAddress}</p>`;
+           const card = document.createElement('div');
+card.className = 'ev-location-card';
+const ratingHtml = place.rating ? `<span class="ev-rating">⭐ ${place.rating}</span>` : '';
+const chargerCount = place.evChargeOptions?.connectorCount 
+    ? `<span class="ev-plugs">🔌 ${place.evChargeOptions.connectorCount} Plugs</span>` 
+    : '<span class="ev-plugs">🔌 Info N/A</span>';
+
+card.innerHTML = `
+    <div style="display:flex; justify-content:space-between; align-items:start;">
+        <h5 style="margin:0;">${place.displayName}</h5>
+        ${ratingHtml}
+    </div>
+    <p style="margin:5px 0;">${place.formattedAddress}</p>
+    <div style="font-size:12px; color:#2c68b5; font-weight:bold;">${chargerCount}</div>
+`;
+            
             card.onclick = () => {
                 map.panTo(place.location);
                 infoWindow.setContent(`<strong>${place.displayName}</strong>`);
