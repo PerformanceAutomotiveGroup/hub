@@ -111,7 +111,11 @@
             `;
 
             // THE SELECTION LOGIC (Card & InfoWindow)
-            const select = () => {
+           const select = (e) => {
+                if (e && e.stopImmediatePropagation) {
+                    e.stopImmediatePropagation();
+                }
+
                 ev_Map.panTo(place.location);
 
                 // Build "Mobile Card" InfoWindow HTML
@@ -141,7 +145,11 @@
                     </div>`;
 
                 ev_InfoWindow.setOptions({ content: infoHtml, headerDisabled: true });
-                ev_InfoWindow.open(ev_Map, marker);
+                ev_InfoWindow.open({
+                    anchor: marker,
+                    map: ev_Map,
+                    shouldFocus: false 
+                });
 
                 // Highlight Sidebar and scroll to it
                 document.querySelectorAll('.ev-location-card').forEach(c => c.style.background = '#fff');
@@ -149,8 +157,11 @@
                 card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             };
 
+            marker.addListener('gmp-click', (e) => {
+                select(e);
+            });
+
             card.onclick = select;
-            marker.addListener('gmp-click', select);
             list.appendChild(card);
         });
     }
