@@ -33,7 +33,7 @@
             ev_Map = new Map(document.getElementById("ev-map-canvas"), {
                 center: { lat: 43.159, lng: -79.246 }, 
                 zoom: 11,
-                mapId: "e9da2b0d1db902e558a4a8df",
+                mapId: "e9da2b0d1db902e558a4a8df", // Verified Map ID
                 mapTypeControl: false,
                 streetViewControl: false,
                 fullscreenControl: true
@@ -62,12 +62,15 @@
 
     // 2. UI RENDERING
     function renderUI(places, AdvancedMarkerElement) {
+        // Clear old markers
         ev_Markers.forEach(m => m.map = null);
         ev_Markers = [];
+        
         const list = document.getElementById('ev-results-list');
         list.innerHTML = '';
         
         places.forEach((place, index) => {
+            // Create modern Advanced Marker
             const marker = new AdvancedMarkerElement({
                 map: ev_Map,
                 position: place.location,
@@ -78,10 +81,9 @@
 
             const card = document.createElement('div');
             card.className = 'ev-location-card';
-            card.id = `ev-card-${index}`; // ID for scrolling logic
+            card.id = `ev-card-${index}`; 
             card.style.cssText = "padding:16px; border-bottom:1px solid #e0e0e0; cursor:pointer; background:#fff; font-family:Roboto, Arial, sans-serif;";
 
-            // Dynamic Data Strings
             const ratingVal = place.rating ? place.rating.toFixed(1) : "5.0";
             const addr = place.formattedAddress || "";
             
@@ -94,7 +96,6 @@
                 </div>`;
             });
 
-            // Sidebar Card HTML
             card.innerHTML = `
                 <div style="display:flex; justify-content:space-between; align-items:start;">
                     <div style="width:78%">
@@ -110,15 +111,15 @@
                 </div>
             `;
 
-            // THE SELECTION LOGIC (Card & InfoWindow)
-           const select = (e) => {
+            // THE SELECTION LOGIC
+            const select = (e) => {
+                // Prevents the map from handling the click and closing the InfoWindow
                 if (e && e.stopImmediatePropagation) {
                     e.stopImmediatePropagation();
                 }
 
                 ev_Map.panTo(place.location);
 
-                // Build "Mobile Card" InfoWindow HTML
                 const infoHtml = `
                     <div style="width:320px; font-family:Roboto, Arial; background:#fff; border-radius:12px; overflow:hidden;">
                         <div style="padding:16px;">
@@ -145,23 +146,24 @@
                     </div>`;
 
                 ev_InfoWindow.setOptions({ content: infoHtml, headerDisabled: true });
+                
+                // Open using the 2026 anchor method to prevent flickering
                 ev_InfoWindow.open({
                     anchor: marker,
                     map: ev_Map,
                     shouldFocus: false 
                 });
 
-                // Highlight Sidebar and scroll to it
+                // Highlight Sidebar
                 document.querySelectorAll('.ev-location-card').forEach(c => c.style.background = '#fff');
                 card.style.background = '#f8f9fa';
                 card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             };
 
-            marker.addListener('gmp-click', (e) => {
-                select(e);
-            });
+            // Marker & Card Listeners
+            marker.addListener('gmp-click', (e) => select(e));
+            card.onclick = (e) => select(e);
 
-            card.onclick = select;
             list.appendChild(card);
         });
     }
