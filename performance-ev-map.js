@@ -27,7 +27,7 @@
             ev_Map = new Map(document.getElementById("ev-map-canvas"), {
                 center: { lat: 43.159, lng: -79.246 }, 
                 zoom: 11,
-                mapId: "YOUR_MAP_ID_HERE", // <--- INSERT YOUR MAP ID HERE
+                mapId: "e9da2b0d1db902e558a4a8df",
                 mapTypeControl: false,
                 streetViewControl: false,
                 fullscreenControl: true
