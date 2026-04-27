@@ -1,9 +1,17 @@
 (function() {
+    let ev_Map, ev_InfoWindow;
     let ev_Markers = [];
     
+    // Helper to format connector types to human-readable names
     function formatConnectorType(type) {
         if (!type) return "Unknown";
-        return type.replace('EV_CONNECTOR_TYPE_', '').replace(/_/g, ' ');
+        const types = {
+            'EV_CONNECTOR_TYPE_J1772': 'J1772',
+            'EV_CONNECTOR_TYPE_CCS_COMBO_1': 'CCS',
+            'EV_CONNECTOR_TYPE_CHADEMO': 'CHAdeMO',
+            'EV_CONNECTOR_TYPE_TESLA': 'Tesla'
+        };
+        return types[type] || type.replace('EV_CONNECTOR_TYPE_', '').replace(/_/g, ' ');
     }
 
     window.initPerformanceEVMap = async function() {
@@ -11,11 +19,15 @@
         try {
             const { Map } = await google.maps.importLibrary("maps");
             const { Place } = await google.maps.importLibrary("places");
+            // Import the marker library specifically for Advanced Markers
+            const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
-            const ev_InfoWindow = new google.maps.InfoWindow();
-            const ev_Map = new Map(document.getElementById("ev-map-canvas"), {
+            ev_InfoWindow = new google.maps.InfoWindow();
+            
+            ev_Map = new Map(document.getElementById("ev-map-canvas"), {
                 center: { lat: 43.159, lng: -79.246 }, 
                 zoom: 11,
+                mapId: "YOUR_MAP_ID_HERE", // <--- INSERT YOUR MAP ID HERE
                 mapTypeControl: false,
                 streetViewControl: false,
                 fullscreenControl: true
@@ -45,25 +57,29 @@
         }
     };
 
-function renderUI(places, map, infoWindow) {
-        ev_Markers.forEach(m => m.setMap(null));
+    async function renderUI(places, map, infoWindow) {
+        const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+
+        // Clear existing markers (Advanced Markers use .map = null)
+        ev_Markers.forEach(m => m.map = null);
         ev_Markers = [];
 
         const list = document.getElementById('ev-results-list');
         list.innerHTML = '';
         
         places.forEach((place) => {
-            const marker = new google.maps.Marker({
+            // Create modern Advanced Marker
+            const marker = new AdvancedMarkerElement({
                 map: map,
                 position: place.location,
-                title: place.displayName
+                title: place.displayName,
+                gmpClickable: true 
             });
             ev_Markers.push(marker);
 
             const card = document.createElement('div');
             card.className = 'ev-location-card';
-            // Custom card styling to match Google's padding and border
-            card.style.cssText = "padding: 16px; border-bottom: 1px solid #e0e0e0; cursor: pointer; font-family: Roboto, Arial, sans-serif;";
+            card.style.cssText = "padding: 16px; border-bottom: 1px solid #e0e0e0; cursor: pointer; font-family: Roboto, Arial, sans-serif; background: #fff;";
 
             // 1. Header with Rating
             const ratingHtml = place.rating ? `
@@ -73,7 +89,7 @@ function renderUI(places, map, infoWindow) {
                     <span style="font-size:13px; color:#70757a;">(2)</span>
                 </div>` : '';
 
-            // 2. Build the Plug List (The bottom rows)
+            // 2. Build the Plug List
             let plugListHtml = '';
             const aggs = place.evChargeOptions?.connectorAggregations;
             
@@ -114,11 +130,16 @@ function renderUI(places, map, infoWindow) {
                 ${plugListHtml}
             `;
 
-            card.onclick = () => {
+            // Function to trigger selection
+            const selectLocation = () => {
                 map.panTo(place.location);
                 infoWindow.setContent(`<div style="padding:10px;"><strong>${place.displayName}</strong><br>${place.formattedAddress}</div>`);
                 infoWindow.open(map, marker);
             };
+
+            card.onclick = selectLocation;
+            marker.addListener('gmp-click', selectLocation); // Advanced Markers use gmp-click
+
             list.appendChild(card);
         });
     }
