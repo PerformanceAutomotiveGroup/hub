@@ -45,7 +45,7 @@
         }
     };
 
-    function renderUI(places, map, infoWindow) {
+function renderUI(places, map, infoWindow) {
         ev_Markers.forEach(m => m.setMap(null));
         ev_Markers = [];
 
@@ -62,44 +62,61 @@
 
             const card = document.createElement('div');
             card.className = 'ev-location-card';
+            // Custom card styling to match Google's padding and border
+            card.style.cssText = "padding: 16px; border-bottom: 1px solid #e0e0e0; cursor: pointer; font-family: Roboto, Arial, sans-serif;";
 
-            // 1. Build the Plug List
+            // 1. Header with Rating
+            const ratingHtml = place.rating ? `
+                <div style="display:flex; align-items:center; gap:4px; margin: 4px 0;">
+                    <span style="font-size:13px; color:#70757a;">${place.rating.toFixed(1)}</span>
+                    <span style="color:#fbbc04; font-size:12px;">★★★★★</span>
+                    <span style="font-size:13px; color:#70757a;">(2)</span>
+                </div>` : '';
+
+            // 2. Build the Plug List (The bottom rows)
             let plugListHtml = '';
             const aggs = place.evChargeOptions?.connectorAggregations;
             
             if (aggs && aggs.length > 0) {
-                plugListHtml = '<div style="margin-top:8px; border-top:1px solid #eee; padding-top:5px;">';
                 aggs.forEach(agg => {
                     const type = formatConnectorType(agg.type);
-                    const count = agg.count || 0;
-                    const power = agg.maxChargeRateKw ? ` (${agg.maxChargeRateKw}kW)` : '';
-                    plugListHtml += `<div style="font-size:11px; color:#444;">• ${count}x ${type}${power}</div>`;
+                    const power = agg.maxChargeRateKw ? `${agg.maxChargeRateKw} kW` : '';
+                    const count = agg.count || 1;
+                    
+                    plugListHtml += `
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+                            <div style="display:flex; align-items:center; gap:8px; font-size:14px; color:#3c4043;">
+                                <span style="color:#00838f;">⚡</span>
+                                <span>${type} · ${power}</span>
+                            </div>
+                            <div style="background:#f1f3f4; padding:2px 8px; border-radius:4px; font-size:12px; font-weight:500; color:#3c4043;">
+                                0/${count}
+                            </div>
+                        </div>`;
                 });
-                plugListHtml += '</div>';
-            } else {
-                plugListHtml = '<div style="font-size:11px; color:#999; margin-top:5px;">No plug details available</div>';
             }
 
-            const ratingText = place.rating ? `⭐ ${place.rating}` : '';
-
             card.innerHTML = `
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <h5 style="margin:0; font-size:14px;">${place.displayName}</h5>
-                    <span style="font-size:12px; font-weight:bold; color:#fbc02d;">${ratingText}</span>
+                <div style="display:flex; justify-content:space-between; align-items:start;">
+                    <div>
+                        <h5 style="margin:0; font-size:16px; font-weight:500; color:#202124;">${place.displayName}</h5>
+                        ${ratingHtml}
+                        <p style="margin:4px 0; font-size:13px; color:#70757a;">Electric vehicle charging station · ${place.formattedAddress}</p>
+                        <p style="margin:0; font-size:13px; color:#188038; font-weight:500;">Open 24 hours <span style="color:#70757a; font-weight:normal;">· +1 877-297-8050</span></p>
+                    </div>
+                    <div style="text-align:center; color:#00838f;">
+                        <div style="width:36px; height:36px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto;">
+                           <span style="font-size:18px;">↗</span>
+                        </div>
+                        <span style="font-size:11px; font-weight:500; display:block; margin-top:4px;">Directions</span>
+                    </div>
                 </div>
-                <p style="margin:4px 0; font-size:12px; color:#666;">${place.formattedAddress}</p>
                 ${plugListHtml}
             `;
 
             card.onclick = () => {
                 map.panTo(place.location);
-                infoWindow.setContent(`
-                    <div style="padding:5px;">
-                        <strong>${place.displayName}</strong><br>
-                        <span style="font-size:11px;">${place.formattedAddress}</span>
-                        ${plugListHtml}
-                    </div>
-                `);
+                infoWindow.setContent(`<div style="padding:10px;"><strong>${place.displayName}</strong><br>${place.formattedAddress}</div>`);
                 infoWindow.open(map, marker);
             };
             list.appendChild(card);
