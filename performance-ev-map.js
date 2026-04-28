@@ -27,12 +27,17 @@
             navigator.geolocation.getCurrentPosition((position) => {
                 const origin = { lat: position.coords.latitude, lng: position.coords.longitude };
                 
+                // Ensure inputs are treated as numbers
+                const destination = { lat: parseFloat(destLat), lng: parseFloat(destLng) };
+
                 directionsService.route({
                     origin: origin,
-                    destination: { lat: destLat, lng: destLng },
+                    destination: destination,
                     travelMode: google.maps.TravelMode.DRIVING
                 }, (result, status) => {
                     if (status === 'OK') {
+                        // FORCE BINDING: Refresh map connection before rendering line
+                        directionsRenderer.setMap(null);
                         directionsRenderer.setMap(ev_Map);
                         
                         if (panel) {
@@ -42,9 +47,13 @@
                         directionsRenderer.setDirections(result);
                         
                         if (panel) panel.scrollIntoView({ behavior: 'smooth' });
+                    } else {
+                        console.error("Directions status: " + status);
                     }
                 });
-            }, () => alert("Please enable location to see directions."));
+            }, (error) => {
+                alert("Please enable location services to see the route line on the map.");
+            });
         }
     };
 
