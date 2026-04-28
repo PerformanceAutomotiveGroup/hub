@@ -3,6 +3,9 @@
     let ev_Markers = [];
     let isPanning = false;
 
+    // Detect mobile for UI scaling
+    const isMobile = window.innerWidth <= 768;
+
     function formatConnector(type) {
         if (!type) return "Unknown";
         const types = { 
@@ -18,48 +21,50 @@
         if (ev_InfoWindow) ev_InfoWindow.close();
     };
 
+    window.triggerNearbySearch = function(lat, lng) {
+        if (!ev_Map) return;
+        ev_Map.setCenter({lat: lat, lng: lng});
+        ev_Map.setZoom(15); 
+        // Note: The 'idle' listener will naturally fire and refresh results based on the new center
+    };
+
+    // Calculate route from User GPS to Station
     window.calculateRoute = function(destLat, destLng) {
         if (!directionsService || !directionsRenderer) return;
         
-        const panel = document.getElementById('ev-directions-panel');
-        
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
-                const origin = { lat: position.coords.latitude, lng: position.coords.longitude };
-                
-                // Ensure inputs are treated as numbers
-                const destination = { lat: parseFloat(destLat), lng: parseFloat(destLng) };
+                const origin = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
 
                 directionsService.route({
                     origin: origin,
-                    destination: destination,
+                    destination: { lat: destLat, lng: destLng },
                     travelMode: google.maps.TravelMode.DRIVING
                 }, (result, status) => {
                     if (status === 'OK') {
-                        // FORCE BINDING: Refresh map connection before rendering line
-                        directionsRenderer.setMap(null);
-                        directionsRenderer.setMap(ev_Map);
-                        
-                        if (panel) {
-                            directionsRenderer.setPanel(panel);
-                        }
-                        
+                        // This draws the blue line (A to B) on the map
                         directionsRenderer.setDirections(result);
                         
+                        // Scroll the user down to the directions text below the map
+                        const panel = document.getElementById('ev-directions-panel');
                         if (panel) panel.scrollIntoView({ behavior: 'smooth' });
                     } else {
-                        console.error("Directions status: " + status);
+                        console.error("Directions request failed: " + status);
                     }
                 });
-            }, (error) => {
-                alert("Please enable location services to see the route line on the map.");
+            }, () => {
+                alert("Location access denied. Please allow location services to see the route line on the map.");
             });
         }
     };
 
-    async function start() {
-        if (typeof google === 'undefined' || !google.maps) {
-            setTimeout(start, 300);
+    window.initPerformanceEVMap = async function() {
+        const mapElement = document.getElementById("ev-map-canvas");
+        if (!mapElement) {
+            setTimeout(window.initPerformanceEVMap, 300);
             return;
         }
 
@@ -70,25 +75,31 @@
                 google.maps.importLibrary("marker")
             ]);
 
+            // Initialize Directions Service and Renderer
             directionsService = new google.maps.DirectionsService();
             directionsRenderer = new google.maps.DirectionsRenderer({
-                suppressMarkers: false,
+                suppressMarkers: false, // Shows 'A' and 'B' markers
                 polylineOptions: {
-                    strokeColor: "#00838f",
-                    strokeWeight: 6,
-                    zIndex: 999
+                    strokeColor: "#00838f", // Performance Brand Cyan
+                    strokeWeight: 6
                 }
             });
-
+            
             ev_InfoWindow = new google.maps.InfoWindow();
             
-            ev_Map = new Map(document.getElementById("ev-map-canvas"), {
+            ev_Map = new Map(mapElement, {
                 center: { lat: 43.159, lng: -79.246 }, 
-                zoom: 11,
+                zoom: isMobile ? 10 : 11,
                 mapId: "e9da2b0d1db902e558a4a8df",
                 mapTypeControl: false,
-                streetViewControl: false
+                streetViewControl: false,
+                fullscreenControl: true,
+                gestureHandling: isMobile ? "greedy" : "auto"
             });
+
+            // Bind the Directions Renderer to the Map and the external Panel
+            directionsRenderer.setMap(ev_Map);
+            directionsRenderer.setPanel(document.getElementById('ev-directions-panel'));
 
             ev_Map.addListener("idle", async () => {
                 if (isPanning) { isPanning = false; return; }
@@ -99,7 +110,7 @@
                     textQuery: "EV Charging Station",
                     fields: ["displayName", "location", "formattedAddress", "rating", "evChargeOptions", "photos", "editorialSummary"],
                     locationRestriction: bounds,
-                    maxResultCount: 20 
+                    maxResultCount: isMobile ? 12 : 20 
                 };
 
                 try {
@@ -108,7 +119,7 @@
                 } catch (e) { console.error("Search failed:", e); }
             });
         } catch (err) { console.error("Initialization Error", err); }
-    }
+    };
 
     function renderUI(places, AdvancedMarkerElement) {
         ev_Markers.forEach(m => m.map = null);
@@ -129,11 +140,22 @@
             const card = document.createElement('div');
             card.className = 'ev-location-card';
             card.id = `ev-card-${index}`;
-            card.style.cssText = "padding:16px; border-bottom:1px solid #e0e0e0; cursor:pointer; background:#fff; font-family:Roboto, Arial, sans-serif;";
+            card.style.cssText = `padding:16px; border-bottom:1px solid #e0e0e0; cursor:pointer; background:#fff; font-family:Roboto, Arial, sans-serif;`;
 
             const ratingVal = place.rating ? place.rating.toFixed(1) : "5.0";
             
-            card.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:start;"><div style="width:78%"><h5 style="margin:0; font-size:16px; font-weight:500; color:#202124;">${place.displayName}</h5><div style="font-size:12px; color:#70757a; margin:4px 0;">${ratingVal} ★★★★★</div><p style="margin:4px 0; font-size:13px; color:#70757a;">${place.formattedAddress}</p></div><div style="text-align:center; color:#00838f; font-size:11px;" onclick="window.calculateRoute(${place.location.lat()}, ${place.location.lng()})"><div style="width:34px; height:34px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">↗</div>Directions</div></div>`;
+            card.innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:start;">
+                    <div style="width:78%">
+                        <h5 style="margin:0; font-size:16px; font-weight:500;">${place.displayName}</h5>
+                        <div style="font-size:12px; color:#70757a; margin:4px 0;">${ratingVal} ★★★★★</div>
+                        <p style="margin:4px 0; font-size:12px; color:#70757a;">${place.formattedAddress}</p>
+                    </div>
+                    <div style="text-align:center; color:#00838f; font-size:10px;" onclick="window.calculateRoute(${place.location.lat()}, ${place.location.lng()})">
+                        <div style="width:34px; height:34px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">↗</div>
+                        Directions
+                    </div>
+                </div>`;
 
             const select = (e) => {
                 if (e && e.stopImmediatePropagation) e.stopImmediatePropagation();
@@ -141,10 +163,10 @@
                 ev_Map.panTo(place.location);
 
                 const photoUrl = place.photos?.[0]?.getURI({maxWidth: 400}) || '';
-                const aboutText = place.editorialSummary || "Electric vehicle charging station.";
+                const aboutText = place.editorialSummary || "Electric vehicle charging station providing reliable power services.";
 
                 const infoHtml = `
-                    <div style="width:340px; font-family:Roboto, Arial; background:#fff; border-radius:12px; overflow:hidden; position:relative;">
+                    <div style="width:${isMobile ? '280px' : '340px'}; font-family:Roboto, Arial; background:#fff; border-radius:12px; overflow:hidden; position:relative;">
                         ${photoUrl ? `<div style="width:100%; height:140px; background:url('${photoUrl}') center/cover no-repeat;"></div>` : ''}
                         <div onclick="window.closeEVInfoWindow()" style="position:absolute; top:12px; right:12px; background:#fff; width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,0.3); font-size:22px; z-index:100; color:#3c4043;">×</div>
                         <div style="padding:16px 16px 0 16px;">
@@ -160,6 +182,14 @@
                                     <div style="width:42px; height:42px; border-radius:50%; background:#00838f; color:#fff; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:20px;">↗</div>
                                     <div style="font-size:11px; color:#00838f; font-weight:500; margin-top:6px;">Directions</div>
                                 </div>
+                                <div style="text-align:center; cursor:pointer;" onclick="window.triggerNearbySearch(${place.location.lat()}, ${place.location.lng()})">
+                                    <div style="width:42px; height:42px; border-radius:50%; border:1px solid #dadce0; color:#00838f; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">📍</div>
+                                    <div style="font-size:11px; color:#00838f; font-weight:500; margin-top:6px;">Nearby</div>
+                                </div>
+                                <div style="text-align:center; cursor:pointer;" onclick="if(navigator.share){navigator.share({title:'${place.displayName}', url:window.location.href})}">
+                                    <div style="width:42px; height:42px; border-radius:50%; border:1px solid #dadce0; color:#00838f; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">🔗</div>
+                                    <div style="font-size:11px; color:#00838f; font-weight:500; margin-top:6px;">Share</div>
+                                </div>
                             </div>
                         </div>
                         <div id="info-content-about" style="display:none; padding:20px; font-size:14px; color:#3c4043; line-height:1.6;">
@@ -168,7 +198,7 @@
                         </div>
                     </div>`;
 
-                ev_InfoWindow.setOptions({ content: infoHtml, headerDisabled: true });
+                ev_InfoWindow.setOptions({ content: infoHtml, headerDisabled: true, maxWidth: isMobile ? 300 : 350 });
                 ev_InfoWindow.open({ anchor: marker, map: ev_Map, shouldFocus: false });
 
                 document.querySelectorAll('.ev-location-card').forEach(c => c.style.background = '#fff');
@@ -181,5 +211,4 @@
             list.appendChild(card);
         });
     }
-    start();
 })();
