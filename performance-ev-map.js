@@ -74,12 +74,15 @@ window.calculateRoute = function(destLat, destLng) {
 
             directionsService = new google.maps.DirectionsService();
             directionsRenderer = new google.maps.DirectionsRenderer({
-                suppressMarkers: false,
-                polylineOptions: {
-                    strokeColor: "#00838f",
-                    strokeWeight: 6
-                }
-            });
+    map: ev_Map, 
+    suppressMarkers: false,
+    polylineOptions: {
+        strokeColor: "#00838f",
+        strokeOpacity: 1.0,
+        strokeWeight: 6,
+        zIndex: 100 
+    }
+});
 
             ev_InfoWindow = new google.maps.InfoWindow();
             
