@@ -1,125 +1,233 @@
-(function() {
-    let ev_Map, ev_InfoWindow, directionsService, directionsRenderer;
-    let ev_Markers = [];
-    let isPanning = false;
+function doGet() {
+  return HtmlService.createHtmlOutputFromFile('Index').setTitle('Vehicle Description Generator');
+}
 
-    function formatConnector(type) {
-        if (!type) return "Unknown";
-        const types = { 'EV_CONNECTOR_TYPE_J1772': 'J1772', 'EV_CONNECTOR_TYPE_CCS_COMBO_1': 'CCS', 'EV_CONNECTOR_TYPE_CHADEMO': 'CHAdeMO', 'EV_CONNECTOR_TYPE_TESLA': 'Tesla' };
-        return types[type] || type.replace('EV_CONNECTOR_TYPE_', '').replace(/_/g, ' ');
+function getVehicleDescription(
+  vin,
+  exteriorColor,
+  interiorColor,
+  mileage,
+  features,
+  dealershipName 
+) {
+  vin = vin.trim().toUpperCase();
+  
+  const template = "retail";
+
+  // VIN validation
+  if (!/^[A-HJ-NPR-Z0-9]{17}$/.test(vin)) {
+    return "Error. Please enter a valid 17 character VIN.";
+  }
+
+  try {
+    const vinData = decodeVin(vin);
+
+    if (!vinData.year || !vinData.make || !vinData.model) {
+      return "Error. VIN could not be decoded.";
     }
 
-    window.closeEVInfoWindow = () => ev_InfoWindow && ev_InfoWindow.close();
+    const description = buildVehicleDescription(
+      vin,
+      vinData,
+      exteriorColor,
+      interiorColor,
+      mileage,
+      features,
+      template
+    );
+
+    // Fetch the specific dealership signature from the Sheet
+    const dealershipSignature = getSignatureFromSheet(dealershipName);
+
+    // Performance Auto Group signature
+    const pagSignature = "Performance Auto Group's mission is to make car buying easy. We are passionate about innovating so that your experience in any of our 39 dealerships is quick and enjoyable. You’ll enjoy working with our friendly teams, who are always available to help you make an informed decision. Purchase confidently with our industry-leading transparency tools that provide unprecedented information about the history and condition of our cars. Drive with confidence knowing that we have the most rigorous inspection and reconditioning process in the country, handled by our team of factory-trained technicians. We invite you to experience the difference - at Performance Auto Group.";
+
+
+    const formattedDescription = description.split('\n\n')
+      .map(para => "<br>" + para.trim() + "<br>")
+      .join('\n\n');
+
+    const formattedDealershipSig = dealershipSignature ? "<br>" + dealershipSignature.trim() + "<br>" : "";
+    const formattedPagSig = "<br>" + pagSignature.trim() + "<br>";
+
+    // Combine everything into the final output
+    const finalOutput = [
+      "VIN: " + vin,
+      formattedDescription,
+      formattedDealershipSig,
+      formattedPagSig
+    ].filter(Boolean).join("\n\n");
+
+    return finalOutput;
+
+  } catch (e) {
+    Logger.log(e);
+    return "Error generating description. Please try again.";
+  } 
+}
+
+function getSignatureFromSheet(dealershipName) {
+  try {
+    const ssId = "1BzpkpSaW78Jh2jDjvqE9nfVjA85t2Xnpu3znZiemVUo"; 
+    const sheet = SpreadsheetApp.openById(ssId).getSheetByName("Signatures");
+    const data = sheet.getDataRange().getValues();
     
-    window.toggleSidebar = () => {
-        const sidebar = document.getElementById('ev-sidebar');
-        const icon = document.getElementById('toggle-icon');
-        const btn = document.getElementById('sidebar-toggle');
-        const isCollapsed = sidebar.style.transform === 'translateX(100%)';
-        sidebar.style.transform = isCollapsed ? 'translateX(0)' : 'translateX(100%)';
-        btn.style.right = isCollapsed ? '310px' : '10px';
-        icon.innerText = isCollapsed ? '❯' : '❮';
-    };
-
-    window.calculateRoute = function(lat, lng) {
-        if (!directionsService || !navigator.geolocation) return;
-        navigator.geolocation.getCurrentPosition((pos) => {
-            const origin = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-            directionsService.route({
-                origin: origin,
-                destination: { lat, lng },
-                travelMode: google.maps.TravelMode.DRIVING
-            }, (res, status) => {
-                if (status === 'OK') {
-                    directionsRenderer.setDirections(res);
-                    document.getElementById('ev-directions-panel').scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-    };
-
-    window.initPerformanceEVMap = async function() {
-        const mapEl = document.getElementById("ev-map-canvas");
-        if (!mapEl) { setTimeout(window.initPerformanceEVMap, 100); return; }
-
-        try {
-            const [{ Map }, { Place }, { AdvancedMarkerElement }] = await Promise.all([
-                google.maps.importLibrary("maps"),
-                google.maps.importLibrary("places"),
-                google.maps.importLibrary("marker")
-            ]);
-
-            directionsService = new google.maps.DirectionsService();
-            directionsRenderer = new google.maps.DirectionsRenderer();
-            ev_InfoWindow = new google.maps.InfoWindow();
-            
-            ev_Map = new Map(mapEl, {
-                center: { lat: 43.159, lng: -79.246 }, 
-                zoom: 11,
-                mapId: "e9da2b0d1db902e558a4a8df", // Cloud ID
-                mapTypeControl: false,
-                streetViewControl: false
-            });
-
-            directionsRenderer.setMap(ev_Map);
-            directionsRenderer.setPanel(document.getElementById('ev-directions-panel'));
-
-            ev_Map.addListener("idle", async () => {
-                if (isPanning) { isPanning = false; return; }
-                const bounds = ev_Map.getBounds();
-                if (!bounds) return;
-
-                const request = {
-                    textQuery: "EV Charging Station",
-                    fields: ["displayName", "location", "formattedAddress", "rating", "evChargeOptions", "photos", "editorialSummary"],
-                    locationRestriction: bounds,
-                    maxResultCount: 20 
-                };
-
-                const { places } = await Place.searchByText(request);
-                renderUI(places || [], AdvancedMarkerElement);
-            });
-        } catch (err) { console.error("Map Load Error:", err); }
-    };
-
-    function renderUI(places, AdvancedMarkerElement) {
-        ev_Markers.forEach(m => m.map = null);
-        ev_Markers = [];
-        const list = document.getElementById('ev-results-list');
-        list.innerHTML = '';
-        
-        places.forEach((place, index) => {
-            const marker = new AdvancedMarkerElement({ map: ev_Map, position: place.location, gmpClickable: true });
-            ev_Markers.push(marker);
-
-            const card = document.createElement('div');
-            card.className = 'ev-location-card';
-            card.style.cssText = "padding:16px; border-bottom:1px solid #e0e0e0; cursor:pointer; font-family:Arial;";
-            
-            card.innerHTML = `<h5 style="margin:0;">${place.displayName}</h5><p style="font-size:12px; color:#666;">${place.formattedAddress}</p>`;
-            
-            const select = () => {
-                isPanning = true;
-                ev_Map.panTo(place.location);
-                const photo = place.photos?.[0]?.getURI({maxWidth: 400}) || '';
-                
-                const infoHtml = `
-                    <div style="width:320px; border-radius:12px; overflow:hidden;">
-                        ${photo ? `<img src="${photo}" style="width:100%; height:120px; object-fit:cover;">` : ''}
-                        <div style="padding:15px; position:relative;">
-                            <div onclick="window.closeEVInfoWindow()" style="position:absolute; top:-10px; right:10px; background:#fff; width:25px; height:25px; border-radius:50%; text-align:center; line-height:25px; cursor:pointer; box-shadow:0 1px 3px rgba(0,0,0,0.2);">×</div>
-                            <h3 style="margin:0 0 10px 0; font-size:18px;">${place.displayName}</h3>
-                            <button onclick="window.calculateRoute(${place.location.lat()}, ${place.location.lng()})" style="width:100%; padding:10px; background:#00838f; color:#fff; border:none; border-radius:4px; cursor:pointer;">Get Directions</button>
-                        </div>
-                    </div>`;
-
-                ev_InfoWindow.setOptions({ content: infoHtml, headerDisabled: true });
-                ev_InfoWindow.open({ anchor: marker, map: ev_Map });
-            };
-
-            marker.addListener('gmp-click', select);
-            card.onclick = select;
-            list.appendChild(card);
-        });
+    for (let i = 0; i < data.length; i++) {
+      if (data[i][0] === dealershipName) {
+        return data[i][1]; 
+      }
     }
-})();
+  } catch (err) {
+    Logger.log("Signature Fetch Error: " + err);
+  }
+  return ""; 
+}
+
+function getDealershipNames() {
+  try {
+    const ssId = "1BzpkpSaW78Jh2jDjvqE9nfVjA85t2Xnpu3znZiemVUo";
+    const ss = SpreadsheetApp.openById(ssId);
+    const sheet = ss.getSheetByName("Signatures");
+    
+    if (!sheet) {
+      Logger.log("Error: Sheet named 'Signatures' not found.");
+      return ["Error: Sheet Not Found"];
+    }
+
+    const data = sheet.getDataRange().getValues();
+    const names = data.slice(1)
+      .map(row => row[0])
+      .filter(name => name && name.toString().trim() !== "");
+    
+    if (names.length === 0) return ["No dealerships found"];
+
+    return names.sort(); 
+  } catch (err) {
+    Logger.log("Critical Error: " + err.toString());
+    return ["Error: Check Permissions/ID"];
+  }
+}
+
+// VIN decoder 
+function decodeVin(vin) {
+  const cache = CacheService.getScriptCache();
+  const cached = cache.get(vin);
+
+  if (cached) {
+    return JSON.parse(cached);
+  }
+
+  const url = "https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValuesExtended/" + vin + "?format=json";
+
+  const response = UrlFetchApp.fetch(url);
+  const data = JSON.parse(response.getContentText());
+
+  if (!data.Results || data.Results.length === 0) {
+    return {};
+  }
+
+  const r = data.Results[0];
+
+  const result = {
+    year: r.ModelYear,
+    make: r.Make,
+    model: r.Model,
+    series: r.Series || "",
+    trim: r.Trim || "",
+    body: r.BodyClass,
+    drivetrain: r.DriveType,
+    engine: r.EngineModel || r.EngineCylinders || "",
+    fuel: r.FuelTypePrimary,
+    transmission: r.TransmissionStyle || ""
+  };
+
+  cache.put(vin, JSON.stringify(result), 21600);
+  return result;
+}
+
+// Gemini description builder 
+function buildVehicleDescription(
+  vin,
+  vinData,
+  exteriorColor,
+  interiorColor,
+  mileage,
+  features,
+  template
+) {
+
+  const CLOUD_FUNCTION_URL = "https://gemini-wrapper-769592788241.us-central1.run.app";
+  const requestId = Utilities.getUuid();
+
+  let toneRules =
+    "Write in a professional dealership retail tone for Canadian buyers.\n" +
+    "Confident, informative, and well structured.\n" +
+    "Highlight performance, comfort, technology, and safety.\n" +
+    "Use natural sales language without exaggeration.\n" +
+    "You may describe common features typically included with this model or trim.\n" +
+    "If trim is known, you may reference it directly.\n" +
+    "If trim is unknown, avoid naming specific packages.\n";
+
+  const prompt =
+    "You are generating a short vehicle description.\n\n" +
+
+    "Required information.\n" +
+    "VIN: " + vin + "\n" +
+    "Year: " + vinData.year + "\n" +
+    "Make: " + vinData.make + "\n" +
+    "Model: " + vinData.model + "\n" +
+    "Exterior Color: " + exteriorColor + "\n" +
+    "Mileage: " + mileage + "\n" +
+    "Series: " + (vinData.series || "not specified") + "\n" +
+    "Trim: " + (vinData.trim || "not specified") + "\n" +
+    "Transmission: " + (vinData.transmission || "not specified") + "\n" +
+    "Key Features: " + features + "\n\n" +
+
+    "Optional information.\n" +
+    "Interior Color: " + (interiorColor || "not specified") + "\n" +
+    "Body Type: " + (vinData.body || "not specified") + "\n" +
+    "Drivetrain: " + (vinData.drivetrain || "not specified") + "\n" +
+    "Engine: " + (vinData.engine || "not specified") + "\n" +
+    "Fuel Type: " + (vinData.fuel || "not specified") + "\n\n" +
+
+    "Rules.\n" +
+    toneRules +
+    "Do not guess missing information.\n" +
+    "If data is unavailable, say not specified.\n" +
+    "CRITICAL: You must incorporate the provided Key Features within the first 100 words of the description.\n" +
+    "Paragraph one. Strong feature driven opening sentence that highlights engine or performance, comfort features, and technology.\n" +
+    "Paragraph two. Expanded details on powertrain, interior comfort, infotainment, and convenience features.\n" +
+    "Paragraph three. Safety systems and overall value statement tailored to Canadian driving conditions.\n";
+
+  const userEmail = Session.getActiveUser().getEmail() || "unknown";
+  const payload = {
+    requestId: requestId,
+    userEmail: userEmail,
+    prompt: prompt
+  };
+
+  const options = {
+    method: "post",
+    contentType: "application/json",
+    headers: {
+      Authorization: "Bearer " + ScriptApp.getOAuthToken()
+    },
+    payload: JSON.stringify(payload),
+    muteHttpExceptions: true
+  };
+
+  const response = UrlFetchApp.fetch(CLOUD_FUNCTION_URL, options);
+  const json = JSON.parse(response.getContentText());
+
+  if (json.requestId !== requestId) {
+    throw new Error("Request mismatch. Please retry.");
+  }
+
+  if (!json.text) {
+    throw new Error("AI generation failed.");
+  }
+
+  return json.text
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
