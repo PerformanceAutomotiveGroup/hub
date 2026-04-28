@@ -1,5 +1,5 @@
 (function() {
-    let ev_Map, ev_InfoWindow;
+    let ev_Map, ev_InfoWindow, directionsService, directionsRenderer;
     let ev_Markers = [];
     let isPanning = false;
 
@@ -22,17 +22,46 @@
         if (!ev_Map) return;
         ev_Map.setCenter({lat: lat, lng: lng});
         ev_Map.setZoom(15); 
-        
         const request = {
             textQuery: "restaurants and coffee shops",
             locationBias: {lat: lat, lng: lng},
             maxResultCount: 10
         };
+    };
+
+    window.calculateRoute = function(destLat, destLng) {
+        if (!directionsService || !directionsRenderer) return;
         
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                const origin = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+
+                directionsService.route({
+                    origin: origin,
+                    destination: { lat: destLat, lng: destLng },
+                    travelMode: google.maps.TravelMode.DRIVING
+                }, (result, status) => {
+                    if (status === 'OK') {
+                        directionsRenderer.setDirections(result);
+                        // Auto-scroll to the directions panel
+                        const panel = document.getElementById('ev-directions-panel');
+                        if (panel) panel.scrollIntoView({ behavior: 'smooth' });
+                    } else {
+                        alert("Directions request failed: " + status);
+                    }
+                });
+            }, () => {
+                alert("Please enable location services to use this feature.");
+            });
+        }
     };
 
     async function start() {
-        if (typeof google === 'undefined' || !google.maps) {
+        const mapElement = document.getElementById("ev-map-canvas");
+        if (!mapElement) {
             setTimeout(start, 300);
             return;
         }
@@ -44,9 +73,12 @@
                 google.maps.importLibrary("marker")
             ]);
 
+            directionsService = new google.maps.DirectionsService();
+            directionsRenderer = new google.maps.DirectionsRenderer();
+            
             ev_InfoWindow = new google.maps.InfoWindow();
             
-            ev_Map = new Map(document.getElementById("ev-map-canvas"), {
+            ev_Map = new Map(mapElement, {
                 center: { lat: 43.159, lng: -79.246 }, 
                 zoom: 11,
                 mapId: "e9da2b0d1db902e558a4a8df",
@@ -54,6 +86,9 @@
                 streetViewControl: false,
                 fullscreenControl: true
             });
+
+            directionsRenderer.setMap(ev_Map);
+            directionsRenderer.setPanel(document.getElementById('ev-directions-panel'));
 
             ev_Map.addListener("idle", async () => {
                 if (isPanning) { isPanning = false; return; }
@@ -99,12 +134,7 @@
             const ratingVal = place.rating ? place.rating.toFixed(1) : "5.0";
             const addr = place.formattedAddress || "";
             
-            let sidebarPlugs = '';
-            (place.evChargeOptions?.connectorAggregations || []).forEach(agg => {
-                sidebarPlugs += `<div style="display:flex; justify-content:space-between; font-size:13px; margin-top:8px;"><span style="color:#00838f;">⚡ ${formatConnector(agg.type)}</span><span style="background:#f1f3f4; padding:0 8px; border-radius:4px;">0/${agg.count || 1}</span></div>`;
-            });
-
-            card.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:start;"><div style="width:78%"><h5 style="margin:0; font-size:16px; font-weight:500; color:#202124;">${place.displayName}</h5><div style="font-size:12px; color:#70757a; margin:4px 0;">${ratingVal} <span style="color:#fbbc04;">★★★★★</span></div><p style="margin:4px 0; font-size:13px; color:#70757a;">${addr}</p>${sidebarPlugs}</div><div style="text-align:center; color:#00838f; font-size:11px;"><div style="width:34px; height:34px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">↗</div>Directions</div></div>`;
+            card.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:start;"><div style="width:78%"><h5 style="margin:0; font-size:16px; font-weight:500; color:#202124;">${place.displayName}</h5><div style="font-size:12px; color:#70757a; margin:4px 0;">${ratingVal} <span style="color:#fbbc04;">★★★★★</span></div><p style="margin:4px 0; font-size:13px; color:#70757a;">${addr}</p></div><div style="text-align:center; color:#00838f; font-size:11px;" onclick="window.calculateRoute(${place.location.lat()}, ${place.location.lng()})"><div style="width:34px; height:34px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">↗</div>Directions</div></div>`;
 
             const select = (e) => {
                 if (e && e.stopImmediatePropagation) e.stopImmediatePropagation();
@@ -130,7 +160,7 @@
                         </div>
                         <div id="info-content-overview">
                             <div style="display:flex; justify-content:space-around; padding:16px 8px; border-bottom:1px solid #f1f3f4;">
-                                <div style="text-align:center; cursor:pointer;" onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=${place.location.lat()},${place.location.lng()}')">
+                                <div style="text-align:center; cursor:pointer;" onclick="window.calculateRoute(${place.location.lat()}, ${place.location.lng()})">
                                     <div style="width:42px; height:42px; border-radius:50%; background:#00838f; color:#fff; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:20px;">↗</div>
                                     <div style="font-size:11px; color:#00838f; font-weight:500; margin-top:6px;">Directions</div>
                                 </div>
@@ -147,10 +177,6 @@
                                 <div style="display:flex; gap:12px; align-items:flex-start; margin-bottom:16px;">
                                     <span style="color:#00838f; font-size:18px;">📍</span>
                                     <span style="font-size:14px; color:#3c4043; line-height:1.4;">${addr}</span>
-                                </div>
-                                <div style="display:flex; gap:12px; align-items:center;">
-                                    <span style="color:#188038; font-size:18px;">🕒</span>
-                                    <span style="font-size:14px; color:#188038; font-weight:500;">Open 24 hours ▾</span>
                                 </div>
                             </div>
                         </div>
