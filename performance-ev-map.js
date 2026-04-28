@@ -3,17 +3,6 @@
     let ev_Markers = [];
     let isPanning = false;
 
-    function formatConnector(type) {
-        if (!type) return "Unknown";
-        const types = { 
-            'EV_CONNECTOR_TYPE_J1772': 'J1772', 
-            'EV_CONNECTOR_TYPE_CCS_COMBO_1': 'CCS', 
-            'EV_CONNECTOR_TYPE_CHADEMO': 'CHAdeMO', 
-            'EV_CONNECTOR_TYPE_TESLA': 'Tesla' 
-        };
-        return types[type] || type.replace('EV_CONNECTOR_TYPE_', '').replace(/_/g, ' ');
-    }
-
     window.closeEVInfoWindow = function() {
         if (ev_InfoWindow) ev_InfoWindow.close();
     };
@@ -24,8 +13,7 @@
             navigator.geolocation.getCurrentPosition((position) => {
                 const origin = { lat: position.coords.latitude, lng: position.coords.longitude };
                 directionsService.route({
-                    origin: origin,
-                    destination: { lat: destLat, lng: destLng },
+                    origin: origin, destination: { lat: destLat, lng: destLng },
                     travelMode: google.maps.TravelMode.DRIVING
                 }, (result, status) => {
                     if (status === 'OK') {
@@ -33,11 +21,18 @@
                         document.getElementById('ev-directions-panel').scrollIntoView({ behavior: 'smooth' });
                     }
                 });
-            }, () => alert("Please enable location to get directions from your current spot."));
+            });
         }
     };
 
     window.initPerformanceEVMap = async function() {
+        const mapElement = document.getElementById("ev-map-canvas");
+        
+        if (!mapElement) {
+            setTimeout(window.initPerformanceEVMap, 100);
+            return;
+        }
+
         try {
             const [{ Map }, { Place }, { AdvancedMarkerElement }] = await Promise.all([
                 google.maps.importLibrary("maps"),
@@ -49,7 +44,7 @@
             directionsRenderer = new google.maps.DirectionsRenderer();
             ev_InfoWindow = new google.maps.InfoWindow();
             
-            ev_Map = new Map(document.getElementById("ev-map-canvas"), {
+            ev_Map = new Map(mapElement, {
                 center: { lat: 43.159, lng: -79.246 }, 
                 zoom: 11,
                 mapId: "e9da2b0d1db902e558a4a8df",
@@ -77,7 +72,7 @@
                     renderUI(places || [], AdvancedMarkerElement);
                 } catch (e) { console.error("Search failed:", e); }
             });
-        } catch (err) { console.error("Initialization Error", err); }
+        } catch (err) { console.error("Init Error", err); }
     };
 
     function renderUI(places, AdvancedMarkerElement) {
@@ -101,7 +96,7 @@
             card.style.cssText = "padding:16px; border-bottom:1px solid #e0e0e0; cursor:pointer; background:#fff; font-family:Roboto, Arial, sans-serif;";
             const ratingVal = place.rating ? place.rating.toFixed(1) : "5.0";
 
-            card.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:start;"><div style="width:78%"><h5 style="margin:0; font-size:16px; font-weight:500; color:#202124;">${place.displayName}</h5><div style="font-size:12px; color:#70757a; margin:4px 0;">${ratingVal} <span style="color:#fbbc04;">★★★★★</span></div><p style="margin:4px 0; font-size:13px; color:#70757a;">${place.formattedAddress}</p></div><div style="text-align:center; color:#00838f; font-size:11px;"><div style="width:34px; height:34px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">↗</div>Directions</div></div>`;
+            card.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:start;"><div style="width:78%"><h5 style="margin:0; font-size:16px; font-weight:500; color:#202124;">${place.displayName}</h5><div style="font-size:12px; color:#70757a; margin:4px 0;">${ratingVal} <span style="color:#fbbc04;">★★★★★</span></div><p style="margin:4px 0; font-size:13px; color:#70757a;">${place.formattedAddress}</p></div><div style="text-align:center; color:#00838f; font-size:11px;" onclick="window.calculateRoute(${place.location.lat()}, ${place.location.lng()})"><div style="width:34px; height:34px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">↗</div>Directions</div></div>`;
 
             const select = (e) => {
                 if (e && e.stopImmediatePropagation) e.stopImmediatePropagation();
@@ -115,22 +110,12 @@
                     <div style="width:340px; font-family:Roboto, Arial; background:#fff; border-radius:12px; overflow:hidden; position:relative;">
                         ${photoUrl ? `<div style="width:100%; height:140px; background:url('${photoUrl}') center/cover no-repeat;"></div>` : ''}
                         <div onclick="window.closeEVInfoWindow()" style="position:absolute; top:12px; right:12px; background:#fff; width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,0.3); font-size:22px; z-index:100; color:#3c4043;">×</div>
-                        <div style="padding:16px 16px 8px 16px;">
+                        <div style="padding:16px;">
                             <h2 style="margin:0; font-size:20px; font-weight:400; color:#202124;">${place.displayName}</h2>
-                        </div>
-                        <div style="display:flex; border-bottom:1px solid #e0e0e0;">
-                            <div id="tab-overview" style="flex:1; text-align:center; padding:12px; color:#00838f; border-bottom:3px solid #00838f; font-weight:500; cursor:pointer;">Overview</div>
-                            <div id="tab-about" style="flex:1; text-align:center; padding:12px; color:#70757a; font-weight:500; cursor:pointer;">About</div>
-                        </div>
-                        <div id="info-content-overview">
-                            <div style="display:flex; justify-content:space-around; padding:16px 8px; border-bottom:1px solid #f1f3f4;">
+                            <div style="display:flex; justify-content:space-around; padding:16px 8px; border-top:1px solid #f1f3f4; margin-top:10px;">
                                 <div style="text-align:center; cursor:pointer;" onclick="window.calculateRoute(${place.location.lat()}, ${place.location.lng()})">
                                     <div style="width:42px; height:42px; border-radius:50%; background:#00838f; color:#fff; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:20px;">↗</div>
                                     <div style="font-size:11px; color:#00838f; font-weight:500; margin-top:6px;">Directions</div>
-                                </div>
-                                <div style="text-align:center; cursor:pointer;" onclick="if(navigator.share){navigator.share({title:'${place.displayName}', url:window.location.href})}">
-                                    <div style="width:42px; height:42px; border-radius:50%; border:1px solid #dadce0; color:#00838f; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">🔗</div>
-                                    <div style="font-size:11px; color:#00838f; font-weight:500; margin-top:6px;">Share</div>
                                 </div>
                             </div>
                         </div>
