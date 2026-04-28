@@ -32,12 +32,13 @@
 
 window.calculateRoute = function(destLat, destLng) {
     if (!directionsService || !directionsRenderer) return;
-
+    
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
             const origin = { lat: position.coords.latitude, lng: position.coords.longitude };
             
-            // Ensure the renderer is connected to the map before drawing
+            // Hard Refresh: Disconnect and Reconnect the renderer
+            directionsRenderer.setMap(null);
             directionsRenderer.setMap(ev_Map);
 
             directionsService.route({
@@ -46,16 +47,13 @@ window.calculateRoute = function(destLat, destLng) {
                 travelMode: google.maps.TravelMode.DRIVING
             }, (result, status) => {
                 if (status === 'OK') {
-                    // This command draws the line and the A/B markers
                     directionsRenderer.setDirections(result);
                     
                     const panel = document.getElementById('ev-directions-panel');
                     if (panel) panel.scrollIntoView({ behavior: 'smooth' });
-                } else {
-                    console.error("Directions failed: " + status);
                 }
             });
-        }, () => alert("Location access is required to show the route on the map."));
+        });
     }
 };
 
