@@ -18,6 +18,19 @@
         if (ev_InfoWindow) ev_InfoWindow.close();
     };
 
+    window.triggerNearbySearch = function(lat, lng) {
+        if (!ev_Map) return;
+        ev_Map.setCenter({lat: lat, lng: lng});
+        ev_Map.setZoom(15); 
+        
+        const request = {
+            textQuery: "restaurants and coffee shops",
+            locationBias: {lat: lat, lng: lng},
+            maxResultCount: 10
+        };
+        
+    };
+
     async function start() {
         if (typeof google === 'undefined' || !google.maps) {
             setTimeout(start, 300);
@@ -57,9 +70,7 @@
                 try {
                     const { places } = await Place.searchByText(request);
                     renderUI(places || [], AdvancedMarkerElement);
-                } catch (e) { 
-                    console.error("Search failed:", e); 
-                }
+                } catch (e) { console.error("Search failed:", e); }
             });
         } catch (err) { console.error("Initialization Error", err); }
     }
@@ -67,7 +78,6 @@
     function renderUI(places, AdvancedMarkerElement) {
         ev_Markers.forEach(m => m.map = null);
         ev_Markers = [];
-        
         const list = document.getElementById('ev-results-list');
         if (!list) return;
         list.innerHTML = '';
@@ -107,28 +117,24 @@
                 const infoHtml = `
                     <div style="width:340px; font-family:Roboto, Arial; background:#fff; border-radius:12px; overflow:hidden; position:relative;">
                         ${photoUrl ? `<div style="width:100%; height:140px; background:url('${photoUrl}') center/cover no-repeat;"></div>` : ''}
-                        
                         <div onclick="window.closeEVInfoWindow()" style="position:absolute; top:12px; right:12px; background:#fff; width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,0.3); font-size:22px; z-index:100; color:#3c4043;">×</div>
-                        
                         <div style="padding:16px 16px 0 16px;">
                             <h2 style="margin:0; font-size:20px; font-weight:400; color:#202124;">${place.displayName}</h2>
                             <div style="display:flex; gap:4px; margin:4px 0; font-size:14px; align-items:center;">
                                 <span>${ratingVal}</span><span style="color:#fbbc04;">★★★★★</span><span style="color:#70757a;">(8)</span>
                             </div>
                         </div>
-
                         <div style="display:flex; border-bottom:1px solid #e0e0e0; margin-top:8px;">
                             <div id="tab-overview" style="flex:1; text-align:center; padding:12px; color:#00838f; border-bottom:3px solid #00838f; font-weight:500; cursor:pointer;" onclick="document.getElementById('info-content-about').style.display='none'; document.getElementById('info-content-overview').style.display='block'; this.style.color='#00838f'; this.style.borderBottom='3px solid #00838f'; document.getElementById('tab-about').style.color='#70757a'; document.getElementById('tab-about').style.borderBottom='none';">Overview</div>
                             <div id="tab-about" style="flex:1; text-align:center; padding:12px; color:#70757a; font-weight:500; cursor:pointer;" onclick="document.getElementById('info-content-overview').style.display='none'; document.getElementById('info-content-about').style.display='block'; this.style.color='#00838f'; this.style.borderBottom='3px solid #00838f'; document.getElementById('tab-overview').style.color='#70757a'; document.getElementById('tab-overview').style.borderBottom='none';">About</div>
                         </div>
-
                         <div id="info-content-overview">
                             <div style="display:flex; justify-content:space-around; padding:16px 8px; border-bottom:1px solid #f1f3f4;">
                                 <div style="text-align:center; cursor:pointer;" onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=${place.location.lat()},${place.location.lng()}')">
                                     <div style="width:42px; height:42px; border-radius:50%; background:#00838f; color:#fff; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:20px;">↗</div>
                                     <div style="font-size:11px; color:#00838f; font-weight:500; margin-top:6px;">Directions</div>
                                 </div>
-                                <div style="text-align:center; cursor:pointer;">
+                                <div style="text-align:center; cursor:pointer;" onclick="window.triggerNearbySearch(${place.location.lat()}, ${place.location.lng()})">
                                     <div style="width:42px; height:42px; border-radius:50%; border:1px solid #dadce0; color:#00838f; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">📍</div>
                                     <div style="font-size:11px; color:#00838f; font-weight:500; margin-top:6px;">Nearby</div>
                                 </div>
@@ -148,7 +154,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div id="info-content-about" style="display:none; padding:20px; font-size:14px; color:#3c4043; line-height:1.6;">
                             <div style="margin-bottom:10px; font-weight:500; color:#202124;">About this location</div>
                             ${aboutText}
