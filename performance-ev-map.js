@@ -75,10 +75,10 @@ window.calculateRoute = function(destLat, destLng) {
     map: ev_Map, 
     suppressMarkers: false,
     polylineOptions: {
-        strokeColor: "#00838f",
+        strokeColor: "#2c68b5",
         strokeOpacity: 1.0,
         strokeWeight: 6,
-        zIndex: 100 
+        zIndex: 999 
     }
 });
 
