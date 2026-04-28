@@ -30,32 +30,32 @@
         };
     };
 
-window.calculateRoute = function(destLat, destLng) {
-    if (!directionsService || !directionsRenderer) return;
-    
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-            const origin = { lat: position.coords.latitude, lng: position.coords.longitude };
-            
-            // Hard Refresh: Disconnect and Reconnect the renderer
-            directionsRenderer.setMap(null);
-            directionsRenderer.setMap(ev_Map);
-
-            directionsService.route({
-                origin: origin,
-                destination: { lat: destLat, lng: destLng },
-                travelMode: google.maps.TravelMode.DRIVING
-            }, (result, status) => {
-                if (status === 'OK') {
-                    directionsRenderer.setDirections(result);
-                    
-                    const panel = document.getElementById('ev-directions-panel');
-                    if (panel) panel.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-    }
-};
+    window.calculateRoute = function(destLat, destLng) {
+        if (!directionsService || !directionsRenderer) return;
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                const origin = { lat: position.coords.latitude, lng: position.coords.longitude };
+                
+                directionsService.route({
+                    origin: origin,
+                    destination: { lat: destLat, lng: destLng },
+                    travelMode: google.maps.TravelMode.DRIVING
+                }, (result, status) => {
+                    if (status === 'OK') {
+                        // FIX: Late-binding the renderer to the map prevents the 'zJ' error
+                        directionsRenderer.setMap(ev_Map);
+                        directionsRenderer.setPanel(document.getElementById('ev-directions-panel'));
+                        
+                        // This command physically draws the blue line on the map
+                        directionsRenderer.setDirections(result);
+                        
+                        const panel = document.getElementById('ev-directions-panel');
+                        if (panel) panel.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            }, () => alert("Please enable location services for turn-by-turn directions."));
+        }
+    };
 
     async function start() {
         if (typeof google === 'undefined' || !google.maps) {
@@ -70,17 +70,16 @@ window.calculateRoute = function(destLat, destLng) {
                 google.maps.importLibrary("marker")
             ]);
 
+            // Initialize Directions engine in standby
             directionsService = new google.maps.DirectionsService();
             directionsRenderer = new google.maps.DirectionsRenderer({
-    map: ev_Map, 
-    suppressMarkers: false,
-    polylineOptions: {
-        strokeColor: "#2c68b5",
-        strokeOpacity: 1.0,
-        strokeWeight: 6,
-        zIndex: 999 
-    }
-});
+                suppressMarkers: false,
+                polylineOptions: {
+                    strokeColor: "#00838f",
+                    strokeWeight: 6,
+                    zIndex: 999
+                }
+            });
 
             ev_InfoWindow = new google.maps.InfoWindow();
             
@@ -92,9 +91,6 @@ window.calculateRoute = function(destLat, destLng) {
                 streetViewControl: false,
                 fullscreenControl: true
             });
-
-            directionsRenderer.setMap(ev_Map);
-            directionsRenderer.setPanel(document.getElementById('ev-directions-panel'));
 
             ev_Map.addListener("idle", async () => {
                 if (isPanning) { isPanning = false; return; }
