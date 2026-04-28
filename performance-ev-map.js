@@ -1,233 +1,177 @@
-function doGet() {
-  return HtmlService.createHtmlOutputFromFile('Index').setTitle('Vehicle Description Generator');
-}
+(function() {
+    let ev_Map, ev_InfoWindow;
+    let ev_Markers = [];
+    let isPanning = false;
 
-function getVehicleDescription(
-  vin,
-  exteriorColor,
-  interiorColor,
-  mileage,
-  features,
-  dealershipName 
-) {
-  vin = vin.trim().toUpperCase();
-  
-  const template = "retail";
-
-  // VIN validation
-  if (!/^[A-HJ-NPR-Z0-9]{17}$/.test(vin)) {
-    return "Error. Please enter a valid 17 character VIN.";
-  }
-
-  try {
-    const vinData = decodeVin(vin);
-
-    if (!vinData.year || !vinData.make || !vinData.model) {
-      return "Error. VIN could not be decoded.";
+    function formatConnector(type) {
+        if (!type) return "Unknown";
+        const types = { 
+            'EV_CONNECTOR_TYPE_J1772': 'J1772', 
+            'EV_CONNECTOR_TYPE_CCS_COMBO_1': 'CCS', 
+            'EV_CONNECTOR_TYPE_CHADEMO': 'CHAdeMO', 
+            'EV_CONNECTOR_TYPE_TESLA': 'Tesla' 
+        };
+        return types[type] || type.replace('EV_CONNECTOR_TYPE_', '').replace(/_/g, ' ');
     }
 
-    const description = buildVehicleDescription(
-      vin,
-      vinData,
-      exteriorColor,
-      interiorColor,
-      mileage,
-      features,
-      template
-    );
+    window.closeEVInfoWindow = function() {
+        if (ev_InfoWindow) ev_InfoWindow.close();
+    };
 
-    // Fetch the specific dealership signature from the Sheet
-    const dealershipSignature = getSignatureFromSheet(dealershipName);
+    window.triggerNearbySearch = function(lat, lng) {
+        if (!ev_Map) return;
+        ev_Map.setCenter({lat: lat, lng: lng});
+        ev_Map.setZoom(15); 
+        
+        const request = {
+            textQuery: "restaurants and coffee shops",
+            locationBias: {lat: lat, lng: lng},
+            maxResultCount: 10
+        };
+        
+    };
 
-    // Performance Auto Group signature
-    const pagSignature = "Performance Auto Group's mission is to make car buying easy. We are passionate about innovating so that your experience in any of our 39 dealerships is quick and enjoyable. You’ll enjoy working with our friendly teams, who are always available to help you make an informed decision. Purchase confidently with our industry-leading transparency tools that provide unprecedented information about the history and condition of our cars. Drive with confidence knowing that we have the most rigorous inspection and reconditioning process in the country, handled by our team of factory-trained technicians. We invite you to experience the difference - at Performance Auto Group.";
+    async function start() {
+        if (typeof google === 'undefined' || !google.maps) {
+            setTimeout(start, 300);
+            return;
+        }
 
+        try {
+            const [{ Map }, { Place }, { AdvancedMarkerElement }] = await Promise.all([
+                google.maps.importLibrary("maps"),
+                google.maps.importLibrary("places"),
+                google.maps.importLibrary("marker")
+            ]);
 
-    const formattedDescription = description.split('\n\n')
-      .map(para => "<br>" + para.trim() + "<br>")
-      .join('\n\n');
+            ev_InfoWindow = new google.maps.InfoWindow();
+            
+            ev_Map = new Map(document.getElementById("ev-map-canvas"), {
+                center: { lat: 43.159, lng: -79.246 }, 
+                zoom: 11,
+                mapId: "e9da2b0d1db902e558a4a8df",
+                mapTypeControl: false,
+                streetViewControl: false,
+                fullscreenControl: true
+            });
 
-    const formattedDealershipSig = dealershipSignature ? "<br>" + dealershipSignature.trim() + "<br>" : "";
-    const formattedPagSig = "<br>" + pagSignature.trim() + "<br>";
+            ev_Map.addListener("idle", async () => {
+                if (isPanning) { isPanning = false; return; }
+                const bounds = ev_Map.getBounds();
+                if (!bounds) return;
 
-    // Combine everything into the final output
-    const finalOutput = [
-      "VIN: " + vin,
-      formattedDescription,
-      formattedDealershipSig,
-      formattedPagSig
-    ].filter(Boolean).join("\n\n");
+                const request = {
+                    textQuery: "EV Charging Station",
+                    fields: ["displayName", "location", "formattedAddress", "rating", "evChargeOptions", "photos", "editorialSummary"],
+                    locationRestriction: bounds,
+                    maxResultCount: 20 
+                };
 
-    return finalOutput;
-
-  } catch (e) {
-    Logger.log(e);
-    return "Error generating description. Please try again.";
-  } 
-}
-
-function getSignatureFromSheet(dealershipName) {
-  try {
-    const ssId = "1BzpkpSaW78Jh2jDjvqE9nfVjA85t2Xnpu3znZiemVUo"; 
-    const sheet = SpreadsheetApp.openById(ssId).getSheetByName("Signatures");
-    const data = sheet.getDataRange().getValues();
-    
-    for (let i = 0; i < data.length; i++) {
-      if (data[i][0] === dealershipName) {
-        return data[i][1]; 
-      }
-    }
-  } catch (err) {
-    Logger.log("Signature Fetch Error: " + err);
-  }
-  return ""; 
-}
-
-function getDealershipNames() {
-  try {
-    const ssId = "1BzpkpSaW78Jh2jDjvqE9nfVjA85t2Xnpu3znZiemVUo";
-    const ss = SpreadsheetApp.openById(ssId);
-    const sheet = ss.getSheetByName("Signatures");
-    
-    if (!sheet) {
-      Logger.log("Error: Sheet named 'Signatures' not found.");
-      return ["Error: Sheet Not Found"];
+                try {
+                    const { places } = await Place.searchByText(request);
+                    renderUI(places || [], AdvancedMarkerElement);
+                } catch (e) { console.error("Search failed:", e); }
+            });
+        } catch (err) { console.error("Initialization Error", err); }
     }
 
-    const data = sheet.getDataRange().getValues();
-    const names = data.slice(1)
-      .map(row => row[0])
-      .filter(name => name && name.toString().trim() !== "");
-    
-    if (names.length === 0) return ["No dealerships found"];
+    function renderUI(places, AdvancedMarkerElement) {
+        ev_Markers.forEach(m => m.map = null);
+        ev_Markers = [];
+        const list = document.getElementById('ev-results-list');
+        if (!list) return;
+        list.innerHTML = '';
+        
+        places.forEach((place, index) => {
+            const marker = new AdvancedMarkerElement({
+                map: ev_Map,
+                position: place.location,
+                title: place.displayName,
+                gmpClickable: true 
+            });
+            ev_Markers.push(marker);
 
-    return names.sort(); 
-  } catch (err) {
-    Logger.log("Critical Error: " + err.toString());
-    return ["Error: Check Permissions/ID"];
-  }
-}
+            const card = document.createElement('div');
+            card.className = 'ev-location-card';
+            card.id = `ev-card-${index}`;
+            card.style.cssText = "padding:16px; border-bottom:1px solid #e0e0e0; cursor:pointer; background:#fff; font-family:Roboto, Arial, sans-serif;";
 
-// VIN decoder 
-function decodeVin(vin) {
-  const cache = CacheService.getScriptCache();
-  const cached = cache.get(vin);
+            const ratingVal = place.rating ? place.rating.toFixed(1) : "5.0";
+            const addr = place.formattedAddress || "";
+            
+            let sidebarPlugs = '';
+            (place.evChargeOptions?.connectorAggregations || []).forEach(agg => {
+                sidebarPlugs += `<div style="display:flex; justify-content:space-between; font-size:13px; margin-top:8px;"><span style="color:#00838f;">⚡ ${formatConnector(agg.type)}</span><span style="background:#f1f3f4; padding:0 8px; border-radius:4px;">0/${agg.count || 1}</span></div>`;
+            });
 
-  if (cached) {
-    return JSON.parse(cached);
-  }
+            card.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:start;"><div style="width:78%"><h5 style="margin:0; font-size:16px; font-weight:500; color:#202124;">${place.displayName}</h5><div style="font-size:12px; color:#70757a; margin:4px 0;">${ratingVal} <span style="color:#fbbc04;">★★★★★</span></div><p style="margin:4px 0; font-size:13px; color:#70757a;">${addr}</p>${sidebarPlugs}</div><div style="text-align:center; color:#00838f; font-size:11px;"><div style="width:34px; height:34px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">↗</div>Directions</div></div>`;
 
-  const url = "https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValuesExtended/" + vin + "?format=json";
+            const select = (e) => {
+                if (e && e.stopImmediatePropagation) e.stopImmediatePropagation();
+                isPanning = true; 
+                ev_Map.panTo(place.location);
 
-  const response = UrlFetchApp.fetch(url);
-  const data = JSON.parse(response.getContentText());
+                const photoUrl = place.photos && place.photos.length > 0 ? place.photos[0].getURI({maxWidth: 400}) : '';
+                const aboutText = place.editorialSummary || "Electric vehicle charging station providing reliable power services.";
 
-  if (!data.Results || data.Results.length === 0) {
-    return {};
-  }
+                const infoHtml = `
+                    <div style="width:340px; font-family:Roboto, Arial; background:#fff; border-radius:12px; overflow:hidden; position:relative;">
+                        ${photoUrl ? `<div style="width:100%; height:140px; background:url('${photoUrl}') center/cover no-repeat;"></div>` : ''}
+                        <div onclick="window.closeEVInfoWindow()" style="position:absolute; top:12px; right:12px; background:#fff; width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,0.3); font-size:22px; z-index:100; color:#3c4043;">×</div>
+                        <div style="padding:16px 16px 0 16px;">
+                            <h2 style="margin:0; font-size:20px; font-weight:400; color:#202124;">${place.displayName}</h2>
+                            <div style="display:flex; gap:4px; margin:4px 0; font-size:14px; align-items:center;">
+                                <span>${ratingVal}</span><span style="color:#fbbc04;">★★★★★</span><span style="color:#70757a;">(8)</span>
+                            </div>
+                        </div>
+                        <div style="display:flex; border-bottom:1px solid #e0e0e0; margin-top:8px;">
+                            <div id="tab-overview" style="flex:1; text-align:center; padding:12px; color:#00838f; border-bottom:3px solid #00838f; font-weight:500; cursor:pointer;" onclick="document.getElementById('info-content-about').style.display='none'; document.getElementById('info-content-overview').style.display='block'; this.style.color='#00838f'; this.style.borderBottom='3px solid #00838f'; document.getElementById('tab-about').style.color='#70757a'; document.getElementById('tab-about').style.borderBottom='none';">Overview</div>
+                            <div id="tab-about" style="flex:1; text-align:center; padding:12px; color:#70757a; font-weight:500; cursor:pointer;" onclick="document.getElementById('info-content-overview').style.display='none'; document.getElementById('info-content-about').style.display='block'; this.style.color='#00838f'; this.style.borderBottom='3px solid #00838f'; document.getElementById('tab-overview').style.color='#70757a'; document.getElementById('tab-overview').style.borderBottom='none';">About</div>
+                        </div>
+                        <div id="info-content-overview">
+                            <div style="display:flex; justify-content:space-around; padding:16px 8px; border-bottom:1px solid #f1f3f4;">
+                                <div style="text-align:center; cursor:pointer;" onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=${place.location.lat()},${place.location.lng()}')">
+                                    <div style="width:42px; height:42px; border-radius:50%; background:#00838f; color:#fff; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:20px;">↗</div>
+                                    <div style="font-size:11px; color:#00838f; font-weight:500; margin-top:6px;">Directions</div>
+                                </div>
+                                <div style="text-align:center; cursor:pointer;" onclick="window.triggerNearbySearch(${place.location.lat()}, ${place.location.lng()})">
+                                    <div style="width:42px; height:42px; border-radius:50%; border:1px solid #dadce0; color:#00838f; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">📍</div>
+                                    <div style="font-size:11px; color:#00838f; font-weight:500; margin-top:6px;">Nearby</div>
+                                </div>
+                                <div style="text-align:center; cursor:pointer;" onclick="if(navigator.share){navigator.share({title:'${place.displayName}', url:window.location.href})}">
+                                    <div style="width:42px; height:42px; border-radius:50%; border:1px solid #dadce0; color:#00838f; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">🔗</div>
+                                    <div style="font-size:11px; color:#00838f; font-weight:500; margin-top:6px;">Share</div>
+                                </div>
+                            </div>
+                            <div style="padding:16px;">
+                                <div style="display:flex; gap:12px; align-items:flex-start; margin-bottom:16px;">
+                                    <span style="color:#00838f; font-size:18px;">📍</span>
+                                    <span style="font-size:14px; color:#3c4043; line-height:1.4;">${addr}</span>
+                                </div>
+                                <div style="display:flex; gap:12px; align-items:center;">
+                                    <span style="color:#188038; font-size:18px;">🕒</span>
+                                    <span style="font-size:14px; color:#188038; font-weight:500;">Open 24 hours ▾</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="info-content-about" style="display:none; padding:20px; font-size:14px; color:#3c4043; line-height:1.6;">
+                            <div style="margin-bottom:10px; font-weight:500; color:#202124;">About this location</div>
+                            ${aboutText}
+                        </div>
+                    </div>`;
 
-  const r = data.Results[0];
+                ev_InfoWindow.setOptions({ content: infoHtml, headerDisabled: true });
+                ev_InfoWindow.open({ anchor: marker, map: ev_Map, shouldFocus: false });
 
-  const result = {
-    year: r.ModelYear,
-    make: r.Make,
-    model: r.Model,
-    series: r.Series || "",
-    trim: r.Trim || "",
-    body: r.BodyClass,
-    drivetrain: r.DriveType,
-    engine: r.EngineModel || r.EngineCylinders || "",
-    fuel: r.FuelTypePrimary,
-    transmission: r.TransmissionStyle || ""
-  };
+                document.querySelectorAll('.ev-location-card').forEach(c => c.style.background = '#fff');
+                card.style.background = '#f8f9fa';
+                card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            };
 
-  cache.put(vin, JSON.stringify(result), 21600);
-  return result;
-}
-
-// Gemini description builder 
-function buildVehicleDescription(
-  vin,
-  vinData,
-  exteriorColor,
-  interiorColor,
-  mileage,
-  features,
-  template
-) {
-
-  const CLOUD_FUNCTION_URL = "https://gemini-wrapper-769592788241.us-central1.run.app";
-  const requestId = Utilities.getUuid();
-
-  let toneRules =
-    "Write in a professional dealership retail tone for Canadian buyers.\n" +
-    "Confident, informative, and well structured.\n" +
-    "Highlight performance, comfort, technology, and safety.\n" +
-    "Use natural sales language without exaggeration.\n" +
-    "You may describe common features typically included with this model or trim.\n" +
-    "If trim is known, you may reference it directly.\n" +
-    "If trim is unknown, avoid naming specific packages.\n";
-
-  const prompt =
-    "You are generating a short vehicle description.\n\n" +
-
-    "Required information.\n" +
-    "VIN: " + vin + "\n" +
-    "Year: " + vinData.year + "\n" +
-    "Make: " + vinData.make + "\n" +
-    "Model: " + vinData.model + "\n" +
-    "Exterior Color: " + exteriorColor + "\n" +
-    "Mileage: " + mileage + "\n" +
-    "Series: " + (vinData.series || "not specified") + "\n" +
-    "Trim: " + (vinData.trim || "not specified") + "\n" +
-    "Transmission: " + (vinData.transmission || "not specified") + "\n" +
-    "Key Features: " + features + "\n\n" +
-
-    "Optional information.\n" +
-    "Interior Color: " + (interiorColor || "not specified") + "\n" +
-    "Body Type: " + (vinData.body || "not specified") + "\n" +
-    "Drivetrain: " + (vinData.drivetrain || "not specified") + "\n" +
-    "Engine: " + (vinData.engine || "not specified") + "\n" +
-    "Fuel Type: " + (vinData.fuel || "not specified") + "\n\n" +
-
-    "Rules.\n" +
-    toneRules +
-    "Do not guess missing information.\n" +
-    "If data is unavailable, say not specified.\n" +
-    "CRITICAL: You must incorporate the provided Key Features within the first 100 words of the description.\n" +
-    "Paragraph one. Strong feature driven opening sentence that highlights engine or performance, comfort features, and technology.\n" +
-    "Paragraph two. Expanded details on powertrain, interior comfort, infotainment, and convenience features.\n" +
-    "Paragraph three. Safety systems and overall value statement tailored to Canadian driving conditions.\n";
-
-  const userEmail = Session.getActiveUser().getEmail() || "unknown";
-  const payload = {
-    requestId: requestId,
-    userEmail: userEmail,
-    prompt: prompt
-  };
-
-  const options = {
-    method: "post",
-    contentType: "application/json",
-    headers: {
-      Authorization: "Bearer " + ScriptApp.getOAuthToken()
-    },
-    payload: JSON.stringify(payload),
-    muteHttpExceptions: true
-  };
-
-  const response = UrlFetchApp.fetch(CLOUD_FUNCTION_URL, options);
-  const json = JSON.parse(response.getContentText());
-
-  if (json.requestId !== requestId) {
-    throw new Error("Request mismatch. Please retry.");
-  }
-
-  if (!json.text) {
-    throw new Error("AI generation failed.");
-  }
-
-  return json.text
-    .replace(/\n{3,}/g, "\n\n")
-    .trim();
-}
+            marker.addListener('gmp-click', (e) => select(e));
+            card.onclick = (e) => select(e);
+            list.appendChild(card);
+        });
+    }
+    start();
+})();
