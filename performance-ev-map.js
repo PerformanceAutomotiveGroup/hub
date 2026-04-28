@@ -30,25 +30,34 @@
         };
     };
 
-    window.calculateRoute = function(destLat, destLng) {
-        if (!directionsService || !directionsRenderer) return;
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition((position) => {
-                const origin = { lat: position.coords.latitude, lng: position.coords.longitude };
-                directionsService.route({
-                    origin: origin,
-                    destination: { lat: destLat, lng: destLng },
-                    travelMode: google.maps.TravelMode.DRIVING
-                }, (result, status) => {
-                    if (status === 'OK') {
-                        directionsRenderer.setDirections(result);
-                        const panel = document.getElementById('ev-directions-panel');
-                        if (panel) panel.scrollIntoView({ behavior: 'smooth' });
-                    }
-                });
-            }, () => alert("Please enable location services for turn-by-turn directions."));
-        }
-    };
+window.calculateRoute = function(destLat, destLng) {
+    if (!directionsService || !directionsRenderer) return;
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+            const origin = { lat: position.coords.latitude, lng: position.coords.longitude };
+            
+            // Ensure the renderer is connected to the map before drawing
+            directionsRenderer.setMap(ev_Map);
+
+            directionsService.route({
+                origin: origin,
+                destination: { lat: destLat, lng: destLng },
+                travelMode: google.maps.TravelMode.DRIVING
+            }, (result, status) => {
+                if (status === 'OK') {
+                    // This command draws the line and the A/B markers
+                    directionsRenderer.setDirections(result);
+                    
+                    const panel = document.getElementById('ev-directions-panel');
+                    if (panel) panel.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    console.error("Directions failed: " + status);
+                }
+            });
+        }, () => alert("Location access is required to show the route on the map."));
+    }
+};
 
     async function start() {
         if (typeof google === 'undefined' || !google.maps) {
