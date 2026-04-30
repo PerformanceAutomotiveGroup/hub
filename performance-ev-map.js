@@ -39,39 +39,39 @@
     };
 
     window.calculateRoute = function(destLat, destLng) {
-        if (!directionsService || !directionsRenderer) return;
-        
-        const latNum = parseFloat(destLat);
-        const lngNum = parseFloat(destLng);
+    if (!directionsService || !directionsRenderer) return;
+    
+    const latNum = Number(destLat);
+    const lngNum = Number(destLng);
 
-        if (isNaN(latNum) || isNaN(lngNum)) return;
+    if (isNaN(latNum) || isNaN(lngNum) || !isFinite(latNum) || !isFinite(lngNum)) {
+        console.error("calculateRoute: Invalid coordinates received.");
+        return;
+    }
 
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition((position) => {
-                const origin = { lat: position.coords.latitude, lng: position.coords.longitude };
-                
-                // FIX: Formal constructor strips hidden 'KJ' properties that cause crashes
-                const destination = new google.maps.LatLng(latNum, lngNum);
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+            const origin = { lat: position.coords.latitude, lng: position.coords.longitude };
+            
+            const destination = new google.maps.LatLng(latNum, lngNum);
 
-                directionsService.route({
-                    origin: origin,
-                    destination: destination,
-                    travelMode: google.maps.TravelMode.DRIVING
-                }, (result, status) => {
-                    if (status === 'OK') {
-                        // Force re-binding to map to fix missing line and B marker
-                        directionsRenderer.setMap(null);
-                        directionsRenderer.setMap(ev_Map);
-                        directionsRenderer.setDirections(result);
-                        
-                        const panel = document.getElementById('ev-directions-panel');
-                        if (panel) panel.scrollIntoView({ behavior: 'smooth' });
-                    }
-                });
-            }, () => alert("Please enable location services."));
-        }
-    };
-
+            directionsService.route({
+                origin: origin,
+                destination: destination,
+                travelMode: google.maps.TravelMode.DRIVING
+            }, (result, status) => {
+                if (status === 'OK') {
+                    directionsRenderer.setMap(null);
+                    directionsRenderer.setMap(ev_Map);
+                    directionsRenderer.setDirections(result);
+                    
+                    const panel = document.getElementById('ev-directions-panel');
+                    if (panel) panel.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        }, () => alert("Please enable location services."));
+    }
+};
     async function start() {
         if (typeof google === 'undefined' || !google.maps) {
             setTimeout(start, 300);
