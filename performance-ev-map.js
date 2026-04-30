@@ -36,7 +36,7 @@
         };
     };
 
-window.calculateRoute = function(destLat, destLng) {
+    window.calculateRoute = function(destLat, destLng) {
         if (!window.directionsService || !window.directionsRenderer) return;
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
@@ -47,7 +47,14 @@ window.calculateRoute = function(destLat, destLng) {
                     travelMode: google.maps.TravelMode.DRIVING
                 }, (result, status) => {
                     if (status === 'OK') {
-                        window.directionsRenderer.setDirections(result);
+                        // Close info window so it doesn't hide Point B
+                        if (ev_InfoWindow) ev_InfoWindow.close();
+
+                        // Set directions and ensure markers have high zIndex to be on top
+                        window.directionsRenderer.setOptions({
+                            directions: result,
+                            markerOptions: { zIndex: 9999 } 
+                        });
                         
                         window.directionsRenderer.setMap(null);
                         window.directionsRenderer.setMap(window.ev_Map);
