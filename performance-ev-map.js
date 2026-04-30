@@ -45,7 +45,7 @@
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
                 const origin = { lat: position.coords.latitude, lng: position.coords.longitude };
-                const destination = { lat: destLat, lng: destLng };
+                const destination = { lat: parseFloat(destLat), lng: parseFloat(destLng) };
 
                 directionsService.route({
                     origin: origin,
@@ -193,7 +193,7 @@
                         </div>
                         <div id="info-content-overview">
                             <div style="display:flex; justify-content:space-around; padding:16px 8px; border-bottom:1px solid #f1f3f4;">
-                                <div style="text-align:center; cursor:pointer;" onclick="window.calculateRoute(${place.location.lat}, ${place.location.lng})">
+                                <div style="text-align:center; cursor:pointer;" onclick="window.calculateRoute(${place.location.lat()}, ${place.location.lng()})"">
                                     <div style="width:42px; height:42px; border-radius:50%; background:#00838f; color:#fff; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:20px;">↗</div>
                                     <div style="font-size:11px; color:#00838f; font-weight:500; margin-top:6px;">Directions</div>
                                 </div>
