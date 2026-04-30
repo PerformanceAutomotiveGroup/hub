@@ -40,53 +40,44 @@
         } catch (e) { console.error("Nearby search failed:", e); }
     };
 
-// Use this updated function to resolve both the missing line and missing B marker
 window.calculateRoute = function(destLat, destLng) {
     if (!directionsService || !directionsRenderer) return;
-    
-    // Convert incoming values to clean, finite numbers
-    const latB = parseFloat(destLat);
-    const lngB = parseFloat(destLng);
 
-    if (isNaN(latB) || isNaN(lngB)) {
-        console.error("calculateRoute: Valid destination coordinates were not provided.");
+    const lat = parseFloat(destLat);
+    const lng = parseFloat(destLng);
+
+    if (isNaN(lat) || isNaN(lng)) {
+        console.error("Invalid destination coordinates");
         return;
     }
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
-            
-            const originA = { 
+            const origin = { 
                 lat: position.coords.latitude, 
                 lng: position.coords.longitude 
             };
-
-            const destinationB = new google.maps.LatLng(latB, lngB);
+            
+            // Format destination as a clean LatLngLiteral
+            const destination = { lat: lat, lng: lng };
 
             directionsService.route({
-                origin: originA,
-                destination: destinationB, 
+                origin: origin,
+                destination: destination,
                 travelMode: google.maps.TravelMode.DRIVING
-
             }, (result, status) => {
                 if (status === 'OK') {
-                    directionsRenderer.setMap(null); 
-                    directionsRenderer.setMap(ev_Map); 
-                    
+                    // Re-bind to ensure the Map instance is fresh
+                    directionsRenderer.setMap(ev_Map);
                     directionsRenderer.setDirections(result);
                     
                     const panel = document.getElementById('ev-directions-panel');
                     if (panel) panel.scrollIntoView({ behavior: 'smooth' });
-                    
-                    console.log("calculateRoute: Route visualization successful.");
                 } else {
-                    console.error('calculateRoute: Directions request failed due to ' + status);
-                    alert("Could not calculate directions to this location.");
+                    console.error("Directions request failed: " + status);
                 }
             });
-        }, () => alert("Please enable location services for turn-by-turn directions."));
-    } else {
-        alert("Your browser does not support Geolocation services.");
+        }, () => alert("Please enable location services."));
     }
 };
 
