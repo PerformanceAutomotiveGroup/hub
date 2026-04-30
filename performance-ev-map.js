@@ -40,15 +40,18 @@
 
     window.calculateRoute = function(destLat, destLng) {
         if (!directionsService || !directionsRenderer) return;
-        const lat = parseFloat(destLat);
-        const lng = parseFloat(destLng);
+        
+        const latNum = parseFloat(destLat);
+        const lngNum = parseFloat(destLng);
 
-        if (isNaN(lat) || isNaN(lng)) return;
+        if (isNaN(latNum) || isNaN(lngNum)) return;
 
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
                 const origin = { lat: position.coords.latitude, lng: position.coords.longitude };
-                const destination = new google.maps.LatLng(lat, lng);
+                
+                // FIX: Formal constructor strips hidden 'KJ' properties that cause crashes
+                const destination = new google.maps.LatLng(latNum, lngNum);
 
                 directionsService.route({
                     origin: origin,
@@ -56,7 +59,7 @@
                     travelMode: google.maps.TravelMode.DRIVING
                 }, (result, status) => {
                     if (status === 'OK') {
-                        // Reset map binding to force polyline visibility
+                        // Force re-binding to map to fix missing line and B marker
                         directionsRenderer.setMap(null);
                         directionsRenderer.setMap(ev_Map);
                         directionsRenderer.setDirections(result);
@@ -89,11 +92,11 @@
                 polylineOptions: {
                     strokeColor: "#00838f",
                     strokeWeight: 6,
-                    zIndex: 9999, // Fixed: comma instead of semicolon
+                    zIndex: 99999, // Force line to top layer
                     strokeOpacity: 0.9
                 },
                 markerOptions: {
-                    zIndex: 10000, 
+                    zIndex: 100000, // Force Point B to top layer
                     optimized: false
                 }
             });
@@ -116,6 +119,7 @@
                 const rawBounds = ev_Map.getBounds();
                 if (!rawBounds) return;
 
+                // FIX: Manually construct clean literal to kill 'cj' error
                 const cleanBounds = {
                     north: rawBounds.getNorthEast().lat(),
                     south: rawBounds.getSouthWest().lat(),
