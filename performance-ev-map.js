@@ -36,7 +36,7 @@
         };
     };
 
-    window.calculateRoute = function(destLat, destLng) {
+window.calculateRoute = function(destLat, destLng) {
         if (!window.directionsService || !window.directionsRenderer) return;
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
@@ -47,10 +47,15 @@
                     travelMode: google.maps.TravelMode.DRIVING
                 }, (result, status) => {
                     if (status === 'OK') {
-                        // Ensure renderer is attached and draw the route
-                        window.directionsRenderer.setMap(window.ev_Map);
                         window.directionsRenderer.setDirections(result);
                         
+                        window.directionsRenderer.setMap(null);
+                        window.directionsRenderer.setMap(window.ev_Map);
+
+                        google.maps.event.addListenerOnce(window.ev_Map, 'tilesloaded', function(){
+                            window.directionsRenderer.setDirections(result);
+                        });
+
                         const panel = document.getElementById('ev-directions-panel');
                         if (panel) panel.scrollIntoView({ behavior: 'smooth' });
                     }
