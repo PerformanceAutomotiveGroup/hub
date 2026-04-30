@@ -3,7 +3,7 @@
     let ev_Markers = [];
     let isPanning = false;
 
-    // Manual route elements to bypass legacy renderer bugs
+    // Manual route elements to ensure visibility on Vector Maps
     let activeRouteLine = null;
     let destinationMarker = null;
 
@@ -24,6 +24,7 @@
 
     window.triggerNearbySearch = async function(lat, lng) {
         if (!ev_Map) return;
+        // Strip hidden properties by forcing Number casting
         const latNum = Number(lat);
         const lngNum = Number(lng);
         
@@ -61,11 +62,11 @@
                     travelMode: google.maps.TravelMode.DRIVING
                 }, async (result, status) => {
                     if (status === 'OK') {
-                        // 1. Clear previous manual route elements
+                        // 1. Clear previous manual route layers
                         if (activeRouteLine) activeRouteLine.setMap(null);
                         if (destinationMarker) destinationMarker.map = null;
 
-                        // 2. Draw the line manually (Fixes the invisible line on Vector Maps)
+                        // 2. Draw line using native Polyline (Bypasses KJ/cj errors)
                         activeRouteLine = new google.maps.Polyline({
                             path: result.routes[0].overview_path,
                             strokeColor: "#00838f",
@@ -75,7 +76,7 @@
                             zIndex: 9999
                         });
 
-                        // 3. Place Point B manually using Advanced Markers (Fixes hidden marker)
+                        // 3. Place Destination Marker manually
                         const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
                         destinationMarker = new AdvancedMarkerElement({
                             map: ev_Map,
@@ -84,13 +85,12 @@
                             zIndex: 10000
                         });
 
-                        // 4. Load the text steps into your panel
+                        // 4. Update the text step panel
                         directionsRenderer.setDirections(result);
                         
                         const panel = document.getElementById('ev-directions-panel');
                         if (panel) panel.scrollIntoView({ behavior: 'smooth' });
                         
-                        // Fit map to show the whole route
                         ev_Map.fitBounds(result.routes[0].bounds);
                     }
                 });
@@ -99,24 +99,25 @@
     };
 
     async function start() {
+        // Prevent duplicate initialization crashes
         if (typeof google === 'undefined' || !google.maps) {
             setTimeout(start, 300);
             return;
         }
 
         try {
-            const [{ Map }, { Place }, { AdvancedMarkerElement }] = await Promise.all([
+            const [{ Map }, { Place }] = await Promise.all([
                 google.maps.importLibrary("maps"),
-                google.maps.importLibrary("places"),
-                google.maps.importLibrary("marker")
+                google.maps.importLibrary("places")
             ]);
 
             directionsService = new google.maps.DirectionsService();
             
-            // We suppress default rendering to use our manual drawing instead
+            // Renderer used only for the text panel to avoid 'KJ' marker errors
             directionsRenderer = new google.maps.DirectionsRenderer({
                 suppressMarkers: true, 
-                preserveViewport: true
+                preserveViewport: true,
+                map: null 
             });
 
             ev_InfoWindow = new google.maps.InfoWindow();
@@ -137,7 +138,7 @@
                 const bounds = ev_Map.getBounds();
                 if (!bounds) return;
 
-                // FIX: Manual reconstruction to kill 'cj' error
+                // Reconstruct bounds literal to strip 'cj' property
                 const cleanBounds = {
                     north: bounds.getNorthEast().lat(),
                     south: bounds.getSouthWest().lat(),
@@ -154,6 +155,7 @@
 
                 try {
                     const { places } = await Place.searchByText(request);
+                    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
                     renderUI(places || [], AdvancedMarkerElement);
                 } catch (e) { console.error("Search failed:", e); }
             });
@@ -178,8 +180,7 @@
 
             const card = document.createElement('div');
             card.className = 'ev-location-card';
-            card.id = `ev-card-${index}`;
-            card.style.cssText = "padding:16px; border-bottom:1px solid #e0e0e0; cursor:pointer; background:#fff; font-family:Roboto, Arial, sans-serif;";
+            card.style.cssText = "padding:16px; border-bottom:1px solid #e0e0e0; cursor:pointer; background:#fff;";
 
             const ratingVal = place.rating ? place.rating.toFixed(1) : "5.0";
             const addr = place.formattedAddress || "";
@@ -205,44 +206,18 @@
                         <div onclick="window.closeEVInfoWindow()" style="position:absolute; top:12px; right:12px; background:#fff; width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,0.3); font-size:22px; z-index:100; color:#3c4043;">×</div>
                         <div style="padding:16px 16px 0 16px;">
                             <h2 style="margin:0; font-size:20px; font-weight:400; color:#202124;">${place.displayName}</h2>
-                            <div style="display:flex; gap:4px; margin:4px 0; font-size:14px; align-items:center;">
-                                <span>${ratingVal}</span><span style="color:#fbbc04;">★★★★★</span><span style="color:#70757a;">(8)</span>
+                        </div>
+                        <div style="display:flex; justify-content:space-around; padding:16px 8px;">
+                            <div style="text-align:center; cursor:pointer;" onclick="window.calculateRoute(${place.location.lat()}, ${place.location.lng()})">
+                                <div style="width:42px; height:42px; border-radius:50%; background:#00838f; color:#fff; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:20px;">↗</div>
+                                <div style="font-size:11px; color:#00838f; font-weight:500; margin-top:6px;">Directions</div>
+                            </div>
+                            <div style="text-align:center; cursor:pointer;" onclick="window.triggerNearbySearch(${place.location.lat()}, ${place.location.lng()})">
+                                <div style="width:42px; height:42px; border-radius:50%; border:1px solid #dadce0; color:#00838f; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">📍</div>
+                                <div style="font-size:11px; color:#00838f; font-weight:500; margin-top:6px;">Nearby</div>
                             </div>
                         </div>
-                        <div style="display:flex; border-bottom:1px solid #e0e0e0; margin-top:8px;">
-                            <div id="tab-overview" style="flex:1; text-align:center; padding:12px; color:#00838f; border-bottom:3px solid #00838f; font-weight:500; cursor:pointer;" onclick="document.getElementById('info-content-about').style.display='none'; document.getElementById('info-content-overview').style.display='block'; this.style.color='#00838f'; this.style.borderBottom='3px solid #00838f'; document.getElementById('tab-about').style.color='#70757a'; document.getElementById('tab-about').style.borderBottom='none';">Overview</div>
-                            <div id="tab-about" style="flex:1; text-align:center; padding:12px; color:#70757a; font-weight:500; cursor:pointer;" onclick="document.getElementById('info-content-overview').style.display='none'; document.getElementById('info-content-about').style.display='block'; this.style.color='#00838f'; this.style.borderBottom='3px solid #00838f'; document.getElementById('tab-overview').style.color='#70757a'; document.getElementById('tab-overview').style.borderBottom='none';">About</div>
-                        </div>
-                        <div id="info-content-overview">
-                            <div style="display:flex; justify-content:space-around; padding:16px 8px; border-bottom:1px solid #f1f3f4;">
-                                <div style="text-align:center; cursor:pointer;" onclick="window.calculateRoute(${place.location.lat()}, ${place.location.lng()})">
-                                    <div style="width:42px; height:42px; border-radius:50%; background:#00838f; color:#fff; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:20px;">↗</div>
-                                    <div style="font-size:11px; color:#00838f; font-weight:500; margin-top:6px;">Directions</div>
-                                </div>
-                                <div style="text-align:center; cursor:pointer;" onclick="window.triggerNearbySearch(${place.location.lat()}, ${place.location.lng()})">
-                                    <div style="width:42px; height:42px; border-radius:50%; border:1px solid #dadce0; color:#00838f; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">📍</div>
-                                    <div style="font-size:11px; color:#00838f; font-weight:500; margin-top:6px;">Nearby</div>
-                                </div>
-                                <div style="text-align:center; cursor:pointer;" onclick="if(navigator.share){navigator.share({title:'${place.displayName}', url:window.location.href})}">
-                                    <div style="width:42px; height:42px; border-radius:50%; border:1px solid #dadce0; color:#00838f; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">🔗</div>
-                                    <div style="font-size:11px; color:#00838f; font-weight:500; margin-top:6px;">Share</div>
-                                </div>
-                            </div>
-                            <div style="padding:16px;">
-                                <div style="display:flex; gap:12px; align-items:flex-start; margin-bottom:16px;">
-                                    <span style="color:#00838f; font-size:18px;">2📍</span>
-                                    <span style="font-size:14px; color:#3c4043; line-height:1.4;">${addr}</span>
-                                </div>
-                                <div style="display:flex; gap:12px; align-items:center;">
-                                    <span style="color:#188038; font-size:18px;">🕒</span>
-                                    <span style="font-size:14px; color:#188038; font-weight:500;">Open 24 hours ▾</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="info-content-about" style="display:none; padding:20px; font-size:14px; color:#3c4043; line-height:1.6;">
-                            <div style="margin-bottom:10px; font-weight:500; color:#202124;">About this location</div>
-                            ${aboutText}
-                        </div>
+                        <div style="padding:16px; font-size:14px; color:#3c4043; border-top:1px solid #f1f3f4;">3📍 ${addr}</div>
                     </div>`;
 
                 ev_InfoWindow.setOptions({ content: infoHtml, headerDisabled: true });
