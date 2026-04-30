@@ -42,7 +42,7 @@
                     travelMode: google.maps.TravelMode.DRIVING
                 }, (result, status) => {
                     if (status === 'OK') {
-                        // This draws the route line on the map
+                        directionsRenderer.setMap(ev_Map);
                         directionsRenderer.setDirections(result);
                         // This handles the scrolling to the directions panel
                         const panel = document.getElementById('ev-directions-panel');
@@ -70,9 +70,12 @@
             directionsService = new google.maps.DirectionsService();
             directionsRenderer = new google.maps.DirectionsRenderer({
                 suppressMarkers: false,
+                preserveViewport: false,
                 polylineOptions: {
                     strokeColor: "#00838f",
-                    strokeWeight: 6
+                    strokeWeight: 6,
+                    strokeOpacity: 1.0,
+                    zIndex: 9999999
                 }
             });
 
