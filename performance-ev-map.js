@@ -50,21 +50,17 @@
                         // Close info window so it doesn't hide Point B
                         if (ev_InfoWindow) ev_InfoWindow.close();
 
-                        // Set directions and ensure markers have high zIndex to be on top
-                        window.directionsRenderer.setOptions({
-                            directions: result,
-                            markerOptions: { zIndex: 9999 } 
-                        });
-                        
-                        window.directionsRenderer.setMap(null);
-                        window.directionsRenderer.setMap(window.ev_Map);
+                        // Use requestAnimationFrame to ensure WebGL/Vector layers are ready for the polyline
+                        requestAnimationFrame(() => {
+                            window.directionsRenderer.setMap(window.ev_Map);
+                            window.directionsRenderer.setOptions({
+                                directions: result,
+                                markerOptions: { zIndex: 9999 } 
+                            });
 
-                        google.maps.event.addListenerOnce(window.ev_Map, 'tilesloaded', function(){
-                            window.directionsRenderer.setDirections(result);
+                            const panel = document.getElementById('ev-directions-panel');
+                            if (panel) panel.scrollIntoView({ behavior: 'smooth' });
                         });
-
-                        const panel = document.getElementById('ev-directions-panel');
-                        if (panel) panel.scrollIntoView({ behavior: 'smooth' });
                     }
                 });
             }, () => alert("Please enable location services for turn-by-turn directions."));
