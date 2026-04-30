@@ -36,36 +36,32 @@
         };
     };
 
-    window.calculateRoute = function(destLat, destLng) {
-        if (!window.directionsService || !window.directionsRenderer) return;
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition((position) => {
-                const origin = { lat: position.coords.latitude, lng: position.coords.longitude };
-                window.directionsService.route({
-                    origin: origin,
-                    destination: { lat: destLat, lng: destLng },
-                    travelMode: google.maps.TravelMode.DRIVING
-                }, (result, status) => {
-                    if (status === 'OK') {
-                        // Close info window so it doesn't hide Point B
-                        if (ev_InfoWindow) ev_InfoWindow.close();
+ window.calculateRoute = function(destLat, destLng) {
+    if (!window.directionsService || !window.directionsRenderer) return;
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+            const origin = { lat: position.coords.latitude, lng: position.coords.longitude };
+            window.directionsService.route({
+                origin: origin,
+                destination: { lat: destLat, lng: destLng },
+                travelMode: google.maps.TravelMode.DRIVING
+            }, (result, status) => {
+                if (status === 'OK') {
+                    if (ev_InfoWindow) ev_InfoWindow.close();
 
-                        // Use requestAnimationFrame to ensure WebGL/Vector layers are ready for the polyline
-                        requestAnimationFrame(() => {
-                            window.directionsRenderer.setMap(window.ev_Map);
-                            window.directionsRenderer.setOptions({
-                                directions: result,
-                                markerOptions: { zIndex: 9999 } 
-                            });
+                    requestAnimationFrame(() => {
+                        // Force the renderer to use the map and directions
+                        window.directionsRenderer.setMap(window.ev_Map);
+                        window.directionsRenderer.setDirections(result);
 
-                            const panel = document.getElementById('ev-directions-panel');
-                            if (panel) panel.scrollIntoView({ behavior: 'smooth' });
-                        });
-                    }
-                });
-            }, () => alert("Please enable location services for turn-by-turn directions."));
-        }
-    };
+                        const panel = document.getElementById('ev-directions-panel');
+                        if (panel) panel.scrollIntoView({ behavior: 'smooth' });
+                    });
+                }
+            });
+        }, () => alert("Please enable location services."));
+    }
+};
 
     async function start() {
         if (typeof google === 'undefined' || !google.maps) {
@@ -82,15 +78,19 @@
 
             window.directionsService = new google.maps.DirectionsService();
             window.directionsRenderer = new google.maps.DirectionsRenderer({
-                suppressMarkers: false,
-                preserveViewport: false,
-                polylineOptions: {
-                    strokeColor: "#00838f",
-                    strokeWeight: 6,
-                    strokeOpacity: 1.0,
-                    zIndex: 9999999
-                }
-            });
+        suppressMarkers: false,
+        preserveViewport: false,
+        useAdvancedMarkers: true, 
+        markerOptions: {
+            zIndex: 9999,
+            collisionBehavior: "REQUIRED_AND_HIDES_OPTIONAL" 
+        },
+        polylineOptions: {
+            strokeColor: "#00838f",
+            strokeWeight: 6,
+            zIndex: 9999999
+        }
+    });
 
             ev_InfoWindow = new google.maps.InfoWindow();
             
