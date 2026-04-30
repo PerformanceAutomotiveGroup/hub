@@ -3,6 +3,8 @@
     let ev_Markers = [];
     let isPanning = false;
 
+    let lastMilePolyline = null;
+
     function formatConnector(type) {
         if (!type) return "Unknown";
         const types = { 
@@ -18,8 +20,10 @@
         if (ev_InfoWindow) ev_InfoWindow.close();
     };
 
-    window.triggerNearbySearch = function(lat, lng) {
+    window.triggerNearbySearch = async function(lat, lng) {
         if (!ev_Map) return;
+        
+        const { Place } = await google.maps.importLibrary("places");
         ev_Map.setCenter({lat: lat, lng: lng});
         ev_Map.setZoom(15); 
         
@@ -28,23 +32,47 @@
             locationBias: {lat: lat, lng: lng},
             maxResultCount: 10
         };
+
+        try {
+            const { places } = await Place.searchByText(request);
+            const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+            renderUI(places || [], AdvancedMarkerElement);
+        } catch (e) { console.error("Nearby search failed:", e); }
     };
 
-    // Calculate route and output steps to the panel below map
     window.calculateRoute = function(destLat, destLng) {
         if (!directionsService || !directionsRenderer) return;
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
                 const origin = { lat: position.coords.latitude, lng: position.coords.longitude };
+                const destination = { lat: destLat, lng: destLng };
+
                 directionsService.route({
                     origin: origin,
-                    destination: { lat: destLat, lng: destLng },
-                    travelMode: google.maps.TravelMode.DRIVING
+                    destination: destination,
+                    travelMode: google.maps.TravelMode.DRIVING,
+                    optimizeWaypoints: true
                 }, (result, status) => {
                     if (status === 'OK') {
-                        // This draws the route line on the map
                         directionsRenderer.setDirections(result);
-                        // This handles the scrolling to the directions panel
+                        
+                        if (lastMilePolyline) lastMilePolyline.setMap(null);
+                        
+                        const route = result.routes[0].legs[0];
+                        const lastStepPoint = route.end_location;
+                        
+                        lastMilePolyline = new google.maps.Polyline({
+                            path: [lastStepPoint, destination],
+                            strokeColor: "#00838f",
+                            strokeOpacity: 0,
+                            icons: [{
+                                icon: { path: 'M 0,-1 0,1', strokeOpacity: 1, scale: 2 },
+                                offset: '0',
+                                repeat: '10px'
+                            }],
+                            map: ev_Map
+                        });
+
                         const panel = document.getElementById('ev-directions-panel');
                         if (panel) panel.scrollIntoView({ behavior: 'smooth' });
                     }
@@ -66,13 +94,13 @@
                 google.maps.importLibrary("marker")
             ]);
 
-            // Initialize Directions Service/Renderer
             directionsService = new google.maps.DirectionsService();
             directionsRenderer = new google.maps.DirectionsRenderer({
                 suppressMarkers: false,
                 polylineOptions: {
                     strokeColor: "#00838f",
-                    strokeWeight: 6
+                    strokeWeight: 6,
+                    zIndex: 1 
                 }
             });
 
@@ -87,7 +115,6 @@
                 fullscreenControl: true
             });
 
-            // Bind directions to map and panel
             directionsRenderer.setMap(ev_Map);
             directionsRenderer.setPanel(document.getElementById('ev-directions-panel'));
 
@@ -140,8 +167,7 @@
                 sidebarPlugs += `<div style="display:flex; justify-content:space-between; font-size:13px; margin-top:8px;"><span style="color:#00838f;">⚡ ${formatConnector(agg.type)}</span><span style="background:#f1f3f4; padding:0 8px; border-radius:4px;">0/${agg.count || 1}</span></div>`;
             });
 
-            // Card remains exactly as you designed
-            card.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:start;"><div style="width:78%"><h5 style="margin:0; font-size:16px; font-weight:500; color:#202124;">${place.displayName}</h5><div style="font-size:12px; color:#70757a; margin:4px 0;">${ratingVal} <span style="color:#fbbc04;">★★★★★</span></div><p style="margin:4px 0; font-size:13px; color:#70757a;">${addr}</p>${sidebarPlugs}</div><div style="text-align:center; color:#00838f; font-size:11px;" onclick="window.calculateRoute(${place.location.lat()}, ${place.location.lng()})"><div style="width:34px; height:34px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">↗</div>Directions</div></div>`;
+            card.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:start;"><div style="width:78%"><h5 style="margin:0; font-size:16px; font-weight:500; color:#202124;">${place.displayName}</h5><div style="font-size:12px; color:#70757a; margin:4px 0;">${ratingVal} <span style="color:#fbbc04;">★★★★★</span></div><p style="margin:4px 0; font-size:13px; color:#70757a;">${addr}</p>${sidebarPlugs}</div><div style="text-align:center; color:#00838f; font-size:11px;" onclick="window.calculateRoute(${place.location.lat}, ${place.location.lng})"><div style="width:34px; height:34px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">↗</div>Directions</div></div>`;
 
             const select = (e) => {
                 if (e && e.stopImmediatePropagation) e.stopImmediatePropagation();
@@ -151,7 +177,6 @@
                 const photoUrl = place.photos && place.photos.length > 0 ? place.photos[0].getURI({maxWidth: 400}) : '';
                 const aboutText = place.editorialSummary || "Electric vehicle charging station providing reliable power services.";
 
-                // InfoHtml remains exactly as you designed
                 const infoHtml = `
                     <div style="width:340px; font-family:Roboto, Arial; background:#fff; border-radius:12px; overflow:hidden; position:relative;">
                         ${photoUrl ? `<div style="width:100%; height:140px; background:url('${photoUrl}') center/cover no-repeat;"></div>` : ''}
@@ -168,11 +193,11 @@
                         </div>
                         <div id="info-content-overview">
                             <div style="display:flex; justify-content:space-around; padding:16px 8px; border-bottom:1px solid #f1f3f4;">
-                                <div style="text-align:center; cursor:pointer;" onclick="window.calculateRoute(${place.location.lat()}, ${place.location.lng()})">
+                                <div style="text-align:center; cursor:pointer;" onclick="window.calculateRoute(${place.location.lat}, ${place.location.lng})">
                                     <div style="width:42px; height:42px; border-radius:50%; background:#00838f; color:#fff; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:20px;">↗</div>
                                     <div style="font-size:11px; color:#00838f; font-weight:500; margin-top:6px;">Directions</div>
                                 </div>
-                                <div style="text-align:center; cursor:pointer;" onclick="window.triggerNearbySearch(${place.location.lat()}, ${place.location.lng()})">
+                                <div style="text-align:center; cursor:pointer;" onclick="window.triggerNearbySearch(${place.location.lat}, ${place.location.lng})">
                                     <div style="width:42px; height:42px; border-radius:50%; border:1px solid #dadce0; color:#00838f; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">📍</div>
                                     <div style="font-size:11px; color:#00838f; font-weight:500; margin-top:6px;">Nearby</div>
                                 </div>
