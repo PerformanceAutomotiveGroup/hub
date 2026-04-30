@@ -40,46 +40,39 @@
         } catch (e) { console.error("Nearby search failed:", e); }
     };
 
-    window.calculateRoute = function(destLat, destLng) {
-        if (!directionsService || !directionsRenderer) return;
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition((position) => {
-                const origin = { lat: position.coords.latitude, lng: position.coords.longitude };
-                const destination = { lat: parseFloat(destLat), lng: parseFloat(destLng) };
+window.calculateRoute = function(destLat, destLng) {
+    if (!directionsService || !directionsRenderer) return;
+    
+    // Force coordinates to finite numbers to stop the "not a number" error
+    const lat = parseFloat(destLat);
+    const lng = parseFloat(destLng);
 
-                directionsService.route({
-                    origin: origin,
-                    destination: destination,
-                    travelMode: google.maps.TravelMode.DRIVING,
-                    optimizeWaypoints: true
-                }, (result, status) => {
-                    if (status === 'OK') {
-                        directionsRenderer.setDirections(result);
-                        
-                        if (lastMilePolyline) lastMilePolyline.setMap(null);
-                        
-                        const route = result.routes[0].legs[0];
-                        const lastStepPoint = route.end_location;
-                        
-                        lastMilePolyline = new google.maps.Polyline({
-                            path: [lastStepPoint, destination],
-                            strokeColor: "#00838f",
-                            strokeOpacity: 0,
-                            icons: [{
-                                icon: { path: 'M 0,-1 0,1', strokeOpacity: 1, scale: 2 },
-                                offset: '0',
-                                repeat: '10px'
-                            }],
-                            map: ev_Map
-                        });
+    if (isNaN(lat) || isNaN(lng)) {
+        console.error("Invalid coordinates provided to calculateRoute");
+        return;
+    }
 
-                        const panel = document.getElementById('ev-directions-panel');
-                        if (panel) panel.scrollIntoView({ behavior: 'smooth' });
-                    }
-                });
-            }, () => alert("Please enable location services for turn-by-turn directions."));
-        }
-    };
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+            const origin = { lat: position.coords.latitude, lng: position.coords.longitude };
+            const destination = { lat: lat, lng: lng };
+
+            directionsService.route({
+                origin: origin,
+                destination: destination,
+                travelMode: google.maps.TravelMode.DRIVING
+            }, (result, status) => {
+                if (status === 'OK') {
+                    directionsRenderer.setMap(ev_Map); // Re-confirm map instance
+                    directionsRenderer.setDirections(result);
+                    
+                    const panel = document.getElementById('ev-directions-panel');
+                    if (panel) panel.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        }, () => alert("Please enable location services for turn-by-turn directions."));
+    }
+};
 
     async function start() {
         if (typeof google === 'undefined' || !google.maps) {
@@ -167,7 +160,7 @@
                 sidebarPlugs += `<div style="display:flex; justify-content:space-between; font-size:13px; margin-top:8px;"><span style="color:#00838f;">⚡ ${formatConnector(agg.type)}</span><span style="background:#f1f3f4; padding:0 8px; border-radius:4px;">0/${agg.count || 1}</span></div>`;
             });
 
-            card.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:start;"><div style="width:78%"><h5 style="margin:0; font-size:16px; font-weight:500; color:#202124;">${place.displayName}</h5><div style="font-size:12px; color:#70757a; margin:4px 0;">${ratingVal} <span style="color:#fbbc04;">★★★★★</span></div><p style="margin:4px 0; font-size:13px; color:#70757a;">${addr}</p>${sidebarPlugs}</div><div style="text-align:center; color:#00838f; font-size:11px;" onclick="window.calculateRoute(${place.location.lat}, ${place.location.lng})"><div style="width:34px; height:34px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">↗</div>Directions</div></div>`;
+            card.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:start;"><div style="width:78%"><h5 style="margin:0; font-size:16px; font-weight:500; color:#202124;">${place.displayName}</h5><div style="font-size:12px; color:#70757a; margin:4px 0;">${ratingVal} <span style="color:#fbbc04;">★★★★★</span></div><p style="margin:4px 0; font-size:13px; color:#70757a;">${addr}</p>${sidebarPlugs}</div><div style="text-align:center; color:#00838f; font-size:11px;" onclick="window.calculateRoute(${place.location.lat()}, ${place.location.lng()})"><div style="width:34px; height:34px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">↗</div>Directions</div></div>`;
 
             const select = (e) => {
                 if (e && e.stopImmediatePropagation) e.stopImmediatePropagation();
