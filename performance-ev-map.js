@@ -2,7 +2,6 @@
     let ev_Map, ev_InfoWindow, directionsService, directionsRenderer;
     let ev_Markers = [];
     let isPanning = false;
-
     let lastMilePolyline = null;
 
     function formatConnector(type) {
@@ -22,7 +21,6 @@
 
     window.triggerNearbySearch = async function(lat, lng) {
         if (!ev_Map) return;
-        
         const { Place } = await google.maps.importLibrary("places");
         ev_Map.setCenter({lat: lat, lng: lng});
         ev_Map.setZoom(15); 
@@ -40,46 +38,36 @@
         } catch (e) { console.error("Nearby search failed:", e); }
     };
 
-window.calculateRoute = function(destLat, destLng) {
-    if (!directionsService || !directionsRenderer) return;
+    window.calculateRoute = function(destLat, destLng) {
+        if (!directionsService || !directionsRenderer) return;
+        const lat = parseFloat(destLat);
+        const lng = parseFloat(destLng);
 
-    const lat = parseFloat(destLat);
-    const lng = parseFloat(destLng);
+        if (isNaN(lat) || isNaN(lng)) return;
 
-    if (isNaN(lat) || isNaN(lng)) {
-        console.error("Invalid destination coordinates");
-        return;
-    }
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                const origin = { lat: position.coords.latitude, lng: position.coords.longitude };
+                const destination = { lat: lat, lng: lng };
 
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-            const origin = { 
-                lat: position.coords.latitude, 
-                lng: position.coords.longitude 
-            };
-            
-            // Format destination as a clean LatLngLiteral
-            const destination = { lat: lat, lng: lng };
-
-            directionsService.route({
-                origin: origin,
-                destination: destination,
-                travelMode: google.maps.TravelMode.DRIVING
-            }, (result, status) => {
-                if (status === 'OK') {
-                    // Re-bind to ensure the Map instance is fresh
-                    directionsRenderer.setMap(ev_Map);
-                    directionsRenderer.setDirections(result);
-                    
-                    const panel = document.getElementById('ev-directions-panel');
-                    if (panel) panel.scrollIntoView({ behavior: 'smooth' });
-                } else {
-                    console.error("Directions request failed: " + status);
-                }
-            });
-        }, () => alert("Please enable location services."));
-    }
-};
+                directionsService.route({
+                    origin: origin,
+                    destination: destination,
+                    travelMode: google.maps.TravelMode.DRIVING
+                }, (result, status) => {
+                    if (status === 'OK') {
+                        // Reset map binding to force polyline visibility
+                        directionsRenderer.setMap(null);
+                        directionsRenderer.setMap(ev_Map);
+                        directionsRenderer.setDirections(result);
+                        
+                        const panel = document.getElementById('ev-directions-panel');
+                        if (panel) panel.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            }, () => alert("Please enable location services."));
+        }
+    };
 
     async function start() {
         if (typeof google === 'undefined' || !google.maps) {
@@ -101,17 +89,16 @@ window.calculateRoute = function(destLat, destLng) {
                 polylineOptions: {
                     strokeColor: "#00838f",
                     strokeWeight: 6,
-                    zIndex: 9999;
+                    zIndex: 9999, // Fixed: comma instead of semicolon
                     strokeOpacity: 0.9
                 },
-        markerOptions: {
-        zIndex: 10000, 
-        optimized: false
-            }
+                markerOptions: {
+                    zIndex: 10000, 
+                    optimized: false
+                }
             });
 
             ev_InfoWindow = new google.maps.InfoWindow();
-            
             ev_Map = new Map(document.getElementById("ev-map-canvas"), {
                 center: { lat: 43.159, lng: -79.246 }, 
                 zoom: 11,
@@ -125,30 +112,29 @@ window.calculateRoute = function(destLat, destLng) {
             directionsRenderer.setPanel(document.getElementById('ev-directions-panel'));
 
             ev_Map.addListener("idle", async () => {
-    if (isPanning) { isPanning = false; return; }
-    
-    const rawBounds = ev_Map.getBounds();
-    if (!rawBounds) return;
+                if (isPanning) { isPanning = false; return; }
+                const rawBounds = ev_Map.getBounds();
+                if (!rawBounds) return;
 
-    const cleanBounds = {
-        north: rawBounds.getNorthEast().lat(),
-        south: rawBounds.getSouthWest().lat(),
-        east: rawBounds.getNorthEast().lng(),
-        west: rawBounds.getSouthWest().lng()
-    };
+                const cleanBounds = {
+                    north: rawBounds.getNorthEast().lat(),
+                    south: rawBounds.getSouthWest().lat(),
+                    east: rawBounds.getNorthEast().lng(),
+                    west: rawBounds.getSouthWest().lng()
+                };
 
-    const request = {
-        textQuery: "EV Charging Station",
-        fields: ["displayName", "location", "formattedAddress", "rating", "evChargeOptions", "photos", "editorialSummary"],
-        locationRestriction: cleanBounds,
-        maxResultCount: 20 
-    };
+                const request = {
+                    textQuery: "EV Charging Station",
+                    fields: ["displayName", "location", "formattedAddress", "rating", "evChargeOptions", "photos", "editorialSummary"],
+                    locationRestriction: cleanBounds,
+                    maxResultCount: 20 
+                };
 
-    try {
-        const { places } = await Place.searchByText(request);
-        renderUI(places || [], google.maps.marker.AdvancedMarkerElement);
-    } catch (e) { console.error("Search failed:", e); }
-});
+                try {
+                    const { places } = await Place.searchByText(request);
+                    renderUI(places || [], AdvancedMarkerElement);
+                } catch (e) { console.error("Search failed:", e); }
+            });
         } catch (err) { console.error("Initialization Error", err); }
     }
 
@@ -207,11 +193,11 @@ window.calculateRoute = function(destLat, destLng) {
                         </div>
                         <div id="info-content-overview">
                             <div style="display:flex; justify-content:space-around; padding:16px 8px; border-bottom:1px solid #f1f3f4;">
-                                <div style="text-align:center; cursor:pointer;" onclick="window.calculateRoute(${place.location.lat()}, ${place.location.lng()})"">
+                                <div style="text-align:center; cursor:pointer;" onclick="window.calculateRoute(${place.location.lat()}, ${place.location.lng()})">
                                     <div style="width:42px; height:42px; border-radius:50%; background:#00838f; color:#fff; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:20px;">↗</div>
                                     <div style="font-size:11px; color:#00838f; font-weight:500; margin-top:6px;">Directions</div>
                                 </div>
-                                <div style="text-align:center; cursor:pointer;" onclick="window.triggerNearbySearch(${place.location.lat}, ${place.location.lng})">
+                                <div style="text-align:center; cursor:pointer;" onclick="window.triggerNearbySearch(${place.location.lat()}, ${place.location.lng()})">
                                     <div style="width:42px; height:42px; border-radius:50%; border:1px solid #dadce0; color:#00838f; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">📍</div>
                                     <div style="font-size:11px; color:#00838f; font-weight:500; margin-top:6px;">Nearby</div>
                                 </div>
