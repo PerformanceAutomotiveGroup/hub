@@ -48,7 +48,7 @@
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
                 const origin = { lat: position.coords.latitude, lng: position.coords.longitude };
-                const destination = { lat: lat, lng: lng };
+                const destination = new google.maps.LatLng(lat, lng);
 
                 directionsService.route({
                     origin: origin,
