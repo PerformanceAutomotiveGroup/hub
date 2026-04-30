@@ -119,22 +119,30 @@ window.calculateRoute = function(destLat, destLng) {
             directionsRenderer.setPanel(document.getElementById('ev-directions-panel'));
 
             ev_Map.addListener("idle", async () => {
-                if (isPanning) { isPanning = false; return; }
-                const bounds = ev_Map.getBounds();
-                if (!bounds) return;
+    if (isPanning) { isPanning = false; return; }
+    
+    const rawBounds = ev_Map.getBounds();
+    if (!rawBounds) return;
 
-                const request = {
-                    textQuery: "EV Charging Station",
-                    fields: ["displayName", "location", "formattedAddress", "rating", "evChargeOptions", "photos", "editorialSummary"],
-                    locationRestriction: bounds,
-                    maxResultCount: 20 
-                };
+    const cleanBounds = {
+        north: rawBounds.getNorthEast().lat(),
+        south: rawBounds.getSouthWest().lat(),
+        east: rawBounds.getNorthEast().lng(),
+        west: rawBounds.getSouthWest().lng()
+    };
 
-                try {
-                    const { places } = await Place.searchByText(request);
-                    renderUI(places || [], AdvancedMarkerElement);
-                } catch (e) { console.error("Search failed:", e); }
-            });
+    const request = {
+        textQuery: "EV Charging Station",
+        fields: ["displayName", "location", "formattedAddress", "rating", "evChargeOptions", "photos", "editorialSummary"],
+        locationRestriction: cleanBounds,
+        maxResultCount: 20 
+    };
+
+    try {
+        const { places } = await Place.searchByText(request);
+        renderUI(places || [], google.maps.marker.AdvancedMarkerElement);
+    } catch (e) { console.error("Search failed:", e); }
+});
         } catch (err) { console.error("Initialization Error", err); }
     }
 
