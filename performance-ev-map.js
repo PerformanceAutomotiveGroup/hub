@@ -138,7 +138,8 @@
                 map: window.ev_Map,
                 position: place.location,
                 title: place.displayName,
-                gmpClickable: true 
+                gmpClickable: true,
+                zIndex: 1
             });
             ev_Markers.push(marker);
 
