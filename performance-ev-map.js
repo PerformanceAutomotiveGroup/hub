@@ -97,11 +97,17 @@ window.calculateRoute = function(destLat, destLng) {
             directionsService = new google.maps.DirectionsService();
             directionsRenderer = new google.maps.DirectionsRenderer({
                 suppressMarkers: false,
+                preserveViewport: false,
                 polylineOptions: {
                     strokeColor: "#00838f",
                     strokeWeight: 6,
-                    zIndex: 1 
-                }
+                    zIndex: 9999;
+                    strokeOpacity: 0.9
+                },
+        markerOptions: {
+        zIndex: 10000, 
+        optimized: false
+            }
             });
 
             ev_InfoWindow = new google.maps.InfoWindow();
