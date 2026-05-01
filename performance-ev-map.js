@@ -36,7 +36,6 @@
             locationBias: {lat: latNum, lng: lngNum},
             maxResultCount: 10
         };
-        // Logic for nearby search can be expanded here
     };
 
     window.calculateRoute = function(destLat, destLng) {
@@ -62,15 +61,11 @@
                         const leg = route?.legs?.[0];
                         if (!leg) { isRouting = false; return; }
 
-                        // Clear previous artifacts
                         routeMarkers.forEach(m => m.map = null);
                         routeMarkers = [];
                         directionsRenderer.setDirections({ routes: [] });
-                        
-                        // Render route polyline
                         directionsRenderer.setDirections(result);
                         
-                        // Manual markers for A and B to solve stacking
                         const startMarker = new AdvancedMarker({
                             map: ev_Map,
                             position: leg.start_location,
@@ -90,7 +85,6 @@
                         const panel = document.getElementById('ev-directions-panel');
                         if (panel) panel.scrollIntoView({ behavior: 'smooth' });
 
-                        // Release lock only after map settles
                         google.maps.event.addListenerOnce(ev_Map, "idle", () => {
                             isRouting = false;
                         });
@@ -108,6 +102,9 @@
             return;
         }
         try {
+            // PRIORITY INITIALIZATION: Create InfoWindow before map and libraries load
+            ev_InfoWindow = new google.maps.InfoWindow();
+
             const libraries = await Promise.all([
                 google.maps.importLibrary("maps"),
                 google.maps.importLibrary("places"),
@@ -194,7 +191,7 @@
             
             let sidebarPlugs = '';
             (place.evChargeOptions?.connectorAggregations || []).forEach(agg => {
-                sidebarPlugs += `<div style="display:flex; justify-content:space-between; font-size:13px; margin-top:8px;"><span style="color:#00838f;">⚡ ${formatConnector(agg.type)}</span><span style="background:#f1f3f4; padding:0 8px; border-radius:4px;">0/${agg.count || 1}</span></div>`;
+                sidebarPlugs += `<div style="display:flex; justify-content:space-between; font-size:13px; margin-top:8px;"><span style="color:#00838f;">⚡ ${formatConnector(agg.type)}</span><span style="background:#f1f3f4; padding:0; border-radius:4px;">0/${agg.count || 1}</span></div>`;
             });
 
             card.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:start;"><div style="width:78%"><h5 style="margin:0; font-size:16px; font-weight:500; color:#202124;">${place.displayName}</h5><div style="font-size:12px; color:#70757a; margin:4px 0;">${ratingVal} <span style="color:#fbbc04;">★★★★★</span></div><p style="margin:4px 0; font-size:13px; color:#70757a;">${addr}</p>${sidebarPlugs}</div><div style="text-align:center; color:#00838f; font-size:11px;" onclick="event.stopPropagation(); window.calculateRoute(${loc.lat}, ${loc.lng})"><div style="width:34px; height:34px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">↗</div>Directions</div></div>`;
@@ -217,10 +214,6 @@
                                 <span>${ratingVal}</span><span style="color:#fbbc04;">★★★★★</span><span style="color:#70757a;">(8)</span>
                             </div>
                         </div>
-                        <div style="display:flex; border-bottom:1px solid #e0e0e0; margin-top:8px;">
-                            <div id="tab-overview" style="flex:1; text-align:center; padding:12px; color:#00838f; border-bottom:3px solid #00838f; font-weight:500; cursor:pointer;" onclick="document.getElementById('info-content-about').style.display='none'; document.getElementById('info-content-overview').style.display='block'; this.style.color='#00838f'; this.style.borderBottom='3px solid #00838f'; document.getElementById('tab-about').style.color='#70757a'; document.getElementById('tab-about').style.borderBottom='none';">Overview</div>
-                            <div id="tab-about" style="flex:1; text-align:center; padding:12px; color:#70757a; font-weight:500; cursor:pointer;" onclick="document.getElementById('info-content-overview').style.display='none'; document.getElementById('info-content-about').style.display='block'; this.style.color='#00838f'; this.style.borderBottom='3px solid #00838f'; document.getElementById('tab-overview').style.color='#70757a'; document.getElementById('tab-overview').style.borderBottom='none';">About</div>
-                        </div>
                         <div id="info-content-overview">
                             <div style="display:flex; justify-content:space-around; padding:16px 8px; border-bottom:1px solid #f1f3f4;">
                                 <div style="text-align:center; cursor:pointer;" onclick="event.stopPropagation(); window.calculateRoute(${loc.lat}, ${loc.lng})">
@@ -228,33 +221,24 @@
                                     <div style="font-size:11px; color:#00838f; font-weight:500; margin-top:6px;">Directions</div>
                                 </div>
                                 <div style="text-align:center; cursor:pointer;" onclick="window.triggerNearbySearch(${loc.lat}, ${loc.lng})">
-                                    <div style="width:42px; height:42px; border-radius:50%; border:1px solid #dadce0; color:#00838f; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">📍</div>
+                                    <div style="width:42px; height:42px; border-radius:50%; border:1px solid #dadce0; color:#00838f; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">4📍</div>
                                     <div style="font-size:11px; color:#00838f; font-weight:500; margin-top:6px;">Nearby</div>
-                                </div>
-                                <div style="text-align:center; cursor:pointer;" onclick="if(navigator.share){navigator.share({title:'${place.displayName}', url:window.location.href})}">
-                                    <div style="width:42px; height:42px; border-radius:50%; border:1px solid #dadce0; color:#00838f; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">🔗</div>
-                                    <div style="font-size:11px; color:#00838f; font-weight:500; margin-top:6px;">Share</div>
                                 </div>
                             </div>
                             <div style="padding:16px;">
                                 <div style="display:flex; gap:12px; align-items:flex-start; margin-bottom:16px;">
-                                    <span style="color:#00838f; font-size:18px;">4📍</span>
+                                    <span style="color:#00838f; font-size:18px;">📍</span>
                                     <span style="font-size:14px; color:#3c4043; line-height:1.4;">${addr}</span>
-                                </div>
-                                <div style="display:flex; gap:12px; align-items:center;">
-                                    <span style="color:#188038; font-size:18px;">🕒</span>
-                                    <span style="font-size:14px; color:#188038; font-weight:500;">Open 24 hours ▾</span>
                                 </div>
                             </div>
                         </div>
-                        <div id="info-content-about" style="display:none; padding:20px; font-size:14px; color:#3c4043; line-height:1.6;">
-                            <div style="margin-bottom:10px; font-weight:500; color:#202124;">About this location</div>
-                            ${aboutText}
-                        </div>
                     </div>`;
 
-                ev_InfoWindow.setOptions({ content: infoHtml, headerDisabled: true });
-                ev_InfoWindow.open({ anchor: marker, map: ev_Map, shouldFocus: false });
+                // SAFE EXECUTION: Check if InfoWindow exists before calling setOptions
+                if (ev_InfoWindow) {
+                    ev_InfoWindow.setOptions({ content: infoHtml, headerDisabled: true });
+                    ev_InfoWindow.open({ anchor: marker, map: ev_Map, shouldFocus: false });
+                }
 
                 document.querySelectorAll('.ev-location-card').forEach(c => c.style.background = '#fff');
                 card.style.background = '#f8f9fa';
