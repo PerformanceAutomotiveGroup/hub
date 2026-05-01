@@ -7,7 +7,7 @@
     let isPanning = false;
     let isRouting = false;
 
-    // Helper to safely extract coordinates as numbers
+    // Safety helper to extract coordinates as primitive numbers
     const getSafeCoord = (val) => typeof val === 'function' ? val() : val;
 
     window.closeEVInfoWindow = function() {
@@ -33,13 +33,12 @@
                     travelMode: google.maps.TravelMode.DRIVING
                 }, (result, status) => {
                     if (status === 'OK') {
-                        // 1. CLEANUP: Clear old artifacts to prevent 'apply' errors
+                        // 1. CLEANUP: Detach old artifacts to stop the 'apply' crash on zoom
                         if (activePolyline) activePolyline.setMap(null);
                         routeMarkers.forEach(m => m.map = null);
                         routeMarkers = [];
 
-                        // 2. UNWRAP PATH: Convert Google LatLng objects to primitive literals
-                        // This resolves the 'not a number' error
+                        // 2. PATH UNWRAPPING: Force internal Google objects into primitive literals
                         const rawPath = result.routes[0].overview_path;
                         const cleanPath = rawPath.map(p => ({ lat: p.lat(), lng: p.lng() }));
 
@@ -53,25 +52,35 @@
                             zIndex: 100
                         });
 
-                        // 3. MANUAL A & B MARKERS: Using PinElement for labels
+                        // 3. UPDATED PIN ELEMENT: Using glyphText (fixes deprecation warning)
                         const leg = result.routes[0].legs[0];
                         const startMarker = new AdvancedMarker({
                             map: ev_Map,
                             position: leg.start_location,
-                            content: new google.maps.marker.PinElement({ glyph: "A", background: "#00838f", borderColor: "#fff", glyphColor: "#fff" }).element,
+                            content: new google.maps.marker.PinElement({ 
+                                glyphText: "A", 
+                                background: "#00838f", 
+                                borderColor: "#fff", 
+                                glyphColor: "#fff" 
+                            }).element,
                             zIndex: 200
                         });
 
                         const endMarker = new AdvancedMarker({
                             map: ev_Map,
                             position: leg.end_location,
-                            content: new google.maps.marker.PinElement({ glyph: "B", background: "#d32f2f", borderColor: "#fff", glyphColor: "#fff" }).element,
+                            content: new google.maps.marker.PinElement({ 
+                                glyphText: "B", 
+                                background: "#d32f2f", 
+                                borderColor: "#fff", 
+                                glyphColor: "#fff" 
+                            }).element,
                             zIndex: 201
                         });
 
                         routeMarkers.push(startMarker, endMarker);
 
-                        // 4. BIND PANEL: Update turn-by-turn text
+                        // 4. UPDATE TEXT PANEL
                         directionsRenderer.setDirections(result);
                         const panel = document.getElementById('ev-directions-panel');
                         if (panel) panel.scrollIntoView({ behavior: 'smooth' });
@@ -93,7 +102,7 @@
             return;
         }
         try {
-            // INITIALIZE INFOWINDOW EARLY: Prevents 'undefined' errors during renderUI
+            // Initialize InfoWindow early to ensure it exists for renderUI
             ev_InfoWindow = new google.maps.InfoWindow();
 
             const lib = await Promise.all([
@@ -109,7 +118,7 @@
             directionsService = new google.maps.DirectionsService();
             directionsRenderer = new google.maps.DirectionsRenderer({
                 suppressMarkers: true, 
-                map: null // Detach renderer from map to prevent internal conflicts on vector map
+                map: null // Keep detached from map instance to avoid internal Vector conflicts
             });
 
             ev_Map = new Map(document.getElementById("ev-map-canvas"), {
@@ -157,7 +166,10 @@
         list.innerHTML = '';
         
         places.forEach((place) => {
-            const loc = { lat: getSafeCoord(place.location.lat), lng: getSafeCoord(place.location.lng) };
+            const lat = getSafeCoord(place.location.lat);
+            const lng = getSafeCoord(place.location.lng);
+            const loc = { lat: lat, lng: lng };
+
             const marker = new AdvancedMarker({
                 map: ev_Map,
                 position: loc,
@@ -173,7 +185,7 @@
             card.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:start;">
                 <div style="width:78%"><h5 style="margin:0;">${place.displayName}</h5></div>
                 <div style="text-align:center; color:#00838f; font-size:11px;" onclick="event.stopPropagation(); window.calculateRoute(${loc.lat}, ${loc.lng})">
-                <div style="width:34px; height:34px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">↗</div>2Directions</div></div>`;
+                <div style="width:34px; height:34px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">↗</div>Directions</div></div>`;
 
             const select = () => {
                 isPanning = true; 
