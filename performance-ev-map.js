@@ -3,6 +3,7 @@
     let AdvancedMarker; 
     let ev_Markers = [];
     let routeMarkers = []; 
+    let activePolyline = null; // Manual polyline for reliability
     let isPanning = false;
     let isRouting = false;
 
@@ -23,23 +24,8 @@
         if (ev_InfoWindow) ev_InfoWindow.close();
     };
 
-    window.triggerNearbySearch = async function(lat, lng) {
-        if (!ev_Map) return;
-        const latNum = Number(lat);
-        const lngNum = Number(lng);
-        const { Place } = await google.maps.importLibrary("places");
-        ev_Map.setCenter({lat: latNum, lng: lngNum});
-        ev_Map.setZoom(15); 
-        
-        const request = {
-            textQuery: "restaurants and coffee shops",
-            locationBias: {lat: latNum, lng: lngNum},
-            maxResultCount: 10
-        };
-    };
-
     window.calculateRoute = function(destLat, destLng) {
-        if (!directionsService || !directionsRenderer) return;
+        if (!directionsService) return;
         
         const latNum = Number(destLat);
         const lngNum = Number(destLng);
@@ -57,31 +43,43 @@
                     travelMode: google.maps.TravelMode.DRIVING
                 }, (result, status) => {
                     if (status === 'OK') {
-                        const route = result.routes?.[0];
-                        const leg = route?.legs?.[0];
-                        if (!leg) { isRouting = false; return; }
-
+                        // 1. CLEAR OLD ROUTE (Fixes the zoom 'apply' crash)
+                        if (activePolyline) activePolyline.setMap(null);
                         routeMarkers.forEach(m => m.map = null);
                         routeMarkers = [];
-                        directionsRenderer.setDirections({ routes: [] });
-                        directionsRenderer.setDirections(result);
+
+                        // 2. DRAW POLYLINE MANUALLY (Guarantees visibility)
+                        activePolyline = new google.maps.Polyline({
+                            path: result.routes[0].overview_path,
+                            geodesic: true,
+                            strokeColor: "#00838f",
+                            strokeOpacity: 1.0,
+                            strokeWeight: 6,
+                            map: ev_Map,
+                            zIndex: 100
+                        });
+
+                        // 3. ADD A & B LABELS (Fixes missing point labels)
+                        const leg = result.routes[0].legs[0];
                         
                         const startMarker = new AdvancedMarker({
                             map: ev_Map,
                             position: leg.start_location,
-                            zIndex: 9999,
-                            title: "Your Location"
+                            content: new google.maps.marker.PinElement({ glyph: "A", background: "#00838f", borderColor: "#fff", glyphColor: "#fff" }).element,
+                            zIndex: 200
                         });
 
                         const endMarker = new AdvancedMarker({
                             map: ev_Map,
                             position: leg.end_location,
-                            zIndex: 10000, 
-                            title: "Destination"
+                            content: new google.maps.marker.PinElement({ glyph: "B", background: "#d32f2f", borderColor: "#fff", glyphColor: "#fff" }).element,
+                            zIndex: 201
                         });
 
                         routeMarkers.push(startMarker, endMarker);
 
+                        // 4. BIND PANEL (Text steps only)
+                        directionsRenderer.setDirections(result);
                         const panel = document.getElementById('ev-directions-panel');
                         if (panel) panel.scrollIntoView({ behavior: 'smooth' });
 
@@ -92,7 +90,7 @@
                         isRouting = false;
                     }
                 });
-            }, () => { isRouting = false; alert("Location services timed out."); }, { timeout: 10000 });
+            }, () => { isRouting = false; alert("Geolocation failed."); }, { timeout: 10000 });
         }
     };
 
@@ -102,23 +100,21 @@
             return;
         }
         try {
-            // PRIORITY INITIALIZATION: Create InfoWindow before map and libraries load
             ev_InfoWindow = new google.maps.InfoWindow();
-
-            const libraries = await Promise.all([
+            const lib = await Promise.all([
                 google.maps.importLibrary("maps"),
                 google.maps.importLibrary("places"),
                 google.maps.importLibrary("marker")
             ]);
 
-            const { Map } = libraries[0];
-            const { Place } = libraries[1];
-            AdvancedMarker = libraries[2].AdvancedMarkerElement;
+            const { Map } = lib[0];
+            const { Place } = lib[1];
+            AdvancedMarker = lib[2].AdvancedMarkerElement;
 
             directionsService = new google.maps.DirectionsService();
             directionsRenderer = new google.maps.DirectionsRenderer({
-                suppressMarkers: true, 
-                polylineOptions: { strokeColor: "#00838f", strokeWeight: 6, zIndex: 500 }
+                suppressMarkers: true, // Crucial: We use PinElement for labels
+                map: null // Detach from map to stop 'apply' errors
             });
 
             ev_Map = new Map(document.getElementById("ev-map-canvas"), {
@@ -126,11 +122,9 @@
                 zoom: 11,
                 mapId: "e9da2b0d1db902e558a4a8df",
                 mapTypeControl: false,
-                streetViewControl: false,
-                fullscreenControl: true
+                streetViewControl: false
             });
 
-            directionsRenderer.setMap(ev_Map);
             directionsRenderer.setPanel(document.getElementById('ev-directions-panel'));
 
             ev_Map.addListener("idle", async () => {
@@ -157,7 +151,7 @@
                 const { places } = await Place.searchByText(request);
                 renderUI(places || []);
             });
-        } catch (err) { console.error("Initialization Error", err); }
+        } catch (err) { console.error("Init Error", err); }
     }
 
     function renderUI(places) {
@@ -168,11 +162,7 @@
         list.innerHTML = '';
         
         places.forEach((place, index) => {
-            const loc = {
-                lat: getSafeCoord(place.location.lat),
-                lng: getSafeCoord(place.location.lng)
-            };
-
+            const loc = { lat: getSafeCoord(place.location.lat), lng: getSafeCoord(place.location.lng) };
             const marker = new AdvancedMarker({
                 map: ev_Map,
                 position: loc,
@@ -183,70 +173,14 @@
 
             const card = document.createElement('div');
             card.className = 'ev-location-card';
-            card.id = `ev-card-${index}`;
-            card.style.cssText = "padding:16px; border-bottom:1px solid #e0e0e0; cursor:pointer; background:#fff; font-family:Roboto, Arial, sans-serif;";
-
-            const ratingVal = place.rating ? place.rating.toFixed(1) : "5.0";
-            const addr = place.formattedAddress || "";
+            card.style.cssText = "padding:16px; border-bottom:1px solid #e0e0e0; cursor:pointer; background:#fff;";
             
-            let sidebarPlugs = '';
-            (place.evChargeOptions?.connectorAggregations || []).forEach(agg => {
-                sidebarPlugs += `<div style="display:flex; justify-content:space-between; font-size:13px; margin-top:8px;"><span style="color:#00838f;">⚡ ${formatConnector(agg.type)}</span><span style="background:#f1f3f4; padding:0; border-radius:4px;">0/${agg.count || 1}</span></div>`;
-            });
+            card.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:start;">
+                <div style="width:78%"><h5 style="margin:0;">${place.displayName}</h5></div>
+                <div style="text-align:center; color:#00838f; font-size:11px;" onclick="event.stopPropagation(); window.calculateRoute(${loc.lat}, ${loc.lng})">
+                <div style="width:34px; height:34px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">↗</div>Directions</div></div>`;
 
-            card.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:start;"><div style="width:78%"><h5 style="margin:0; font-size:16px; font-weight:500; color:#202124;">${place.displayName}</h5><div style="font-size:12px; color:#70757a; margin:4px 0;">${ratingVal} <span style="color:#fbbc04;">★★★★★</span></div><p style="margin:4px 0; font-size:13px; color:#70757a;">${addr}</p>${sidebarPlugs}</div><div style="text-align:center; color:#00838f; font-size:11px;" onclick="event.stopPropagation(); window.calculateRoute(${loc.lat}, ${loc.lng})"><div style="width:34px; height:34px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">↗</div>Directions</div></div>`;
-
-            const select = (e) => {
-                if (e && e.stopImmediatePropagation) e.stopImmediatePropagation();
-                isPanning = true; 
-                ev_Map.panTo(loc);
-
-                const photoUrl = place.photos && place.photos.length > 0 ? place.photos[0].getURI({maxWidth: 400}) : '';
-                const aboutText = place.editorialSummary || "Electric vehicle charging station providing reliable power services.";
-
-                const infoHtml = `
-                    <div style="width:340px; font-family:Roboto, Arial; background:#fff; border-radius:12px; overflow:hidden; position:relative;">
-                        ${photoUrl ? `<div style="width:100%; height:140px; background:url('${photoUrl}') center/cover no-repeat;"></div>` : ''}
-                        <div onclick="window.closeEVInfoWindow()" style="position:absolute; top:12px; right:12px; background:#fff; width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,0.3); font-size:22px; z-index:100; color:#3c4043;">×</div>
-                        <div style="padding:16px 16px 0 16px;">
-                            <h2 style="margin:0; font-size:20px; font-weight:400; color:#202124;">${place.displayName}</h2>
-                            <div style="display:flex; gap:4px; margin:4px 0; font-size:14px; align-items:center;">
-                                <span>${ratingVal}</span><span style="color:#fbbc04;">★★★★★</span><span style="color:#70757a;">(8)</span>
-                            </div>
-                        </div>
-                        <div id="info-content-overview">
-                            <div style="display:flex; justify-content:space-around; padding:16px 8px; border-bottom:1px solid #f1f3f4;">
-                                <div style="text-align:center; cursor:pointer;" onclick="event.stopPropagation(); window.calculateRoute(${loc.lat}, ${loc.lng})">
-                                    <div style="width:42px; height:42px; border-radius:50%; background:#00838f; color:#fff; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:20px;">↗</div>
-                                    <div style="font-size:11px; color:#00838f; font-weight:500; margin-top:6px;">Directions</div>
-                                </div>
-                                <div style="text-align:center; cursor:pointer;" onclick="window.triggerNearbySearch(${loc.lat}, ${loc.lng})">
-                                    <div style="width:42px; height:42px; border-radius:50%; border:1px solid #dadce0; color:#00838f; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">4📍</div>
-                                    <div style="font-size:11px; color:#00838f; font-weight:500; margin-top:6px;">Nearby</div>
-                                </div>
-                            </div>
-                            <div style="padding:16px;">
-                                <div style="display:flex; gap:12px; align-items:flex-start; margin-bottom:16px;">
-                                    <span style="color:#00838f; font-size:18px;">📍</span>
-                                    <span style="font-size:14px; color:#3c4043; line-height:1.4;">${addr}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>`;
-
-                // SAFE EXECUTION: Check if InfoWindow exists before calling setOptions
-                if (ev_InfoWindow) {
-                    ev_InfoWindow.setOptions({ content: infoHtml, headerDisabled: true });
-                    ev_InfoWindow.open({ anchor: marker, map: ev_Map, shouldFocus: false });
-                }
-
-                document.querySelectorAll('.ev-location-card').forEach(c => c.style.background = '#fff');
-                card.style.background = '#f8f9fa';
-                card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            };
-
-            marker.addListener('gmp-click', (e) => select(e));
-            card.onclick = (e) => select(e);
+            card.onclick = () => { isPanning = true; ev_Map.panTo(loc); };
             list.appendChild(card);
         });
     }
