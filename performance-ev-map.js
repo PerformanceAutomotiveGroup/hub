@@ -7,6 +7,7 @@
     let isPanning = false;
     let isRouting = false;
 
+    // Helper to safely extract coordinates as numbers
     const getSafeCoord = (val) => typeof val === 'function' ? val() : val;
 
     window.closeEVInfoWindow = function() {
@@ -32,12 +33,13 @@
                     travelMode: google.maps.TravelMode.DRIVING
                 }, (result, status) => {
                     if (status === 'OK') {
-                        // 1. CLEANUP: Clear everything before new draw to avoid 'apply' errors
+                        // 1. CLEANUP: Clear old artifacts to prevent 'apply' errors
                         if (activePolyline) activePolyline.setMap(null);
                         routeMarkers.forEach(m => m.map = null);
                         routeMarkers = [];
 
-                        // 2. FIX: UNWRAP PATH (This solves the 'not a number' error)
+                        // 2. UNWRAP PATH: Convert Google LatLng objects to primitive literals
+                        // This resolves the 'not a number' error
                         const rawPath = result.routes[0].overview_path;
                         const cleanPath = rawPath.map(p => ({ lat: p.lat(), lng: p.lng() }));
 
@@ -51,7 +53,7 @@
                             zIndex: 100
                         });
 
-                        // 3. ADD A & B PIN LABELS
+                        // 3. MANUAL A & B MARKERS: Using PinElement for labels
                         const leg = result.routes[0].legs[0];
                         const startMarker = new AdvancedMarker({
                             map: ev_Map,
@@ -69,7 +71,7 @@
 
                         routeMarkers.push(startMarker, endMarker);
 
-                        // 4. UPDATE TEXT PANEL
+                        // 4. BIND PANEL: Update turn-by-turn text
                         directionsRenderer.setDirections(result);
                         const panel = document.getElementById('ev-directions-panel');
                         if (panel) panel.scrollIntoView({ behavior: 'smooth' });
@@ -81,7 +83,7 @@
                         isRouting = false;
                     }
                 });
-            }, () => { isRouting = false; alert("Location failed."); }, { timeout: 10000 });
+            }, () => { isRouting = false; alert("Location services failed."); }, { timeout: 10000 });
         }
     };
 
@@ -91,7 +93,7 @@
             return;
         }
         try {
-            // FIX: Initialize InfoWindow early so it is available to renderUI
+            // INITIALIZE INFOWINDOW EARLY: Prevents 'undefined' errors during renderUI
             ev_InfoWindow = new google.maps.InfoWindow();
 
             const lib = await Promise.all([
@@ -107,7 +109,7 @@
             directionsService = new google.maps.DirectionsService();
             directionsRenderer = new google.maps.DirectionsRenderer({
                 suppressMarkers: true, 
-                map: null // Detach renderer from map to prevent internal conflicts
+                map: null // Detach renderer from map to prevent internal conflicts on vector map
             });
 
             ev_Map = new Map(document.getElementById("ev-map-canvas"), {
@@ -144,7 +146,7 @@
                 const { places } = await Place.searchByText(request);
                 renderUI(places || []);
             });
-        } catch (err) { console.error("Init Error", err); }
+        } catch (err) { console.error("Initialization Error", err); }
     }
 
     function renderUI(places) {
@@ -171,9 +173,8 @@
             card.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:start;">
                 <div style="width:78%"><h5 style="margin:0;">${place.displayName}</h5></div>
                 <div style="text-align:center; color:#00838f; font-size:11px;" onclick="event.stopPropagation(); window.calculateRoute(${loc.lat}, ${loc.lng})">
-                <div style="width:34px; height:34px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">↗</div>Directions</div></div>`;
+                <div style="width:34px; height:34px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">↗</div>2Directions</div></div>`;
 
-            // THE SELECT FUNCTION (Re-Added for InfoWindow)
             const select = () => {
                 isPanning = true; 
                 ev_Map.panTo(loc);
@@ -181,10 +182,10 @@
                 const photoUrl = place.photos?.[0]?.getURI({maxWidth: 400}) || '';
                 const infoHtml = `
                     <div style="width:300px; padding:10px; font-family:Arial;">
-                        ${photoUrl ? `<img src="${photoUrl}" style="width:100%; border-radius:8px;">` : ''}
-                        <h3>${place.displayName}</h3>
-                        <p>${place.formattedAddress}</p>
-                        <button onclick="window.calculateRoute(${loc.lat}, ${loc.lng})" style="background:#00838f; color:#fff; border:none; padding:8px 12px; border-radius:4px; cursor:pointer;">Get Directions</button>
+                        ${photoUrl ? `<img src="${photoUrl}" style="width:100%; border-radius:8px; margin-bottom:8px;">` : ''}
+                        <h3 style="margin:0 0 8px 0;">${place.displayName}</h3>
+                        <p style="font-size:13px; color:#555;">${place.formattedAddress}</p>
+                        <button onclick="window.calculateRoute(${loc.lat}, ${loc.lng})" style="background:#00838f; color:#fff; border:none; padding:8px 12px; border-radius:4px; cursor:pointer; width:100%;">Get Directions</button>
                     </div>`;
 
                 if (ev_InfoWindow) {
