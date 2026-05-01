@@ -41,12 +41,12 @@
                             return;
                         }
 
-                        // 1. CLEANUP: Detach old artifacts
+                        // 1. CLEANUP: Detach old artifacts to prevent 'apply' crashes
                         if (activePolyline) activePolyline.setMap(null);
                         routeMarkers.forEach(m => m.map = null);
                         routeMarkers = [];
 
-                        // 2. DECODE PATH: Use Geometry library for a stable path on Vector Maps
+                        // 2. STABLE PATH DECODING: Resolves missing line on Vector Maps
                         const decodedPath = google.maps.geometry.encoding.decodePath(overview);
                         const cleanPath = decodedPath.map(p => ({ lat: p.lat(), lng: p.lng() }));
 
@@ -60,7 +60,7 @@
                             zIndex: 150
                         });
 
-                        // 3. MANUAL A & B PIN LABELS (2026 glyphText standard)
+                        // 3. UPDATED PIN ELEMENT: Direct object passing (Fixes deprecation warning)
                         const startMarker = new AdvancedMarker({
                             map: ev_Map,
                             position: leg.start_location,
@@ -69,7 +69,7 @@
                                 background: "#00838f", 
                                 borderColor: "#fff", 
                                 glyphColor: "#fff" 
-                            }).element,
+                            }),
                             zIndex: 200
                         });
 
@@ -81,15 +81,15 @@
                                 background: "#d32f2f", 
                                 borderColor: "#fff", 
                                 glyphColor: "#fff" 
-                            }).element,
+                            }),
                             zIndex: 201
                         });
 
                         routeMarkers.push(startMarker, endMarker);
 
-                        // 4. SYNC UI
+                        // 4. SYNC UI & FOCUS
                         directionsRenderer.setDirections(result);
-                        ev_Map.fitBounds(route.bounds); // Focus the route
+                        ev_Map.fitBounds(route.bounds);
 
                         const panel = document.getElementById('ev-directions-panel');
                         if (panel) panel.scrollIntoView({ behavior: 'smooth' });
@@ -113,7 +113,7 @@
         try {
             ev_InfoWindow = new google.maps.InfoWindow();
 
-            // Load Geometry library along with others
+            // Load all required libraries including Geometry
             const lib = await Promise.all([
                 google.maps.importLibrary("maps"),
                 google.maps.importLibrary("places"),
@@ -192,10 +192,15 @@
             card.className = 'ev-location-card';
             card.style.cssText = "padding:16px; border-bottom:1px solid #e0e0e0; cursor:pointer; background:#fff;";
             
-            card.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:start;">
-                <div style="width:78%"><h5 style="margin:0;">${place.displayName}</h5></div>
-                <div style="text-align:center; color:#00838f; font-size:11px;" onclick="event.stopPropagation(); window.calculateRoute(${loc.lat}, ${loc.lng})">
-                <div style="width:34px; height:34px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">↗</div>6Directions</div></div>`;
+            card.innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:start;">
+                    <div style="width:78%"><h5 style="margin:0;">${place.displayName}</h5></div>
+                    <div style="text-align:center; color:#00838f; font-size:11px;" 
+                         onclick="event.stopPropagation(); window.calculateRoute(${loc.lat}, ${loc.lng})">
+                        <div style="width:34px; height:34px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">↗</div>
+                        Directions
+                    </div>
+                </div>`;
 
             const select = () => {
                 isPanning = true; 
@@ -206,7 +211,10 @@
                         ${photoUrl ? `<img src="${photoUrl}" style="width:100%; border-radius:8px; margin-bottom:8px;">` : ''}
                         <h3 style="margin:0 0 8px 0;">${place.displayName}</h3>
                         <p style="font-size:13px; color:#555;">${place.formattedAddress}</p>
-                        <button onclick="window.calculateRoute(${loc.lat}, ${loc.lng})" style="background:#00838f; color:#fff; border:none; padding:8px 12px; border-radius:4px; cursor:pointer; width:100%;">Get Directions</button>
+                        <button onclick="window.calculateRoute(${loc.lat}, ${loc.lng})" 
+                                style="background:#00838f; color:#fff; border:none; padding:8px 12px; border-radius:4px; cursor:pointer; width:100%;">
+                            Get Directions
+                        </button>
                     </div>`;
 
                 if (ev_InfoWindow) {
