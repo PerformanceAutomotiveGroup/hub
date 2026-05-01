@@ -3,22 +3,11 @@
     let AdvancedMarker; 
     let ev_Markers = [];
     let routeMarkers = []; 
-    let activePolyline = null; // Manual polyline for reliability
+    let activePolyline = null; 
     let isPanning = false;
     let isRouting = false;
 
     const getSafeCoord = (val) => typeof val === 'function' ? val() : val;
-
-    function formatConnector(type) {
-        if (!type) return "Unknown";
-        const types = { 
-            'EV_CONNECTOR_TYPE_J1772': 'J1772', 
-            'EV_CONNECTOR_TYPE_CCS_COMBO_1': 'CCS', 
-            'EV_CONNECTOR_TYPE_CHADEMO': 'CHAdeMO', 
-            'EV_CONNECTOR_TYPE_TESLA': 'Tesla' 
-        };
-        return types[type] || type.replace('EV_CONNECTOR_TYPE_', '').replace(/_/g, ' ');
-    }
 
     window.closeEVInfoWindow = function() {
         if (ev_InfoWindow) ev_InfoWindow.close();
@@ -43,14 +32,17 @@
                     travelMode: google.maps.TravelMode.DRIVING
                 }, (result, status) => {
                     if (status === 'OK') {
-                        // 1. CLEAR OLD ROUTE (Fixes the zoom 'apply' crash)
+                        // 1. CLEANUP: Clear everything before new draw to avoid 'apply' errors
                         if (activePolyline) activePolyline.setMap(null);
                         routeMarkers.forEach(m => m.map = null);
                         routeMarkers = [];
 
-                        // 2. DRAW POLYLINE MANUALLY (Guarantees visibility)
+                        // 2. FIX: UNWRAP PATH (This solves the 'not a number' error)
+                        const rawPath = result.routes[0].overview_path;
+                        const cleanPath = rawPath.map(p => ({ lat: p.lat(), lng: p.lng() }));
+
                         activePolyline = new google.maps.Polyline({
-                            path: result.routes[0].overview_path,
+                            path: cleanPath,
                             geodesic: true,
                             strokeColor: "#00838f",
                             strokeOpacity: 1.0,
@@ -59,9 +51,8 @@
                             zIndex: 100
                         });
 
-                        // 3. ADD A & B LABELS (Fixes missing point labels)
+                        // 3. ADD A & B PIN LABELS
                         const leg = result.routes[0].legs[0];
-                        
                         const startMarker = new AdvancedMarker({
                             map: ev_Map,
                             position: leg.start_location,
@@ -78,7 +69,7 @@
 
                         routeMarkers.push(startMarker, endMarker);
 
-                        // 4. BIND PANEL (Text steps only)
+                        // 4. UPDATE TEXT PANEL
                         directionsRenderer.setDirections(result);
                         const panel = document.getElementById('ev-directions-panel');
                         if (panel) panel.scrollIntoView({ behavior: 'smooth' });
@@ -90,7 +81,7 @@
                         isRouting = false;
                     }
                 });
-            }, () => { isRouting = false; alert("Geolocation failed."); }, { timeout: 10000 });
+            }, () => { isRouting = false; alert("Location failed."); }, { timeout: 10000 });
         }
     };
 
@@ -100,7 +91,9 @@
             return;
         }
         try {
+            // FIX: Initialize InfoWindow early so it is available to renderUI
             ev_InfoWindow = new google.maps.InfoWindow();
+
             const lib = await Promise.all([
                 google.maps.importLibrary("maps"),
                 google.maps.importLibrary("places"),
@@ -113,8 +106,8 @@
 
             directionsService = new google.maps.DirectionsService();
             directionsRenderer = new google.maps.DirectionsRenderer({
-                suppressMarkers: true, // Crucial: We use PinElement for labels
-                map: null // Detach from map to stop 'apply' errors
+                suppressMarkers: true, 
+                map: null // Detach renderer from map to prevent internal conflicts
             });
 
             ev_Map = new Map(document.getElementById("ev-map-canvas"), {
@@ -161,7 +154,7 @@
         if (!list) return;
         list.innerHTML = '';
         
-        places.forEach((place, index) => {
+        places.forEach((place) => {
             const loc = { lat: getSafeCoord(place.location.lat), lng: getSafeCoord(place.location.lng) };
             const marker = new AdvancedMarker({
                 map: ev_Map,
@@ -180,7 +173,28 @@
                 <div style="text-align:center; color:#00838f; font-size:11px;" onclick="event.stopPropagation(); window.calculateRoute(${loc.lat}, ${loc.lng})">
                 <div style="width:34px; height:34px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">↗</div>Directions</div></div>`;
 
-            card.onclick = () => { isPanning = true; ev_Map.panTo(loc); };
+            // THE SELECT FUNCTION (Re-Added for InfoWindow)
+            const select = () => {
+                isPanning = true; 
+                ev_Map.panTo(loc);
+                
+                const photoUrl = place.photos?.[0]?.getURI({maxWidth: 400}) || '';
+                const infoHtml = `
+                    <div style="width:300px; padding:10px; font-family:Arial;">
+                        ${photoUrl ? `<img src="${photoUrl}" style="width:100%; border-radius:8px;">` : ''}
+                        <h3>${place.displayName}</h3>
+                        <p>${place.formattedAddress}</p>
+                        <button onclick="window.calculateRoute(${loc.lat}, ${loc.lng})" style="background:#00838f; color:#fff; border:none; padding:8px 12px; border-radius:4px; cursor:pointer;">Get Directions</button>
+                    </div>`;
+
+                if (ev_InfoWindow) {
+                    ev_InfoWindow.setOptions({ content: infoHtml });
+                    ev_InfoWindow.open({ anchor: marker, map: ev_Map });
+                }
+            };
+
+            marker.addListener('gmp-click', select);
+            card.onclick = select;
             list.appendChild(card);
         });
     }
