@@ -1,7 +1,12 @@
 (function() {
     let ev_Map, ev_InfoWindow, directionsService, directionsRenderer;
+    let AdvancedMarker; 
     let ev_Markers = [];
+    let routeMarkers = []; 
     let isPanning = false;
+    let isRouting = false;
+
+    const getSafeCoord = (val) => typeof val === 'function' ? val() : val;
 
     function formatConnector(type) {
         if (!type) return "Unknown";
@@ -18,38 +23,82 @@
         if (ev_InfoWindow) ev_InfoWindow.close();
     };
 
-    window.triggerNearbySearch = function(lat, lng) {
+    window.triggerNearbySearch = async function(lat, lng) {
         if (!ev_Map) return;
-        ev_Map.setCenter({lat: lat, lng: lng});
+        const latNum = Number(lat);
+        const lngNum = Number(lng);
+        const { Place } = await google.maps.importLibrary("places");
+        ev_Map.setCenter({lat: latNum, lng: lngNum});
         ev_Map.setZoom(15); 
         
         const request = {
             textQuery: "restaurants and coffee shops",
-            locationBias: {lat: lat, lng: lng},
+            locationBias: {lat: latNum, lng: lngNum},
             maxResultCount: 10
         };
+        // Logic for nearby search can be expanded here
     };
 
-    // Calculate route and output steps to the panel below map
     window.calculateRoute = function(destLat, destLng) {
         if (!directionsService || !directionsRenderer) return;
+        
+        const latNum = Number(destLat);
+        const lngNum = Number(destLng);
+        if (isNaN(latNum) || isNaN(lngNum)) return;
+
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
+                isRouting = true; 
                 const origin = { lat: position.coords.latitude, lng: position.coords.longitude };
+                const destination = { lat: latNum, lng: lngNum };
+
                 directionsService.route({
                     origin: origin,
-                    destination: { lat: destLat, lng: destLng },
+                    destination: destination,
                     travelMode: google.maps.TravelMode.DRIVING
                 }, (result, status) => {
                     if (status === 'OK') {
-                        // This draws the route line on the map
+                        const route = result.routes?.[0];
+                        const leg = route?.legs?.[0];
+                        if (!leg) { isRouting = false; return; }
+
+                        // Clear previous artifacts
+                        routeMarkers.forEach(m => m.map = null);
+                        routeMarkers = [];
+                        directionsRenderer.setDirections({ routes: [] });
+                        
+                        // Render route polyline
                         directionsRenderer.setDirections(result);
-                        // This handles the scrolling to the directions panel
+                        
+                        // Manual markers for A and B to solve stacking
+                        const startMarker = new AdvancedMarker({
+                            map: ev_Map,
+                            position: leg.start_location,
+                            zIndex: 9999,
+                            title: "Your Location"
+                        });
+
+                        const endMarker = new AdvancedMarker({
+                            map: ev_Map,
+                            position: leg.end_location,
+                            zIndex: 10000, 
+                            title: "Destination"
+                        });
+
+                        routeMarkers.push(startMarker, endMarker);
+
                         const panel = document.getElementById('ev-directions-panel');
                         if (panel) panel.scrollIntoView({ behavior: 'smooth' });
+
+                        // Release lock only after map settles
+                        google.maps.event.addListenerOnce(ev_Map, "idle", () => {
+                            isRouting = false;
+                        });
+                    } else {
+                        isRouting = false;
                     }
                 });
-            }, () => alert("Please enable location services for turn-by-turn directions."));
+            }, () => { isRouting = false; alert("Location services timed out."); }, { timeout: 10000 });
         }
     };
 
@@ -58,26 +107,23 @@
             setTimeout(start, 300);
             return;
         }
-
         try {
-            const [{ Map }, { Place }, { AdvancedMarkerElement }] = await Promise.all([
+            const libraries = await Promise.all([
                 google.maps.importLibrary("maps"),
                 google.maps.importLibrary("places"),
                 google.maps.importLibrary("marker")
             ]);
 
-            // Initialize Directions Service/Renderer
+            const { Map } = libraries[0];
+            const { Place } = libraries[1];
+            AdvancedMarker = libraries[2].AdvancedMarkerElement;
+
             directionsService = new google.maps.DirectionsService();
             directionsRenderer = new google.maps.DirectionsRenderer({
-                suppressMarkers: false,
-                polylineOptions: {
-                    strokeColor: "#00838f",
-                    strokeWeight: 6
-                }
+                suppressMarkers: true, 
+                polylineOptions: { strokeColor: "#00838f", strokeWeight: 6, zIndex: 500 }
             });
 
-            ev_InfoWindow = new google.maps.InfoWindow();
-            
             ev_Map = new Map(document.getElementById("ev-map-canvas"), {
                 center: { lat: 43.159, lng: -79.246 }, 
                 zoom: 11,
@@ -87,31 +133,37 @@
                 fullscreenControl: true
             });
 
-            // Bind directions to map and panel
             directionsRenderer.setMap(ev_Map);
             directionsRenderer.setPanel(document.getElementById('ev-directions-panel'));
 
             ev_Map.addListener("idle", async () => {
-                if (isPanning) { isPanning = false; return; }
+                if (isPanning || isRouting) return;
                 const bounds = ev_Map.getBounds();
                 if (!bounds) return;
+
+                const ne = bounds.getNorthEast();
+                const sw = bounds.getSouthWest();
+                const cleanBounds = {
+                    north: getSafeCoord(ne.lat),
+                    south: getSafeCoord(sw.lat),
+                    east: getSafeCoord(ne.lng),
+                    west: getSafeCoord(sw.lng)
+                };
 
                 const request = {
                     textQuery: "EV Charging Station",
                     fields: ["displayName", "location", "formattedAddress", "rating", "evChargeOptions", "photos", "editorialSummary"],
-                    locationRestriction: bounds,
+                    locationRestriction: cleanBounds,
                     maxResultCount: 20 
                 };
 
-                try {
-                    const { places } = await Place.searchByText(request);
-                    renderUI(places || [], AdvancedMarkerElement);
-                } catch (e) { console.error("Search failed:", e); }
+                const { places } = await Place.searchByText(request);
+                renderUI(places || []);
             });
         } catch (err) { console.error("Initialization Error", err); }
     }
 
-    function renderUI(places, AdvancedMarkerElement) {
+    function renderUI(places) {
         ev_Markers.forEach(m => m.map = null);
         ev_Markers = [];
         const list = document.getElementById('ev-results-list');
@@ -119,11 +171,16 @@
         list.innerHTML = '';
         
         places.forEach((place, index) => {
-            const marker = new AdvancedMarkerElement({
+            const loc = {
+                lat: getSafeCoord(place.location.lat),
+                lng: getSafeCoord(place.location.lng)
+            };
+
+            const marker = new AdvancedMarker({
                 map: ev_Map,
-                position: place.location,
+                position: loc,
                 title: place.displayName,
-                gmpClickable: true 
+                gmpClickable: true
             });
             ev_Markers.push(marker);
 
@@ -140,18 +197,16 @@
                 sidebarPlugs += `<div style="display:flex; justify-content:space-between; font-size:13px; margin-top:8px;"><span style="color:#00838f;">⚡ ${formatConnector(agg.type)}</span><span style="background:#f1f3f4; padding:0 8px; border-radius:4px;">0/${agg.count || 1}</span></div>`;
             });
 
-            // Card remains exactly as you designed
-            card.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:start;"><div style="width:78%"><h5 style="margin:0; font-size:16px; font-weight:500; color:#202124;">${place.displayName}</h5><div style="font-size:12px; color:#70757a; margin:4px 0;">${ratingVal} <span style="color:#fbbc04;">★★★★★</span></div><p style="margin:4px 0; font-size:13px; color:#70757a;">${addr}</p>${sidebarPlugs}</div><div style="text-align:center; color:#00838f; font-size:11px;" onclick="window.calculateRoute(${place.location.lat()}, ${place.location.lng()})"><div style="width:34px; height:34px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">↗</div>Directions</div></div>`;
+            card.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:start;"><div style="width:78%"><h5 style="margin:0; font-size:16px; font-weight:500; color:#202124;">${place.displayName}</h5><div style="font-size:12px; color:#70757a; margin:4px 0;">${ratingVal} <span style="color:#fbbc04;">★★★★★</span></div><p style="margin:4px 0; font-size:13px; color:#70757a;">${addr}</p>${sidebarPlugs}</div><div style="text-align:center; color:#00838f; font-size:11px;" onclick="event.stopPropagation(); window.calculateRoute(${loc.lat}, ${loc.lng})"><div style="width:34px; height:34px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">↗</div>Directions</div></div>`;
 
             const select = (e) => {
                 if (e && e.stopImmediatePropagation) e.stopImmediatePropagation();
                 isPanning = true; 
-                ev_Map.panTo(place.location);
+                ev_Map.panTo(loc);
 
                 const photoUrl = place.photos && place.photos.length > 0 ? place.photos[0].getURI({maxWidth: 400}) : '';
                 const aboutText = place.editorialSummary || "Electric vehicle charging station providing reliable power services.";
 
-                // InfoHtml remains exactly as you designed
                 const infoHtml = `
                     <div style="width:340px; font-family:Roboto, Arial; background:#fff; border-radius:12px; overflow:hidden; position:relative;">
                         ${photoUrl ? `<div style="width:100%; height:140px; background:url('${photoUrl}') center/cover no-repeat;"></div>` : ''}
@@ -168,11 +223,11 @@
                         </div>
                         <div id="info-content-overview">
                             <div style="display:flex; justify-content:space-around; padding:16px 8px; border-bottom:1px solid #f1f3f4;">
-                                <div style="text-align:center; cursor:pointer;" onclick="window.calculateRoute(${place.location.lat()}, ${place.location.lng()})">
+                                <div style="text-align:center; cursor:pointer;" onclick="event.stopPropagation(); window.calculateRoute(${loc.lat}, ${loc.lng})">
                                     <div style="width:42px; height:42px; border-radius:50%; background:#00838f; color:#fff; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:20px;">↗</div>
                                     <div style="font-size:11px; color:#00838f; font-weight:500; margin-top:6px;">Directions</div>
                                 </div>
-                                <div style="text-align:center; cursor:pointer;" onclick="window.triggerNearbySearch(${place.location.lat()}, ${place.location.lng()})">
+                                <div style="text-align:center; cursor:pointer;" onclick="window.triggerNearbySearch(${loc.lat}, ${loc.lng})">
                                     <div style="width:42px; height:42px; border-radius:50%; border:1px solid #dadce0; color:#00838f; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">📍</div>
                                     <div style="font-size:11px; color:#00838f; font-weight:500; margin-top:6px;">Nearby</div>
                                 </div>
@@ -183,7 +238,7 @@
                             </div>
                             <div style="padding:16px;">
                                 <div style="display:flex; gap:12px; align-items:flex-start; margin-bottom:16px;">
-                                    <span style="color:#00838f; font-size:18px;">📍</span>
+                                    <span style="color:#00838f; font-size:18px;">4📍</span>
                                     <span style="font-size:14px; color:#3c4043; line-height:1.4;">${addr}</span>
                                 </div>
                                 <div style="display:flex; gap:12px; align-items:center;">
