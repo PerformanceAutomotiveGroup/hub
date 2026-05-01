@@ -41,12 +41,12 @@
                             return;
                         }
 
-                        // 1. CLEANUP: Detach old artifacts to prevent 'apply' crashes
+                        // 1. CLEANUP: Clear old artifacts to stop the 'apply' crash
                         if (activePolyline) activePolyline.setMap(null);
                         routeMarkers.forEach(m => m.map = null);
                         routeMarkers = [];
 
-                        // 2. STABLE PATH DECODING: Resolves missing line on Vector Maps
+                        // 2. STABLE PATH DECODING: Fixes the missing line and 'not a number' error
                         const decodedPath = google.maps.geometry.encoding.decodePath(overview);
                         const cleanPath = decodedPath.map(p => ({ lat: p.lat(), lng: p.lng() }));
 
@@ -60,7 +60,7 @@
                             zIndex: 150
                         });
 
-                        // 3. UPDATED PIN ELEMENT: Direct object passing (Fixes deprecation warning)
+                        // 3. UPDATED PIN LABELS: Direct object passing (2026 standard)
                         const startMarker = new AdvancedMarker({
                             map: ev_Map,
                             position: leg.start_location,
@@ -87,7 +87,7 @@
 
                         routeMarkers.push(startMarker, endMarker);
 
-                        // 4. SYNC UI & FOCUS
+                        // 4. SYNC UI: Load text steps into panel and focus map
                         directionsRenderer.setDirections(result);
                         ev_Map.fitBounds(route.bounds);
 
@@ -113,7 +113,6 @@
         try {
             ev_InfoWindow = new google.maps.InfoWindow();
 
-            // Load all required libraries including Geometry
             const lib = await Promise.all([
                 google.maps.importLibrary("maps"),
                 google.maps.importLibrary("places"),
@@ -128,7 +127,7 @@
             directionsService = new google.maps.DirectionsService();
             directionsRenderer = new google.maps.DirectionsRenderer({
                 suppressMarkers: true, 
-                map: null 
+                map: null // Detach from map to prevent internal 'apply' crashes
             });
 
             ev_Map = new Map(document.getElementById("ev-map-canvas"), {
@@ -198,7 +197,7 @@
                     <div style="text-align:center; color:#00838f; font-size:11px;" 
                          onclick="event.stopPropagation(); window.calculateRoute(${loc.lat}, ${loc.lng})">
                         <div style="width:34px; height:34px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">↗</div>
-                        Directions
+                        7Directions
                     </div>
                 </div>`;
 
