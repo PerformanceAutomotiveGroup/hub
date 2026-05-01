@@ -7,7 +7,6 @@
     let isPanning = false;
     let isRouting = false;
 
-    // Safety helper to extract coordinates as primitive numbers
     const getSafeCoord = (val) => typeof val === 'function' ? val() : val;
 
     window.closeEVInfoWindow = function() {
@@ -33,14 +32,23 @@
                     travelMode: google.maps.TravelMode.DRIVING
                 }, (result, status) => {
                     if (status === 'OK') {
-                        // 1. CLEANUP: Detach old artifacts to stop the 'apply' crash on zoom
+                        const route = result.routes?.[0];
+                        const leg = route?.legs?.[0];
+                        const overview = route?.overview_polyline;
+
+                        if (!route || !leg || !overview) {
+                            isRouting = false;
+                            return;
+                        }
+
+                        // 1. CLEANUP: Detach old artifacts
                         if (activePolyline) activePolyline.setMap(null);
                         routeMarkers.forEach(m => m.map = null);
                         routeMarkers = [];
 
-                        // 2. PATH UNWRAPPING: Force internal Google objects into primitive literals
-                        const rawPath = result.routes[0].overview_path;
-                        const cleanPath = rawPath.map(p => ({ lat: p.lat(), lng: p.lng() }));
+                        // 2. DECODE PATH: Use Geometry library for a stable path on Vector Maps
+                        const decodedPath = google.maps.geometry.encoding.decodePath(overview);
+                        const cleanPath = decodedPath.map(p => ({ lat: p.lat(), lng: p.lng() }));
 
                         activePolyline = new google.maps.Polyline({
                             path: cleanPath,
@@ -49,11 +57,10 @@
                             strokeOpacity: 1.0,
                             strokeWeight: 6,
                             map: ev_Map,
-                            zIndex: 100
+                            zIndex: 150
                         });
 
-                        // 3. UPDATED PIN ELEMENT: Using glyphText (fixes deprecation warning)
-                        const leg = result.routes[0].legs[0];
+                        // 3. MANUAL A & B PIN LABELS (2026 glyphText standard)
                         const startMarker = new AdvancedMarker({
                             map: ev_Map,
                             position: leg.start_location,
@@ -80,8 +87,10 @@
 
                         routeMarkers.push(startMarker, endMarker);
 
-                        // 4. UPDATE TEXT PANEL
+                        // 4. SYNC UI
                         directionsRenderer.setDirections(result);
+                        ev_Map.fitBounds(route.bounds); // Focus the route
+
                         const panel = document.getElementById('ev-directions-panel');
                         if (panel) panel.scrollIntoView({ behavior: 'smooth' });
 
@@ -102,13 +111,14 @@
             return;
         }
         try {
-            // Initialize InfoWindow early to ensure it exists for renderUI
             ev_InfoWindow = new google.maps.InfoWindow();
 
+            // Load Geometry library along with others
             const lib = await Promise.all([
                 google.maps.importLibrary("maps"),
                 google.maps.importLibrary("places"),
-                google.maps.importLibrary("marker")
+                google.maps.importLibrary("marker"),
+                google.maps.importLibrary("geometry")
             ]);
 
             const { Map } = lib[0];
@@ -118,7 +128,7 @@
             directionsService = new google.maps.DirectionsService();
             directionsRenderer = new google.maps.DirectionsRenderer({
                 suppressMarkers: true, 
-                map: null // Keep detached from map instance to avoid internal Vector conflicts
+                map: null 
             });
 
             ev_Map = new Map(document.getElementById("ev-map-canvas"), {
@@ -185,12 +195,11 @@
             card.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:start;">
                 <div style="width:78%"><h5 style="margin:0;">${place.displayName}</h5></div>
                 <div style="text-align:center; color:#00838f; font-size:11px;" onclick="event.stopPropagation(); window.calculateRoute(${loc.lat}, ${loc.lng})">
-                <div style="width:34px; height:34px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">↗</div>Directions</div></div>`;
+                <div style="width:34px; height:34px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">↗</div>6Directions</div></div>`;
 
             const select = () => {
                 isPanning = true; 
                 ev_Map.panTo(loc);
-                
                 const photoUrl = place.photos?.[0]?.getURI({maxWidth: 400}) || '';
                 const infoHtml = `
                     <div style="width:300px; padding:10px; font-family:Arial;">
