@@ -23,7 +23,6 @@
 
     window.triggerNearbySearch = async function(lat, lng) {
         if (!ev_Map) return;
-        // Strip hidden properties by forcing Number casting
         const latNum = Number(lat);
         const lngNum = Number(lng);
         
