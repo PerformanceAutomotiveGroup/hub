@@ -3,7 +3,6 @@
     let ev_Markers = [];
     let isPanning = false;
 
-    // Manual route elements to ensure visibility on Vector Maps
     let activeRouteLine = null;
     let destinationMarker = null;
 
