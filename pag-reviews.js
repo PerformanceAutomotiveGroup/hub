@@ -16,12 +16,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const ctaInventory = document.getElementById("ctaInventory");
   const ctaService = document.getElementById("ctaService");
 
-  if (typeof locationsData === 'undefined') {
-    console.error("Dealership Directory Error: locationsData array is not defined on the parent page.");
+  // Defensive Check for the new root cloud object structure
+  if (typeof locationsData === 'undefined' || !locationsData.dealerships) {
+    console.error("Dealership Directory Error: locationsData.dealerships is not defined on the parent page.");
     return;
   }
 
-  locationsData.forEach(loc => {
+  // Use the isolated array reference shortcut to clean up loops
+  const dealerships = locationsData.dealerships;
+
+  // 1. Populate Selection Filters
+  dealerships.forEach(loc => {
     const option = document.createElement("option");
     option.value = loc.key;
     option.textContent = loc.name;
@@ -29,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const brands = new Set();
-  locationsData.forEach(loc => { if(loc.brand) brands.add(loc.brand); });
+  dealerships.forEach(loc => { if(loc.brand) brands.add(loc.brand); });
   Array.from(brands).sort().forEach(brand => {
     const option = document.createElement("option");
     option.value = brand.toLowerCase();
@@ -37,12 +42,24 @@ document.addEventListener("DOMContentLoaded", () => {
     brandFilter.appendChild(option);
   });
 
+  // Helper function to extract readable dates from Cloud timestamps
+  function formatReviewDate(isoString) {
+    try {
+      const dateObj = new Date(isoString);
+      if (isNaN(dateObj.getTime())) return "Recently";
+      return dateObj.toLocaleDateString('en-CA', { year: 'numeric', month: 'short', day: 'numeric' });
+    } catch(e) {
+      return "Recently";
+    }
+  }
+
+  // 2. Render Left Sidebar Dealership Cards
   function renderLocations() {
     locationsEl.innerHTML = "";
     const search = searchInput.value.toLowerCase();
     const selectedBrand = brandFilter.value;
 
-    locationsData.forEach(loc => {
+    dealerships.forEach(loc => {
       if (
         (locationFilter.value !== "all" && locationFilter.value !== loc.key) ||
         (selectedBrand !== "all" && loc.brand.toLowerCase() !== selectedBrand.toLowerCase()) ||
@@ -77,6 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // 3. Populate Right Feed Components on Click
   function openPanel(loc) {
     document.querySelectorAll('.location-card').forEach(card => {
       card.classList.remove('active');
@@ -90,7 +108,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // Toggle panels
     if (panelPlaceholder) panelPlaceholder.style.display = "none";
     if (panelContent) panelContent.style.display = "block";
 
@@ -99,59 +116,64 @@ document.addEventListener("DOMContentLoaded", () => {
     if (panelAddress) panelAddress.textContent = loc.address;
     if (panelReviews) panelReviews.innerHTML = "";
 
-    // Generate accurate performance.ca permalinks based on data slugs
-    const cleanSlug = loc.key.replace(/_/g, '-');
-    if (ctaInventory) ctaInventory.href = `https://www.performance.ca/dealerships/${cleanSlug}/new-inventory/`;
-    if (ctaService) ctaService.href = `https://www.performance.ca/dealerships/${cleanSlug}/book-service/`;
+    // Maps directly to the precise nested object keys inside your cloud file
+    if (ctaInventory && loc.ctas && loc.ctas.inventory) ctaInventory.href = loc.ctas.inventory;
+    if (ctaService && loc.ctas && loc.ctas.service) ctaService.href = loc.ctas.service;
 
-    // Global Google review link display evaluation
-    if (loc.googleMapsUrl && panelGlobalLink && panelGlobalLinkContainer) {
-      panelGlobalLink.href = loc.googleMapsUrl;
-      panelGlobalLink.textContent = `Read All ${loc.count} Reviews on Google →`;
+    // Direct routing setup for the updated dealership link strategy
+    if (loc.ctas && loc.ctas.dealershipHomeUrl && panelGlobalLink && panelGlobalLinkContainer) {
+      panelGlobalLink.href = loc.ctas.dealershipHomeUrl;
+      panelGlobalLink.textContent = `Read All ${loc.count} Reviews on Our Website →`;
       panelGlobalLinkContainer.style.display = "block";
     } else if (panelGlobalLinkContainer) {
       panelGlobalLinkContainer.style.display = "none";
     }
 
     // Render individual reviews loop
-    loc.reviews.forEach(r => {
-      const isLongText = r.text.length > 120;
-      const shortText = isLongText ? r.text.substring(0, 120) + "..." : r.text;
+    if (loc.reviews) {
+      loc.reviews.forEach(r => {
+        const isLongText = r.text && r.text.length > 120;
+        const shortText = isLongText ? r.text.substring(0, 120) + "..." : (r.text || "");
+        const formattedDate = formatReviewDate(r.date);
 
-      const review = document.createElement("div");
-      review.className = "review";
-      review.style.marginBottom = "15px";
-      review.innerHTML = `
-        <div class="review-meta" style="font-size:0.85em; color:#666;">
-          ★ ${r.rating} | ${loc.brand} | Assisted by: ${r.staff} | ${r.date}
-        </div>
-        <div class="review-text">
-          <span class="preview">${shortText}</span>
-          <span class="full" style="display:none;">${r.text}</span>
-        </div>
-        ${isLongText ? `<span class="toggle" style="color:#0056b3; cursor:pointer; font-size:0.9em; display:block; margin-top:4px;">Read more</span>` : ''}
-      `;
+        const review = document.createElement("div");
+        review.className = "review";
+        review.style.borderTop = "1px solid #e0e0e0";
+        review.style.padding = "12px 0";
+        review.style.marginBottom = "5px";
+        
+        review.innerHTML = `
+          <div class="review-meta" style="font-size:0.85em; color:#666; margin-bottom: 6px;">
+            ★ ${r.rating} | ${loc.brand} | Assisted by: ${r.customer || 'Verified Guest'} | ${formattedDate}
+          </div>
+          <div class="review-text">
+            <span class="preview">${shortText}</span>
+            ${isLongText ? `<span class="full" style="display:none;">${r.text}</span>` : ''}
+          </div>
+          ${isLongText ? `<span class="toggle" style="color:#2c68b5; cursor:pointer; font-size:0.9em; display:block; margin-top:4px;">Read more</span>` : ''}
+        `;
 
-      const toggle = review.querySelector(".toggle");
-      if (toggle) {
-        const preview = review.querySelector(".preview");
-        const full = review.querySelector(".full");
+        const toggle = review.querySelector(".toggle");
+        if (toggle) {
+          const preview = review.querySelector(".preview");
+          const full = review.querySelector(".full");
 
-        toggle.onclick = () => {
-          if (full.style.display === "none") {
-            full.style.display = "inline";
-            preview.style.display = "none";
-            toggle.textContent = "Show less";
-          } else {
-            full.style.display = "none";
-            preview.style.display = "inline";
-            toggle.textContent = "Read more";
-          }
-        };
-      }
+          toggle.onclick = () => {
+            if (full.style.display === "none") {
+              full.style.display = "inline";
+              preview.style.display = "none";
+              toggle.textContent = "Show less";
+            } else {
+              full.style.display = "none";
+              preview.style.display = "inline";
+              toggle.textContent = "Read more";
+            }
+          };
+        }
 
-      if (panelReviews) panelReviews.appendChild(review);
-    });
+        if (panelReviews) panelReviews.appendChild(review);
+      });
+    }
   }
 
   locationFilter.onchange = renderLocations;
