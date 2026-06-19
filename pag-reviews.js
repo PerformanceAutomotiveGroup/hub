@@ -68,14 +68,14 @@
           (search && !loc.name.toLowerCase().includes(search))
         ) return;
 
-// Dynamically construct the path to the new subfolder using the lowercase brand name
-const logoUrl = `https://performanceautomotivegroup.github.io/hub/images/brands/${loc.brand.toLowerCase()}.png`;
+const brandNormalized = loc.brand ? loc.brand.toLowerCase() : "";
+const logoUrl = brandNormalized ? `https://performanceautomotivegroup.github.io/hub/images/brands/${brandNormalized}.png` : "";
 
 const card = document.createElement("div");
 card.className = "location-card";
 card.innerHTML = `
   <div style="display:flex; align-items:center; gap:10px; cursor:pointer;">
-    <img src="${logoUrl}" alt="${loc.brand} logo" style="width:90px; height:auto; max-height:50px; object-fit:contain;" onerror="this.style.display='none';">
+    ${logoUrl ? `<img src="${logoUrl}" alt="${loc.brand || 'Dealership'} logo" style="width:90px; height:auto; max-height:50px; object-fit:contain;" onerror="this.style.display='none';">` : ''}
     <div>
       <div class="location-name" style="font-weight:bold;">${loc.name}</div>
       <div class="location-meta">★ ${loc.rating} from ${loc.count} reviews</div>
