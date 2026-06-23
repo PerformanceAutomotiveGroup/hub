@@ -1,92 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8" />
-<!-- Ensures proper rendering and touch zooming on mobile devices -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>CSS - Performance Hub</title>
-<!-- Link to the main site-wide CSS stylesheet -->
-<link rel="stylesheet" href="../../css/style.css" />
+<head> 
+    <div data-include="/hub/nav/head.html"></div>
+    <title>CSS Hover Dropdown – Performance Hub</title> 
 </head>
-<body>
+<body> 
 
-<!-- Include top navigation bar -->
-<div data-include="../../nav/topnav.html"></div>
+<div data-include="/hub/nav/topnav.html"></div>
 
-<!-- Page content wrapper -->
 <div class="content">
 
-<!-- Include HTML section side navigation -->
-<div data-include="../../nav/csssidenav.html"></div>
+    <div data-include="/hub/nav/csssidenav.html"></div>
 
-<! ------- EDIT START HERE ------- >
+    <div class="main">
 
-<!-- Main content section -->
-<div class="main">
-<h1>CSS Hover Dropdown</h1>
-<p>Move the mouse over the text "Answer" to open the dropdown content.</p>
-<!-- Screenshot container -->
-<div class="blue-box">
-<h2>Screenshots</h2>
-<div class="screenshot-gallery">
-<!-- Example screenshot image -->
-<img src="../../images/hoverable-dropdown1.png" alt="Element on click"><img src="../../images/hoverable-dropdown2.png" alt="Hoverable Dropdown">
-</div>
-<!-- Link to live form page -->
-<a href="#" target="_blank" class="blue-btn">NO LIVE VIEW</a>
-</div>
-<!-- END Screenshot section -->
+        <h1>CSS Hover Dropdown</h1>
+        <p>Move the mouse over the text "Answer" to open the dropdown content area dynamically.</p>
 
-<!-- YOUR Code section 1 -->
-<div class="code-section">
-<div class="code-header">
-<span>HTML Code</span> 
-</div>
+        <div class="blue-box">
+            <h2>Screenshots</h2>
+            <div class="screenshot-gallery">
+                <img src="/hub/images/hoverable-dropdown1.png" alt="Dropdown Hidden View">
+                <img src="/hub/images/hoverable-dropdown2.png" alt="Dropdown Hover Active View">
+            </div>
+            <a href="#" target="_blank" class="blue-btn" style="display: none;">NO LIVE VIEW</a>
+        </div>
 
-<!-- Code snippet display area (Prism.js highlights this) -->
-<pre><code id="html-form-snippet" class="language-html"></code></pre>
+        <div class="blue-box">
+            <h2>Live Preview</h2>
+            <div id="live-preview"></div>
+            <p style="font-size:0.9em; color:#555; margin-top:10px;">
+                Usage: Preview renders live component execution inside a safe sandbox. Use copy modules below for deployment.
+            </p>
+        </div>
 
-<!-- Hidden - containing YOUR code -->
-<template id="html-form-template"> 
+        <section class="template-code-block" id="html-code">
+            <div class="code-header toggle-btn">
+                <h3>HTML Structure <span style="font-size:0.8em; color:#777;">(Click to view)</span></h3>
+                <button class="copy-btn" data-copy="html-code">Copy HTML</button>
+            </div>
+            <template id="html-template">
 <h2>Hoverable Dropdown</h2>
 <h3>Question: What does “ABS” stand for in cars?</h3>
+
 <div class="pag-dropdown">
-<span>Answer</span>
-<div class="pag-dropdown-content">
-<p>Anti-lock Braking System – it prevents the wheels from locking up during hard braking.</p>
+    <span>Answer</span>
+    <div class="pag-dropdown-content">
+        <p>Anti-lock Braking System – it prevents the wheels from locking up during hard braking.</p>
+    </div>
 </div>
-</template>
+            </template>
+            <pre class="collapsible"><code class="language-html"></code></pre>
+        </section>
 
-<!-- Button to copy the template code to clipboard -->
-<button class="copy-btn" onclick="copyCode('html-form-snippet')">Copy Code</button>
-</div>
-<!-- END Code section -->
+        <section class="template-code-block" id="css-code">
+            <div class="code-header toggle-btn">
+                <h3>CSS Styles <span style="font-size:0.8em; color:#777;">(Click to view)</span></h3>
+                <button class="copy-btn" data-copy="css-code">Copy CSS</button>
+            </div>
+            <template id="css-template">
+.pag-dropdown {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    background-color: #0077b6;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+}
 
-<!-- YOUR Code section 2 -->
-<div class="code-section">
-<div class="code-header">
-<span>CSS Code</span> 
-</div>
-<pre><code id="html-form2-snippet" class="language-html"></code></pre>
+.pag-dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #f9f9f9;
+    color: #333;
+    min-width: 360px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 1;
+    border-radius: 6px;
+    margin-top: 5px;
+}
 
-<!-- Hidden - containing YOUR code -->
-<template id="html-form2-template"> 
-.pag-dropdown { position: relative; display: inline-block; } .pag-dropdown-content { display: none; position: absolute; background-color: #f9f9f9; min-width: 360px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); padding: 12px 16px; z-index: 1; } .pag-dropdown:hover .pag-dropdown-content { display: block; }
-</template>
+.pag-dropdown:hover .pag-dropdown-content {
+    display: block;
+}
+            </template>
+            <pre class="collapsible"><code class="language-css"></code></pre>
+        </section>
 
-<button class="copy-btn" onclick="copyCode('html-form2-snippet')">Copy Code</button>
-</div>
-<!-- END Code section -->
+        <section class="template-code-block" id="js-code" style="display: none;">
+            <div class="code-header toggle-btn">
+                <h3>JavaScript Interaction</h3>
+                <button class="copy-btn" data-copy="js-code">Copy JS</button>
+            </div>
+            <template id="js-template">
+// No custom script requirements for pure CSS dropdown functionality
+            </template>
+            <pre class="collapsible"><code class="language-js"></code></pre>
+        </section>
+
+        <div style="margin: 30px 0;">
+            <button class="copy-btn" data-copy-all style="padding: 10px 20px; font-weight: bold;">Copy All Modules</button>
+        </div>
+
+    </div> 
 </div> 
-</div> <! ------- EDIT END HERE ------- >
 
-<!-- Prism.js for syntax highlighting -->
-<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.js"></script>
+<div data-include="/hub/nav/footernav.html"></div>
 
-<!-- Include footer navigation -->
-<div data-include="../../nav/footernav.html"></div>
+<script src="/hub/js/include.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"></script>
 
-<!-- Script to handle HTML partial includes -->
-<script src="../../js/include.js"></script>
 </body>
 </html>
