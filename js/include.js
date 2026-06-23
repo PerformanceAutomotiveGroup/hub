@@ -1,5 +1,5 @@
 // ===============================
-// HTML Includes
+// HTML Includes with Path Correction
 // ===============================
 function loadIncludes(callback) {
   const elements = document.querySelectorAll('[data-include]');
@@ -7,8 +7,20 @@ function loadIncludes(callback) {
 
   if (elements.length === 0 && callback) callback();
 
+  // Determine if running on GitHub Pages subfolder vs local root
+  const basePrefix = window.location.pathname.startsWith('/hub/') ? '/hub' : '';
+
   elements.forEach(el => {
-    const file = el.getAttribute('data-include');
+    let file = el.getAttribute('data-include');
+    
+    // Convert relative paths to absolute root paths dynamically
+    if (file.startsWith('../')) {
+      file = file.replace(/^(\.\.\/)+/, '/');
+    }
+    if (!file.startsWith('http') && !file.startsWith(basePrefix)) {
+      file = basePrefix + file;
+    }
+
     fetch(file)
       .then(res => {
         if (!res.ok) throw new Error(`Could not fetch ${file}`);
@@ -31,14 +43,15 @@ function loadIncludes(callback) {
 function highlightActiveLink() {
   const currentPage = window.location.pathname.split('/').pop();
   document.querySelectorAll('.sidenav a').forEach(link => {
-    if (link.getAttribute('href') === currentPage) {
+    const href = link.getAttribute('href');
+    if (href && href.split('/').pop() === currentPage) {
       link.classList.add('active');
     }
   });
 }
 
 // ===============================
-// Prism Template Loader
+// Prism Template Loader (Standardized)
 // ===============================
 function initPrismTemplates() {
   document.querySelectorAll('template[id$="-template"]').forEach(template => {
@@ -46,8 +59,11 @@ function initPrismTemplates() {
     const codeBlock = document.querySelector(`#${baseId}-code code`);
 
     if (codeBlock) {
+      // Safely grab innerHTML and clean up whitespace
       codeBlock.textContent = template.innerHTML.trim();
-      Prism.highlightElement(codeBlock);
+      if (window.Prism) {
+        Prism.highlightElement(codeBlock);
+      }
     }
   });
 }
@@ -57,19 +73,21 @@ function initPrismTemplates() {
 // ===============================
 function initCopyButtons() {
   document.querySelectorAll('.copy-btn[data-copy]').forEach(btn => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation(); // Stop code collapse from firing on click
       const id = btn.getAttribute('data-copy');
       const code = document.querySelector(`#${id} code`)?.textContent;
       if (!code) return;
 
       navigator.clipboard.writeText(code).then(() => {
+        const originalText = btn.textContent;
         btn.textContent = 'Copied!';
-        setTimeout(() => (btn.textContent = 'Copy'), 1500);
+        setTimeout(() => (btn.textContent = originalText), 1500);
       });
     });
   });
 
-  // Copy ALL
+  // Copy ALL Combined Component Code
   const copyAllBtn = document.querySelector('[data-copy-all]');
   if (copyAllBtn) {
     copyAllBtn.addEventListener('click', () => {
@@ -77,20 +95,7 @@ function initCopyButtons() {
       const css  = document.querySelector('#css-code code')?.textContent || '';
       const js   = document.querySelector('#js-code code')?.textContent || '';
 
-      const combined = `
-<!-- HTML -->
-${html}
-
-<!-- CSS -->
-<style>
-${css}
-</style>
-
-<!-- JS -->
-<script>
-${js}
-<\/script>
-`.trim();
+      const combined = `\n${html}\n\n\n<style>\n${css}\n</style>\n\n\n<script>\n${js}\n<\/script>`.trim();
 
       navigator.clipboard.writeText(combined).then(() => {
         copyAllBtn.textContent = 'All Copied!';
@@ -105,35 +110,35 @@ ${js}
 // ===============================
 function renderLivePreview() {
   const previewContainer = document.getElementById('live-preview');
-  const template = document.getElementById('html-template');
-  const cssCode = document.querySelector('#css-code code')?.textContent || '';
-  const jsCode  = document.querySelector('#js-code code')?.textContent || '';
+  const htmlTemplate = document.getElementById('html-template');
+  const cssTemplate = document.getElementById('css-template');
+  const jsTemplate = document.getElementById('js-template');
 
-  if (previewContainer && template) {
-    previewContainer.innerHTML = ''; // clear previous
+  if (previewContainer && htmlTemplate) {
+    previewContainer.innerHTML = ''; // Clear container
 
-    // Clone HTML
-    const clone = template.content.cloneNode(true);
+    // Inject HTML
+    const clone = htmlTemplate.content.cloneNode(true);
     previewContainer.appendChild(clone);
 
-    // Inject CSS
-    if (cssCode) {
+    // Inject CSS if present
+    if (cssTemplate) {
       const styleEl = document.createElement('style');
-      styleEl.textContent = cssCode;
+      styleEl.textContent = cssTemplate.innerHTML.trim();
       previewContainer.appendChild(styleEl);
     }
 
-    // Inject JS
-    if (jsCode) {
+    // Inject JS if present
+    if (jsTemplate) {
       const scriptEl = document.createElement('script');
-      scriptEl.textContent = jsCode;
+      scriptEl.textContent = jsTemplate.innerHTML.trim();
       previewContainer.appendChild(scriptEl);
     }
   }
 }
 
 // ===============================
-// Collapsible code sections
+// Collapsible Code Sections
 // ===============================
 function initCollapsibleCode() {
   document.querySelectorAll('.template-code-block .toggle-btn').forEach(header => {
