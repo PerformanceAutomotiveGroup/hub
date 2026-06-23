@@ -1,48 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head> 
-<meta charset="UTF-8" /> 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
-<title>HTML Image Maps – Performance Hub</title> <!--  Change title HERE  -->
-<link rel="stylesheet" href="../../css/style.css" /> 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/themes/prism.min.css" /> 
+<!-- Standardized meta initialization, typography parameters, global styles, and configurations -->
+<div data-include="/hub/nav/head.html"></div>
+<title>HTML Image Maps – Performance Hub</title> 
 </head>
-
 <body> 
 
-<!-- Top Navigation -->
-<div data-include="../../nav/topnav.html"></div>
+<!-- Global Master Header Navigation Module -->
+<div data-include="/hub/nav/topnav.html"></div>
 
 <div class="content">
 
-<!-- Side Navigation -->
-<div data-include="../../nav/htmlsidenav.html"></div>
+<!-- Workspace Sidebar Navigation Module -->
+<div data-include="/hub/nav/htmlsidenav.html"></div>
 
-<!-- Main Content -->
+<!-- Main Content Area -->
 <div class="main">
 
-<!-- Title -->
 <h1>HTML Image Maps</h1>
-<p>This HTML image map example displays an interactive image divided into five clickable areas. Each area highlights on hover and shows a label with its title.</p>
+<p>An interactive, responsive image mapping technique utilizing absolute percentage-based hotspots to establish responsive click target boundaries and tooltip overlays.</p>
 
-<!-- Live Preview -->
+<!-- Dynamic Sandbox Render Frame Container -->
 <div class="blue-box">
 <h2>Live Preview</h2>
 <div id="live-preview"></div>
 <p style="font-size:0.9em; color:#555; margin-top:10px;">
-Usage: Preview renders the template HTML, CSS, and JS. Copy the sections below for WordPress or other projects.
+Usage: Preview renders live component execution inside an isolated sandbox. Use copy modules below for deployment.
 </p>
 </div>
 
-<!-- ########## HTML Code Section ########## -->
+<!-- ########## HTML Structural Segment ########## -->
 <section class="template-code-block" id="html-code">
 <div class="code-header toggle-btn">
-<h3>HTML Structure > <span style="font-size:15px; color:#555;">Click to expand</span></h3>
+<h3>HTML Structure <span style="font-size:0.8em; color:#777;">(Click to view)</span></h3>
 <button class="copy-btn" data-copy="html-code">Copy HTML</button>
 </div>
-
-<template id="html-template"><!--  Your HTML code goes within HERE  -->
+<template id="html-template">
 <div class="image-map">
 <img src="https://performance.performanceautodev.com/wp-content/uploads/sites/40/2020/06/xcommunity.jpg.pagespeed.ic.GzF73iD-5F.webp" alt="Community Map">
 
@@ -67,28 +61,47 @@ Usage: Preview renders the template HTML, CSS, and JS. Copy the sections below f
 </a>
 </div>
 </template>
-
 <pre class="collapsible"><code class="language-html"></code></pre>
 </section>
 
-<!-- ########## CSS Code Section ########## -->
+<!-- ########## CSS Presentation Segment ########## -->
 <section class="template-code-block" id="css-code">
 <div class="code-header toggle-btn">
-<h3>CSS > <span style="font-size:15px; color:#555;">Click to expand</span></h3>
+<h3>CSS Styles <span style="font-size:0.8em; color:#777;">(Click to view)</span></h3>
 <button class="copy-btn" data-copy="css-code">Copy CSS</button>
 </div>
-<pre class="collapsible"><code class="language-css"><!--  Your CSS code goes within HERE  -->
-.image-map { position: relative; max-width: 900px; margin: auto; }
-.image-map img { width: 100%; height: auto; display: block; }
-.hotspot { position: absolute; border: 2px solid transparent; transition: all 0.3s ease; border-radius: 74px; }
-.hotspot:hover { background-color: none; }
+<template id="css-template">
+.image-map { 
+position: relative; 
+max-width: 900px; 
+margin: auto; 
+}
+
+.image-map img { 
+width: 100%; 
+height: auto; 
+display: block; 
+}
+
+.hotspot { 
+position: absolute; 
+border: 2px solid transparent; 
+transition: all 0.3s ease; 
+border-radius: 74px; 
+}
+
+.hotspot:hover { 
+background-color: rgba(255, 255, 255, 0.15); 
+border-color: #ffffff;
+}
+
 .hotspot span {
 position: absolute;
 bottom: 100%;
 left: 50%;
 transform: translateX(-50%);
 background: rgba(0, 0, 0, 0.8);
-color: #fff;
+color: #ffffff;
 padding: 5px 10px;
 border-radius: 4px;
 font-size: 14px;
@@ -96,39 +109,52 @@ white-space: nowrap;
 opacity: 0;
 pointer-events: none;
 transition: opacity 0.3s ease;
+margin-bottom: 5px;
+font-family: sans-serif;
 }
-.hotspot:hover span { opacity: 1; }
-</code></pre>
+
+.hotspot:hover span { 
+opacity: 1; 
+}
+</template>
+<pre class="collapsible"><code class="language-css"></code></pre>
 </section>
 
-<!-- ########## JS Code Section ########## -->
+<!-- ########## JS Logical Segment ########## -->
 <section class="template-code-block" id="js-code">
 <div class="code-header toggle-btn">
-<h3>JavaScript > <span style="font-size:15px; color:#555;">Click to expand</span></h3>
+<h3>JavaScript Interaction <span style="font-size:0.8em; color:#777;">(Click to view)</span></h3>
 <button class="copy-btn" data-copy="js-code">Copy JS</button>
 </div>
-<pre class="collapsible"><code class="language-js"> <!--  Your JS code goes within HERE  -->
+<template id="js-template">
+// Optional programmatic state management extensions can be handled here
 document.querySelectorAll('.hotspot').forEach(hotspot => {
-hotspot.addEventListener('mouseenter', () => hotspot.querySelector('span').style.opacity = 1);
-hotspot.addEventListener('mouseleave', () => hotspot.querySelector('span').style.opacity = 0);
+hotspot.addEventListener('mouseenter', () => {
+const tooltip = hotspot.querySelector('span');
+if (tooltip) tooltip.style.opacity = '1';
 });
-</code></pre>
+hotspot.addEventListener('mouseleave', () => {
+const tooltip = hotspot.querySelector('span');
+if (tooltip) tooltip.style.opacity = '0';
+});
+});
+</template>
+<pre class="collapsible"><code class="language-js"></code></pre>
 </section>
 
-<!-- Copy All Button -->
-<div style="margin: 20px 0;">
-<button class="copy-btn" data-copy-all>Copy All</button>
+<!-- Complete Blueprint Compilation Downloader Utility -->
+<div style="margin: 30px 0;">
+<button class="copy-btn" data-copy-all style="padding: 10px 20px; font-weight: bold;">Copy All Modules</button>
 </div>
 
-</div> <!-- .main -->
+</div> 
+</div> 
 
-</div> <!-- .content -->
+<!-- Global Layout Footer Module -->
+<div data-include="/hub/nav/footernav.html"></div>
 
-<!-- Footer -->
-<div data-include="../../nav/footernav.html"></div>
-
-<!-- JS Includes -->
-<script src="../../js/include.js"></script>
+<!-- Core Architectural Engine Components & Code Highlighter Parser Utilities -->
+<script src="/hub/js/include.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"></script>
 
 </body>
