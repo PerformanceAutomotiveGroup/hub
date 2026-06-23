@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+<div data-include="/hub/nav/head.html"></div>
+<title>Landing Page – Template</title> 
+</head>
+<body> 
+
+<div data-include="/hub/nav/topnav.html"></div>
+
+<div class="content">
+
+<div data-include="/hub/nav/templatessidenav.html"></div>
+
+<div class="main">
+
+<h1>Landing Page Template</h1>
+<p>A clean, conversion-focused landing page layout used across Performance marketing campaigns.</p>
+
+<div class="blue-box">
+<h2>Screenshots</h2>
+<div class="screenshot-gallery">
+<img src="/hub/images/landing-template-1.png" alt="Hero View">
+<img src="/hub/images/landing-template-2.png" alt="Content View">
+</div>
+</div>
+
+<div class="blue-box">
+<h2>Live Preview</h2>
+<div id="live-preview"></div>
+<p style="font-size:0.9em; color:#555; margin-top:10px;">
+Usage: Preview renders live component execution. Use copy modules below for deployment.
+</p>
+</div>
+
+<section class="template-code-block" id="html-code">
+<div class="code-header toggle-btn">
+<h3>HTML Structure <span style="font-size:0.8em; color:#777;">(Click to view)</span></h3>
+<button class="copy-btn" data-copy="html-code">Copy HTML</button>
+</div>
+<template id="html-template">
+<section class="hero">
+<h1>Main Headline</h1>
+<p>Supporting value proposition</p>
+<a href="#form" class="btn">Get Started</a>
+</section>
+
+<section class="features">
+<div class="grid">
+<div class="card">
+<h3>Feature One</h3>
+<p>Description</p>
+</div>
+<div class="card">
+<h3>Feature Two</h3>
+<p>Description</p>
+</div>
+</div>
+</section>
+</template>
+<pre class="collapsible"><code class="language-html"></code></pre>
+</section>
+
+<section class="template-code-block" id="css-code">
+<div class="code-header toggle-btn">
+<h3>CSS Styles <span style="font-size:0.8em; color:#777;">(Click to view)</span></h3>
+<button class="copy-btn" data-copy="css-code">Copy CSS</button>
+</div>
+<template id="css-template">
+.hero {
+background: linear-gradient(135deg, #0077b6, #00b4d8);
+color: white;
+padding: 50px 30px;
+border-radius: 12px;
+margin-bottom: 30px;
+}
+.hero h1 { margin: 0; font-size: 2.2rem; }
+.hero p { margin-top: 10px; font-size: 1.1rem; }
+
+.grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+gap: 20px;
+}
+.card {
+background: #fff;
+padding: 20px;
+border-radius: 12px;
+box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+transition: transform 0.2s ease, box-shadow 0.2s ease;
+cursor: pointer;
+}
+.card:hover { transform: translateY(-5px); box-shadow: 0 6px 12px rgba(0,0,0,0.15); }
+.card h3 { color: #0077b6; margin-bottom: 8px; }
+.card p { color: #555; }
+</template>
+<pre class="collapsible"><code class="language-css"></code></pre>
+</section>
+
+<section class="template-code-block" id="js-code">
+<div class="code-header toggle-btn">
+<h3>JavaScript Interaction <span style="font-size:0.8em; color:#777;">(Click to view)</span></h3>
+<button class="copy-btn" data-copy="js-code">Copy JS</button>
+</div>
+<template id="js-template">
+document.querySelectorAll('.btn').forEach(btn => {
+btn.addEventListener('click', () => {
+console.log('CTA clicked');
+});
+});
+</template>
+<pre class="collapsible"><code class="language-js"></code></pre>
+</section>
+
+<div style="margin: 30px 0;">
+<button class="copy-btn" data-copy-all style="padding: 10px 20px; font-weight: bold;">Copy All Modules</button>
+</div>
+
+</div> 
+</div> 
+
+<div data-include="/hub/nav/footernav.html"></div>
+
+<script src="/hub/js/include.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"></script>
+
+</body>
+</html>
