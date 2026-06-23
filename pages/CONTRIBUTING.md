@@ -14,18 +14,18 @@ Ask yourself:
 - Will someone else benefit from this example?
 - Does this already exist elsewhere in the hub?
 
-If the answer is unclear, the content likely belongs in `MORE`.
+If the answer is unclear, the content likely belongs in `MORE` until its purpose is defined.
 
 ---
 
 ## Where Things Go
 
-- **HTML** → Markup structure and semantic examples  
-- **CSS** → Styling, layout, and interaction patterns  
-- **JS** → JavaScript behaviours and logic examples  
-- **BOOTSTRAP** → Framework-specific usage  
-- **TEMPLATES** → Full-page layout compositions  
-- **MORE** → Advanced, experimental, or transitional topics  
+- **HTML/** → Markup structures grouped into chapter subfolders (`basic-elements/`, `forms/`, `galleries/`, `maps/`)  
+- **CSS/** → Styling, global root variables, and presentation interaction patterns (`toggles-states/`)  
+- **JS/** → JavaScript behaviours, programmatic logic, and event listeners (`ui-controls/`)  
+- **BOOTSTRAP/** → Framework-specific layout usage and utility grids  
+- **TEMPLATES/** → Full-page assembled layout compositions (`landing-pages/`)  
+- **MORE/** → Advanced tracking headers, SEO structures, optimization hacks, or edge cases  
 
 If something does not clearly fit, do not force it.
 
@@ -34,60 +34,23 @@ If something does not clearly fit, do not force it.
 ## Templates Guidelines
 
 Templates should:
-- Represent full-page layouts
-- Combine multiple patterns into a cohesive structure
-- Reflect real use cases (Used on PAG)
+- Represent complete, macro full-page layouts
+- Combine multiple building block patterns (HTML/CSS/JS) into a cohesive structure
+- Reflect real use cases deployed on PAG digital properties
 
 Templates should not:
-- Demonstrate single components or effects
-- Include experimental or one-off code
-- Duplicate examples already covered elsewhere
+- Demonstrate single isolated components or basic micro effects
+- Include experimental or unverified one-off code
+- Duplicate layouts or sequences already covered elsewhere
 
 ---
 
-## Naming Conventions
+## Naming & Path Conventions
 
-- Use descriptive, lowercase filenames
-- Separate words with hyphens
-- Avoid generic names like `test.html` or `new.html`
+- Use descriptive, lowercase filenames separated exclusively with hyphens.
+- **Root-Relative Links Only:** Never use relative path operators (`../../`) for asset includes or navigation hooks. All internal configurations must map to absolute roots (`/hub/nav/...`) to guarantee stability on static hosting networks.
+- Always place files inside their designated chapter directory tier (e.g., a form code file goes inside `/pages/HTML/forms/`).
 
-Good:
-landing-page.html
-image-gallery.html
-service-layout.html
-
-
----
-
-## Code Expectations
-
-- Keep examples focused and readable
-- Avoid unnecessary complexity
-- Comment only when it adds clarity
-- Do not introduce new dependencies without a clear reason
-
----
-
-## Images & Assets
-
-- Store screenshots in `/images/`
-- Use images to support explanations, not replace them
-- Keep filenames descriptive
-
----
-
-## Final Check
-
-Before committing:
-- Verify links and include work
-- Ensure the example loads without errors
-- Confirm the content aligns with existing patterns
-
-If a contribution is confusing, it needs refinement.
-
----
-
-## Maintenance
-
-Outdated or unused examples should be updated or removed.  
-The hub should reflect how work is actually done today.
+```text
+Good Filename:   trader-contact-form.html
+Good Pathing:    /hub/pages/HTML/forms/html-form.html
