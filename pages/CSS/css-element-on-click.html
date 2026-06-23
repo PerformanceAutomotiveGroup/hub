@@ -1,100 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8" />
-<!-- Ensures proper rendering and touch zooming on mobile devices -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>CSS - Performance Hub</title>
-<!-- Link to the main site-wide CSS stylesheet -->
-<link rel="stylesheet" href="../../css/style.css" />
+<head> 
+    <div data-include="/hub/nav/head.html"></div>
+    <title>CSS Element On-click – Performance Hub</title> 
 </head>
-<body>
+<body> 
 
-<!-- Include top navigation bar -->
-<div data-include="../../nav/topnav.html"></div>
+<div data-include="/hub/nav/topnav.html"></div>
 
-<!-- Page content wrapper -->
 <div class="content">
 
-<!-- Include HTML section side navigation -->
-<div data-include="../../nav/csssidenav.html"></div>
+    <div data-include="/hub/nav/csssidenav.html"></div>
 
-<! ------- EDIT START HERE ------- >
+    <div class="main">
 
-<!-- Main content section -->
-<div class="main">
-<h1>CSS Element On-click</h1>
-<p>How it works: When the user clicks on the p element, a function called myFunction() is executed, which changes the style of the div with id="panel" from display:none (hidden) to display:block (visible).</p>
-<!-- Screenshot container -->
-<div class="blue-box">
-<h2>Screenshots</h2>
-<div class="screenshot-gallery">
-<!-- Example screenshot image -->
-<img src="../../images/element-on-click2.png" alt="Element on click"><img src="../../images/element-on-click2.png" alt="Element on click">
-</div>
-<!-- Link to live form page -->
-<a href="#" target="_blank" class="blue-btn">NO LIVE VIEW</a>
-</div>
-<!-- END Screenshot section -->
+        <h1>CSS Element On-click</h1>
+        <p><strong>How it works:</strong> When the user clicks on the trigger element, a function called <code>myFunction()</code> is executed, which toggles the visibility style of the description panel container from hidden to visible.</p>
 
-<!-- YOUR Code section 1 -->
-<div class="code-section">
-<div class="code-header">
-<span>HTML Code</span> 
-</div>
+        <div class="blue-box">
+            <h2>Screenshots</h2>
+            <div class="screenshot-gallery">
+                <img src="/hub/images/element-on-click2.png" alt="Element State Pre-click">
+                <img src="/hub/images/element-on-click2.png" alt="Element State Post-click">
+            </div>
+            <a href="#" target="_blank" class="blue-btn" style="display: none;">NO LIVE VIEW</a>
+        </div>
 
-<!-- Code snippet display area (Prism.js highlights this) -->
-<pre><code id="html-form-snippet" class="language-html"></code></pre>
+        <div class="blue-box">
+            <h2>Live Preview</h2>
+            <div id="live-preview"></div>
+            <p style="font-size:0.9em; color:#555; margin-top:10px;">
+                Usage: Preview renders live component execution inside a safe sandbox. Use copy modules below for deployment.
+            </p>
+        </div>
 
-<!-- Hidden - containing YOUR code -->
-<template id="html-form-template"> 
+        <section class="template-code-block" id="html-code">
+            <div class="code-header toggle-btn">
+                <h3>HTML Structure <span style="font-size:0.8em; color:#777;">(Click to view)</span></h3>
+                <button class="copy-btn" data-copy="html-code">Copy HTML</button>
+            </div>
+            <template id="html-template">
 <p class="flip" onclick="myFunction()">Driven by Excellence for Over 50 Years</p>
 
 <div id="panel">
-<p>Since 1964, Performance Auto Group has grown into one of Canada’s premier automotive groups. Our dealerships are among the highest-volume in Ontario and are consistently recognized for delivering outstanding customer care.
-
-We’re committed to providing a premium experience at every stage of the customer journey. With advanced facilities and a dedicated, highly trained team, we ensure every guest receives exceptional service.
-
-Our founder, Sam Alizadeh, believed that “every customer is entitled to the same great experience.” This mindset continues to guide our operations and defines our reputation for excellence in customer care.</p>
+    <p>Since 1964, Performance Auto Group has grown into one of Canada’s premier automotive groups. Our dealerships are among the highest-volume in Ontario and are consistently recognized for delivering outstanding customer care.</p>
+    <p>We’re committed to providing a premium experience at every stage of the customer journey. With advanced facilities and a dedicated, highly trained team, we ensure every guest receives exceptional service.</p>
+    <p>Our founder, Sam Alizadeh, believed that “every customer is entitled to the same great experience.” This mindset continues to guide our operations and defines our reputation for excellence in customer care.</p>
 </div>
+            </template>
+            <pre class="collapsible"><code class="language-html"></code></pre>
+        </section>
 
-<script>
-function myFunction() {
-document.getElementById("panel").style.display = "block";
+        <section class="template-code-block" id="css-code">
+            <div class="code-header toggle-btn">
+                <h3>CSS Styles <span style="font-size:0.8em; color:#777;">(Click to view)</span></h3>
+                <button class="copy-btn" data-copy="css-code">Copy CSS</button>
+            </div>
+            <template id="css-template">
+#panel, .flip {
+    padding: 15px;
+    text-align: center;
+    background-color: #2c68b5;
+    color: white;
+    border: solid 1px #2c68b5;
+    margin: 10px auto;
+    cursor: pointer;
+    border-radius: 6px;
+    font-weight: bold;
 }
-</script>
-</template>
 
-<!-- Button to copy the template code to clipboard -->
-<button class="copy-btn" onclick="copyCode('html-form-snippet')">Copy Code</button>
-</div>
-<!-- END Code section -->
+#panel {
+    display: none;
+    background-color: #ffffff;
+    color: #333333;
+    border: solid 1px #dddddd;
+    font-weight: normal;
+    text-align: left;
+}
+            </template>
+            <pre class="collapsible"><code class="language-css"></code></pre>
+        </section>
 
-<!-- YOUR Code section 2 -->
-<div class="code-section">
-<div class="code-header">
-<span>CSS Code</span> 
-</div>
-<pre><code id="html-form2-snippet" class="language-html"></code></pre>
+        <section class="template-code-block" id="js-code">
+            <div class="code-header toggle-btn">
+                <h3>JavaScript Interaction <span style="font-size:0.8em; color:#777;">(Click to view)</span></h3>
+                <button class="copy-btn" data-copy="js-code">Copy JS</button>
+            </div>
+            <template id="js-template">
+function myFunction() {
+    const panel = document.getElementById("panel");
+    if (panel.style.display === "block") {
+        panel.style.display = "none";
+    } else {
+        panel.style.display = "block";
+    }
+}
+            </template>
+            <pre class="collapsible"><code class="language-js"></code></pre>
+        </section>
 
-<!-- Hidden - containing YOUR code -->
-<template id="html-form2-template"> 
-#panel, .flip { padding: 10px; text-align: center; background-color: #2c68b5; color: white; border: solid 1px #2c68b5; margin: auto; cursor:pointer; } #panel { display: none; }
-</template>
+        <div style="margin: 30px 0;">
+            <button class="copy-btn" data-copy-all style="padding: 10px 20px; font-weight: bold;">Copy All Modules</button>
+        </div>
 
-<button class="copy-btn" onclick="copyCode('html-form2-snippet')">Copy Code</button>
-</div>
-<!-- END Code section -->
+    </div> 
 </div> 
-</div> <! ------- EDIT END HERE ------- >
 
-<!-- Prism.js for syntax highlighting -->
-<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.js"></script>
+<div data-include="/hub/nav/footernav.html"></div>
 
-<!-- Include footer navigation -->
-<div data-include="../../nav/footernav.html"></div>
+<script src="/hub/js/include.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"></script>
 
-<!-- Script to handle HTML partial includes -->
-<script src="../../js/include.js"></script>
 </body>
 </html>
