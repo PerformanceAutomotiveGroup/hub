@@ -1,28 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<!-- Ensures proper rendering and touch zooming on mobile devices -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>JS - Performance Hub</title>
-<!-- Link to the main site-wide CSS stylesheet -->
-<link rel="stylesheet" href="../../css/style.css" />
+<div data-include="/hub/nav/head.html"></div>
+<title>JavaScript – Performance Hub</title>
 </head>
 <body>
 
-<!-- Include top navigation bar -->
-<div data-include="../../nav/topnav.html"></div>
+<div data-include="/hub/nav/topnav.html"></div>
 
-<!-- Page content wrapper -->
 <div class="content">
 
-<!-- Include section side navigation -->
-<div data-include="../../nav/jssidenav.html"></div>
+<div data-include="/hub/nav/jssidenav.html"></div>
 
-<! ------- EDIT START HERE ------- >
+<main class="main">
 
-<!-- Main content section -->
-<div class="main">
 <section class="hero">
 <h1>JavaScript Snippet Library</h1>
 <p>Welcome to the JavaScript resource hub. This section is designed to give you quick, reusable snippets that bring interactivity to your projects. Whether you need form validation, dynamic content, or useful utilities, these examples will help you save time and build smarter. Add your own scripts to expand our shared library.</p>
@@ -69,16 +60,13 @@
 <p>Automatically save form progress to local storage to prevent data loss.</p>
 </div>
 </section>
+
+</main>
 </div>
-</div>
 
-<!-- Prism.js for syntax highlighting -->
-<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.js"></script>
+<div data-include="/hub/nav/footernav.html"></div>
 
-<!-- Include footer navigation -->
-<div data-include="../../nav/footernav.html"></div>
+<script src="/hub/js/include.js"></script>
 
-<!-- Script to handle HTML partial includes -->
-<script src="../../js/include.js"></script>
 </body>
 </html>
