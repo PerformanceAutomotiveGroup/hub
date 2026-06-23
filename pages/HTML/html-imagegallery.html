@@ -1,48 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head> 
-<meta charset="UTF-8" /> 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
-<title>HTML Image gallery – Performance Hub</title> <!--  Change title HERE  -->
-<link rel="stylesheet" href="../../css/style.css" /> 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/themes/prism.min.css" /> 
+<!-- Standardized meta initialization, typography parameters, global styles, and configurations -->
+<div data-include="/hub/nav/head.html"></div>
+<title>HTML Image Gallery – Performance Hub</title> 
 </head>
-
 <body> 
 
-<!-- Top Navigation -->
-<div data-include="../../nav/topnav.html"></div>
+<!-- Global Master Header Navigation Module -->
+<div data-include="/hub/nav/topnav.html"></div>
 
 <div class="content">
 
-<!-- Side Navigation -->
-<div data-include="../../nav/htmlsidenav.html"></div>
+<!-- Workspace Sidebar Navigation Module -->
+<div data-include="/hub/nav/htmlsidenav.html"></div>
 
-<!-- Main Content -->
+<!-- Main Content Area -->
 <div class="main">
 
-<!-- Title -->
-<h1>HTML Image gallery</h1>
-<p>This HTML image map example displays an interactive image divided into five clickable areas. Each area highlights on hover and shows a label with its title.</p>
+<h1>HTML Image Gallery</h1>
+<p>A responsive, CSS Grid-powered imagery distribution framework tailored for dealership asset showcases, featuring hover scaling effects and customizable dynamic captions.</p>
 
-<!-- Live Preview -->
+<!-- Dynamic Sandbox Render Frame Container -->
 <div class="blue-box">
 <h2>Live Preview</h2>
 <div id="live-preview"></div>
 <p style="font-size:0.9em; color:#555; margin-top:10px;">
-Usage: Preview renders the template HTML, CSS, and JS. Copy the sections below for WordPress or other projects.
+Usage: Preview renders live component execution inside an isolated sandbox. Use copy modules below for deployment.
 </p>
 </div>
 
-<!-- ########## HTML Code Section ########## -->
+<!-- ########## HTML Structural Segment ########## -->
 <section class="template-code-block" id="html-code">
 <div class="code-header toggle-btn">
-<h3>HTML Structure > <span style="font-size:15px; color:#555;">Click to expand</span></h3>
+<h3>HTML Structure <span style="font-size:0.8em; color:#777;">(Click to view)</span></h3>
 <button class="copy-btn" data-copy="html-code">Copy HTML</button>
 </div>
-
-<template id="html-template"> <!--  Your HTML code goes within HERE  -->
+<template id="html-template">
 <div class="gallery-grid">
 <div class="gallery-item">
 <a href="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/08/2025-Mazda-CX-30.jpg" target="_blank">
@@ -73,18 +67,17 @@ Usage: Preview renders the template HTML, CSS, and JS. Copy the sections below f
 </div>
 </div>
 </template>
-
 <pre class="collapsible"><code class="language-html"></code></pre>
 </section>
 
-<!-- ########## CSS Code Section ########## -->
+<!-- ########## CSS Presentation Segment ########## -->
 <section class="template-code-block" id="css-code">
 <div class="code-header toggle-btn">
-<h3>CSS > <span style="font-size:15px; color:#555;">Click to expand</span></h3>
+<h3>CSS Styles <span style="font-size:0.8em; color:#777;">(Click to view)</span></h3>
 <button class="copy-btn" data-copy="css-code">Copy CSS</button>
 </div>
-<pre class="collapsible"><code class="language-css"><!--  Your CSS code goes within HERE  -->
-/* Grid container */
+<template id="css-template">
+/* Grid container layout arrangement */
 .gallery-grid {
 display: grid;
 grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -92,23 +85,23 @@ gap: 20px;
 margin: 20px 0;
 }
 
-/* Each gallery item */
+/* Individual card module dimensions and adjustments */
 .gallery-item {
-border: 1px solid #ccc;
+border: 1px solid #cccccc;
 border-radius: 8px;
 overflow: hidden;
-background-color: #fff;
+background-color: #ffffff;
 transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
 }
 
-/* Hover effect */
+/* Hover movement transformation and shadow effects */
 .gallery-item:hover {
 transform: translateY(-5px);
-box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-border-color: #777;
+box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+border-color: #777777;
 }
 
-/* Image inside gallery */
+/* Universal fluid image configurations */
 .gallery-item img {
 width: 100%;
 height: auto;
@@ -116,47 +109,47 @@ display: block;
 transition: transform 0.3s;
 }
 
-/* Optional image zoom on hover */
+/* Subtle graphic enhancement trigger criteria */
 .gallery-item:hover img {
 transform: scale(1.05);
 }
 
-/* Description below each image */
+/* Bottom description tag typography layout styling rules */
 .gallery-item .desc {
 padding: 12px;
 text-align: center;
 font-size: 0.95rem;
-color: #333;
+color: #333333;
 }
-
-</code></pre>
+</template>
+<pre class="collapsible"><code class="language-css"></code></pre>
 </section>
 
-<!-- ########## JS Code Section ########## -->
-<section class="template-code-block" id="js-code">
+<!-- ########## JS Logical Segment (Empty Placeholder for clean compilation) ########## -->
+<section class="template-code-block" id="js-code" style="display: none;">
 <div class="code-header toggle-btn">
-<h3>JavaScript > <span style="font-size:15px; color:#555;">Click to expand</span></h3>
+<h3>JavaScript Interaction</h3>
 <button class="copy-btn" data-copy="js-code">Copy JS</button>
 </div>
-<pre class="collapsible"><code class="language-js"> <!--  Your JS code goes within HERE  -->
-
-</code></pre>
+<template id="js-template">
+// No custom script requirements for basic CSS Grid presentation components
+</template>
+<pre class="collapsible"><code class="language-js"></code></pre>
 </section>
 
-<!-- Copy All Button -->
-<div style="margin: 20px 0;">
-<button class="copy-btn" data-copy-all>Copy All</button>
+<!-- Complete Blueprint Compilation Downloader Utility -->
+<div style="margin: 30px 0;">
+<button class="copy-btn" data-copy-all style="padding: 10px 20px; font-weight: bold;">Copy All Modules</button>
 </div>
 
-</div> <!-- .main -->
+</div> 
+</div> 
 
-</div> <!-- .content -->
+<!-- Global Layout Footer Module -->
+<div data-include="/hub/nav/footernav.html"></div>
 
-<!-- Footer -->
-<div data-include="../../nav/footernav.html"></div>
-
-<!-- JS Includes -->
-<script src="../../js/include.js"></script>
+<!-- Core Architectural Engine Components & Code Highlighter Parser Utilities -->
+<script src="/hub/js/include.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"></script>
 
 </body>
