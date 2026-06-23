@@ -1,81 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head> 
-<meta charset="UTF-8" /> 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
-<title>Responsive Image Swap – Performance Hub</title> <!--  Change title HERE  -->
-<link rel="stylesheet" href="../../css/style.css" /> 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/themes/prism.min.css" /> 
+<!-- Standardized meta initialization, typography parameters, global styles, and configurations -->
+<div data-include="/hub/nav/head.html"></div>
+<title>Responsive Image Swap – Performance Hub</title> 
 </head>
-
 <body> 
 
-<!-- Top Navigation -->
-<div data-include="../../nav/topnav.html"></div>
+<!-- Global Master Header Navigation Module -->
+<div data-include="/hub/nav/topnav.html"></div>
 
 <div class="content">
 
-<!-- Side Navigation -->
-<div data-include="../../nav/htmlsidenav.html"></div>
+<!-- Workspace Sidebar Navigation Module -->
+<div data-include="/hub/nav/htmlsidenav.html"></div>
 
-<!-- Main Content -->
+<!-- Main Content Area -->
 <div class="main">
 
-<!-- Title -->
 <h1>Responsive Image Swap</h1>
-<p>This HTML code uses the <picture> element to display different images based on the browser’s width, ensuring an optimized and responsive viewing experience for users on various devices.</p>
+<p>This layout applies the native HTML <code>&lt;picture&gt;</code> asset optimization element to deliver custom-cropped graphics across distinct viewport configurations, maximizing platform load performance.</p>
 
-<!-- Live Preview -->
+<!-- Dynamic Sandbox Render Frame Container -->
 <div class="blue-box">
 <h2>Live Preview</h2>
 <div id="live-preview"></div>
 <p style="font-size:0.9em; color:#555; margin-top:10px;">
-Usage: Preview renders the template HTML, CSS, and JS. Copy the sections below for WordPress or other projects.
+Usage: Preview renders live component execution inside an isolated sandbox. Use copy modules below for deployment.
 </p>
 </div>
 
-<!-- ########## HTML Code Section ########## -->
+<!-- ########## HTML Structural Segment ########## -->
 <section class="template-code-block" id="html-code">
 <div class="code-header toggle-btn">
-<h3>HTML Structure > <span style="font-size:15px; color:#555;">Click to expand</span></h3>
+<h3>HTML Structure <span style="font-size:0.8em; color:#777;">(Click to view)</span></h3>
 <button class="copy-btn" data-copy="html-code">Copy HTML</button>
 </div>
-
-<template id="html-template"><!--  Your HTML code goes within HERE  -->
+<template id="html-template">
 <picture class="responsive-picture">
-<!-- Mobile: up to 600px wide -->
-<source 
-srcset="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/05/Family-Road-Trip-New-SUV.jpeg" 
-media="(max-width: 600px)">
+<!-- Mobile Devices: Viewport widths up to 600px -->
+<source srcset="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/05/Family-Road-Trip-New-SUV.jpeg" media="(max-width: 600px)">
 
-<!-- Tablet / small desktop: up to 1500px wide -->
-<source 
-srcset="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/05/Family-Road-Trip-New-Car.jpeg" 
-media="(max-width: 1500px)">
+<!-- Tablets & Compact Viewports: Viewport widths up to 1500px -->
+<source srcset="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/05/Family-Road-Trip-New-Car.jpeg" media="(max-width: 1500px)">
 
-<!-- Large desktop: default image -->
-<source 
-srcset="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/04/2025-Hyundai-elantra_safety_hc_01-copy.jpg">
+<!-- High-Resolution Displays: Fallback asset allocation -->
+<source srcset="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/04/2025-Hyundai-elantra_safety_hc_01-copy.jpg">
 
-<!-- Fallback image for browsers that don’t support <picture> -->
-<img 
-src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/05/Family-Road-Trip-New-Car.jpeg" 
-alt="A family enjoying a road trip in a new car"
-class="responsive-img">
+<!-- Legacy Browser Image Execution Paradigm Fallback -->
+<img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/05/Family-Road-Trip-New-Car.jpeg" alt="A family enjoying a road trip in a new car" class="responsive-img">
 </picture>
 </template>
-
 <pre class="collapsible"><code class="language-html"></code></pre>
 </section>
 
-<!-- ########## CSS Code Section ########## -->
+<!-- ########## CSS Presentation Segment ########## -->
 <section class="template-code-block" id="css-code">
 <div class="code-header toggle-btn">
-<h3>CSS > <span style="font-size:15px; color:#555;">Click to expand</span></h3>
+<h3>CSS Styles <span style="font-size:0.8em; color:#777;">(Click to view)</span></h3>
 <button class="copy-btn" data-copy="css-code">Copy CSS</button>
 </div>
-<pre class="collapsible"><code class="language-css"><!--  Your CSS code goes within HERE  -->
+<template id="css-template">
 .responsive-picture img {
 max-width: 100%;
 height: auto;
@@ -84,34 +69,35 @@ margin: 1rem auto;
 border-radius: 8px;
 box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
-</code></pre>
+</template>
+<pre class="collapsible"><code class="language-css"></code></pre>
 </section>
 
-<!-- ########## JS Code Section ########## -->
-<section class="template-code-block" id="js-code">
+<!-- ########## JS Logical Segment (Empty Placeholder for clean compilation) ########## -->
+<section class="template-code-block" id="js-code" style="display: none;">
 <div class="code-header toggle-btn">
-<h3>JavaScript > <span style="font-size:15px; color:#555;">Click to expand</span></h3>
+<h3>JavaScript Interaction</h3>
 <button class="copy-btn" data-copy="js-code">Copy JS</button>
 </div>
-<pre class="collapsible"><code class="language-js"> <!--  Your JS code goes within HERE  -->
-
-</code></pre>
+<template id="js-template">
+// Component functionality relies strictly on browser media feature criteria
+</template>
+<pre class="collapsible"><code class="language-js"></code></pre>
 </section>
 
-<!-- Copy All Button -->
-<div style="margin: 20px 0;">
-<button class="copy-btn" data-copy-all>Copy All</button>
+<!-- Complete Blueprint Compilation Downloader Utility -->
+<div style="margin: 30px 0;">
+<button class="copy-btn" data-copy-all style="padding: 10px 20px; font-weight: bold;">Copy All Modules</button>
 </div>
 
-</div> <!-- .main -->
+</div> 
+</div> 
 
-</div> <!-- .content -->
+<!-- Global Layout Footer Module -->
+<div data-include="/hub/nav/footernav.html"></div>
 
-<!-- Footer -->
-<div data-include="../../nav/footernav.html"></div>
-
-<!-- JS Includes -->
-<script src="../../js/include.js"></script>
+<!-- Core Architectural Engine Components & Code Highlighter Parser Utilities -->
+<script src="/hub/js/include.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"></script>
 
 </body>
