@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+<div data-include="/hub/nav/head.html"></div>
+<title>Performance Car Shopping Layout – Templates Hub</title> 
+</head>
+<body> 
+
+<div data-include="/hub/nav/topnav.html"></div>
+
+<div class="content">
+
+<div data-include="/hub/nav/templatessidenav.html"></div>
+
+<div class="main">
+
+<h1>Performance Car Shopping Experience</h1>
+<p>A comprehensive, feature-rich digital campaign template featuring interactive path filters, a dynamic multi-brand inventory comparison console, inline asset streaming, and validation-ready accordion FAQs.</p>
+
+<div class="blue-box">
+<h2>Live Preview</h2>
+<div id="live-preview"></div>
+<p style="font-size:0.9em; color:#555; margin-top:10px;">
+Usage: Preview renders live component execution inside an isolated sandbox. Use copy modules below for deployment.
+</p>
+</div>
+
+<section class="template-code-block" id="html-code">
+<div class="code-header toggle-btn">
+<h3>HTML Structure <span style="font-size:0.8em; color:#777;">(Click to view)</span></h3>
+<button class="copy-btn" data-copy="html-code">Copy HTML</button>
+</div>
+<template id="html-template">
+<div class="pag-wrap">
+
+<section class="pag-hero-outer" id="pag-sec-hero">
+<div class="pag-inner pag-hero">
+<div class="pag-hero-card">
+<h1>Your Dream Car Is Calling</h1>
+<p class="pag-hero-subtitle">Explore our expansive inventory of new and used vehicles across our network of dealerships in Ontario, Canada. Browse, build & buy your vehicle your way!</p>
+
+<div style="display:flex; gap:12px; align-items:center; margin-bottom:16px; flex-wrap:wrap">
+<a class="pag-btn pag-btn-primary" href="https://shop.performance.ca/en">View Shopping Options</a>
+<a class="pag-btn pag-btn-outline" href="#pag-sec-brands">Compare Brand Inventory</a>
+</div>
+
+<p class="pag-small pag-muted">23 brands • 39 dealerships • 4 collision centres • <strong>60+ years of experience</strong></p>
+</div>
+
+<div class="pag-hero-visual" id="pag-hero-video-container" onclick="playHeroVideo()">
+<div class="pag-video-container">
+<img class="pag-video-thumbnail" src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2026/06/pag-shop-online-video.png?auto=format&fit=crop&w=1200&q=80" alt="Performance Auto Group Online Shopping">
+<div class="pag-video-overlay">
+<div class="pag-play-btn">
+<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="pag-scroll-transition-zone">
+<button class="pag-scroll-anchor-link" onclick="scrollToSection('pag-sec-roadmap')">
+<span>Explore Our Process</span>
+<svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+</button>
+</div>
+</section>
+
+<section class="pag-steps-outer" id="pag-sec-roadmap">
+<div class="pag-inner">
+<div class="pag-section-header">
+<h2 style="color:#ffffff;">How Buying Your Car Online Works</h2>
+<p class="pag-section-subtitle" style="color:#ffffff;">A transparent, step-by-step roadmap designed to eliminate pressure and save you time.</p>
+</div>
+
+<div class="pag-steps-timeline" id="pag-steps-snap-container">
+<div class="pag-step-card">
+<div class="pag-step-icon-wrap">
+<svg class="pag-step-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
+<rect x="2" y="3" width="20" height="18" rx="2" stroke="var(--pag-primary)"></rect>
+<line x1="2" y1="8" x2="22" y2="8" stroke="var(--pag-primary)"></line>
+<path d="M6 15h12m-10-3h8l1-2H7l-1 2zm-1 3v2h2v-2m8 0v2h2v-2" stroke="var(--pag-primary)"></path>
+<circle cx="18" cy="18" r="3" stroke="var(--pag-accent)" fill="#fff"></circle>
+<line x1="20" y1="20" x2="22" y2="22" stroke="var(--pag-accent)"></line>
+</svg>
+</div>
+<div class="pag-step-badge">1</div>
+<h5>Choose Your Vehicle</h5>
+<p>Browse our massive 6,700+ new and used regional inventory to find the perfect match for your lifestyle.</p>
+</div>
+
+<div class="pag-step-card">
+<div class="pag-step-icon-wrap">
+<svg class="pag-step-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
+<rect x="4" y="2" width="16" height="20" rx="2" stroke="var(--pag-primary)"></rect>
+<line x1="4" y1="6" x2="20" y2="6" stroke="var(--pag-primary)"></line>
+<circle cx="8" cy="10" r="1" fill="var(--pag-primary)"></circle>
+<circle cx="12" cy="10" r="1" fill="var(--pag-primary)"></circle>
+<circle cx="16" cy="10" r="1" fill="var(--pag-primary)"></circle>
+<circle cx="8" cy="14" r="1" fill="var(--pag-primary)"></circle>
+<circle cx="12" cy="14" r="1" fill="var(--pag-primary)"></circle>
+<circle cx="16" cy="14" r="1" fill="var(--pag-accent)"></circle>
+<line x1="8" y1="18" x2="16" y2="18" stroke="var(--pag-accent)" stroke-width="2"></line>
+</svg>
+</div>
+<div class="pag-step-badge">2</div>
+<h5>Build Your Deal</h5>
+<p>Structure your personalized payment plan with transparent finance, lease, or cash options.</p>
+</div>
+
+<div class="pag-step-card">
+<div class="pag-step-icon-wrap">
+<svg class="pag-step-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
+<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="var(--pag-primary)"></path>
+<path d="M9 11l2 2 4-4" stroke="var(--pag-accent)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<div class="pag-step-badge">3</div>
+<h5>Secure Approval</h5>
+<p>Submit basic details through our encrypted portal and receive lending terms from trusted institutions in minutes.</p>
+</div>
+
+<div class="pag-step-card">
+<div class="pag-step-icon-wrap">
+<svg class="pag-step-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
+<circle cx="8" cy="12" r="3" stroke="var(--pag-primary)"></circle>
+<path d="M11 12h8m-2 0v3m3-3v3" stroke="var(--pag-primary)"></path>
+<path d="M12 4l1 3 3 1-3 1-1 3-1-3-3-1 3-1z" stroke="var(--pag-accent)" fill="var(--pag-accent)"></path>
+</svg>
+</div>
+<div class="pag-step-badge">4</div>
+<h5>Finalize & Deliver</h5>
+<p>Verify your trade-in appraisal online, then schedule your on-lot pickup or direct home delivery.</p>
+</div>
+</div>
+
+<div class="pag-steps-carousel-dots" id="pag-steps-carousel-dots">
+<span class="pag-steps-carousel-dot pag-active" onclick="scrollToStepCard(0)"></span>
+<span class="pag-steps-carousel-dot" onclick="scrollToStepCard(1)"></span>
+<span class="pag-steps-carousel-dot" onclick="scrollToStepCard(2)"></span>
+<span class="pag-steps-carousel-dot" onclick="scrollToStepCard(3)"></span>
+</div>
+
+<div class="pag-scroll-transition-zone">
+<button class="pag-scroll-anchor-link" onclick="scrollToSection('pag-sec-dashboard')">
+<span>Build Your Deal</span>
+<svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+</button>
+</div>
+</div>
+</section>
+
+<section class="pag-inner pag-section-block-spacing" id="pag-sec-dashboard">
+<div class="pag-two-col">
+<main style="display:flex; flex-direction:column; gap:20px">
+<div class="pag-section-header" style="margin-bottom: 0px;">
+<h2>Car Shopping Hub</h2>
+<p class="pag-section-subtitle">Whether you are buying today or planning a custom factory build, start your deal online and save hours at the showroom.</p>
+</div>
+
+<div class="pag-toggle-container">
+<div class="pag-filter-switch">
+<button class="pag-filter-btn active" id="pag-filter-all" onclick="filterDashboard('all')">Show All Paths</button>
+<button class="pag-filter-btn" id="pag-filter-now" onclick="filterDashboard('now')">I Want to Buy Now</button>
+<button class="pag-filter-btn" id="pag-filter-later" onclick="filterDashboard('later')">I am Planning Ahead</button>
+</div>
+</div>
+
+<div class="pag-workspace-dashboard" id="pag-dashboard-grid" aria-label="Car Shopping Layout Console">
+<a href="https://shop.performance.ca/en/" class="pag-dashboard-card pag-card-slate pag-card-q2" data-timeline="later">
+<div>
+<strong>Build & Price</strong>
+<p>Choose your colours, features, and trim packages—built your way.</p>
+</div>
+<span class="pag-card-action-text">Explore Brand Models →</span>
+</a>
+
+<a href="/vehicles/new/" class="pag-dashboard-card pag-card-primary pag-card-q1" data-timeline="now">
+<div>
+<strong>Shop New & Used</strong>
+<p>Shop new and used vehicles, ready to drive home today!</p>
+</div>
+<span class="pag-card-action-text">View New and Used Inventory →</span>
+</a>
+
+<a href="/models/" class="pag-dashboard-card pag-card-dark pag-card-q3" data-timeline="now">
+<div>
+<strong>Showroom Locations</strong>
+<p>Visit one of our 39 locations across Ontario.</p>
+</div>
+<span class="pag-card-action-text">View Showrooms →</span>
+</a>
+
+<a href="#pag-sec-brands" class="pag-dashboard-card pag-card-accent pag-card-q4" data-timeline="later">
+<div>
+<strong>Compare Our Dealership Brands</strong>
+<p>Search across 23 brands to find your perfect match.</p>
+</div>
+<span class="pag-card-action-text">Select Brand Network →</span>
+</a>
+</div>
+</main>
+
+<aside style="margin-top: 40px;">
+<section class="pag-handoff-container">
+<h3 style="margin-top:0; font-size:19px; font-weight:700">Choose the Ideal Path</h3>
+<p class="pag-muted" style="font-size:15px; margin-bottom:15px">Move forward with the shopping experience that works best for you. Online or In-Store.</p>
+
+<div class="pag-handoff-grid" role="navigation" aria-label="Action steps navigation panel">
+<a href="https://shop.performance.ca/en" class="pag-handoff-tile active" style="text-decoration:none">
+<strong>Start Your Deal Online</strong>
+<span>Customize payments, terms, and protections inside our ecommerce platform.</span>
+</a>
+<a href="#open-chat" class="pag-handoff-tile" style="text-decoration:none" onclick="event.preventDefault(); triggerLiveChatToast();">
+<strong>Chat Live With A Specialist</strong>
+<span>Open a real-time messaging panel for vehicle verification, walk-around videos, and personalized guidance.</span>
+</a>
+<a href="https://shop.performance.ca/en" class="pag-handoff-tile" style="text-decoration:none">
+<strong>Schedule Showroom Visit</strong>
+<span>Reserve a priority on-lot appointment at your preferred dealership through our ecommerce platform.</span>
+</a>
+</div>
+</section>
+</aside>
+</div>
+
+<div class="pag-scroll-transition-zone">
+<button class="pag-scroll-anchor-link" onclick="scrollToSection('pag-sec-tools')">
+<span>Access Digital Tools</span>
+<svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+</button>
+</div>
+</section>
+
+<section class="pag-ribbon-white" id="pag-sec-tools">
+<div class="pag-inner">
+<div class="pag-section-header">
+<h2>Fast-Track Your Purchasing Decisions</h2>
+<p class="pag-section-subtitle">Use our secure tools to calculate real payments, value your trade, and obtain competitive approvals layout solutions.</p>
+</div>
+
+<div class="pag-icon-card-grid">
+<a href="/payment-calculator" class="pag-icon-card pag-card-pricing">
+<div class="pag-icon-card-img"><img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/6/2022/01/icon1-1.svg" alt="Payment Configurator Icon"></div>
+<h4>Flexible Payment Options</h4>
+<p>Customize your purchase based on your financing preferences.</p>
+<span class="pag-tool-action">Launch Calculator</span>
+</a>
+<a href="/finance-centre/" class="pag-icon-card pag-card-approvals">
+<div class="pag-icon-card-img"><img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/6/2022/01/icon2-1.svg" alt="Lending Engine Icon"></div>
+<h4>Streamlined Approvals</h4>
+<p>Get approved for financing from leading lenders in just a few steps.</p>
+<span class="pag-tool-action">Apply for Financing</span>
+</a>
+<a href="/instant-vehicle-appraisal/" class="pag-icon-card pag-card-valuations">
+<div class="pag-icon-card-img"><img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/6/2022/01/icon3-1.svg" alt="Trade Appraisal Icon"></div>
+<h4>Instant Value For Your Trade</h4>
+<p>See your vehicle's current value based on live market data parameters.</p>
+<span class="pag-tool-action">Value Your Trade</span>
+</a>
+</div>
+
+<div class="pag-scroll-transition-zone">
+<button class="pag-scroll-anchor-link" onclick="scrollToSection('pag-sec-brands')">
+<span>Compare Brand Inventory</span>
+<svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+</button>
+</div>
+</div>
+</section>
+
+<section class="pag-brand-outer-ribbon" id="pag-sec-brands">
+<div class="pag-inner">
+<div class="pag-brand-console-card">
+<div class="pag-section-header" style="margin-bottom: 24px;">
+<h2 style="color: var(--pag-primary);">Compare 23 Brands Instantly</h2>
+<p class="pag-section-subtitle" style="color:#ffffff;">Select multiple brands to build a single, unified vehicle search across our entire Ontario dealership locations footprint.</p>
+</div>
+
+<div class="pag-brand-filters-row">
+<button class="pag-brand-filter-pill active" id="pag-bf-all" onclick="filterBrandsGrid('all')">All Makes</button>
+<button class="pag-brand-filter-pill" id="pag-bf-luxury" onclick="filterBrandsGrid('luxury')">Luxury</button>
+<button class="pag-brand-filter-pill" id="pag-bf-domestic" onclick="filterBrandsGrid('domestic')">Domestic</button>
+<button class="pag-brand-filter-pill" id="pag-bf-import" onclick="filterBrandsGrid('import')">Import</button>
+<button class="pag-brand-filter-pill" id="pag-bf-clear" onclick="clearAllBrandsSelection()" style="background: transparent; color: #ef4444; display:none; border: 1px dashed #fca5a5;">Reset Selection (0)</button>
+</div>
+
+<div class="pag-brand-grid" id="pag-brands-logo-grid">
+<div class="pag-brand-wrapper" data-make="Acura" data-cat="luxury" onclick="toggleBrandSelect(this)">
+<input type="checkbox" class="pag-brand-checkbox" aria-label="Select Acura">
+<div class="pag-brand"><img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Acura-1.png" alt="Acura"></div>
+</div>
+<div class="pag-brand-wrapper" data-make="Audi" data-cat="luxury" onclick="toggleBrandSelect(this)">
+<input type="checkbox" class="pag-brand-checkbox" aria-label="Select Audi">
+<div class="pag-brand"><img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Audi.png" alt="Audi"></div>
+</div>
+<div class="pag-brand-wrapper" data-make="BMW" data-cat="luxury" onclick="toggleBrandSelect(this)">
+<input type="checkbox" class="pag-brand-checkbox" aria-label="Select BMW">
+<div class="pag-brand"><img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/BMW.png" alt="BMW"></div>
+</div>
+<div class="pag-brand-wrapper" data-make="Chrysler" data-cat="domestic" onclick="toggleBrandSelect(this)">
+<input type="checkbox" class="pag-brand-checkbox" aria-label="Select Chrysler">
+<div class="pag-brand"><img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Chrysler-1.png" alt="Chrysler"></div>
+</div>
+<div class="pag-brand-wrapper" data-make="Dodge" data-cat="domestic" onclick="toggleBrandSelect(this)">
+<input type="checkbox" class="pag-brand-checkbox" aria-label="Select Dodge">
+<div class="pag-brand"><img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Dodge.png" alt="Dodge"></div>
+</div>
+<div class="pag-brand-wrapper" data-make="Fiat" data-cat="import" onclick="toggleBrandSelect(this)">
+<input type="checkbox" class="pag-brand-checkbox" aria-label="Select Fiat">
+<div class="pag-brand"><img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Fiat.png" alt="Fiat"></div>
+</div>
+<div class="pag-brand-wrapper" data-make="Ford" data-cat="domestic" onclick="toggleBrandSelect(this)">
+<input type="checkbox" class="pag-brand-checkbox" aria-label="Select Ford">
+<div class="pag-brand"><img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Ford.png" alt="Ford"></div>
+</div>
+<div class="pag-brand-wrapper" data-make="Honda" data-cat="import" onclick="toggleBrandSelect(this)">
+<input type="checkbox" class="pag-brand-checkbox" aria-label="Select Honda">
+<div class="pag-brand"><img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Honda.png" alt="Honda"></div>
+</div>
+<div class="pag-brand-wrapper" data-make="Hyundai" data-cat="import" onclick="toggleBrandSelect(this)">
+<input type="checkbox" class="pag-brand-checkbox" aria-label="Select Hyundai">
+<div class="pag-brand"><img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Hyundai.png" alt="Hyundai"></div>
+</div>
+<div class="pag-brand-wrapper" data-make="Jeep" data-cat="domestic" onclick="toggleBrandSelect(this)">
+<input type="checkbox" class="pag-brand-checkbox" aria-label="Select Jeep">
+<div class="pag-brand"><img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Jeep.png" alt="Jeep"></div>
+</div>
+<div class="pag-brand-wrapper" data-make="Kia" data-cat="import" onclick="toggleBrandSelect(this)">
+<input type="checkbox" class="pag-brand-checkbox" aria-label="Select Kia">
+<div class="pag-brand"><img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/KIA-175_175.png" alt="Kia"></div>
+</div>
+<div class="pag-brand-wrapper" data-make="Lexus" data-cat="luxury" onclick="toggleBrandSelect(this)">
+<input type="checkbox" class="pag-brand-checkbox" aria-label="Select Lexus">
+<div class="pag-brand"><img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Lexus.png" alt="Lexus"></div>
+</div>
+<div class="pag-brand-wrapper" data-make="Mazda" data-cat="import" onclick="toggleBrandSelect(this)">
+<input type="checkbox" class="pag-brand-checkbox" aria-label="Select Mazda">
+<div class="pag-brand"><img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/LOGO-15.png" alt="Mazda"></div>
+</div>
+<div class="pag-brand-wrapper" data-make="Mercedes-Benz" data-cat="luxury" onclick="toggleBrandSelect(this)">
+<input type="checkbox" class="pag-brand-checkbox" aria-label="Select Mercedes-Benz">
+<div class="pag-brand"><img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Mercedes-Benz.png" alt="Mercedes-Benz"></div>
+</div>
+<div class="pag-brand-wrapper" data-make="MINI" data-cat="import" onclick="toggleBrandSelect(this)">
+<input type="checkbox" class="pag-brand-checkbox" aria-label="Select MINI">
+<div class="pag-brand"><img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/MINI.png" alt="MINI"></div>
+</div>
+<div class="pag-brand-wrapper" data-make="Mitsubishi" data-cat="import" onclick="toggleBrandSelect(this)">
+<input type="checkbox" class="pag-brand-checkbox" aria-label="Select Mitsubishi">
+<div class="pag-brand"><img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Mitsbusihi.png" alt="Mitsubishi"></div>
+</div>
+<div class="pag-brand-wrapper" data-make="Nissan" data-cat="import" onclick="toggleBrandSelect(this)">
+<input type="checkbox" class="pag-brand-checkbox" aria-label="Select Nissan">
+<div class="pag-brand"><img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Nissan.png" alt="Nissan"></div>
+</div>
+<div class="pag-brand-wrapper" data-make="Ram" data-cat="domestic" onclick="toggleBrandSelect(this)">
+<input type="checkbox" class="pag-brand-checkbox" aria-label="Select Ram">
+<div class="pag-brand"><img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/RAM.png" alt="Ram"></div>
+</div>
+<div class="pag-brand-wrapper" data-make="Subaru" data-cat="import" onclick="toggleBrandSelect(this)">
+<input type="checkbox" class="pag-brand-checkbox" aria-label="Select Subaru">
+<div class="pag-brand"><img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/183x12520.jpg" alt="Subaru"></div>
+</div>
+<div class="pag-brand-wrapper" data-make="Toyota" data-cat="import" onclick="toggleBrandSelect(this)">
+<input type="checkbox" class="pag-brand-checkbox" aria-label="Select Toyota">
+<div class="pag-brand"><img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/TOYOTA-175_175.png" alt="Toyota"></div>
+</div>
+<div class="pag-brand-wrapper" data-make="Volkswagen" data-cat="import" onclick="toggleBrandSelect(this)">
+<input type="checkbox" class="pag-brand-checkbox" aria-label="Select Volkswagen">
+<div class="pag-brand"><img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Volkswagen.png" alt="Volkswagen"></div>
+</div>
+<div class="pag-brand-wrapper" data-make="AutoPlanet Brampton" data-cat="domestic" onclick="toggleBrandSelect(this)">
+<input type="checkbox" class="pag-brand-checkbox" aria-label="Select AutoPlanet Brampton">
+<div class="pag-brand"><img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2020/11/LOGO-23.png" alt="AutoPlanet Brampton"></div>
+</div>
+<div class="pag-brand-wrapper" data-make="AutoPlanet Durham" data-cat="domestic" onclick="toggleBrandSelect(this)">
+<input type="checkbox" class="pag-brand-checkbox" aria-label="Select AutoPlanet Durham">
+<div class="pag-brand"><img src="https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2020/11/LOGO-24.png" alt="AutoPlanet Durham"></div>
+</div>
+</div>
+
+<div class="pag-sticky-comparison-bar" id="pag-comparison-bar">
+<span id="pag-comparison-count" style="font-size:16px; font-weight:600; letter-spacing:0.02em">Selected Makes: 0</span>
+<button class="pag-btn pag-btn-primary pag-small" onclick="executeCombinedSearch()" style="padding:8px 16px; font-size:13px">Compare Selected Brands</button>
+</div>
+</div>
+
+<div class="pag-scroll-transition-zone" style="margin-top: 60px;">
+<button class="pag-scroll-anchor-link" onclick="scrollToSection('pag-sec-reviews')">
+<span>Read Customer Reviews</span>
+<svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+</button>
+</div>
+</div>
+</section>
+
+<section class="pag-inner pag-section-block-spacing" id="pag-sec-reviews">
+<div class="pag-reviews-section-grid">
+<div class="pag-testimonial-card-frame">
+<svg class="pag-quote-watermark" fill="currentColor" viewBox="0 0 24 24">
+<path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+</svg>
+
+<div>
+<h3 style="margin:0 0 6px 0; color:#0b1220">Guest Feedback</h3>
+<p class="pag-muted" style="font-size:15px; margin-bottom:24px">Testimonials submitted directly from verified purchase follow-up schedules.</p>
+
+<div class="pag-testimonial-slide-deck" id="pag-testimonial-carousel">
+<div class="pag-testimonial-slide-item active">
+<div style="display:flex; gap:4px; color:#fbbf24; margin-bottom:12px">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+<blockquote style="margin:0; font-size:16px; line-height:1.6; font-style:normal; color:#0b1220; font-weight:500">
+  "I configured my deal options completely from my couch and scheduled my showroom key handoff. Absolutely zero pressure. Outstanding service standard."
+</blockquote>
+<div class="pag-guest-profile-strip">
+  <div class="pag-guest-avatar">SA</div>
+  <div class="pag-guest-meta">
+      <h4>Sarah A. 
+          <span class="pag-verified-checkmark-badge" title="Verified Guest">
+              <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l5-5z" clip-rule="evenodd"></path></svg>
+          </span>
+      </h4>
+      <span>Toronto Guest • Purchased Toyota</span>
+  </div>
+</div>
+</div>
+
+<div class="pag-testimonial-slide-item">
+<div style="display:flex; gap:4px; color:#fbbf24; margin-bottom:12px">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+<blockquote style="margin:0; font-size:16px; line-height:1.6; font-style:normal; color:#0b1220; font-weight:500">
+  "Finding a local hybrid option was simple. The multi-brand grid consolidated exactly what I was comparing, saving hours of jumping between individual locations."
+</blockquote>
+<div class="pag-guest-profile-strip">
+  <div class="pag-guest-avatar">DM</div>
+  <div class="pag-guest-meta">
+      <h4>David M.
+          <span class="pag-verified-checkmark-badge" title="Verified Guest">
+              <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l5-5z" clip-rule="evenodd"></path></svg>
+          </span>
+      </h4>
+      <span>Ottawa Guest • Purchased Honda</span>
+  </div>
+</div>
+</div>
+
+<div class="pag-testimonial-slide-item">
+<div style="display:flex; gap:4px; color:#fbbf24; margin-bottom:12px">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+<blockquote style="margin:0; font-size:16px; line-height:1.6; font-style:normal; color:#0b1220; font-weight:500">
+  "Secured a clean valuation range for my trade before even scheduling my on-lot walkaround. Complete baseline visibility keeps the entire process respectful and fast."
+</blockquote>
+<div class="pag-guest-profile-strip">
+  <div class="pag-guest-avatar">PL</div>
+  <div class="pag-guest-meta">
+      <h4>Priya L.
+          <span class="pag-verified-checkmark-badge" title="Verified Guest">
+              <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l5-5z" clip-rule="evenodd"></path></svg>
+          </span>
+      </h4>
+      <span>Mississauga Guest • Purchased Hyundai</span>
+  </div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="pag-carousel-nav-dots" id="pag-carousel-dots">
+<button class="pag-carousel-dot active" onclick="setSlide(0)" aria-label="Slide 1"></button>
+<button class="pag-carousel-dot" onclick="setSlide(1)" aria-label="Slide 2"></button>
+<button class="pag-carousel-dot" onclick="setSlide(2)" aria-label="Slide 3"></button>
+</div>
+</div>
+
+<div class="pag-ratings-scorecard-card">
+<div>
+<h3 style="margin:0 0 16px 0; font-size:15px; font-weight:700; color:var(--pag-muted); text-transform:uppercase; letter-spacing:0.05em; text-align:center">Satisfaction Summary</h3>
+<div class="pag-overall-score-grid" style="justify-content:center">
+<span style="font-size:36px; font-weight:800; color:#0b1220">4.7</span>
+<span style="font-size:18px; font-weight:600; color:var(--pag-muted)">/ 5.0</span>
+</div>
+<div style="display:flex; gap:3px; color:#fbbf24; font-size:16px; margin-bottom:4px; justify-content:center">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+<span class="pag-small pag-muted" style="display:block; margin-bottom:12px; text-align:center">Based on 14,240+ verified survey submittals.</span>
+
+<div class="pag-rating-distribution-chart">
+<div class="pag-distribution-row">
+<span style="width:30px">5 Star</span>
+<div class="pag-distribution-bar-track"><div class="pag-distribution-bar-fill" style="width:84%"></div></div>
+<span style="width:25px; text-align:right">84%</span>
+</div>
+<div class="pag-distribution-row">
+<span style="width:30px">4 Star</span>
+<div class="pag-distribution-bar-track"><div class="pag-distribution-bar-fill" style="width:11%"></div></div>
+<span style="width:25px; text-align:right">11%</span>
+</div>
+<div class="pag-distribution-row">
+<span style="width:30px">3 Star</span>
+<div class="pag-distribution-bar-track"><div class="pag-distribution-bar-fill" style="width:3%"></div></div>
+<span style="width:25px; text-align:right">3%</span>
+</div>
+</div>
+</div>
+
+<div class="pag-satisfaction-metrics-list">
+<div>
+<div class="pag-metric-row-header">
+<span>Transaction speed
+  <span class="pag-tooltip-anchor">
+      <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+      <span class="pag-tooltip-box">Reflects customers who processed digital terms online and spent under 45 minutes total at pickup.</span>
+  </span>
+</span>
+<span>94%</span>
+</div>
+<div class="pag-bar-fill-track"><div class="pag-bar-fill-value" style="width:94%"></div></div>
+</div>
+
+<div>
+<div class="pag-metric-row-header">
+<span>Terms transparency
+  <span class="pag-tooltip-anchor">
+      <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+      <span class="pag-tooltip-box">Measures contract compliance to ensure showroom documents match calculations perfectly.</span>
+  </span>
+</span>
+<span>98%</span>
+</div>
+<div class="pag-bar-fill-track"><div class="pag-bar-fill-value" style="width:98%"></div></div>
+</div>
+
+<div>
+<div class="pag-metric-row-header">
+<span>Bespoke support service
+  <span class="pag-tooltip-anchor">
+      <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+      <span class="pag-tooltip-box">Rates the responsiveness of on-lot advisors dedicated to bespoke portfolio requirements.</span>
+  </span>
+</span>
+<span>91%</span>
+</div>
+<div class="pag-bar-fill-track"><div class="pag-bar-fill-value" style="width:91%"></div></div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="pag-scroll-transition-zone" style="margin-top: 80px;">
+<button class="pag-scroll-anchor-link" onclick="scrollToSection('pag-sec-faq')">
+<span>Frequently Asked Questions</span>
+<svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+</button>
+</div>
+</section>
+
+<section class="pag-faq-outer" id="pag-sec-faq">
+<div class="pag-inner">
+<div class="pag-section-header">
+<h2>Frequently Asked Questions</h2>
+</div>
+
+<div class="pag-faq">
+<details class="pag-faq-item">
+<summary>Can I complete my transaction terms online?</summary>
+<p>Yes. Our digital tools allow you to structure your payment plan, customize trade-in details, and complete your initial credit qualification—all before you arrive at the dealership.</p>
+</details>
+<details class="pag-faq-item">
+<summary>How do I explore vehicles from various brands in one place?</summary>
+<p>Our streamlined platform allows you to browse multiple brands simultaneously, aggregating inventory from our locations. This makes it effortless to compare features and pricing across models without hopping between sites.</p>
+</details>
+<details class="pag-faq-item">
+<summary>How does the vehicle pickup or home delivery process work?</summary>
+<p>After you structure your deal online, you can choose between a priority on-lot appointment or direct home delivery. In both cases, a dedicated specialist will guide you through features and review final documents.</p>
+</details>
+<details class="pag-faq-item">
+<summary>Can I trade in my current vehicle if it still has an outstanding loan or active finance?</summary>
+<p>Absolutely. Our teams handle lien-based trades regularly. We will contact your lender to obtain an official payoff, then apply that balance to your total trade value assignment.</p>
+</details>
+<details class="pag-faq-item">
+<summary>What documents do I need to bring to finalize my purchase?</summary>
+<p>To keep delivery under 45 minutes, please bring a valid Driver's License, your current insurance slip, void cheque for financing, and the ownership slip if you are trading in a vehicle.</p>
+</details>
+<details class="pag-faq-item">
+<summary>Are data transmissions secured?</summary>
+<p>Yes. All information submitted through our platform is protected by advanced encryption algorithms and secure data-handling protocols, ensuring details remain fully safeguarded.</p>
+</details>
+</div>
+</div>
+</section>
+
+<div id="pag-toast-message" role="alert" aria-live="assertive"></div>
+
+</div>
+</template>
+<pre class="collapsible"><code class="language-html"></code></pre>
+</section>
+
+<section class="template-code-block" id="css-code">
+<div class="code-header toggle-btn">
+<h3>CSS Styles <span style="font-size:0.8em; color:#777;">(Click to view)</span></h3>
+<button class="copy-btn" data-copy="css-code">Copy CSS</button>
+</div>
+<template id="css-template">
+.page-title { display: none; }
+.primary-wrapper { padding: 0px; }
+p:empty { display: none; }
+.primary>:not(:last-child) { margin-bottom: 0; }
+
+.pag-wrap {
+--pag-primary: #2c68b5;
+--pag-accent: #0f9d58;
+--pag-muted: #4b5563;
+--pag-bg: #f8f8f8;
+--pag-card: #ffffff;
+--pag-maxw: 1100px;
+--pag-radius: 12px;
+--pag-gap: 24px;
+--pag-container-padding: 20px;
+background: var(--pag-bg);
+color: #0b1220;
+line-height: 1.45;
+font-family: system-ui, -apple-system, sans-serif;
+width: 100%;
+margin: 0;
+padding: 0;
+scroll-behavior: smooth;
+}
+
+.pag-wrap * { box-sizing: border-box; }
+
+.pag-inner {
+max-width: var(--pag-maxw);
+margin: 0 auto;
+padding: 0 var(--pag-container-padding);
+}
+
+.pag-scroll-transition-zone {
+display: flex;
+justify-content: center;
+align-items: center;
+width: 100%;
+margin-top: 50px;
+clear: both;
+}
+
+.pag-scroll-anchor-link {
+display: inline-flex;
+flex-direction: column;
+align-items: center;
+gap: 12px;
+text-decoration: none;
+font-size: 13px;
+font-weight: 700;
+text-transform: uppercase;
+letter-spacing: 0.14em;
+color: var(--pag-primary);
+transition: color 0.2s ease, transform 0.2s ease;
+cursor: pointer;
+border: none;
+background: transparent;
+padding: 10px;
+z-index: 1;
+}
+
+.pag-scroll-anchor-link:hover {
+color: #083d82;
+transform: translateY(3px);
+}
+
+.pag-scroll-anchor-link svg {
+width: 26px;
+height: 26px;
+fill: currentColor;
+animation: pag-bounce-arrow 2s infinite;
+}
+
+.pag-steps-outer .pag-scroll-anchor-link, 
+.pag-brand-outer-ribbon .pag-scroll-anchor-link {
+color: rgba(255, 255, 255, 0.85);
+}
+
+.pag-steps-outer .pag-scroll-anchor-link:hover, 
+.pag-brand-outer-ribbon .pag-scroll-anchor-link:hover {
+color: #ffffff;
+}
+
+@keyframes pag-bounce-arrow {
+0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+40% { transform: translateY(5px); }
+60% { transform: translateY(2px); }
+}
+
+.pag-wrap h1, .pag-wrap h2, .pag-wrap h3, .pag-wrap h4, .pag-wrap h5, .pag-wrap h6 {
+color: #2c68b5;
+line-height: 1.2;
+letter-spacing: -0.025em;
+}
+
+.pag-wrap h1 { margin: 0 0 14px 0; }
+
+.pag-hero-subtitle {
+color: #ffffff;
+margin: 0 0 30px 0;
+font-size: 18.5px;
+line-height: 1.6;
+max-width: 95%;
+}
+
+.pag-wrap h2 {
+text-transform: uppercase;
+letter-spacing: 0.06em;
+margin: 0 0 16px 0;
+line-height: 1.3;
+text-align: center;
+}
+
+.pag-wrap h2::after {
+content: "";
+display: block;
+background: var(--pag-primary);
+margin: 12px auto 0 auto;
+height: 2px;
+width: 10rem;
+}
+
+.pag-steps-outer h2::after, .pag-brand-outer-ribbon h2::after { background: #ffffff; }
+.pag-section-header { text-align: center; margin-bottom: 40px; }
+
+.pag-section-subtitle {
+color: #000000;
+font-size: 16px;
+line-height: 1.5;
+margin: 12px auto 0 auto;
+max-width: 650px;
+}
+
+/* Hero Content Module Presentation */
+.pag-hero-outer {
+position: relative;
+width: 100%;
+background-image: url('https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/02/2025-nissan-murano-blue-side-view.jpg?auto=format&fit=crop&w=1920&q=80');
+background-size: cover;
+background-position: center;
+overflow: hidden;
+box-shadow: 0 10px 30px rgba(11,17,32,0.1);
+padding-top: 60px;
+padding-bottom: 40px;
+}
+
+.pag-hero-outer::before {
+content: '';
+position: absolute;
+top: 0; left: 0; right: 0; bottom: 0;
+background: rgba(11, 18, 32, 0.78);
+backdrop-filter: blur(4px);
+-webkit-backdrop-filter: blur(4px);
+z-index: 1;
+}
+
+.pag-hero {
+position: relative;
+z-index: 2;
+display: grid;
+grid-template-columns: 1fr 560px;
+gap: 28px;
+align-items: stretch;
+}
+
+.pag-hero-card h1 { color: #ffffff; }
+.pag-hero-card .pag-muted { color: rgba(255, 255, 255, 0.6) !important; }
+
+.pag-btn {
+display: inline-block;
+padding: 12px 20px;
+border-radius: 10px;
+font-weight: 600;
+text-decoration: none;
+text-align: center;
+border: none;
+cursor: pointer;
+font-family: inherit;
+transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.pag-btn-primary { background: var(--pag-primary); color: white; }
+.pag-btn-primary:hover { background: #083d82; }
+.pag-btn-outline { background: transparent; border: 1px solid rgba(255, 255, 255, 0.3); color: #ffffff; }
+.pag-btn-outline:hover { background: rgba(255, 255, 255, 0.08); }
+.pag-btn:active { transform: scale(0.98); }
+
+.pag-hero-visual { border-radius: var(--pag-radius); overflow: hidden; box-shadow: 0 10px 30px rgba(11,17,32,0.08); min-height: 340px; }
+.pag-video-container { position: relative; cursor: pointer; background: #0b1220; width: 100%; height: 100%; min-height: 340px; overflow: hidden; }
+.pag-video-thumbnail { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
+.pag-video-container:hover .pag-video-thumbnail { transform: scale(1.03); }
+
+.pag-video-overlay {
+position: absolute;
+top: 0; left: 0; width: 100%; height: 100%;
+background: rgba(11, 18, 32, 0.45);
+display: flex; align-items: center; justify-content: center;
+transition: background 0.3s ease;
+}
+
+.pag-play-btn {
+width: 76px; height: 76px;
+background: var(--pag-primary);
+border-radius: 50%;
+display: flex; align-items: center; justify-content: center;
+box-shadow: 0 4px 20px rgba(11, 79, 168, 0.4);
+transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.2s ease;
+}
+
+.pag-play-btn svg { width: 28px; height: 28px; fill: #ffffff; margin-left: 4px; }
+.pag-video-container:hover .pag-play-btn { transform: scale(1.1); background: #083d82; }
+
+.pag-section-block-spacing { padding-top: 100px; padding-bottom: 120px; }
+.pag-toggle-container { display: flex; justify-content: center; margin-bottom: 32px; }
+.pag-filter-switch { display: inline-flex; background: #e2e8f0; padding: 4px; border-radius: 30px; border: 1px solid rgba(11, 79, 168, 0.1); }
+
+.pag-filter-btn {
+background: transparent; border: none;
+padding: 8px 18px; font-size: 13px; font-weight: 600;
+color: var(--pag-muted); border-radius: 20px; cursor: pointer;
+transition: all 0.2s ease;
+}
+
+.pag-filter-btn.active { background: var(--pag-card); color: var(--pag-primary); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.pag-two-col { display: grid; grid-template-columns: 1fr 380px; gap: 24px; }
+.pag-workspace-dashboard { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; transition: all 0.3s ease; }
+
+.pag-dashboard-card {
+position: relative; overflow: hidden;
+background: var(--pag-card); border: 1px solid rgba(11, 79, 168, 0.1);
+border-radius: 10px; padding: 24px;
+display: flex; flex-direction: column; justify-content: space-between;
+transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, opacity 0.3s ease, filter 0.3s ease;
+text-decoration: none; color: inherit;
+}
+
+.pag-dashboard-card:hover { transform: translateY(-2px); border-color: var(--pag-primary); box-shadow: 0 6px 20px rgba(11, 17, 32, 0.05); }
+.pag-dashboard-card.dimmed { opacity: 0.4; filter: grayscale(40%); }
+.pag-dashboard-card.highlighted { border-color: var(--pag-primary); box-shadow: 0 0 0 2px rgba(11, 79, 168, 0.15), 0 6px 20px rgba(11, 17, 32, 0.05); }
+
+.pag-dashboard-card::before {
+content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+background-size: cover; background-position: center; z-index: 1;
+transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.pag-dashboard-card::after {
+content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+background: linear-gradient(180deg, rgba(255, 255, 255, 0.50) 0%, rgba(255, 255, 255, 0.98) 100%);
+z-index: 2; transition: background 0.3s ease;
+}
+
+.pag-dashboard-card:hover::before { transform: scale(1.08); }
+.pag-dashboard-card:hover::after { background: linear-gradient(180deg, rgba(255, 255, 255, 0.90) 0%, rgba(255, 255, 255, 0.96) 100%); }
+
+.pag-card-q1::before { background-image: url('https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/06/2025-Audi-A5_Q5.png?auto=format&fit=crop&w=600&q=80'); }
+.pag-card-q2::before { background-image: url('https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/06/2025-Audi-A5.png?auto=format&fit=crop&w=600&q=80'); }
+.pag-card-q3::before { background-image: url('https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/05/2025-Volkswagen-Tiguan-Showroom-View.jpg?auto=format&fit=crop&w=600&q=80'); }
+.pag-card-q4::before { background-image: url('https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/04/2025-Hyundai-elantra_safety_hc_01-copy.jpg?auto=format&fit=crop&w=600&q=80'); }
+
+.pag-dashboard-card > * { position: relative; z-index: 3; }
+.pag-card-primary { border-left: 4px solid var(--pag-primary); }
+.pag-card-accent { border-left: 4px solid var(--pag-accent); }
+.pag-card-slate { border-left: 4px solid var(--pag-muted); }
+.pag-card-dark { border-left: 4px solid #0b1220; }
+
+.pag-dashboard-card strong { display: block; font-size: 16px; font-weight: 700; color: #0b1220; margin-bottom: 6px; }
+.pag-dashboard-card p { margin: 0 0 16px 0; color: #000000; font-size: 14px; line-height: 1.4; }
+.pag-dashboard-card .pag-card-action-text { font-size: 13px; font-weight: 600; color: var(--pag-primary); display: flex; align-items: center; gap: 4px; margin-top: auto; }
+
+.pag-handoff-container { background: var(--pag-card); padding: 30px; border-radius: 10px; box-shadow: 0 10px 24px rgba(11,17,32,0.06); height: 100%; }
+.pag-handoff-grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin: 16px 0; }
+.pag-handoff-tile { border: 1px solid rgba(11,79,168,0.15); padding: 14px; border-radius: 8px; text-align: left; cursor: pointer; background: transparent; transition: all 0.2s; display: flex; flex-direction: column; justify-content: center; width: 100%; }
+.pag-handoff-tile:hover { background: rgba(11,79,168,0.02); border-color: var(--pag-primary); }
+.pag-handoff-tile.active { border-color: var(--pag-primary); background: rgba(11,79,168,0.05); box-shadow: 0 0 0 1px var(--pag-primary); }
+.pag-handoff-tile strong { font-size: 14px; display: block; margin-bottom: 2px; color: #0b1220; }
+.pag-handoff-tile span { font-size: 14px; color: var(--pag-muted); }
+
+.pag-steps-outer { background: linear-gradient(135deg, #0b4fa8 0%, #2c68b5 100%); width: 100%; padding-top: 100px; padding-bottom: 60px; }
+.pag-steps-timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 40px 0; }
+.pag-step-card { background: var(--pag-card); border: 1px solid rgba(11, 79, 168, 0.08); border-radius: 10px; padding: 32px 24px; text-align: center; box-shadow: 0 10px 25px rgba(6, 50, 132, 0.15); transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.pag-step-card:hover { transform: translateY(-4px); box-shadow: 0 14px 35px rgba(6, 50, 132, 0.25); }
+.pag-step-icon-wrap { height: 70px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; }
+.pag-step-svg { width: 72px; height: 72px; transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1); }
+.pag-step-card:hover .pag-step-svg { transform: scale(1.06) translateY(-2px); }
+
+.pag-step-badge {
+width: 44px; height: 44px; border-radius: 50%;
+background: var(--pag-primary); color: #ffffff;
+display: inline-flex; align-items: center; justify-content: center;
+font-weight: 700; font-size: 18px; margin-bottom: 16px;
+box-shadow: 0 4px 10px rgba(11, 79, 168, 0.2); transition: all 0.2s ease;
+}
+
+.pag-step-card:hover .pag-step-badge { background: #000000; }
+.pag-step-card h5 { margin: 0 0 8px 0; color: #0b1220; }
+.pag-step-card p { margin: 0; font-size: 15px; color: var(--pag-muted); line-height: 1.45; }
+.pag-steps-carousel-dots { display: none; justify-content: center; gap: 8px; margin-top: 24px; }
+.pag-steps-carousel-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255, 255, 255, 0.4); cursor: pointer; transition: all 0.3s ease; }
+.pag-steps-carousel-dot.pag-active { background: #ffffff; width: 20px; border-radius: 4px; }
+
+.pag-ribbon-white { background: #ffffff; border-top: 1px solid #eef2f6; border-bottom: 1px solid #eef2f6; width: 100%; padding-top: 100px; padding-bottom: 120px; }
+.pag-icon-card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
+.pag-icon-card {
+position: relative; overflow: hidden; background: var(--pag-card);
+border: 1px solid rgba(11, 79, 168, 0.08); border-radius: var(--pag-radius);
+padding: 32px; text-align: center; box-shadow: 0 4px 15px rgba(11, 17, 32, 0.02);
+text-decoration: none; color: inherit; display: flex; flex-direction: column;
+align-items: center; transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.pag-icon-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-size: cover; background-position: center; z-index: 1; transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+.pag-card-pricing::before { background-image: url('https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2021/08/Finance-scaled.jpeg?auto=format&fit=crop&w=600&q=80'); }
+.pag-card-approvals::before { background-image: url('https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/INSET_FINANCING.png?auto=format&fit=crop&w=600&q=80'); }
+.pag-card-valuations::before { background-image: url('https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2021/08/Trade-in-Valuation.png?auto=format&fit=crop&w=600&q=80'); }
+
+.pag-icon-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(180deg, rgba(255, 255, 255, 0.50) 0%, rgba(255, 255, 255, 0.98) 100%); z-index: 2; transition: background 0.3s ease; }
+.pag-icon-card > * { position: relative; z-index: 3; }
+.pag-icon-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(11, 17, 32, 0.06); }
+.pag-icon-card:hover::before { transform: scale(1.08); }
+.pag-icon-card:hover::after { background: linear-gradient(180deg, rgba(255, 255, 255, 0.90) 0%, rgba(255, 255, 255, 0.95) 100%); }
+
+.pag-icon-card-img { width: 72px; height: 72px; border-radius: 50%; background: rgba(11, 79, 168, 0.04); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1); }
+.pag-icon-card:hover .pag-icon-card-img { transform: scale(1.08); }
+.pag-icon-card-img img { max-width: 50px; max-height: 50px; object-fit: contain; }
+.pag-icon-card h4 { margin: 0 0 10px 0; font-size: 18px; color: #0b1220; }
+.pag-icon-card p { margin: 0 0 20px 0; font-size: 15px; color: #000000; line-height: 1.5; }
+
+.pag-tool-action {
+display: inline-block; width: 100%; padding: 10px 16px; border-radius: 8px; font-weight: 600; font-size: 14px;
+text-align: center; border: 1px solid var(--pag-primary); color: var(--pag-primary); background: transparent;
+transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease; margin-top: auto;
+}
+.pag-icon-card:hover .pag-tool-action { background: var(--pag-primary); color: #ffffff; border-color: var(--pag-primary); }
+
+.pag-brand-outer-ribbon { position: relative; width: 100%; background-image: url('https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/06/2025-Audi-Q5-A5.png?auto=format&fit=crop&w=1920&q=80'); background-size: cover; background-position: center; overflow: hidden; padding-top: 100px; padding-bottom: 40px; }
+.pag-brand-outer-ribbon::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(11, 18, 32, 0.82); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); z-index: 1; }
+.pag-brand-outer-ribbon > .pag-inner { position: relative; z-index: 2; }
+.pag-brand-console-card { border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3); border-radius: var(--pag-radius); padding: 40px; }
+.pag-brand-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+.pag-brand-wrapper { position: relative; cursor: pointer; transition: opacity 0.2s ease; }
+.pag-brand-checkbox { position: absolute; top: 8px; left: 8px; z-index: 2; width: 18px; height: 18px; accent-color: var(--pag-primary); cursor: pointer; }
+
+.pag-brand { background: var(--pag-bg); padding: 12px; border-radius: 8px; display: flex; align-items: center; justify-content: center; height: 85px; box-shadow: 0 2px 8px rgba(11,17,32,0.02); border: 1px solid transparent; transition: all 0.2s ease; width: 100%; }
+.pag-brand-wrapper:hover .pag-brand { transform: translateY(-2px); border-color: rgba(11,79,168,0.2); }
+.pag-brand-wrapper.selected .pag-brand { border-color: var(--pag-primary); background: rgba(11,79,168,0.02); box-shadow: 0 0 0 1px var(--pag-primary); }
+.pag-brand img { max-height: 60px; max-width: 100%; object-fit: contain; pointer-events: none; }
+
+.pag-sticky-comparison-bar { display: none; position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #0b1220; color: white; padding: 14px 24px; border-radius: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 100; align-items: center; gap: 20px; animation: pag-slideUp 0.3s ease forwards; }
+.pag-brand-filters-row { display: flex; gap: 8px; justify-content: center; margin-bottom: 24px; flex-wrap: wrap; }
+.pag-brand-filter-pill { background: #f1f5f9; border: none; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; color: var(--pag-muted); cursor: pointer; transition: all 0.2s ease; }
+.pag-brand-filter-pill.active { background: var(--pag-primary); color: white; }
+
+.pag-reviews-section-grid { display: grid; grid-template-columns: 1fr 360px; gap: 24px; align-items: stretch; }
+.pag-testimonial-card-frame { background: var(--pag-card); border: 1px solid rgba(11, 79, 168, 0.08); border-radius: var(--pag-radius); padding: 32px; box-shadow: 0 4px 20px rgba(11, 17, 32, 0.02); position: relative; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; }
+.pag-quote-watermark { position: absolute; top: -10px; right: 15px; width: 120px; height: 120px; color: rgba(11, 79, 168, 0.03); pointer-events: none; }
+.pag-testimonial-slide-deck { position: relative; min-height: 160px; }
+.pag-testimonial-slide-item { position: absolute; top: 0; left: 0; width: 100%; opacity: 0; visibility: hidden; transform: translateY(10px); transition: opacity 0.5s ease, transform 0.5s ease, visibility 0.5s ease; }
+.pag-testimonial-slide-item.active { opacity: 1; visibility: visible; transform: translateY(0); position: relative; }
+
+.pag-guest-profile-strip { display: flex; align-items: center; gap: 12px; margin-top: 24px; }
+.pag-guest-avatar { width: 44px; height: 44px; border-radius: 50%; background: rgba(11, 79, 168, 0.08); color: var(--pag-primary); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 15px; border: 2px solid #ffffff; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+.pag-guest-meta h4 { margin: 0; font-size: 14px; font-weight: 700; color: #0b1220; display: flex; align-items: center; gap: 4px; }
+.pag-guest-meta span { font-size: 12px; color: var(--pag-muted); }
+.pag-verified-checkmark-badge { display: inline-flex; align-items: center; justify-content: center; color: var(--pag-accent); width: 14px; height: 14px; }
+.pag-carousel-nav-dots { display: flex; gap: 8px; margin-top: 20px; }
+.pag-carousel-dot { width: 8px; height: 8px; border-radius: 50%; background: #e5e7eb; border: none; padding: 0; cursor: pointer; transition: all 0.3s ease; }
+.pag-carousel-dot.active { background: var(--pag-primary); width: 20px; border-radius: 4px; }
+
+.pag-ratings-scorecard-card { background: var(--pag-card); border: 1px solid rgba(11, 79, 168, 0.08); border-radius: var(--pag-radius); padding: 32px; box-shadow: 0 4px 20px rgba(11, 17, 32, 0.02); display: flex; flex-direction: column; justify-content: space-between; }
+.pag-overall-score-grid { display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px; }
+.pag-rating-distribution-chart { display: flex; flex-direction: column; gap: 6px; margin: 16px 0; border-bottom: 1px solid #f3f4f6; padding-bottom: 16px; }
+.pag-distribution-row { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--pag-muted); }
+.pag-distribution-bar-track { flex: 1; height: 6px; background: #f3f4f6; border-radius: 3px; overflow: hidden; }
+.pag-distribution-bar-fill { height: 100%; background: #fbbf24; border-radius: 3px; }
+.pag-satisfaction-metrics-list { display: flex; flex-direction: column; gap: 12px; }
+.pag-metric-row-header { display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 600; color: #0b1220; }
+
+.pag-tooltip-anchor { position: relative; display: inline-flex; align-items: center; cursor: pointer; color: var(--pag-muted); margin-left: 4px; transition: color 0.2s; }
+.pag-tooltip-anchor:hover { color: var(--pag-primary); }
+.pag-tooltip-anchor svg { width: 13px; height: 13px; }
+.pag-tooltip-box { visibility: hidden; opacity: 0; position: absolute; bottom: 100%; left: 50%; transform: translate(-50%, -8px); background: #0b1220; color: #ffffff; padding: 10px 14px; border-radius: 6px; font-size: 11px; font-weight: 400; width: 220px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.15); z-index: 10; pointer-events: none; transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease; }
+.pag-tooltip-box::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border-width: 5px; border-style: solid; border-color: #0b1220 transparent transparent transparent; }
+.pag-tooltip-anchor:hover .pag-tooltip-box { visibility: visible; opacity: 1; transform: translate(-50%, -4px); }
+.pag-bar-fill-track { width: 100%; height: 6px; background: #f3f4f6; border-radius: 3px; margin-top: 4px; overflow: hidden; }
+.pag-bar-fill-value { height: 100%; background: var(--pag-primary); border-radius: 3px; }
+
+.pag-faq-outer { background: #ffffff; border-top: 1px solid #eef2f6; width: 100%; padding-top: 100px; padding-bottom: 120px; }
+.pag-faq-item { background: var(--pag-bg); padding: 16px; border-radius: 10px; margin-bottom: 12px; box-shadow: 0 4px 12px rgba(11,17,32,0.01); border: 1px solid rgba(11,79,168,0.04); }
+.pag-faq-item summary { font-weight: 600; cursor: pointer; font-size: 15px; color: #0b1220; }
+.pag-faq-item p { margin: 10px 0 0; color: var(--pag-muted); font-size: 15px; padding-left: 4px; }
+
+#pag-toast-message { visibility: hidden; min-width: 280px; background-color: #0b1220; color: #fff; text-align: center; border-radius: 8px; padding: 16px; position: fixed; z-index: 200; left: 50%; bottom: 30px; transform: translateX(-50%); font-size: 14px; font-weight: 500; box-shadow: 0 10px 25px rgba(0,0,0,0.25); border-left: 4px solid var(--pag-primary); opacity: 0; transition: opacity 0.3s, visibility 0.3s; }
+#pag-toast-message.pag-show { visibility: visible; opacity: 1; }
+
+@keyframes pag-slideUp { from { opacity: 0; transform: translate(-50%, 15px); } to { opacity: 1; transform: translate(-50%, 0); } }
+
+@media (max-width:980px){
+.pag-hero { grid-template-columns:1fr; }
+.pag-two-col { grid-template-columns:1fr; }
+.pag-icon-card-grid { grid-template-columns:1fr; }
+.pag-brand-grid { grid-template-columns:repeat(4,1fr); }
+.pag-ratings-scorecard-card { display:none; }
+.pag-reviews-section-grid { grid-template-columns: none; }
+.pag-steps-timeline { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; gap: 0; padding: 10px 0 24px 0; margin: 0; }
+.pag-step-card { flex: 0 0 100%; scroll-snap-align: center; max-width: 100%; margin: 0; padding: 40px 24px; border-radius: 0; background: rgba(255, 255, 255, 0.08) !important; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: none; border-bottom: 1px solid rgba(255, 255, 255, 0.12); box-shadow: none; }
+.pag-step-card h5, .pag-step-card p { color: #ffffff !important; }
+.pag-step-badge { background: #ffffff !important; color: var(--pag-primary) !important; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+.pag-step-svg line, .pag-step-svg rect, .pag-step-svg path, .pag-step-svg circle { stroke: #ffffff !important; }
+.pag-steps-timeline::-webkit-scrollbar { display: none; }
+.pag-steps-carousel-dots { display: flex; }
+}
+@media (max-width:768px){
+.pag-wrap h1 { font-size: 30px !important; }
+.pag-wrap h2 { font-size: 20px !important; }
+.pag-hero-subtitle { font-size: 15px !important; }
+}
+@media (max-width:640px){
+.pag-workspace-dashboard { grid-template-columns:1fr; }
+.pag-brand-grid { grid-template-columns:repeat(3,1fr); }
+}
+</template>
+<pre class="collapsible"><code class="language-css"></code></pre>
+</section>
+
+<section class="template-code-block" id="js-code">
+<div class="code-header toggle-btn">
+<h3>JavaScript Interaction <span style="font-size:0.8em; color:#777;">(Click to view)</span></h3>
+<button class="copy-btn" data-copy="js-code">Copy JS</button>
+</div>
+<template id="js-template">
+let pagSlides = []; 
+let pagDots = []; 
+let pagSlideIdx = 0; 
+let pagCarouselInterval = null; 
+let selectedBrands = []; 
+
+/* Global Smooth Scroll Method Initialization */
+window.scrollToSection = function(sectionId) {
+const targetElement = document.getElementById(sectionId);
+if (targetElement) {
+targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+pagSlides = document.querySelectorAll('#pag-testimonial-carousel .pag-testimonial-slide-item');
+pagDots = document.querySelectorAll('#pag-carousel-dots .pag-carousel-dot');
+
+if (pagSlides.length > 0) {
+showSlide(0);
+startCarousel();
+}
+
+/* Mobile Timeline Touch Snap-Alignment Autoplay Loop Engine */
+const stepsSnapContainer = document.getElementById('pag-steps-snap-container');
+const stepsNavDots = document.querySelectorAll('.pag-steps-carousel-dot');
+let stepsSlideIdx = 0;
+let stepsAutoplayInterval = null;
+const totalStepCards = 4;
+let isUserInteracting = false;
+
+function startStepsAutoplay() {
+stopStepsAutoplay();
+if (window.innerWidth <= 980 && !isUserInteracting) {
+stepsAutoplayInterval = setInterval(() => {
+stepsSlideIdx = (stepsSlideIdx + 1) % totalStepCards;
+scrollToStepCard(stepsSlideIdx);
+}, 3500); 
+}
+}
+
+function stopStepsAutoplay() {
+if (stepsAutoplayInterval) {
+clearInterval(stepsAutoplayInterval);
+stepsAutoplayInterval = null;
+}
+}
+
+if (stepsSnapContainer) {
+stepsSnapContainer.addEventListener('scroll', () => {
+const scrollLeftPosition = stepsSnapContainer.scrollLeft;
+const containerWidth = stepsSnapContainer.clientWidth;
+let currentSnapIndex = Math.round(scrollLeftPosition / containerWidth);
+
+if (currentSnapIndex < 0) currentSnapIndex = 0;
+if (currentSnapIndex >= totalStepCards) currentSnapIndex = totalStepCards - 1;
+
+stepsNavDots.forEach((dot, index) => {
+dot.classList.toggle('pag-active', index === currentSnapIndex);
+});
+stepsSlideIdx = currentSnapIndex;
+});
+
+stepsSnapContainer.addEventListener('touchstart', () => {
+isUserInteracting = true;
+stopStepsAutoplay();
+}, { passive: true });
+
+stepsSnapContainer.addEventListener('touchend', () => {
+setTimeout(() => {
+isUserInteracting = false;
+startStepsAutoplay();
+}, 1000); 
+}, { passive: true });
+}
+
+window.scrollToStepCard = function(index) {
+if (!stepsSnapContainer) return;
+const cards = stepsSnapContainer.querySelectorAll('.pag-step-card');
+if (cards[index]) {
+stopStepsAutoplay();
+stepsSnapContainer.scrollTo({ left: cards[index].offsetLeft, behavior: 'smooth' });
+stepsSlideIdx = index;
+setTimeout(() => { if (!isUserInteracting) startStepsAutoplay(); }, 600);
+}
+};
+
+window.addEventListener('resize', () => {
+if (window.innerWidth > 980) { stopStepsAutoplay(); } else { startStepsAutoplay(); }
+});
+
+startStepsAutoplay();
+});
+
+function showSlide(index) {
+if (!pagSlides.length || !pagDots.length) return;
+pagSlides.forEach((slide, idx) => { slide.classList.toggle('active', idx === index); });
+pagDots.forEach((dot, idx) => { dot.classList.toggle('active', idx === index); });
+pagSlideIdx = index;
+}
+
+function rotateSlides() {
+if (!pagSlides.length) return;
+let nextIdx = (pagSlideIdx + 1) % pagSlides.length;
+showSlide(nextIdx);
+}
+
+function startCarousel() {
+stopCarousel();
+pagCarouselInterval = setInterval(rotateSlides, 4500);
+}
+
+function stopCarousel() {
+if (pagCarouselInterval) clearInterval(pagCarouselInterval);
+}
+
+window.setSlide = function(index) {
+stopCarousel();
+showSlide(index);
+startCarousel();
+};
+
+/* Dashboard Filter Hub Methods */
+window.filterDashboard = function(timelineType) {
+const grid = document.getElementById('pag-dashboard-grid');
+if (!grid) return;
+const cards = grid.querySelectorAll('.pag-dashboard-card');
+const buttons = document.querySelectorAll('.pag-filter-btn');
+
+buttons.forEach(btn => { btn.classList.toggle('active', btn.id === `pag-filter-${timelineType}`); });
+
+cards.forEach(card => {
+card.classList.remove('dimmed', 'highlighted');
+const cardTimeline = card.getAttribute('data-timeline');
+if (timelineType !== 'all') {
+if (cardTimeline === timelineType) { card.classList.add('highlighted'); } else { card.classList.add('dimmed'); }
+}
+});
+};
+
+/* Multi-Brand Grid Mask Methods */
+window.filterBrandsGrid = function(category) {
+const grid = document.getElementById('pag-brands-logo-grid');
+if (!grid) return;
+const items = grid.querySelectorAll('.pag-brand-wrapper');
+const buttons = document.querySelectorAll('.pag-brand-filter-pill');
+
+buttons.forEach(btn => { btn.classList.toggle('active', btn.id === `pag-bf-${category}`); });
+
+items.forEach(item => {
+const itemCat = item.getAttribute('data-cat');
+if (category === 'all' || itemCat === category) {
+item.style.opacity = '1';
+item.style.pointerEvents = 'auto';
+} else {
+item.style.opacity = '0.18';
+item.style.pointerEvents = 'none';
+}
+});
+};
+
+/* Brand Selection Multi-Check Triggers */
+window.toggleBrandSelect = function(wrapperElement) {
+const checkbox = wrapperElement.querySelector('.pag-brand-checkbox');
+const make = wrapperElement.getAttribute('data-make');
+const evt = window.event;
+
+if (evt && evt.target !== checkbox) checkbox.checked = !checkbox.checked;
+
+if (checkbox.checked) {
+wrapperElement.classList.add('selected');
+if (!selectedBrands.includes(make)) selectedBrands.push(make);
+} else {
+wrapperElement.classList.remove('selected');
+selectedBrands = selectedBrands.filter(item => item !== make);
+}
+
+const bar = document.getElementById('pag-comparison-bar');
+const countLabel = document.getElementById('pag-comparison-count');
+const resetBtn = document.getElementById('pag-bf-clear');
+
+if (bar && countLabel) {
+if (selectedBrands.length > 0) {
+bar.style.display = 'flex';
+countLabel.textContent = `Selected Makes (${selectedBrands.length}): ${selectedBrands.join(', ')}`;
+if (resetBtn) {
+resetBtn.style.display = 'inline-block';
+resetBtn.textContent = `Reset (${selectedBrands.length})`;
+}
+} else {
+bar.style.display = 'none';
+if (resetBtn) resetBtn.style.display = 'none';
+}
+}
+};
+
+window.clearAllBrandsSelection = function() {
+selectedBrands = [];
+const grid = document.getElementById('pag-brands-logo-grid');
+if (grid) {
+grid.querySelectorAll('.pag-brand-wrapper').forEach(wrap => {
+wrap.classList.remove('selected');
+const box = wrap.querySelector('.pag-brand-checkbox');
+if (box) box.checked = false;
+});
+}
+const bar = document.getElementById('pag-comparison-bar');
+const resetBtn = document.getElementById('pag-bf-clear');
+if (bar) bar.style.display = 'none';
+if (resetBtn) resetBtn.style.display = 'none';
+filterBrandsGrid('all');
+};
+
+/* Unified Direct URL String Query Search Execution */
+window.executeCombinedSearch = function() {
+if (selectedBrands.length === 0) return;
+const queryParams = selectedBrands.map(make => `make=${encodeURIComponent(make)}`).join('&');
+window.open(`https://shop.performance.ca/en/search?${queryParams}`, '_blank');
+};
+
+/* Toast Notification Service Alert Call */
+window.triggerLiveChatToast = function() {
+const toast = document.getElementById('pag-toast-message');
+if (!toast) return;
+toast.textContent = 'Live Chat Specialist Desk is initializing... Look for the message bubble at the bottom right corner shortly!';
+toast.classList.add('pag-show');
+setTimeout(() => { toast.classList.remove('pag-show'); }, 5000);
+};
+
+/* Iframe Streaming Video Trigger Method */
+window.playHeroVideo = function() {
+const container = document.getElementById('pag-hero-video-container');
+if (!container) return;
+container.innerHTML = `
+<iframe src="https://www.youtube.com/embed/nsYXwyL0BBY?rel=0&autoplay=1&controls=1&modestbranding=1" 
+title="How to Shop Online" frameborder="0" style="width:100%; height:100%; object-fit:cover; display:block;"
+allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+`;
+};
+</template>
+<pre class="collapsible"><code class="language-js"></code></pre>
+</section>
+
+<div style="margin: 30px 0;">
+<button class="copy-btn" data-copy-all style="padding: 10px 20px; font-weight: bold;">Copy All Modules</button>
+</div>
+
+</div> 
+</div> 
+
+<div data-include="/hub/nav/footernav.html"></div>
+
+<script src="/hub/js/include.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"></script>
+
+</body>
+</html>
