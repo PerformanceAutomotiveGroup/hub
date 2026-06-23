@@ -1,155 +1,301 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Performance Auto Group Hub</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="/hub/css/style.css" />
-  <style>
-    /* Instant Search Specific UI Tweaks */
-    .hero-content { position: relative; }
-    .search-wrapper { display: flex; max-width: 500px; margin: 20px auto; position: relative; }
-    .search-wrapper input { flex: 1; padding: 12px; border: 2px solid #ddd; border-radius: 6px 0 0 6px; font-size: 16px; outline: none; }
-    .search-wrapper button { padding: 12px 20px; background: #2c68b5; color: white; border: none; border-radius: 0 6px 6px 0; cursor: pointer; }
-    
-    /* Live Dropdown Results Box */
-    .search-results { 
-      position: absolute; top: 100%; left: 0; right: 0; 
-      background: white; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
-      max-height: 250px; overflow-y: auto; z-index: 100; display: none; text-align: left;
-    }
-    .search-results a { display: block; padding: 12px; color: #333; text-decoration: none; border-bottom: 1px solid #eee; }
-    .search-results a:hover { background: #f4f7fb; color: #2c68b5; }
-    .search-results .no-results { padding: 12px; color: #777; font-style: italic; }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Performance Auto Group Hub</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="/hub/css/style.css" />
+<style>
+/* Instant Search Specific UI Tweaks */
+.hero-content { position: relative; }
+.search-wrapper { display: flex; max-width: 500px; margin: 20px auto; position: relative; }
+.search-wrapper input { flex: 1; padding: 12px; border: 2px solid #ddd; border-radius: 6px 0 0 6px; font-size: 16px; outline: none; }
+.search-wrapper button { padding: 12px 20px; background: #2c68b5; color: white; border: none; border-radius: 0 6px 6px 0; cursor: pointer; }
+
+/* Live Dropdown Results Box */
+.search-results { 
+position: absolute; top: 100%; left: 0; right: 0; 
+background: white; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+max-height: 250px; overflow-y: auto; z-index: 100; display: none; text-align: left;
+}
+.search-results a { display: block; padding: 12px; color: #333; text-decoration: none; border-bottom: 1px solid #eee; }
+.search-results a:hover { background: #f4f7fb; color: #2c68b5; }
+.search-results .no-results { padding: 12px; color: #777; font-style: italic; }
+</style>
 </head>
 <body>
 
-  <!-- Activated Shared Navigation Engine Header -->
-  <div data-include="/hub/nav/topnav.html"></div>
+<!-- Activated Shared Navigation Engine Header -->
+<div data-include="/hub/nav/topnav.html"></div>
 
-  <h1 class="page-title" style="text-align: center; margin-top: 40px;">Performance Auto Group Hub</h1>
+<h1 class="page-title" style="text-align: center; margin-top: 40px;">Performance Auto Group Hub</h1>
 
-  <section class="hero-section" style="text-align: center; padding: 40px 20px;">
-    <div class="hero-content">
-      <h2>Welcome to the Performance Hub</h2>
-      <p class="subheading">Your central place for reusable HTML, CSS, JS, and templates. Click a section to begin.</p>
-      
-      <!-- Interactive Search Bar Wrapper Container -->
-      <div class="search-wrapper">
-        <input type="text" id="hub-search" placeholder="Search for code snippets, components, layout styles..." autocomplete="off" />
-        <button><i class="fas fa-search"></i></button>
-        <!-- The Live Search Results Dropdown -->
-        <div id="search-results-box" class="search-results"></div>
-      </div>
-    </div> 
-  </section>
+<section class="hero-section" style="text-align: center; padding: 40px 20px;">
+<div class="hero-content">
+<h2>Welcome to the Performance Hub</h2>
+<p class="subheading">Your central place for reusable HTML, CSS, JS, and templates. Click a section to begin.</p>
 
-  <!-- Categorized Route Entry Grid -->
-  <div class="card-grid">
-    <div class="card pink">
-      <h2>HTML</h2>
-      <p>Structure your content for the web.</p>
-      <a href="/hub/pages/HTML/index.html" class="btn">Start</a>
-    </div>
-    <div class="card yellow">
-      <h2>CSS</h2>
-      <p>Style and design beautiful pages.</p>
-      <a href="/hub/pages/CSS/index.html" class="btn">Start</a>
-    </div>
-    <div class="card light">
-      <h2>JavaScript</h2>
-      <p>Make your pages interactive and dynamic.</p>
-      <a href="/hub/pages/JS/index.html" class="btn">Start</a>
-    </div>
-    <div class="card mint">
-      <h2>Bootstrap</h2>
-      <p>Build responsive designs fast.</p>
-      <a href="/hub/pages/BOOTSTARP/index.html" class="btn">Start</a>
-    </div>
-    <div class="card aqua">
-      <h2>Templates</h2>
-      <p>Start from customizable templates.</p>
-      <a href="/hub/pages/TEMPLATES/index.html" class="btn">Start</a>
-    </div>
-    <div class="card gray">
-      <h2>More</h2>
-      <p>Discover additional tools and utilities.</p>
-      <a href="/hub/pages/MORE/index.html" class="btn">Start</a>
-    </div>
-  </div>
+<!-- Interactive Search Bar Wrapper Container -->
+<div class="search-wrapper">
+<input type="text" id="hub-search" placeholder="Search for code snippets, components, layout styles..." autocomplete="off" />
+<button><i class="fas fa-search"></i></button>
+<!-- The Live Search Results Dropdown -->
+<div id="search-results-box" class="search-results"></div>
+</div>
+</div> 
+</section>
 
-  <!-- Global Footer Container Integration -->
-  <div data-include="/hub/nav/footernav.html"></div>
+<!-- Categorized Route Entry Grid -->
+<div class="card-grid">
+<div class="card pink">
+<h2>HTML</h2>
+<p>Structure your content for the web.</p>
+<a href="/hub/pages/HTML/index.html" class="btn">Start</a>
+</div>
+<div class="card yellow">
+<h2>CSS</h2>
+<p>Style and design beautiful pages.</p>
+<a href="/hub/pages/CSS/index.html" class="btn">Start</a>
+</div>
+<div class="card light">
+<h2>JavaScript</h2>
+<p>Make your pages interactive and dynamic.</p>
+<a href="/hub/pages/JS/index.html" class="btn">Start</a>
+</div>
+<div class="card mint">
+<h2>Bootstrap</h2>
+<p>Build responsive designs fast.</p>
+<a href="/hub/pages/BOOTSTARP/index.html" class="btn">Start</a>
+</div>
+<div class="card aqua">
+<h2>Templates</h2>
+<p>Start from customizable templates.</p>
+<a href="/hub/pages/TEMPLATES/index.html" class="btn">Start</a>
+</div>
+<div class="card gray">
+<h2>More</h2>
+<p>Discover additional tools and utilities.</p>
+<a href="/hub/pages/MORE/index.html" class="btn">Start</a>
+</div>
+</div>
 
-  <!-- Core Utility Infrastructure Script Injection -->
-  <script src="/hub/js/include.js"></script>
+<!-- Global Footer Container Integration -->
+<div data-include="/hub/nav/footernav.html"></div>
 
-  <!-- INLINE APPLICATION SEARCH CONTROLLER ENGINE -->
-  <script>
-    // 1. Your Centralized Search Database
-    // Simply add any new child files right here to build them!
-    const searchDatabase = [
-      { name: "HTML Home / Overview", url: "/hub/pages/HTML/index.html", keywords: "html structure index guide overview" },
-      { name: "HTML Trader Form Component", url: "/hub/pages/HTML/html-form.html", keywords: "html form trader lead capture input form" },
-      { name: "HTML Image Maps Documentation", url: "/hub/pages/HTML/html-map.html", keywords: "html image maps coordinate area click geometry" },
-      { name: "HTML Image Swap System", url: "/hub/pages/HTML/html-imageswap.html", keywords: "html image swap hover change picture src transition" },
-      { name: "HTML Div Structure Elements", url: "/hub/pages/HTML/html-divelements.html", keywords: "html div container block spacing section alignment" },
-      { name: "HTML Responsive Image Gallery", url: "/hub/pages/HTML/html-imagegallery.html", keywords: "html image gallery thumbnail responsiveness portfolio" },
-      { name: "HTML Lightbox Overlay Gallery", url: "/hub/pages/HTML/html-lightbox-gallery.html", keywords: "html lightbox modal gallery overlay image popup click fullscreen" },
-      
-      { name: "CSS Home / Overview", url: "/hub/pages/CSS/index.html", keywords: "css styles presentation index layout framework typography variables" },
-      { name: "CSS Interactive Element On-click", url: "/hub/pages/CSS/css-element-on-click.html", keywords: "css element on click hide show target panel toggle function display" },
-      { name: "CSS Hoverable Navigation Dropdown", url: "/hub/pages/CSS/css-hover-dropdown.html", keywords: "css hover dropdown absolute responsive child select menu display question answer" },
-      
-      { name: "Bootstrap Component Library Hub", url: "/hub/pages/BOOTSTARP/index.html", keywords: "bootstrap bootstarp layout elements responsive framework grid columns utility elements" },
-      { name: "WordPress Reusable Layout Templates", url: "/hub/pages/TEMPLATES/index.html", keywords: "templates full layout wordpress conversions compositions framework theme" },
-      { name: "Basic Conversion Marketing Landing Page", url: "/hub/pages/TEMPLATES/page-layouts/landing-page-basic.html", keywords: "landing page blueprint basic campaign performance hero grid modules template" }
-    ];
+<!-- Core Utility Infrastructure Script Injection -->
+<script src="/hub/js/include.js"></script>
 
-    // 2. Search Application Interaction Logic Execution
-    const searchInput = document.getElementById('hub-search');
-    const resultsBox = document.getElementById('search-results-box');
+<!-- INLINE APPLICATION SEARCH CONTROLLER ENGINE -->
+<script>
+// 1. Your Centralized Search Database
+// Simply add any new child files right here to build them!
+// Master Library Discoverability Database Index
+const searchDatabase = [
+// =========================================================================
+// CATEGORY LANDING TIERS (MAIN HUBS)
+// =========================================================================
+{
+title: "HTML Chapter Library",
+category: "HTML",
+description: "The structural layout blueprint framework center, organized by operational semantic chapters.",
+url: "/hub/pages/HTML/index.html"
+},
+{
+title: "CSS Styles Library",
+category: "CSS",
+description: "Global design variables, root presentation parameters, layout models, and animations tracking.",
+url: "/hub/pages/CSS/index.html"
+},
+{
+title: "JavaScript Core Library",
+category: "JS",
+description: "Client-side interactive functional scripts, data hooks, and event listeners.",
+url: "/hub/pages/JS/index.html"
+},
+{
+title: "Bootstrap UI Components",
+category: "Bootstrap",
+description: "Rapid deployment grids, structural column layouts, navbars, and button utility sheets.",
+url: "/hub/pages/BOOTSTRAP/index.html"
+},
+{
+title: "Master Templates & Scaffolding",
+category: "Templates",
+description: "Complete full-page wireframes, marketing funnels, and theme scaffolding blueprints.",
+url: "/hub/pages/TEMPLATES/index.html"
+},
+{
+title: "More Utilities & Configurations",
+category: "More",
+description: "SEO header injections, metadata guidelines, accessibility tweaks, and code shortcuts.",
+url: "/hub/pages/MORE/index.html"
+},
 
-    searchInput.addEventListener('input', () => {
-      const value = searchInput.value.toLowerCase().trim();
-      
-      // If blank query parameter set, clean layout display footprint
-      if (!value) {
-        resultsBox.innerHTML = '';
-        resultsBox.style.display = 'none';
-        return;
-      }
+// =========================================================================
+// SUB-CATEGORY CHAPTER DASHBOARDS (OPTION B HUBS)
+// =========================================================================
+{
+title: "HTML: Basic Elements Chapter Index",
+category: "HTML",
+description: "Chapter 1: Foundational building blocks, headings hierarchy, text layouts, and line breaks.",
+url: "/hub/pages/HTML/basic-elements/index.html"
+},
+{
+title: "HTML: Forms & Lead Capture Chapter Index",
+category: "HTML",
+description: "Chapter 2: Interactive user intake layers, input configurations, validation fields, and forms.",
+url: "/hub/pages/HTML/forms/index.html"
+},
+{
+title: "HTML: Galleries & Media Chapter Index",
+category: "HTML",
+description: "Chapter 3: Responsive imagery frameworks, hover transitions, grids, and fullscreen sliders.",
+url: "/hub/pages/HTML/galleries/index.html"
+},
+{
+title: "HTML: Interactive Maps Chapter Index",
+category: "HTML",
+description: "Chapter 4: Scalable boundary hotspot maps, click targets tracking coordinates, and SVGs.",
+url: "/hub/pages/HTML/maps/index.html"
+},
+{
+title: "CSS: Interactive Toggles & States Chapter Index",
+category: "CSS",
+description: "Chapter 5: Structural layout element presentation states, hover triggers, and dropdown lists.",
+url: "/hub/pages/CSS/toggles-states/index.html"
+},
+{
+title: "JS: UI Controls & Toggles Chapter Index",
+category: "JS",
+description: "Chapter 2: Modular user interface transitions, panel controls, menu draws, and alert layers.",
+url: "/hub/pages/JS/ui-controls/index.html"
+},
+{
+title: "Templates: Campaign Landing Pages Chapter Index",
+category: "Templates",
+description: "Chapter 1: Fully compiled end-to-end operational landing pages and marketing funnels.",
+url: "/hub/pages/TEMPLATES/landing-pages/index.html"
+},
 
-      // Filter database matches based on snippet naming or keyword registry definitions
-      const matches = searchDatabase.filter(item => 
-        item.name.toLowerCase().includes(value) || 
-        item.keywords.toLowerCase().includes(value)
-      );
+// =========================================================================
+// STANDALONE SNIPPETS & COMPONENT SUITES
+// =========================================================================
+// HTML Components
+{
+title: "HTML Trader Contact Intake Form",
+category: "HTML",
+description: "Clean user intake layout module optimized for quick third-party marketing integration shortcuts.",
+url: "/hub/pages/HTML/forms/html-form.html"
+},
+{
+title: "HTML Grid-Driven Image Gallery",
+category: "HTML",
+description: "A fluid, CSS-grid element presentation wall featuring scale transforms and hover animations.",
+url: "/hub/pages/HTML/galleries/html-imagegallery.html"
+},
+{
+title: "HTML Viewport Media Image Swap",
+category: "HTML",
+description: "Native media property engine swap utilizing layout queries to deliver cropped assets by platform viewports.",
+url: "/hub/pages/HTML/galleries/html-imageswap.html"
+},
+{
+title: "HTML Fullscreen Lightbox Slideshow",
+category: "HTML",
+description: "Interactive media layer cycling index arrays dynamically with full text caption parsing.",
+url: "/hub/pages/HTML/galleries/html-lightbox-gallery.html"
+},
+{
+title: "HTML Absolute Percentage Image Map",
+category: "HTML",
+description: "Responsive graphic layout establishing safe tracking coordinates hotspot fields and absolute tooltip wrappers.",
+url: "/hub/pages/HTML/maps/html-map.html"
+},
 
-      // Render search items string output template blocks
-      if (matches.length > 0) {
-        resultsBox.innerHTML = matches.map(item => `
-          <a href="${item.url}">
-            <strong>${item.name}</strong><br/>
-            <span style="font-size:0.8em; color:#777;">Path: ${item.url}</span>
-          </a>
-        `).join('');
-      } else {
-        resultsBox.innerHTML = '<div class="no-results">No documentation matching snippet query found...</div>';
-      }
+// CSS Components
+{
+title: "CSS Element Display Selector On-click",
+category: "CSS",
+description: "Pure presentation class state modifier toggling display visibility parameters on click actions.",
+url: "/hub/pages/CSS/toggles-states/css-element-on-click.html"
+},
+{
+title: "CSS Absolute Hover Dropdown Menu",
+category: "CSS",
+description: "Layered component container rules revealing sub-navigation listings smoothly using clean hover transitions.",
+url: "/hub/pages/CSS/toggles-states/css-hover-dropdown.html"
+},
 
-      resultsBox.style.display = 'block';
-    });
+// Full Page Layout Templates
+{
+title: "Basic Wireframe Landing Page Structure",
+category: "Templates",
+description: "Clean standard base scaffolding layout managing hero calls, text columns, and standard parameters.",
+url: "/hub/pages/TEMPLATES/landing-pages/landing-page-basic.html"
+},
+{
+title: "Immersive Performance Experience Blueprint",
+category: "Templates",
+description: "Advanced page architecture containing video integrations, layered presentation tiers, and tab selections.",
+url: "/hub/pages/TEMPLATES/landing-pages/performance-experience-page.html"
+},
+{
+title: "Interactive E-Commerce Car Shopping Page",
+category: "Templates",
+description: "High-fidelity digital layout framework complete with interactive timeline route filters and brand selector checklist.",
+url: "/hub/pages/TEMPLATES/landing-pages/performance-car-shopping.html"
+},
+{
+title: "Corporate About Showcase Blueprint",
+category: "Templates",
+description: "Comprehensive informational layout structure tracking stat counters, automated brand loop carousels, and grid pillars.",
+url: "/hub/pages/TEMPLATES/landing-pages/performance-about.html"
+}
+];
 
-    // Close the search dropdown box instantly when clicking anywhere else on the document frame
-    document.addEventListener('click', (e) => {
-      if (!searchInput.contains(e.target) && !resultsBox.contains(e.target)) {
-        resultsBox.style.display = 'none';
-      }
-    });
-  </script>
+// 2. Search Application Interaction Logic Execution
+const searchInput = document.getElementById('hub-search');
+const resultsBox = document.getElementById('search-results-box');
+
+searchInput.addEventListener('input', () => {
+const value = searchInput.value.toLowerCase().trim();
+
+// If blank query parameter set, clean layout display footprint
+if (!value) {
+resultsBox.innerHTML = '';
+resultsBox.style.display = 'none';
+return;
+}
+
+// Filter database matches based on snippet naming or keyword registry definitions
+const matches = searchDatabase.filter(item => 
+item.name.toLowerCase().includes(value) || 
+item.keywords.toLowerCase().includes(value)
+);
+
+// Render search items string output template blocks
+if (matches.length > 0) {
+resultsBox.innerHTML = matches.map(item => `
+<a href="${item.url}">
+<strong>${item.name}</strong><br/>
+<span style="font-size:0.8em; color:#777;">Path: ${item.url}</span>
+</a>
+`).join('');
+} else {
+resultsBox.innerHTML = '<div class="no-results">No documentation matching snippet query found...</div>';
+}
+
+resultsBox.style.display = 'block';
+});
+
+// Close the search dropdown box instantly when clicking anywhere else on the document frame
+document.addEventListener('click', (e) => {
+if (!searchInput.contains(e.target) && !resultsBox.contains(e.target)) {
+resultsBox.style.display = 'none';
+}
+});
+</script>
 
 </body>
 </html>
