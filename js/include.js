@@ -244,6 +244,36 @@ function initCollapsibleCode() {
   });
 }
 
+window.executeTopNavSearch = function() {
+    const query = document.getElementById('topnav-search-input').value.toLowerCase().trim();
+    
+    const dashboardResultContainer = document.getElementById('search-results');
+    
+    if (dashboardResultContainer) {
+        const homeSearchInput = document.getElementById('search-input');
+        if (homeSearchInput) {
+            homeSearchInput.value = query;
+            if (typeof performSearch === "function") performSearch();
+        }
+    } else {
+        if (event.key === 'Enter' && query.length > 0) {
+            sessionStorage.setItem('hubSearchQuery', query);
+            window.location.href = '/hub/index.html';
+        }
+    }
+};
+
+// Auto-run on homepage DOM load to catch external deep page redirections
+document.addEventListener('DOMContentLoaded', () => {
+    const savedQuery = sessionStorage.getItem('hubSearchQuery');
+    const homeSearchInput = document.getElementById('search-input');
+    if (savedQuery && homeSearchInput) {
+        sessionStorage.removeItem('hubSearchQuery');
+        homeSearchInput.value = savedQuery;
+        if (typeof performSearch === "function") performSearch();
+    }
+});
+
 // =========================================================================
 // 5. APPARATUS EXECUTION LIFECYCLE INITIALIZER
 // =========================================================================
