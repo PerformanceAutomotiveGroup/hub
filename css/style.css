@@ -17,7 +17,7 @@ position: relative;
 height: 60px;
 display: flex;
 align-items: center;
-justify-content: space-between;
+justify-content: center;
 background: #1a1a1a;
 box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 box-sizing: border-box;
@@ -43,6 +43,27 @@ align-items: center;
 gap: 16px;
 position: relative;
 padding-right: 24px;
+}
+
+.topnav .topnav-links a {
+color: #94a3b8;               
+text-decoration: none;
+font-size: 14px;
+font-weight: 500;
+padding: 6px 10px;
+border-radius: 4px;
+transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.topnav .topnav-links a:hover {
+color: #f1f5f9;          
+background-color: #1e293b;   
+}
+
+.topnav .topnav-links a.active {
+color: #ffffff;
+background-color: #2c68b5; 
+font-weight: 600;
 }
 
 .topnav-search-box {
@@ -84,17 +105,56 @@ pointer-events: none;
 display: none;
 position: absolute;
 right: 0;
-top: 38px;
-width: 300px;
-max-height: 400px;
+top: 42px;
+width: 320px;
+max-height: 420px;
 overflow-y: auto;
-background: #ffffff !important;
-border: 1px solid #e2e8f0;
+background: #0f172a !important; 
+border: 1px solid #334155;  
 border-radius: 8px;
-box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
 text-align: left;
-padding: 4px 0;
-z-index: 9999999 !important; 
+padding: 6px 0;
+z-index: 9999999 !important;
+scroll-behavior: smooth;
+}
+
+#topnav-search-results-box a {
+display: block;
+padding: 12px 16px;
+border-bottom: 1px solid #1e293b;
+text-decoration: none;
+color: #f1f5f9;               
+transition: background 0.15s ease, border-left 0.15s ease;
+border-left: 3px solid transparent;
+}
+
+#topnav-search-results-box a:hover {
+background: #1e293b;          
+border-left: 3px solid #2c68b5; 
+}
+
+#topnav-search-results-box a strong {
+font-size: 14px;
+font-weight: 600;
+color: #ffffff;
+display: block;
+margin-bottom: 3px;
+}
+
+#topnav-search-results-box a span {
+font-family: monospace;
+font-size: 11px;
+color: #64748b;               
+display: block;
+word-break: break-all;
+}
+
+#topnav-search-results-box .no-results {
+padding: 16px;
+color: #94a3b8;
+font-size: 13px;
+text-align: center;
 }
 
 /* Page Title */
