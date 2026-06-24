@@ -99,7 +99,7 @@
 <li><strong>Production Content CDN Endpoint:</strong> <code>https://performanceautoprod-com.cdn-convertus.com/uploads/...</code></li>
 <li><strong>Platform Shared Assets Endpoint:</strong> <code>https://autoplanet.com/pag/...</code></li>
 </ul>
-<p><em>Security Warning: Ensure all incoming connection URLs route through secure encrypted layers (HTTPS). Unencrypted HTTP endpoints are blocked by browser layer security walls.</em></p>
+<p><em>Security Warning: Ensure all incoming connection URLs route through secure, encrypted layers (HTTPS). Unencrypted HTTP endpoints are blocked by browser-layer security walls.</em></p>
 </div>
 </section>
 
@@ -145,26 +145,62 @@
 </div>
 </section>
 
-<section class="template-code-block" id="module-search">
+<section class="template-code-block" id="module-step-by-step">
 <div class="code-header toggle-btn">
-<h3>Module 4: Global Search Registry Synchronization</h3>
-<button class="copy-btn" data-copy="module-search">Copy Module 4 Code</button>
+<h3>Module 4: Step-by-Step New Page Creation Blueprint</h3>
+<button class="copy-btn" data-copy="module-step-by-step">Copy Module 4 Code</button>
 </div>
 <div class="tutorial-card">
-<h4>4.1 Instant Global Discoverability Integration</h4>
-<p>The global search box on the master homepage filters inputs in real-time by matching keywords against an internal JavaScript database array. If you create a new file or subpage layout but do not register it inside this file, it will remain completely invisible to the search engine.</p>
+<h4>4.1 Copy-Paste Baseline Scaffolding</h4>
+<p>When generating a fresh component review page from scratch, do not build from a blank file. Copy this verified layout structure, save it into your target chapter subfolder using lowercase hyphenated naming, and populate the content zones:</p>
 
-<p>Open your primary database configuration script, locate the master <code>searchDatabase</code> array variable, and inject a clean data object matching your new page path exactly. You must preserve your original dictionary key constraints:</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+&lt;div data-include="/hub/nav/head.html"&gt;&lt;/div&gt;
+&lt;title&gt;Component Name – Performance Hub&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
 
-<pre><code>const searchDatabase = [
-// ... Keep existing index objects intact
-{ 
-name: "Exact Component Blueprint Name", 
-url: "/hub/pages/CATEGORY/SUB-FOLDER/filename.html", 
-keywords: "lowercase space separated terms tags strings indicators lookups matching values parameters fields rules" 
-}
-];</code></pre>
-<p><em>Optimization Tip: Stack your keywords string with synonyms, component behavioral states, and target descriptors. For example, if adding an input form, include terms like 'input, text, email, submission, lead-capture, check, validate' to guarantee a high query match rate.</em></p>
+&lt;div data-include="/hub/nav/topnav.html"&gt;&lt;/div&gt;
+
+&lt;div class="content"&gt;
+&lt;!-- Update sidebar include to match folder category: htmlsidenav, csssidenav, jssidenav --&gt;
+&lt;div data-include="/hub/nav/htmlsidenav.html"&gt;&lt;/div&gt;
+
+&lt;main class="main"&gt;
+&lt;h1&gt;Component Display Title&lt;/h1&gt;
+&lt;p&gt;Technical description of the component purpose and layout constraints.&lt;/p&gt;
+
+&lt;!-- Live Render Box Container --&gt;
+&lt;div class="blue-box"&gt;
+&lt;h2&gt;Live Preview&lt;/h2&gt;
+&lt;div id="live-preview"&gt;
+&lt;!-- Live functional code component gets injected here --&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Code Display Module --&gt;
+&lt;section class="template-code-block"&gt;
+&lt;div class="code-header toggle-btn"&gt;
+&lt;h3&gt;Source Code&lt;/h3&gt;
+&lt;button class="copy-btn"&gt;Copy Code&lt;/button&gt;
+&lt;/div&gt;
+&lt;div class="tutorial-card"&gt;
+&lt;h4&gt;Implementation Parameters&lt;/h4&gt;
+&lt;p&gt;Detail specific container sizing or required classes here.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/section&gt;
+&lt;/main&gt;
+&lt;/div&gt;
+
+&lt;div data-include="/hub/nav/footernav.html"&gt;&lt;/div&gt;
+&lt;script src="/hub/js/include.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+<h4>4.2 Branch Synchronization Constraints</h4>
+<p>Because all search references live inside a single shared database array file, always execute a <code>git pull origin master</code> immediately before adding your string array payload to prevent merge version tracking lockouts.</p>
 </div>
 </section>
 
