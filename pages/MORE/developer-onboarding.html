@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<div data-include="/hub/nav/head.html"></div>
+<title>Developer Terminal Manual & Core Specification – Performance Hub</title>
+</head>
+<body>
+
+<div data-include="/hub/nav/topnav.html"></div>
+
+<div class="content">
+
+<div data-include="/hub/nav/moresidenav.html"></div>
+
+<main class="main">
+
+<section class="hero">
+<h1>Core Repository Engineering Specification</h1>
+<p>Welcome to the Core Engineering Manual. This document details the routing protocols, sandboxed component structures, matrix rendering engines, and path integrity standards required to scale the Performance Hub repository seamlessly.</p>
+</section>
+
+<div class="blue-box">
+<h2>System Status & Terminal Instance</h2>
+<div id="live-preview">
+<div style="font-family: monospace; background: #0b1220; color: #38bdf8; padding: 16px; border-radius: 6px; box-shadow: inset 0 2px 8px rgba(0,0,0,0.8);">
+<p style="margin: 0 0 4px 0; color: #4ade80;">&gt; SYSTEM: PERFORMANCE_HUB_ENGINE_ONLINE</p>
+<p style="margin: 0 0 4px 0;">&gt; CODENAME: W3S_CHAPTER_MATRIX_V3</p>
+<p style="margin: 0; color: #fbbf24;">&gt; PROTOCOL: ABSOLUTE_ROOT_MAPPING_FORCED</p>
+</div>
+</div>
+</div>
+
+<section class="template-code-block" id="module-pipelines">
+<div class="code-header toggle-btn">
+<h3>Module 1: Directory Pipelines & Root Isolation</h3>
+<button class="copy-btn" data-copy="module-pipelines">Copy Module 1 Code</button>
+</div>
+<template id="html-template-m1">
+<div class="tutorial-card">
+<h4>1.1 Absolute Path Mapping Specification</h4>
+<p>The Performance Hub runs as an interconnected, multi-tier static ecosystem. Relative file traversals (such as <code>../../nav/head.html</code>) are strictly prohibited. Moving a file between directory branches will alter its context and break references. All linkages must execute via root-relative mapping pipelines absolute to the domain root.</p>
+
+<div style="background: #f1f5f9; padding: 12px; border-left: 4px solid #2c68b5; margin: 12px 0;">
+<strong>Pipeline Syntax Constraints:</strong><br>
+❌ <code>&lt;script src="../js/include.js"&gt;&lt;/script&gt;</code><br>
+✅ <code>&lt;script src="/hub/js/include.js"&gt;&lt;/script&gt;</code>
+</div>
+
+<h4>1.2 Sandbox Code Decoupling Framework</h4>
+<p>To safely capture structural layouts without causing parent window asset conflicts, code blocks are strictly isolated. Components must be contained in native HTML <code>&lt;template&gt;</code> nodes with precise identifier hooks. The workspace rendering engine extracts text matrices out of these templates, parses them through security filters, and injects clean text outputs directly into the Prism syntax highlighter elements.</p>
+<pre><code>&lt;template id="html-template"&gt;
+&lt;!-- Raw structural markup components here --&gt;
+&lt;/template&gt;
+
+&lt;template id="css-template"&gt;
+/* Clean layout formatting presentation code here */
+&lt;/template&gt;
+
+&lt;template id="js-template"&gt;
+// Functional behaviour logical configurations here
+&lt;/template&gt;</code></pre>
+</div>
+</template>
+<pre class="collapsible"><code class="language-html"></code></pre>
+</section>
+
+<section class="template-code-block" id="module-graphics">
+<div class="code-header toggle-btn">
+<h3>Module 2: Infinite Graphic Asset Protocols</h3>
+<button class="copy-btn" data-copy="module-graphics">Copy Module 2 Code</button>
+</div>
+<template id="html-template-m2">
+<div class="tutorial-card">
+<h4>2.1 Image Storage & Mapping Guidelines</h4>
+<p>To prevent directory layout clutter, static graphic assets, mockups, screenshots, and structural icons are completely abstracted away from code pages and stored within the global image asset pool directory.</p>
+
+<div style="background: #f1f5f9; padding: 14px; border-radius: 6px; margin: 12px 0;">
+<strong>Image Pipeline Pathing:</strong> <code>/hub/images/</code><br>
+<strong>Naming Convention:</strong> Lowercase alphanumeric taxonomy blocks separated exclusively by a single hyphen.<br>
+<strong>Call Syntax Structure:</strong> <code>&lt;img src="/hub/images/dealership-slider-mockup.png" alt="Descriptive Context"&gt;</code>
+</div>
+
+<h4>2.2 External CDN Asset Injections</h4>
+<p>When pulling production vehicle elements or dealership environmental framework visuals, utilize high-speed, secure CDN links directly from our certified content hubs. This guarantees that asset parameters match real project assets perfectly.</p>
+<ul>
+<li><strong>Production Content CDN Endpoint:</strong> <code>https://performanceautoprod-com.cdn-convertus.com/uploads/...</code></li>
+<li><strong>Platform Shared Assets Endpoint:</strong> <code>https://autoplanet.com/pag/...</code></li>
+</ul>
+<p><em>Security Warning: Ensure all incoming connection URLs route through secure encrypted layers (HTTPS). Unencrypted HTTP endpoints are blocked by browser layer security walls.</em></p>
+</div>
+</template>
+<pre class="collapsible"><code class="language-html"></code></pre>
+</section>
+
+<section class="template-code-block" id="module-scaffolding">
+<div class="code-header toggle-btn">
+<h3>Module 3: Scaffolding Chapters & Deep Subpages</h3>
+<button class="copy-btn" data-copy="module-scaffolding">Copy Module 3 Code</button>
+</div>
+<template id="html-template-m3">
+<div class="tutorial-card">
+<h4>3.1 Spawning a New Sub-Category Chapter Hub</h4>
+<p>When expanding our documentation roadmap with a brand-new code discipline chapter (e.g., creating a new chapter track inside the CSS Library), follow this exact execution sequence:</p>
+
+<ol style="line-height: 1.6;">
+<li>Navigate into your local category directory target path (e.g., <code>/hub/pages/CSS/</code>).</li>
+<li>Spawn a new, lowercase hyphen-separated chapter directory subfolder (e.g., <code>/hub/pages/CSS/grid-layouts/</code>).</li>
+<li>Inside that new path, establish a clean index baseline control page named exactly <code>index.html</code>.</li>
+<li>Configure the new page's metadata tracking hooks to point right back to its shared sidebar navigation partial include file: <code>&lt;div data-include="/hub/nav/csssidenav.html"&gt;&lt;/div&gt;</code>.</li>
+</ol>
+
+<h4>3.2 Appending an Active Navigation Component Link</h4>
+<p>To let users access your new chapter dashboard from anywhere inside that category track, update the centralized navigation fragment file located in the <code>/hub/nav/</code> directory. Use absolute root-relative structural parameters:</p>
+<pre><code>&lt;!-- Appended inside /hub/nav/csssidenav.html --&gt;
+&lt;a href="/hub/pages/CSS/grid-layouts/index.html"&gt;6. Advanced Grid Layouts&lt;/a&gt;</code></pre>
+
+<h4>3.3 Appending a Component Code Snippet Card</h4>
+<p>Once your new chapter index file is live, register code snippet assets inside its primary selection component grid wrapper (<code>&lt;section class="grid"&gt;</code>) using this standardized dashboard design card container structure:</p>
+<pre><code>&lt;div class="card"&gt;
+&lt;h3&gt;CSS Workspace Grid System&lt;/h3&gt;
+&lt;p&gt;Asymmetric multi-column template tracking layout distribution boundaries cleanly.&lt;/p&gt;
+&lt;a href="/hub/pages/CSS/grid-layouts/workspace-grid.html" class="btn"&gt;View Snippet&lt;/a&gt;
+&lt;/div&gt;</code></pre>
+</div>
+</template>
+<pre class="collapsible"><code class="language-html"></code></pre>
+</section>
+
+<section class="template-code-block" id="module-search">
+<div class="code-header toggle-btn">
+<h3>Module 4: Global Search Registry Synchronization</h3>
+<button class="copy-btn" data-copy="module-search">Copy Module 4 Code</button>
+</div>
+<template id="html-template-m4">
+<div class="tutorial-card">
+<h4>4.1 Instant Global Discoverability Integration</h4>
+<p>The global search box on the master homepage filters inputs in real-time by matching keywords against an internal JavaScript database array. If you create a new file or subpage layout but do not register it inside this file, it will remain completely invisible to the search engine.</p>
+
+<p>Open your primary database configuration script, locate the master <code>searchDatabase</code> array variable, and inject a clean data object matching your new page path exactly. You must preserve your original dictionary key constraints:</p>
+
+<pre><code>const searchDatabase = [
+// ... Keep existing index objects intact
+{ 
+name: "Exact Component Blueprint Name", 
+url: "/hub/pages/CATEGORY/SUB-FOLDER/filename.html", 
+keywords: "lowercase space separated terms tags strings indicators lookups matching values parameters fields rules" 
+}
+];</code></pre>
+<p><em>Optimization Tip: Stack your keywords string with synonyms, component behavioral states, and target descriptors. For example, if adding an input form, include terms like 'input, text, email, submission, lead-capture, check, validate' to guarantee a high query match rate.</em></p>
+</div>
+</template>
+<pre class="collapsible"><code class="language-html"></code></pre>
+</section>
+
+<section class="template-code-block" id="module-controls">
+<div class="code-header toggle-btn">
+<h3>Module 5: Codebase Validation & Style Restrictions</h3>
+<button class="copy-btn" data-copy="module-controls">Copy Module 5 Code</button>
+</div>
+<template id="html-template-m5">
+<div class="tutorial-card">
+<h4>5.1 Typographic Punctuation Parameters</h4>
+<p>To avoid text parsing errors across metadata scripts and layout engines, do not use em-dashes (<code>—</code>) or en-dashes (<code>–</code>) inside documentation overviews or code comments. Use clean colons or standard hyphens exclusively.</p>
+
+<h4>5.2 Prohibited Corporate Vocabulary Matrix</h4>
+<p>Maintain an objective, technical, developer-to-developer voice across our internal codebases. Avoid marketing filler text or emotional buzzwords. Always write plain, descriptive engineering equivalents instead:</p>
+
+<table style="width: 100%; border-collapse: collapse; margin-top: 12px;">
+<thead>
+<tr style="background: #2c68b5; color: #ffffff;">
+<th style="padding: 10px; text-align: left;">❌ Prohibited Marketing Term</th>
+<th style="padding: 10px; text-align: left;">✅ Approved Engineering Alternative</th>
+</tr>
+</thead>
+<tbody>
+<tr style="background: #ffffff; border-bottom: 1px solid #e2e8f0;"><td style="padding: 10px; font-weight: 600; color: #ef4444;">Harness</td><td style="padding: 10px; color: #10b981;">Utilize, apply, execute, implement, activate</td></tr>
+<tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0;"><td style="padding: 10px; font-weight: 600; color: #ef4444;">Leverage</td><td style="padding: 10px; color: #10b981;">Deploy, construct, manipulate, maximize, build</td></tr>
+<tr style="background: #ffffff; border-bottom: 1px solid #e2e8f0;"><td style="padding: 10px; font-weight: 600; color: #ef4444;">Empower</td><td style="padding: 10px; color: #10b981;">Provide, allow, structure, facilitate, configure</td></tr>
+<tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0;"><td style="padding: 10px; font-weight: 600; color: #ef4444;">Unleash</td><td style="padding: 10px; color: #10b981;">Release, display, route, trigger, execute, output</td></tr>
+</tbody>
+</table>
+</div>
+</template>
+<pre class="collapsible"><code class="language-html"></code></pre>
+</section>
+
+<div style="margin: 40px 0; padding: 24px; border: 1px dashed #2c68b5; border-radius: 8px; background: #f0f7ff; text-align: center;">
+<h3 style="margin-top: 0; color: #2c68b5;">Deploying the Ultimate Blueprint Configuration</h3>
+<p style="font-size: 14px; margin-bottom: 16px; color: #4b5563;">Click the primary system build action block below to copy the combined codebase files directly onto your clipboard structure.</p>
+<button class="copy-btn" data-copy-all style="padding: 12px 28px; font-size: 15px; font-weight: bold; background: #2c68b5; color: #fff; border: none; border-radius: 6px; cursor: pointer; box-shadow: 0 4px 14px rgba(44,104,181,0.3);">Copy Core Reference Manifest</button>
+</div>
+
+</main>
+</div>
+
+<div data-include="/hub/nav/footernav.html"></div>
+
+<script src="/hub/js/include.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"></script>
+
+</body>
+</html>
