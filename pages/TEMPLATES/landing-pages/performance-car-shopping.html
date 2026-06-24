@@ -835,6 +835,10 @@ transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, o
 text-decoration: none; color: inherit;
 }
 
+.pag-dashboard-card div{
+z-index: 3;
+}
+
 .pag-dashboard-card:hover { transform: translateY(-2px); border-color: var(--pag-primary); box-shadow: 0 6px 20px rgba(11, 17, 32, 0.05); }
 .pag-dashboard-card.dimmed { opacity: 0.4; filter: grayscale(40%); }
 .pag-dashboard-card.highlighted { border-color: var(--pag-primary); box-shadow: 0 0 0 2px rgba(11, 79, 168, 0.15), 0 6px 20px rgba(11, 17, 32, 0.05); }
@@ -931,7 +935,7 @@ align-items: center; transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), b
 .pag-tool-action {
 display: inline-block; width: 100%; padding: 10px 16px; border-radius: 8px; font-weight: 600; font-size: 14px;
 text-align: center; border: 1px solid var(--pag-primary); color: var(--pag-primary); background: transparent;
-transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease; margin-top: auto;
+transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease; margin-top: auto; z-index:3;
 }
 .pag-icon-card:hover .pag-tool-action { background: var(--pag-primary); color: #ffffff; border-color: var(--pag-primary); }
 
