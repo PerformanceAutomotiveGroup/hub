@@ -246,7 +246,6 @@ block.classList.toggle('open');
 
 window.executeTopNavSearch = function() {
 const query = document.getElementById('topnav-search-input').value.toLowerCase().trim();
-
 const dashboardResultContainer = document.getElementById('search-results');
 
 if (dashboardResultContainer) {
@@ -263,37 +262,6 @@ window.location.href = '/hub/index.html';
 }
 };
 
-
-function initializeHubSearchEngine() {
-const currentPath = window.location.pathname;
-const topNavSearch = document.getElementById('topnav-search-block');
-const homeSearchInput = document.getElementById('search-input');
-const savedQuery = sessionStorage.getItem('hubSearchQuery');
-
-// 1. Handle Navigation Search Bar Visibility
-if (topNavSearch) {
-if (currentPath === '/hub/' || currentPath === '/hub/index.html') {
-topNavSearch.style.display = 'none'; // Clear out homepage double-bar layout
-} else {
-topNavSearch.style.display = 'block'; // Keep visible on deep chapter tiers
-}
-}
-
-// 2. Process Saved Redirection Queries on Homepage Load
-if (savedQuery && homeSearchInput) {
-sessionStorage.removeItem('hubSearchQuery');
-homeSearchInput.value = savedQuery;
-
-// Execute your home filter results method instantly
-if (typeof performSearch === "function") {
-performSearch();
-} else if (typeof renderResults === "function") {
-renderResults();
-}
-}
-}
-
-
 // =========================================================================
 // 5. APPARATUS EXECUTION LIFECYCLE INITIALIZER
 // =========================================================================
@@ -304,5 +272,10 @@ initPrismTemplates();
 initCopyButtons();
 renderLivePreview();
 initCollapsibleCode();
+
+// FIXED TIMING ENGINE: Triggers our isolated search layout configuration rules
+if (typeof initGlobalSearchEngine === "function") {
+initGlobalSearchEngine();
+}
 });
 });
