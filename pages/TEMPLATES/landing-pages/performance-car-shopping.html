@@ -922,11 +922,11 @@ align-items: center; transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), b
 .pag-icon-card:hover::before { transform: scale(1.08); }
 .pag-icon-card:hover::after { background: linear-gradient(180deg, rgba(255, 255, 255, 0.90) 0%, rgba(255, 255, 255, 0.95) 100%); }
 
-.pag-icon-card-img { width: 72px; height: 72px; border-radius: 50%; background: rgba(11, 79, 168, 0.04); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1); }
+.pag-icon-card-img { width: 72px; height: 72px; border-radius: 50%; background: rgba(11, 79, 168, 0.04); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1); z-index: 3;}
 .pag-icon-card:hover .pag-icon-card-img { transform: scale(1.08); }
 .pag-icon-card-img img { max-width: 50px; max-height: 50px; object-fit: contain; }
-.pag-icon-card h4 { margin: 0 0 10px 0; font-size: 18px; color: #0b1220; }
-.pag-icon-card p { margin: 0 0 20px 0; font-size: 15px; color: #000000; line-height: 1.5; }
+.pag-icon-card h4 { margin: 0 0 10px 0; font-size: 18px; color: #0b1220; z-index: 3;}
+.pag-icon-card p { margin: 0 0 20px 0; font-size: 15px; color: #000000; line-height: 1.5; z-index: 3;}
 
 .pag-tool-action {
 display: inline-block; width: 100%; padding: 10px 16px; border-radius: 8px; font-weight: 600; font-size: 14px;
