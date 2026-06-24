@@ -130,7 +130,7 @@ Prism.highlightElement(codeBlock);
 
 /**
 * Generates an isolated, sandboxed execution environment (iframe) for live previews.
-* This completely isolates template styling/scripts from breaking your Hub master UI.
+* This completely isolates template styling/scripts from breaking Hub master UI.
 */
 function renderLivePreview() {
 const previewContainer = document.getElementById('live-preview');
@@ -263,15 +263,15 @@ window.location.href = '/hub/index.html';
 };
 
 // =========================================================================
-// 4.5 CENTRALIZED SEARCH APPLICATION CONTROLLER (PASTE THIS HERE)
+// 4.5 CENTRALIZED SEARCH APPLICATION CONTROLLER 
 // =========================================================================
 
-// 1. Centralized Search Database Index Registry
+// 1. Centralized Search Database Index Registry (Keep this intact)
 const searchDatabase = [
 { name: "HTML Home / Overview Dashboard", url: "/hub/pages/HTML/index.html", keywords: "html structure index guide overview chapter main hub library" },
 { name: "CSS Home / Overview Dashboard", url: "/hub/pages/CSS/index.html", keywords: "css styles presentation index layout framework typography variables presentation design main hub library" },
 { name: "JavaScript Home / Overview Dashboard", url: "/hub/pages/JS/index.html", keywords: "js javascript behaviour interaction code programming scripts index main hub library" },
-{ name: "Bootstrap Component Library Hub", url: "/hub/pages/BOOTSTRAP/index.html", keywords: "bootstrap bootstrap layout elements responsive framework grid columns utility elements main hub library" },
+{ name: "Bootstrap Component Library Hub", url: "/hub/pages/BOOTSTRAP/index.html", keywords: "bootstrap bootstarp layout elements responsive framework grid columns utility elements main hub library" },
 { name: "WordPress Reusable Layout Templates", url: "/hub/pages/TEMPLATES/index.html", keywords: "templates full layout wordpress conversions compositions framework theme page design blueprints main hub library" },
 { name: "More Utilities & Optimization Toolkit", url: "/hub/pages/MORE/index.html", keywords: "more extras seo meta tags accessibility optimization helper tools main hub library" },
 { name: "HTML Chapter: Basic Elements Index", url: "/hub/pages/HTML/basic-elements/index.html", keywords: "html chapter basic elements headings text paragraph document rules structural typography index" },
@@ -309,6 +309,8 @@ topNavSearchBlock.style.display = isHomepage ? 'none' : 'block';
 
 if (!searchInput || !resultsBox) return;
 
+// FIX: Core event listener management function
+const processQuery = () => {
 const value = searchInput.value.toLowerCase().trim();
 
 if (!value) {
@@ -334,6 +336,16 @@ resultsBox.innerHTML = '<div style="padding:12px; color:#64748b; font-size:14px;
 }
 
 resultsBox.style.display = 'block';
+};
+
+// FIX: Safely attach the event loop directly to the homepage input element if it lacks an inline tracker attribute
+if (isHomepage && !searchInput.hasAttribute('data-search-bound')) {
+searchInput.addEventListener('input', processQuery);
+searchInput.setAttribute('data-search-bound', 'true');
+} else if (!isHomepage) {
+// Run immediately for topnav keyup actions
+processQuery();
+}
 
 // Outer click dismiss handling
 document.addEventListener('click', (e) => {
@@ -344,7 +356,7 @@ resultsBox.style.display = 'none';
 };
 
 // =========================================================================
-// 5. APPARATUS EXECUTION LIFECYCLE INITIALIZER (Update your existing loop)
+// 5. APPARATUS EXECUTION LIFECYCLE INITIALIZER 
 // =========================================================================
 document.addEventListener('DOMContentLoaded', () => {
 loadIncludes(() => {
