@@ -3,6 +3,23 @@
 <head>
 <div data-include="/hub/nav/head.html"></div>
 <title>Developer Terminal Manual & Core Specification – Performance Hub</title>
+<style>
+.tutorial-card { background: #ffffff; padding: 24px; border: 1px solid #e2e8f0; border-top: none; border-radius: 0 0 8px 8px; margin-bottom: 24px; }
+.tutorial-card h4 { color: #2c68b5; font-size: 1.1rem; margin: 20px 0 8px 0; font-weight: 700; text-transform: uppercase; letter-spacing: 0.02em; }
+.tutorial-card h4:first-of-type { margin-top: 0; }
+.tutorial-card p { font-size: 15px; color: #334155; line-height: 1.6; margin: 0 0 12px 0; }
+.tutorial-card ul, .tutorial-card ol { margin: 0 0 16px 20px; color: #334155; font-size: 15px; }
+.tutorial-card li { margin-bottom: 6px; }
+.tutorial-card pre { background: #1e293b; color: #f8fafc; padding: 14px; border-radius: 6px; overflow-x: auto; font-family: monospace; font-size: 14px; margin: 12px 0; }
+.tutorial-card code { font-family: monospace; background: #f1f5f9; color: #0f172a; padding: 2px 6px; border-radius: 4px; font-size: 14px; }
+.tutorial-card pre code { background: transparent; color: inherit; padding: 0; font-size: inherit; }
+.prohibited-table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 14px; }
+.prohibited-table th { background: #2c68b5; color: #ffffff; padding: 10px; text-align: left; font-weight: 600; }
+.prohibited-table td { padding: 10px; border-bottom: 1px solid #e2e8f0; }
+.prohibited-table tr:nth-child(even) { background: #f8fafc; }
+.bad-word { font-weight: 600; color: #ef4444; }
+.good-word { font-weight: 600; color: #10b981; }
+</style>
 </head>
 <body>
 
@@ -35,7 +52,6 @@
 <h3>Module 1: Directory Pipelines & Root Isolation</h3>
 <button class="copy-btn" data-copy="module-pipelines">Copy Module 1 Code</button>
 </div>
-<template id="html-template-m1">
 <div class="tutorial-card">
 <h4>1.1 Absolute Path Mapping Specification</h4>
 <p>The Performance Hub runs as an interconnected, multi-tier static ecosystem. Relative file traversals (such as <code>../../nav/head.html</code>) are strictly prohibited. Moving a file between directory branches will alter its context and break references. All linkages must execute via root-relative mapping pipelines absolute to the domain root.</p>
@@ -60,8 +76,6 @@
 // Functional behaviour logical configurations here
 &lt;/template&gt;</code></pre>
 </div>
-</template>
-<pre class="collapsible"><code class="language-html"></code></pre>
 </section>
 
 <section class="template-code-block" id="module-graphics">
@@ -69,7 +83,6 @@
 <h3>Module 2: Infinite Graphic Asset Protocols</h3>
 <button class="copy-btn" data-copy="module-graphics">Copy Module 2 Code</button>
 </div>
-<template id="html-template-m2">
 <div class="tutorial-card">
 <h4>2.1 Image Storage & Mapping Guidelines</h4>
 <p>To prevent directory layout clutter, static graphic assets, mockups, screenshots, and structural icons are completely abstracted away from code pages and stored within the global image asset pool directory.</p>
@@ -88,8 +101,6 @@
 </ul>
 <p><em>Security Warning: Ensure all incoming connection URLs route through secure encrypted layers (HTTPS). Unencrypted HTTP endpoints are blocked by browser layer security walls.</em></p>
 </div>
-</template>
-<pre class="collapsible"><code class="language-html"></code></pre>
 </section>
 
 <section class="template-code-block" id="module-scaffolding">
@@ -97,7 +108,6 @@
 <h3>Module 3: Scaffolding Chapters & Deep Subpages</h3>
 <button class="copy-btn" data-copy="module-scaffolding">Copy Module 3 Code</button>
 </div>
-<template id="html-template-m3">
 <div class="tutorial-card">
 <h4>3.1 Spawning a New Sub-Category Chapter Hub</h4>
 <p>When expanding our documentation roadmap with a brand-new code discipline chapter (e.g., creating a new chapter track inside the CSS Library), follow this exact execution sequence:</p>
@@ -133,8 +143,6 @@
 
 <p>Utilize this cloud engine instance to rapidly patch index array files, update standard card parameters, and push verified layout adjustments straight to staging branches directly within your browser viewport viewport limits.</p>
 </div>
-</template>
-<pre class="collapsible"><code class="language-html"></code></pre>
 </section>
 
 <section class="template-code-block" id="module-search">
@@ -142,7 +150,6 @@
 <h3>Module 4: Global Search Registry Synchronization</h3>
 <button class="copy-btn" data-copy="module-search">Copy Module 4 Code</button>
 </div>
-<template id="html-template-m4">
 <div class="tutorial-card">
 <h4>4.1 Instant Global Discoverability Integration</h4>
 <p>The global search box on the master homepage filters inputs in real-time by matching keywords against an internal JavaScript database array. If you create a new file or subpage layout but do not register it inside this file, it will remain completely invisible to the search engine.</p>
@@ -159,8 +166,6 @@ keywords: "lowercase space separated terms tags strings indicators lookups match
 ];</code></pre>
 <p><em>Optimization Tip: Stack your keywords string with synonyms, component behavioral states, and target descriptors. For example, if adding an input form, include terms like 'input, text, email, submission, lead-capture, check, validate' to guarantee a high query match rate.</em></p>
 </div>
-</template>
-<pre class="collapsible"><code class="language-html"></code></pre>
 </section>
 
 <section class="template-code-block" id="module-controls">
@@ -168,7 +173,6 @@ keywords: "lowercase space separated terms tags strings indicators lookups match
 <h3>Module 5: Codebase Validation & Style Restrictions</h3>
 <button class="copy-btn" data-copy="module-controls">Copy Module 5 Code</button>
 </div>
-<template id="html-template-m5">
 <div class="tutorial-card">
 <h4>5.1 Typographic Punctuation Parameters</h4>
 <p>To avoid text parsing errors across metadata scripts and layout engines, do not use em-dashes (<code>—</code>) or en-dashes (<code>–</code>) inside documentation overviews or code comments. Use clean colons or standard hyphens exclusively.</p>
@@ -176,23 +180,21 @@ keywords: "lowercase space separated terms tags strings indicators lookups match
 <h4>5.2 Prohibited Corporate Vocabulary Matrix</h4>
 <p>Maintain an objective, technical, developer-to-developer voice across our internal codebases. Avoid marketing filler text or emotional buzzwords. Always write plain, descriptive engineering equivalents instead:</p>
 
-<table style="width: 100%; border-collapse: collapse; margin-top: 12px;">
+<table class="prohibited-table">
 <thead>
-<tr style="background: #2c68b5; color: #ffffff;">
-<th style="padding: 10px; text-align: left;">❌ Prohibited Marketing Term</th>
-<th style="padding: 10px; text-align: left;">✅ Approved Engineering Alternative</th>
+<tr>
+<th>❌ Prohibited Marketing Term</th>
+<th>✅ Approved Engineering Alternative</th>
 </tr>
 </thead>
 <tbody>
-<tr style="background: #ffffff; border-bottom: 1px solid #e2e8f0;"><td style="padding: 10px; font-weight: 600; color: #ef4444;">Harness</td><td style="padding: 10px; color: #10b981;">Utilize, apply, execute, implement, activate</td></tr>
-<tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0;"><td style="padding: 10px; font-weight: 600; color: #ef4444;">Leverage</td><td style="padding: 10px; color: #10b981;">Deploy, construct, manipulate, maximize, build</td></tr>
-<tr style="background: #ffffff; border-bottom: 1px solid #e2e8f0;"><td style="padding: 10px; font-weight: 600; color: #ef4444;">Empower</td><td style="padding: 10px; color: #10b981;">Provide, allow, structure, facilitate, configure</td></tr>
-<tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0;"><td style="padding: 10px; font-weight: 600; color: #ef4444;">Unleash</td><td style="padding: 10px; color: #10b981;">Release, display, route, trigger, execute, output</td></tr>
+<tr><td class="bad-word">Harness</td><td class="good-word">Utilize, apply, execute, implement, activate</td></tr>
+<tr><td class="bad-word">Leverage</td><td class="good-word">Deploy, construct, manipulate, maximize, build</td></tr>
+<tr><td class="bad-word">Empower</td><td class="good-word">Provide, allow, structure, facilitate, configure</td></tr>
+<tr><td class="bad-word">Unleash</td><td class="good-word">Release, display, route, trigger, execute, output</td></tr>
 </tbody>
 </table>
 </div>
-</template>
-<pre class="collapsible"><code class="language-html"></code></pre>
 </section>
 
 <div style="margin: 40px 0; padding: 24px; border: 1px dashed #2c68b5; border-radius: 8px; background: #f0f7ff; text-align: center;">
