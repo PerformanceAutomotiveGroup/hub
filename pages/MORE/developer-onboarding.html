@@ -165,7 +165,7 @@
 &lt;div data-include="/hub/nav/topnav.html"&gt;&lt;/div&gt;
 
 &lt;div class="content"&gt;
-&lt;!-- Match sidebar link to your category path --&gt;
+&lt;!-- Match sidebar link include to your category path --&gt;
 &lt;div data-include="/hub/nav/htmlsidenav.html"&gt;&lt;/div&gt;
 
 &lt;main class="main"&gt;
@@ -189,8 +189,8 @@
 &lt;/body&gt;
 &lt;/html&gt;</code></pre>
 
-<h4>4.2 Type B: The Standard Snippet / Component Structure</h4>
-<p>Use this layout framework for individual component reference sheets in the HTML, CSS, or JS folders. It features asset verification screenshots alongside a single component sandbox framework:</p>
+<h4>4.2 Type B: The Standard Snippet & Component Structure</h4>
+<p>Use this layout framework for individual component reference sheets or full page templates. It safely renders asset verification screenshots alongside individual components, style sheets, and scripts inside the live sandbox engine preview container:</p>
 
 <pre><code>&lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;
@@ -203,30 +203,49 @@
 &lt;div data-include="/hub/nav/topnav.html"&gt;&lt;/div&gt;
 
 &lt;div class="content"&gt;
+&lt;!-- Side Nav Include Module --&gt;
 &lt;div data-include="/hub/nav/csssidenav.html"&gt;&lt;/div&gt;
 
-&lt;div class="main"&gt;
+&lt;main class="main"&gt;
 &lt;h1&gt;Component Title&lt;/h1&gt;
-&lt;p&gt;&lt;strong&gt;How it works:&lt;/strong&gt; Technical summary behavior description.&lt;/p&gt;
+&lt;p&gt;Technical summary behavior description.&lt;/p&gt;
 
 &lt;div class="blue-box"&gt;
 &lt;h2&gt;Screenshots&lt;/h2&gt;
 &lt;div class="screenshot-gallery"&gt;
-&lt;img src="/hub/images/file-pre.png" alt="Pre-click"&gt;
-&lt;img src="/hub/images/file-post.png" alt="Post-click"&gt;
+&lt;img src="/hub/images/file-pre.png" alt="Pre-click View"&gt;
+&lt;img src="/hub/images/file-post.png" alt="Post-click View"&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;div class="blue-box"&gt;
 &lt;h2&gt;Live Preview&lt;/h2&gt;
 &lt;div id="live-preview"&gt;&lt;/div&gt;
+&lt;p style="font-size:0.9em; color:#555; margin-top:10px;"&gt;
+Usage: Preview renders live component execution inside a safe sandbox. Use copy modules below for deployment.
+&lt;/p&gt;
 &lt;/div&gt;
 
-&lt;!-- Code sections for HTML, CSS, and JS blocks map directly here using templates --&gt;
-&lt;/div&gt; 
+&lt;!-- Code sections for HTML, CSS, and JS blocks map directly here inside templates --&gt;
+&lt;section class="template-code-block" id="html-code"&gt;
+&lt;div class="code-header toggle-btn"&gt;
+&lt;h3&gt;HTML Structure&lt;/h3&gt;
+&lt;button class="copy-btn" data-copy="html-code"&gt;Copy HTML&lt;/button&gt;
+&lt;/div&gt;
+&lt;template id="html-template"&gt;
+&lt;!-- Component markup structural configurations drop here --&gt;
+&lt;/template&gt;
+&lt;pre class="collapsible"&gt;&lt;code class="language-html"&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/section&gt;
+
+&lt;div style="margin: 30px 0;"&gt;
+&lt;button class="copy-btn" data-copy-all style="padding: 10px 20px; font-weight: bold;"&gt;Copy All Modules&lt;/button&gt;
+&lt;/div&gt;
+&lt;/main&gt;
 &lt;/div&gt; 
 
 &lt;div data-include="/hub/nav/footernav.html"&gt;&lt;/div&gt;
+
 &lt;script src="/hub/js/include.js"&gt;&lt;/script&gt;
 &lt;script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"&gt;&lt;/script&gt;
 &lt;/body&gt;
