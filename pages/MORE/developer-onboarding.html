@@ -145,50 +145,40 @@
 </div>
 </section>
 
-<section class="template-code-block" id="module-step-by-step">
+<section class="template-code-block" id="module-blueprints">
 <div class="code-header toggle-btn">
-<h3>Module 4: Step-by-Step New Page Creation Blueprint</h3>
-<button class="copy-btn" data-copy="module-step-by-step">Copy Module 4 Code</button>
+<h3>Module 4: Master Repository File Blueprints</h3>
+<button class="copy-btn" data-copy="module-blueprints">Copy Module 4 Code</button>
 </div>
 <div class="tutorial-card">
-<h4>4.1 Copy-Paste Baseline Scaffolding</h4>
-<p>When generating a fresh component review page from scratch, do not build from a blank file. Copy this verified layout structure, save it into your target chapter subfolder using lowercase hyphenated naming, and populate the content zones:</p>
+<h4>4.1 Type A: The Category Index Dashboard Structure</h4>
+<p>Use this layout framework when establishing a main landing dashboard page. It functions strictly as a directory junction containing layout cards inside a grid wrapper:</p>
 
 <pre><code>&lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;
 &lt;head&gt;
 &lt;div data-include="/hub/nav/head.html"&gt;&lt;/div&gt;
-&lt;title&gt;Component Name – Performance Hub&lt;/title&gt;
+&lt;title&gt;Chapter Name – Performance Hub&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
 
 &lt;div data-include="/hub/nav/topnav.html"&gt;&lt;/div&gt;
 
 &lt;div class="content"&gt;
-&lt;!-- Update sidebar include to match folder category: htmlsidenav, csssidenav, jssidenav --&gt;
+&lt;!-- Match sidebar link to your category path --&gt;
 &lt;div data-include="/hub/nav/htmlsidenav.html"&gt;&lt;/div&gt;
 
 &lt;main class="main"&gt;
-&lt;h1&gt;Component Display Title&lt;/h1&gt;
-&lt;p&gt;Technical description of the component purpose and layout constraints.&lt;/p&gt;
+&lt;section class="hero"&gt;
+&lt;h1&gt;Chapter Title&lt;/h1&gt;
+&lt;p&gt;Technical summary description.&lt;/p&gt;
+&lt;/section&gt;
 
-&lt;!-- Live Render Box Container --&gt;
-&lt;div class="blue-box"&gt;
-&lt;h2&gt;Live Preview&lt;/h2&gt;
-&lt;div id="live-preview"&gt;
-&lt;!-- Live functional code component gets injected here --&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;!-- Code Display Module --&gt;
-&lt;section class="template-code-block"&gt;
-&lt;div class="code-header toggle-btn"&gt;
-&lt;h3&gt;Source Code&lt;/h3&gt;
-&lt;button class="copy-btn"&gt;Copy Code&lt;/button&gt;
-&lt;/div&gt;
-&lt;div class="tutorial-card"&gt;
-&lt;h4&gt;Implementation Parameters&lt;/h4&gt;
-&lt;p&gt;Detail specific container sizing or required classes here.&lt;/p&gt;
+&lt;section class="grid"&gt;
+&lt;div class="card"&gt;
+&lt;h3&gt;Component Title&lt;/h3&gt;
+&lt;p&gt;Brief description.&lt;/p&gt;
+&lt;a href="/hub/pages/PATH/file.html" class="btn"&gt;View Blueprint&lt;/a&gt;
 &lt;/div&gt;
 &lt;/section&gt;
 &lt;/main&gt;
@@ -199,8 +189,48 @@
 &lt;/body&gt;
 &lt;/html&gt;</code></pre>
 
-<h4>4.2 Branch Synchronization Constraints</h4>
-<p>Because all search references live inside a single shared database array file, always execute a <code>git pull origin master</code> immediately before adding your string array payload to prevent merge version tracking lockouts.</p>
+<h4>4.2 Type B: The Standard Snippet / Component Structure</h4>
+<p>Use this layout framework for individual component reference sheets in the HTML, CSS, or JS folders. It features asset verification screenshots alongside a single component sandbox framework:</p>
+
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt; 
+&lt;div data-include="/hub/nav/head.html"&gt;&lt;/div&gt;
+&lt;title&gt;Component Name – Performance Hub&lt;/title&gt; 
+&lt;/head&gt;
+&lt;body&gt; 
+
+&lt;div data-include="/hub/nav/topnav.html"&gt;&lt;/div&gt;
+
+&lt;div class="content"&gt;
+&lt;div data-include="/hub/nav/csssidenav.html"&gt;&lt;/div&gt;
+
+&lt;div class="main"&gt;
+&lt;h1&gt;Component Title&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;How it works:&lt;/strong&gt; Technical summary behavior description.&lt;/p&gt;
+
+&lt;div class="blue-box"&gt;
+&lt;h2&gt;Screenshots&lt;/h2&gt;
+&lt;div class="screenshot-gallery"&gt;
+&lt;img src="/hub/images/file-pre.png" alt="Pre-click"&gt;
+&lt;img src="/hub/images/file-post.png" alt="Post-click"&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="blue-box"&gt;
+&lt;h2&gt;Live Preview&lt;/h2&gt;
+&lt;div id="live-preview"&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Code sections for HTML, CSS, and JS blocks map directly here using templates --&gt;
+&lt;/div&gt; 
+&lt;/div&gt; 
+
+&lt;div data-include="/hub/nav/footernav.html"&gt;&lt;/div&gt;
+&lt;script src="/hub/js/include.js"&gt;&lt;/script&gt;
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
 </div>
 </section>
 
