@@ -90,13 +90,18 @@ function loadIncludes(callback) {
  * Highlights active location within navigation layouts.
  */
 function highlightActiveLink() {
-  const currentFileName = window.location.pathname.split('/').pop();
-  if (!currentFileName) return;
+  const currentPath = window.location.pathname;
+  if (!currentPath) return;
 
   document.querySelectorAll('.sidenav a').forEach(link => {
     const href = link.getAttribute('href');
-    if (href && href.split('/').pop() === currentFileName) {
-      link.classList.add('active');
+    if (href) {
+      const linkPath = new URL(href, window.location.origin).pathname;
+      if (currentPath === linkPath) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active'); 
+      }
     }
   });
 }
