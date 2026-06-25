@@ -194,7 +194,7 @@ display: block;
 }
 
 .topnav .topnav-links {
-display: none; 
+display: none!important; 
 position: absolute;
 top: 60px;
 left: 0;
@@ -209,7 +209,7 @@ box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
 }
 
 .topnav .topnav-links.open {
-display: flex;
+display: flex!important;
 }
 
 .topnav .topnav-links a {
