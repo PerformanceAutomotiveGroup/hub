@@ -355,6 +355,16 @@ resultsBox.style.display = 'none';
 });
 };
 
+/**
+* MOBILE MENU TOGGLE:
+*/
+window.toggleMobileMenu = function() {
+const menu = document.getElementById('topnav-links-menu');
+if (menu) {
+menu.classList.toggle('open');
+}
+};
+
 // =========================================================================
 // 5. APPARATUS EXECUTION LIFECYCLE INITIALIZER 
 // =========================================================================
