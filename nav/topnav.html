@@ -3,6 +3,13 @@
 <img src="/hub/images/brands/pag.png" alt="Performance Auto Group Hub Logo" class="topnav-logo">
 </a>
 
+<button class="topnav-toggle" aria-label="Toggle Navigation Menu" onclick="toggleMobileMenu()">
+<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 24px; height: 24px;">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+</svg>
+</button>
+
+
 <div class="topnav-links" style="display: flex; align-items: center; gap: 16px; padding-right: 24px; position: relative;">
 <a href="/hub/index.html">Home</a>
 <a href="/hub/pages/HTML/index.html">HTML</a>
@@ -19,10 +26,13 @@
 
 <div id="topnav-search-block" class="topnav-search-box">
 <input type="text" id="topnav-search-input" placeholder="Search components..." onkeyup="initGlobalSearchEngine()">
-<svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+<svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0116 0z"></path>
 </svg>
+
 <div id="topnav-search-results-box"></div>
 </div>
 </div>
 </div>
+
