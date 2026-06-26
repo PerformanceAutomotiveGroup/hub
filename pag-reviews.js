@@ -29,42 +29,46 @@ return;
 
 const dealerships = window.locationsData.dealerships;
 
-// Ensure dealerships array contains valid entries before calculating loops
+// 1. CALCULATE GLOBAL SCORES & VALUES
 if (dealerships && dealerships.length > 0) {
-let totalReviews = 0;
-let totalRatingSum = 0;
-let validLocationsCount = 0;
+  let totalReviews = 0;
+  let totalRatingSum = 0;
+  let validLocationsCount = 0;
 
-dealerships.forEach(loc => {
-// Force clean numeric conversions to safeguard calculations from bad database inputs
-const countVal = parseInt(loc.count, 10);
-const ratingVal = parseFloat(loc.rating);
+  dealerships.forEach(loc => {
+    const countVal = parseInt(loc.count, 10);
+    const ratingVal = parseFloat(loc.rating);
 
-// Accumulate your running aggregate metrics rules
-if (!isNaN(countVal)) {
-totalReviews += countVal;
-}
-if (!isNaN(ratingVal) && ratingVal > 0) {
-totalRatingSum += ratingVal;
-validLocationsCount++;
-}
-});
+    if (!isNaN(countVal)) {
+      totalReviews += countVal;
+    }
+    if (!isNaN(ratingVal) && ratingVal > 0) {
+      totalRatingSum += ratingVal;
+      validLocationsCount++;
+    }
+  });
 
-// Mathematically calculate the true network rating mean
-const averageRating = validLocationsCount > 0 ? (totalRatingSum / validLocationsCount).toFixed(1) : "4.7";
+  const averageRating = validLocationsCount > 0 ? (totalRatingSum / validLocationsCount).toFixed(1) : "4.7";
 
-// Safely grab your new dynamic card UI target element pointers
-const globalAvgRatingEl = document.getElementById("globalAvgRating");
-const globalReviewCountEl = document.getElementById("globalReviewCount");
+  // Function to perform the actual DOM replacement
+  const injectGlobalScores = () => {
+    const globalAvgRatingEl = document.getElementById("globalAvgRating");
+    const globalReviewCountEl = document.getElementById("globalReviewCount");
 
-// Format and inject the live mathematical values straight into the document view
-if (globalAvgRatingEl) {
-globalAvgRatingEl.textContent = averageRating;
-}
-if (globalReviewCountEl) {
-// .toLocaleString('en-CA') automatically converts 14240 into a clean presentation string: "14,240"
-globalReviewCountEl.textContent = totalReviews.toLocaleString('en-CA');
-}
+    if (globalAvgRatingEl) {
+      globalAvgRatingEl.textContent = averageRating;
+    }
+    if (globalReviewCountEl) {
+      globalReviewCountEl.textContent = totalReviews.toLocaleString('en-CA');
+    }
+    
+    // Log for verification in browser console
+    console.log(`Scoreboard Populated: Avg ${averageRating}, Total Count ${totalReviews}`);
+  };
+
+  // Run immediately, and run a secondary safety fallback check 200ms later to handle slow rendering
+  injectGlobalScores();
+  setTimeout(injectGlobalScores, 200);
 }
 
 // Populate Selection Dropdowns
