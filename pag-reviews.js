@@ -21,7 +21,6 @@ let totalRatingSum = 0;
 let validLocationsCount = 0;
 
 dealerships.forEach(loc => {
-// Force clean numeric conversions to safeguard calculations
 const countVal = parseInt(loc.count, 10);
 const ratingVal = parseFloat(loc.rating);
 
@@ -36,21 +35,22 @@ validLocationsCount++;
 
 const averageRating = validLocationsCount > 0 ? (totalRatingSum / validLocationsCount).toFixed(1) : "4.7";
 
-// Self-correcting inner function to safely handle delayed DOM rendering
 const injectGlobalScores = () => {
+// Support both old and new layout elements safely simultaneously
 const globalAvgRatingEl = document.getElementById("globalAvgRating");
 const globalReviewCountEl = document.getElementById("globalReviewCount");
+const summaryAvgEl = document.getElementById("summaryAvgRating");
+const summaryCountEl = document.getElementById("summaryReviewCount");
+const summaryLocsEl = document.getElementById("summaryLocationCount");
 
-if (globalAvgRatingEl) {
-globalAvgRatingEl.textContent = averageRating;
-}
-if (globalReviewCountEl) {
-globalReviewCountEl.textContent = totalReviews.toLocaleString('en-CA');
-}
-console.log(`Scoreboard Update Executed: Avg ${averageRating} | Total ${totalReviews}`);
+if (globalAvgRatingEl) globalAvgRatingEl.textContent = averageRating;
+if (globalReviewCountEl) globalReviewCountEl.textContent = totalReviews.toLocaleString('en-CA');
+
+if (summaryAvgEl) summaryAvgEl.textContent = "★ " + averageRating;
+if (summaryCountEl) summaryCountEl.textContent = totalReviews.toLocaleString('en-CA');
+if (summaryLocsEl) summaryLocsEl.textContent = validLocationsCount;
 };
 
-// Run immediately, then run a fallback check 200ms later for slow-loading theme nodes
 injectGlobalScores();
 setTimeout(injectGlobalScores, 200);
 }
@@ -61,7 +61,6 @@ const locationFilter = document.getElementById("locationFilter");
 const brandFilter = document.getElementById("brandFilter");
 const searchInput = document.getElementById("searchInput");
 
-// If this specific URL is missing directory filters, exit here safely but leave scoreboard alive
 if (!locationsEl || !locationFilter || !brandFilter || !searchInput) {
 console.log("Directory layout components not found on this URL. Exiting sidebar mapping execution.");
 return;
@@ -80,14 +79,14 @@ const ctaService = document.getElementById("ctaService");
 
 // 4. POPULATE LOCATION SELECTION DROPDOWN
 dealerships.forEach(loc => {
-if (!loc.key || !loc.name) return; // Skip broken or incomplete entries safely
+if (!loc.key || !loc.name) return; 
 const option = document.createElement("option");
 option.value = loc.key;
 option.textContent = loc.name;
 locationFilter.appendChild(option);
 });
 
-// 5. POPULATE BRAND SELECTION DROPDOWN (With strict string protection limits)
+// 5. POPULATE BRAND SELECTION DROPDOWN
 const brands = new Set();
 dealerships.forEach(loc => { 
 if (loc.brand && typeof loc.brand === 'string' && loc.brand.trim() !== "") {
@@ -102,7 +101,6 @@ option.textContent = brand;
 brandFilter.appendChild(option);
 });
 
-// Helper converting raw database strings into normalized local dates
 function formatReviewDate(isoString) {
 try {
 const dateObj = new Date(isoString);
@@ -178,6 +176,18 @@ panelGlobalLinkContainer.style.display = "block";
 panelGlobalLinkContainer.style.display = "none";
 }
 
+// --- FIXED LOCATION: Safely inside openPanel where 'loc' context is active ---
+const subnavTitle = document.getElementById("subnavTitle");
+const subnavRating = document.getElementById("subnavRating");
+const subnavCtaInv = document.getElementById("subnavCtaInventory");
+const subnavCtaSvc = document.getElementById("subnavCtaService");
+
+if (subnavTitle) subnavTitle.textContent = loc.name;
+if (subnavRating) subnavRating.textContent = `★ ${loc.rating} from ${loc.count} reviews`;
+if (subnavCtaInv && loc.ctas?.inventory) subnavCtaInv.href = loc.ctas.inventory;
+if (subnavCtaSvc && loc.ctas?.service) subnavCtaSvc.href = loc.ctas.service;
+// -----------------------------------------------------------------------------
+
 if (loc.reviews) {
 loc.reviews.forEach(r => {
 const isLongText = r.text && r.text.length > 120;
@@ -222,17 +232,7 @@ if (panelReviews) panelReviews.appendChild(review);
 }
 }
 
-// INSIDE openPanel(loc) METHOD:
-const subnavTitle = document.getElementById("subnavTitle");
-const subnavRating = document.getElementById("subnavRating");
-const subnavCtaInv = document.getElementById("subnavCtaInventory");
-const subnavCtaSvc = document.getElementById("subnavCtaService");
-
-if (subnavTitle) subnavTitle.textContent = loc.name;
-if (subnavRating) subnavRating.textContent = `★ ${loc.rating} from ${loc.count} reviews`;
-if (subnavCtaInv && loc.ctas?.inventory) subnavCtaInv.href = loc.ctas.inventory;
-if (subnavCtaSvc && loc.ctas?.service) subnavCtaSvc.href = loc.ctas.service;
-
+// 8. GLOBAL SCROLL ENGINE EVENT TRACKER
 window.addEventListener('scroll', () => {
 const stickySubnav = document.getElementById('pag-sticky-subnav');
 const layoutStartElement = document.querySelector('.layout');
@@ -258,7 +258,6 @@ brandFilter.onchange = renderLocations;
 renderLocations();
 };
 
-// Safe runtime execution check matching all WP pipeline configurations
 if (document.readyState === "loading") {
 document.addEventListener("DOMContentLoaded", initEngine);
 } else {
