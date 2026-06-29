@@ -148,7 +148,7 @@ locationsEl.appendChild(card);
 });
 }
 
-// 7. POPULATE ACTIVE FEED DISPLAY PANEL
+// 7. POPULATE ACTIVE FEED DISPLAY PANEL (With Virtual Pagination)
 function openPanel(loc) {
 document.querySelectorAll('.location-card').forEach(card => card.classList.remove('active'));
 const cards = document.querySelectorAll('.location-card');
@@ -176,7 +176,7 @@ panelGlobalLinkContainer.style.display = "block";
 panelGlobalLinkContainer.style.display = "none";
 }
 
-// --- FIXED LOCATION: Safely inside openPanel where 'loc' context is active ---
+// Populate Floating Sub-Nav Elements
 const subnavTitle = document.getElementById("subnavTitle");
 const subnavRating = document.getElementById("subnavRating");
 const subnavCtaInv = document.getElementById("subnavCtaInventory");
@@ -186,10 +186,19 @@ if (subnavTitle) subnavTitle.textContent = loc.name;
 if (subnavRating) subnavRating.textContent = `★ ${loc.rating} from ${loc.count} reviews`;
 if (subnavCtaInv && loc.ctas?.inventory) subnavCtaInv.href = loc.ctas.inventory;
 if (subnavCtaSvc && loc.ctas?.service) subnavCtaSvc.href = loc.ctas.service;
-// -----------------------------------------------------------------------------
 
+// PAGINATION CONFIGURATION
 if (loc.reviews) {
-loc.reviews.forEach(r => {
+let currentRenderedCount = 0;
+const BATCH_SIZE = 10;
+const totalReviewsCount = loc.reviews.length;
+
+// Core rendering function to build review
+function renderReviewBatch(startIndex) {
+const endIndex = Math.min(startIndex + BATCH_SIZE, totalReviewsCount);
+
+for (let i = startIndex; i < endIndex; i++) {
+const r = loc.reviews[i];
 const isLongText = r.text && r.text.length > 120;
 const shortText = isLongText ? r.text.substring(0, 120) + "..." : (r.text || "");
 const formattedDate = formatReviewDate(r.date);
@@ -228,7 +237,53 @@ toggle.textContent = "Read more";
 };
 }
 if (panelReviews) panelReviews.appendChild(review);
-});
+}
+
+currentRenderedCount = endIndex;
+manageLoadMoreButton();
+}
+
+// Monitors data boundaries to build or strip the "Load More" trigger block
+function manageLoadMoreButton() {
+let loadMoreBtn = document.getElementById("pagLoadMoreBtn");
+
+if (currentRenderedCount < totalReviewsCount) {
+if (!loadMoreBtn) {
+loadMoreBtn = document.createElement("button");
+loadMoreBtn.id = "pagLoadMoreBtn";
+loadMoreBtn.textContent = `Load More Reviews (${totalReviewsCount - currentRenderedCount} remaining)`;
+
+// Inline button formatting to keep styles robust
+loadMoreBtn.style.display = "block";
+loadMoreBtn.style.width = "100%";
+loadMoreBtn.style.margin = "20px 0";
+loadMoreBtn.style.padding = "12px";
+loadMoreBtn.style.background = "#ffffff";
+loadMoreBtn.style.color = "#2c68b5";
+loadMoreBtn.style.border = "1px solid #cbd5e1";
+loadMoreBtn.style.borderRadius = "6px";
+loadMoreBtn.style.fontWeight = "600";
+loadMoreBtn.style.cursor = "pointer";
+loadMoreBtn.style.transition = "background 0.2s";
+
+loadMoreBtn.onmouseenter = () => loadMoreBtn.style.background = "#f8fafc";
+loadMoreBtn.onmouseleave = () => loadMoreBtn.style.background = "#ffffff";
+
+loadMoreBtn.onclick = () => {
+renderReviewBatch(currentRenderedCount);
+};
+} else {
+loadMoreBtn.textContent = `Load More Reviews (${totalReviewsCount - currentRenderedCount} remaining)`;
+}
+// Ensure the button element is always appended at the very bottom edge of the container
+if (panelReviews) panelReviews.appendChild(loadMoreBtn);
+} else if (loadMoreBtn) {
+loadMoreBtn.remove();
+}
+}
+
+// Render the initial 10 reviews pass
+renderReviewBatch(0);
 }
 }
 
