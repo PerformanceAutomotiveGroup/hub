@@ -222,6 +222,33 @@ if (panelReviews) panelReviews.appendChild(review);
 }
 }
 
+// INSIDE openPanel(loc) METHOD:
+const subnavTitle = document.getElementById("subnavTitle");
+const subnavRating = document.getElementById("subnavRating");
+const subnavCtaInv = document.getElementById("subnavCtaInventory");
+const subnavCtaSvc = document.getElementById("subnavCtaService");
+
+if (subnavTitle) subnavTitle.textContent = loc.name;
+if (subnavRating) subnavRating.textContent = `★ ${loc.rating} from ${loc.count} reviews`;
+if (subnavCtaInv && loc.ctas?.inventory) subnavCtaInv.href = loc.ctas.inventory;
+if (subnavCtaSvc && loc.ctas?.service) subnavCtaSvc.href = loc.ctas.service;
+
+window.addEventListener('scroll', () => {
+const stickySubnav = document.getElementById('pag-sticky-subnav');
+const layoutStartElement = document.querySelector('.layout');
+
+if (!stickySubnav || !layoutStartElement) return;
+
+const triggerPoint = layoutStartElement.offsetTop;
+const isPanelActive = document.getElementById('panelContent').style.display === "block";
+
+if (window.scrollY > triggerPoint && isPanelActive) {
+stickySubnav.classList.add('is-sticky');
+} else {
+stickySubnav.classList.remove('is-sticky');
+}
+});
+
 // Mount Event Listeners
 locationFilter.onchange = renderLocations;
 searchInput.oninput = renderLocations;
