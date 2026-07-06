@@ -208,7 +208,7 @@ review.className = "review";
 review.style.borderTop = "1px solid #e0e0e0";
 review.style.padding = "12px 0";
 
-review.innerHTML = `
+/*review.innerHTML = `
 <div class="review-meta" style="font-size:0.85em; color:#666; margin-bottom: 6px;">
 ★ ${r.rating} | ${loc.brand || 'General'} | Assisted by: ${r.customer || 'Verified Guest'} | ${formattedDate}
 </div>
@@ -217,6 +217,23 @@ review.innerHTML = `
 ${isLongText ? `<span class="full" style="display:none;">${r.text}</span>` : ''}
 </div>
 ${isLongText ? `<span class="toggle" style="color:#2c68b5; cursor:pointer; font-size:0.9em; display:block; margin-top:4px;">Read more</span>` : ''}
+`;*/
+
+review.innerHTML = `
+  <div class="review-meta">
+    <div class="review-meta-top">
+      <span>${'★'.repeat(Math.round(r.rating || 5))}</span>
+      <span class="review-meta-brand">${loc.brand || 'General'}</span>
+    </div>
+    <div class="review-meta-details">
+      Assisted by: <strong>${r.customer || 'Verified Guest'}</strong> • ${formattedDate}
+    </div>
+  </div>
+  <div class="review-text">
+    <span class="preview">${shortText}</span>
+    ${isLongText ? `<span class="full" style="display:none;">${r.text}</span>` : ''}
+  </div>
+  ${isLongText ? `<span class="toggle">Read more</span>` : ''}
 `;
 
 const toggle = review.querySelector(".toggle");
