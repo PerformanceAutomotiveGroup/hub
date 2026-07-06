@@ -69,7 +69,6 @@ return;
 const panelPlaceholder = document.getElementById("panelPlaceholder");
 const panelContent = document.getElementById("panelContent");
 const panelTitle = document.getElementById("panelTitle");
-const panelRating = document.getElementById("panelRating");
 const panelAddress = document.getElementById("panelAddress");
 const panelReviews = document.getElementById("panelReviews");
 const panelGlobalLinkContainer = document.getElementById("panelGlobalLinkContainer");
@@ -146,9 +145,20 @@ if (panelEl) { panelEl.scrollIntoView({ behavior: "smooth", block: "start" }); }
 };
 locationsEl.appendChild(card);
 });
+
+// --- EMPTY SEARCH UI PROTECTION FALLBACK ---
+if (locationsEl.children.length === 0) {
+locationsEl.innerHTML = `
+<div style="padding: 40px 20px; text-align: center; color: #64748b; background: #f8fafc; border-radius: 8px; border: 1px dashed #cbd5e1; margin: 15px 0;">
+<div style="font-size: 28px; margin-bottom: 10px;">🔍</div>
+<strong style="color: #0b1220;">No dealerships found</strong><br>
+<span style="font-size: 13px; color: #64748b;">Try modifying your keyword search or adjusting your brand filters.</span>
+</div>
+`;
+}
 }
 
-// 7. POPULATE ACTIVE FEED DISPLAY PANEL (With Virtual Pagination)
+// 7. POPULATE ACTIVE FEED DISPLAY PANEL (With Virtual Pagination & Layout Upgrades)
 function openPanel(loc) {
 document.querySelectorAll('.location-card').forEach(card => card.classList.remove('active'));
 const cards = document.querySelectorAll('.location-card');
@@ -160,10 +170,9 @@ if (nameEl && nameEl.textContent === loc.name) card.classList.add('active');
 if (panelPlaceholder) panelPlaceholder.style.display = "none";
 if (panelContent) panelContent.style.display = "block";
 
+// Bind Primary Store Typography
 if (panelTitle) panelTitle.textContent = loc.name;
-if (panelRating) panelRating.textContent = `★ ${loc.rating} from ${loc.count} reviews`;
-if (panelAddress) panelAddress.textContent = loc.address;
-if (panelReviews) panelReviews.innerHTML = "";
+if (panelAddress) panelAddress.innerHTML = `📍 ${loc.address}`;
 
 if (ctaInventory && loc.ctas && loc.ctas.inventory) ctaInventory.href = loc.ctas.inventory;
 if (ctaService && loc.ctas && loc.ctas.service) ctaService.href = loc.ctas.service;
@@ -174,6 +183,34 @@ panelGlobalLink.textContent = `Read All ${loc.count} Reviews on Our Website →`
 panelGlobalLinkContainer.style.display = "block";
 } else if (panelGlobalLinkContainer) {
 panelGlobalLinkContainer.style.display = "none";
+}
+
+// --- DYNAMIC HEADER 5-STAR RATING MATRIX ENGINE ---
+const panelRatingRow = document.getElementById("panelRatingRow");
+if (panelRatingRow) {
+const ratingNum = Math.round(parseFloat(loc.rating) || 5);
+const goldStars = '★'.repeat(ratingNum);
+const grayStars = '☆'.repeat(5 - ratingNum);
+
+panelRatingRow.innerHTML = `
+<span class="stars-gold">${goldStars}</span><span class="stars-gray">${grayStars}</span>
+<span class="panel-rating-num">${loc.rating}</span>
+<span class="panel-review-count">(${loc.count} reviews)</span>
+`;
+}
+
+// --- DYNAMIC BRAND LOGO HEADER INJECTION ---
+const logoContainer = document.getElementById("panelBrandLogoContainer");
+if (logoContainer) {
+const brandNormalized = loc.brand ? loc.brand.toLowerCase() : "";
+const logoUrl = brandNormalized ? `https://performanceautomotivegroup.github.io/hub/images/brands/${brandNormalized}.png` : "";
+
+if (logoUrl) {
+logoContainer.innerHTML = `<img src="${logoUrl}" alt="${loc.brand} logo" style="width:100px; height:auto; max-height:55px; object-fit:contain;" onerror="this.parentNode.style.display='none';">`;
+logoContainer.style.display = "block";
+} else {
+logoContainer.style.display = "none";
+}
 }
 
 // Populate Floating Sub-Nav Elements
@@ -187,13 +224,14 @@ if (subnavRating) subnavRating.textContent = `★ ${loc.rating} from ${loc.count
 if (subnavCtaInv && loc.ctas?.inventory) subnavCtaInv.href = loc.ctas.inventory;
 if (subnavCtaSvc && loc.ctas?.service) subnavCtaSvc.href = loc.ctas.service;
 
-// PAGINATION CONFIGURATION
+if (panelReviews) panelReviews.innerHTML = "";
+
+// PAGINATION CONFIGURATION ENGINE LOOP
 if (loc.reviews) {
 let currentRenderedCount = 0;
 const BATCH_SIZE = 10;
 const totalReviewsCount = loc.reviews.length;
 
-// Core rendering function to build review
 function renderReviewBatch(startIndex) {
 const endIndex = Math.min(startIndex + BATCH_SIZE, totalReviewsCount);
 
@@ -205,20 +243,8 @@ const formattedDate = formatReviewDate(r.date);
 
 const review = document.createElement("div");
 review.className = "review";
-review.style.borderTop = "1px solid #e0e0e0";
-review.style.padding = "12px 0";
 
-/*review.innerHTML = `
-<div class="review-meta" style="font-size:0.85em; color:#666; margin-bottom: 6px;">
-★ ${r.rating} | ${loc.brand || 'General'} | Assisted by: ${r.customer || 'Verified Guest'} | ${formattedDate}
-</div>
-<div class="review-text">
-<span class="preview">${shortText}</span>
-${isLongText ? `<span class="full" style="display:none;">${r.text}</span>` : ''}
-</div>
-${isLongText ? `<span class="toggle" style="color:#2c68b5; cursor:pointer; font-size:0.9em; display:block; margin-top:4px;">Read more</span>` : ''}
-`;*/
-
+// --- BALANCED 5-STAR REPEATER MATRIX FOR REVIEW CARDS ---
 const ratingNum = Math.round(r.rating || 5);
 const goldStars = '★'.repeat(ratingNum);
 const grayStars = '☆'.repeat(5 - ratingNum);
@@ -264,7 +290,6 @@ currentRenderedCount = endIndex;
 manageLoadMoreButton();
 }
 
-// Monitors data boundaries to build or strip the "Load More" trigger block
 function manageLoadMoreButton() {
 let loadMoreBtn = document.getElementById("pagLoadMoreBtn");
 
@@ -274,7 +299,6 @@ loadMoreBtn = document.createElement("button");
 loadMoreBtn.id = "pagLoadMoreBtn";
 loadMoreBtn.textContent = `Load More Reviews (${totalReviewsCount - currentRenderedCount} remaining)`;
 
-// Inline button formatting to keep styles robust
 loadMoreBtn.style.display = "block";
 loadMoreBtn.style.width = "100%";
 loadMoreBtn.style.margin = "20px 0";
@@ -296,14 +320,12 @@ renderReviewBatch(currentRenderedCount);
 } else {
 loadMoreBtn.textContent = `Load More Reviews (${totalReviewsCount - currentRenderedCount} remaining)`;
 }
-// Ensure the button element is always appended at the very bottom edge of the container
 if (panelReviews) panelReviews.appendChild(loadMoreBtn);
 } else if (loadMoreBtn) {
 loadMoreBtn.remove();
 }
 }
 
-// Render the initial 10 reviews pass
 renderReviewBatch(0);
 }
 }
