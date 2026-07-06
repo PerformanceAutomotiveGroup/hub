@@ -333,7 +333,7 @@ renderReviewBatch(0);
 // 8. GLOBAL SCROLL EVENT TRACKER
 window.addEventListener('scroll', () => {
 const stickySubnav = document.getElementById('pag-sticky-subnav');
-const layoutStartElement = document.querySelector('.review');
+const layoutStartElement = document.querySelector('.review:nth-of-type(1)');
 
 if (!stickySubnav || !layoutStartElement) return;
 
