@@ -219,21 +219,25 @@ ${isLongText ? `<span class="full" style="display:none;">${r.text}</span>` : ''}
 ${isLongText ? `<span class="toggle" style="color:#2c68b5; cursor:pointer; font-size:0.9em; display:block; margin-top:4px;">Read more</span>` : ''}
 `;*/
 
+const ratingNum = Math.round(r.rating || 5);
+const goldStars = '★'.repeat(ratingNum);
+const grayStars = '☆'.repeat(5 - ratingNum);
+
 review.innerHTML = `
-  <div class="review-meta">
-    <div class="review-meta-top">
-      <span>${'★'.repeat(Math.round(r.rating || 5))}</span>
-      <span class="review-meta-brand">${loc.brand || 'General'}</span>
-    </div>
-    <div class="review-meta-details">
-      Assisted by: <strong>${r.customer || 'Verified Guest'}</strong> • ${formattedDate}
-    </div>
-  </div>
-  <div class="review-text">
-    <span class="preview">${shortText}</span>
-    ${isLongText ? `<span class="full" style="display:none;">${r.text}</span>` : ''}
-  </div>
-  ${isLongText ? `<span class="toggle">Read more</span>` : ''}
+<div class="review-meta">
+<div class="review-meta-top">
+<span class="stars-gold">${goldStars}</span><span class="stars-gray">${grayStars}</span>
+<span class="review-meta-brand">${loc.brand || 'General'}</span>
+</div>
+<div class="review-meta-details">
+Assisted by: <strong>${r.customer || 'Verified Guest'}</strong> • ${formattedDate}
+</div>
+</div>
+<div class="review-text">
+<span class="preview">${shortText}</span>
+${isLongText ? `<span class="full" style="display:none;">${r.text}</span>` : ''}
+</div>
+${isLongText ? `<span class="toggle">Read more</span>` : ''}
 `;
 
 const toggle = review.querySelector(".toggle");
