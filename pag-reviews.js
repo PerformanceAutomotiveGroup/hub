@@ -256,7 +256,7 @@ review.innerHTML = `
 <span class="review-meta-brand">${loc.brand || 'General'}</span>
 </div>
 <div class="review-meta-details">
-Assisted by: <strong>${r.customer || 'Verified Guest'}</strong> • ${formattedDate}
+Written by: <strong>${r.customer || 'Verified Guest'}</strong> • ${formattedDate}
 </div>
 </div>
 <div class="review-text">
