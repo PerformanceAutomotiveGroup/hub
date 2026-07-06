@@ -130,7 +130,7 @@ const card = document.createElement("div");
 card.className = "location-card";
 card.innerHTML = `
 <div style="display:flex; align-items:center; gap:10px; cursor:pointer;">
-${logoUrl ? `<img src="${logoUrl}" alt="${loc.brand || 'Dealership'} logo" style="width:90px; height:auto; max-height:50px; object-fit:contain;" onerror="this.style.display='none';">` : ''}
+${logoUrl ? `<img src="${logoUrl}" alt="${loc.brand || 'Dealership'} logo" style="width:90px; height:auto; max-height:60px; object-fit:contain;" onerror="this.style.display='none';">` : ''}
 <div>
 <div class="location-name" style="font-weight:bold;">${loc.name}</div>
 <div class="location-meta">★ ${loc.rating || '0.0'} from ${loc.count || 0} reviews</div>
