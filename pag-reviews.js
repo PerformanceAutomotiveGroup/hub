@@ -330,10 +330,10 @@ renderReviewBatch(0);
 }
 }
 
-// 8. GLOBAL SCROLL ENGINE EVENT TRACKER
+// 8. GLOBAL SCROLL EVENT TRACKER
 window.addEventListener('scroll', () => {
 const stickySubnav = document.getElementById('pag-sticky-subnav');
-const layoutStartElement = document.querySelector('.layout');
+const layoutStartElement = document.querySelector('.review');
 
 if (!stickySubnav || !layoutStartElement) return;
 
