@@ -333,12 +333,11 @@ renderReviewBatch(0);
 // 8. GLOBAL SCROLL EVENT TRACKER
 window.addEventListener('scroll', () => {
 const stickySubnav = document.getElementById('pag-sticky-subnav');
-const layoutStartElement = document.querySelector('.review:nth-of-type(1)');
+const panelContentEl = document.getElementById('panelContent');
 
-if (!stickySubnav || !layoutStartElement) return;
-
-const triggerPoint = layoutStartElement.offsetTop;
-const isPanelActive = document.getElementById('panelContent').style.display === "block";
+if (!stickySubnav || !panelContentEl) return;
+const isPanelActive = panelContentEl.style.display === "block";
+const triggerPoint = panelContentEl.offsetTop + 250;
 
 if (window.scrollY > triggerPoint && isPanelActive) {
 stickySubnav.classList.add('is-sticky');
