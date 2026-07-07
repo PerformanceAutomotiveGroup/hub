@@ -337,7 +337,7 @@ const panelContentEl = document.getElementById('panelContent');
 
 if (!stickySubnav || !panelContentEl) return;
 const isPanelActive = panelContentEl.style.display === "block";
-const triggerPoint = panelContentEl.offsetTop + 350;
+const triggerPoint = panelContentEl.offsetTop + 450;
 
 if (window.scrollY > triggerPoint && isPanelActive) {
 stickySubnav.classList.add('is-sticky');
