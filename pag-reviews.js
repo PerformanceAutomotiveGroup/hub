@@ -133,7 +133,7 @@ card.innerHTML = `
 ${logoUrl ? `<img src="${logoUrl}" alt="${loc.brand || 'Dealership'} logo" style="width:90px; height:auto; max-height:60px; object-fit:contain;" onerror="this.style.display='none';">` : ''}
 <div>
 <div class="location-name" style="font-weight:bold;">${loc.name}</div>
-<div class="location-meta">★ ${ '0.0'|| loc.rating } from ${loc.count || 0} reviews</div>
+<div class="location-meta">★ ${loc.rating || '0.0'} from ${loc.count || 0} reviews</div>
 </div>
 </div>
 `;
