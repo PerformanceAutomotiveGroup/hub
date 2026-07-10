@@ -179,16 +179,12 @@ if (ctaService && loc.ctas && loc.ctas.service) ctaService.href = loc.ctas.servi
 
 
 if (loc.googleMapsUrl && panelGlobalLink && panelGlobalLinkContainer) {
-  const urlObj = new URL(loc.googleMapsUrl);
-  const cidValue = urlObj.searchParams.get('cid');
-
-  if (cidValue) {
-    panelGlobalLink.href = `https://www.google.com/maps/place/?q=cid:${cidValue}&topic=reviews`;
-  } else {
-    panelGlobalLink.href = loc.googleMapsUrl;
-  }
+  // Point the link straight to the Google Maps URL
+  panelGlobalLink.href = loc.googleMapsUrl;
   
+  // Update the text to match perfectly
   panelGlobalLink.textContent = `Read All ${loc.count} Reviews →`;
+  
   panelGlobalLinkContainer.style.display = "block";
 } else if (panelGlobalLinkContainer) {
   panelGlobalLinkContainer.style.display = "none";
