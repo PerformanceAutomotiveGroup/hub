@@ -178,8 +178,8 @@ if (ctaInventory && loc.ctas && loc.ctas.inventory) ctaInventory.href = loc.ctas
 if (ctaService && loc.ctas && loc.ctas.service) ctaService.href = loc.ctas.service;
 
 if (loc.ctas && loc.ctas.dealershipHomeUrl && panelGlobalLink && panelGlobalLinkContainer) {
-panelGlobalLink.href = loc.ctas.dealershipHomeUrl;
-panelGlobalLink.textContent = `Read All ${loc.count} Reviews on Our Website →`;
+panelGlobalLink.href = loc.googleMapsUrl;
+panelGlobalLink.textContent = `Read All ${loc.count} Reviews →`;
 panelGlobalLinkContainer.style.display = "block";
 } else if (panelGlobalLinkContainer) {
 panelGlobalLinkContainer.style.display = "none";
