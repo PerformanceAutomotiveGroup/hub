@@ -177,8 +177,15 @@ if (panelAddress) panelAddress.innerHTML = `📍 ${loc.address}`;
 if (ctaInventory && loc.ctas && loc.ctas.inventory) ctaInventory.href = loc.ctas.inventory;
 if (ctaService && loc.ctas && loc.ctas.service) ctaService.href = loc.ctas.service;
 
-if (loc.ctas && loc.ctas.dealershipHomeUrl && panelGlobalLink && panelGlobalLinkContainer) {
+if (loc.googleMapsUrl && panelGlobalLink && panelGlobalLinkContainer) {
+const urlObj = new URL(loc.googleMapsUrl);
+const cidValue = urlObj.searchParams.get('cid');
+if (cidValue) {
+panelGlobalLink.href = `https://local.google.com/place?id=${cidValue}&use=srp`;
+} else {
 panelGlobalLink.href = loc.googleMapsUrl;
+}
+
 panelGlobalLink.textContent = `Read All ${loc.count} Reviews →`;
 panelGlobalLinkContainer.style.display = "block";
 } else if (panelGlobalLinkContainer) {
