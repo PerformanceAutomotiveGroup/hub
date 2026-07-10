@@ -186,7 +186,7 @@ panelGlobalLink.href = `https://local.google.com/place?id=${cidValue}&use=srp`;
 panelGlobalLink.href = loc.googleMapsUrl;
 }
 
-panelGlobalLink.textContent = `Read All ${loc.count} Reviews →`;
+panelGlobalLink.textContent = `Read All ${loc.count} Reviews & Find Location →`;
 panelGlobalLinkContainer.style.display = "block";
 } else if (panelGlobalLinkContainer) {
 panelGlobalLinkContainer.style.display = "none";
