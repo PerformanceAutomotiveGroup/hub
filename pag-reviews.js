@@ -183,12 +183,12 @@ if (loc.googleMapsUrl && panelGlobalLink && panelGlobalLinkContainer) {
   const cidValue = urlObj.searchParams.get('cid');
 
   if (cidValue) {
-    panelGlobalLink.href = `https://www.google.com/maps/search/?api=1&query=Google&query_place_id=&lsp=1&q_cid=${cidValue}&topic=reviews`;
+    panelGlobalLink.href = `https://www.google.com/maps/place/?q=cid:${cidValue}&topic=reviews`;
   } else {
     panelGlobalLink.href = loc.googleMapsUrl;
   }
   
-  panelGlobalLink.textContent = `Read All ${loc.count} Reviews on Google Maps →`;
+  panelGlobalLink.textContent = `Read All ${loc.count} Reviews →`;
   panelGlobalLinkContainer.style.display = "block";
 } else if (panelGlobalLinkContainer) {
   panelGlobalLinkContainer.style.display = "none";
