@@ -179,12 +179,10 @@ if (ctaService && loc.ctas && loc.ctas.service) ctaService.href = loc.ctas.servi
 
 
 if (loc.googleMapsUrl && panelGlobalLink && panelGlobalLinkContainer) {
-  // Point the link straight to the Google Maps URL
-  panelGlobalLink.href = loc.googleMapsUrl;
+  const deepReviewLink = generateReviewLinkFromUrl(loc.googleMapsUrl);
+  panelGlobalLink.href = deepReviewLink ? deepReviewLink : loc.googleMapsUrl;
   
-  // Update the text to match perfectly
-  panelGlobalLink.textContent = `Read All ${loc.count} Reviews →`;
-  
+  panelGlobalLink.textContent = `Read All ${loc.count} Reviews on Google Maps →`;
   panelGlobalLinkContainer.style.display = "block";
 } else if (panelGlobalLinkContainer) {
   panelGlobalLinkContainer.style.display = "none";
