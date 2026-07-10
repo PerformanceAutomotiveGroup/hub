@@ -183,14 +183,15 @@ if (loc.googleMapsUrl && panelGlobalLink && panelGlobalLinkContainer) {
   const cidValue = urlObj.searchParams.get('cid');
 
   if (cidValue) {
-    // This forces the full native review browser view open via Search
-    panelGlobalLink.href = `https://local.google.com/place?id=${cidValue}&use=srp`; //
+    panelGlobalLink.href = `https://www.google.com/maps/search/?api=1&query=Google&query_place_id=&lsp=1&q_cid=${cidValue}&topic=reviews`;
   } else {
     panelGlobalLink.href = loc.googleMapsUrl;
   }
   
-  panelGlobalLink.textContent = `Read All ${loc.count} Reviews & Find Dealership →`;
+  panelGlobalLink.textContent = `Read All ${loc.count} Reviews on Google Maps →`;
   panelGlobalLinkContainer.style.display = "block";
+} else if (panelGlobalLinkContainer) {
+  panelGlobalLinkContainer.style.display = "none";
 }
 
 // --- DYNAMIC HEADER 5-STAR RATING MATRIX ENGINE ---
