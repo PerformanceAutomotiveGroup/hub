@@ -45,7 +45,7 @@ if (status === 'OK') {
 directionsRenderer.setMap(ev_Map);
 
 if (panel) {
-    directionsRenderer.setPanel(panel);
+directionsRenderer.setPanel(panel);
 }
 
 directionsRenderer.setDirections(result);
@@ -58,7 +58,9 @@ if (panel) panel.scrollIntoView({ behavior: 'smooth' });
 };
 
 // 2. Assign the functional map engine logic to the global window hook
+// Bind the namespace directly to window at the absolute top of the script
 window.initPerformanceEVMap = async function() {
+// If the maps API asset hasn't registered its global namespace, defer slightly
 if (typeof google === 'undefined' || !google.maps) {
 setTimeout(window.initPerformanceEVMap, 300);
 return;
@@ -111,6 +113,15 @@ renderUI(places || [], AdvancedMarkerElement);
 });
 } catch (err) { console.error("Initialization Error", err); }
 };
+
+// Keep the internal variables and helper hooks encapsulated below it
+(function() {
+let ev_Map, ev_InfoWindow, directionsService, directionsRenderer;
+let ev_Markers = [];
+let isPanning = false;
+
+// Your existing formatConnector, calculateRoute, and renderUI functions go here...
+})();
 
 // FIX: renderUI is now correctly inside the wrapper scope so it can use ev_Map and isPanning
 function renderUI(places, AdvancedMarkerElement) {
