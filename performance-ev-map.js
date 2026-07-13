@@ -1,3 +1,6 @@
+// 1. Declare the callback globally at the absolute top of the file so Google Maps can always see it
+window.initPerformanceEVMap = null;
+
 (function() {
 let ev_Map, ev_InfoWindow, directionsService, directionsRenderer;
 let ev_Markers = [];
@@ -39,11 +42,10 @@ destination: { lat: parseFloat(destLat), lng: parseFloat(destLng) },
 travelMode: google.maps.TravelMode.DRIVING
 }, (result, status) => {
 if (status === 'OK') {
-// Late-bind the renderer to prevent the zJ loading error
 directionsRenderer.setMap(ev_Map);
 
 if (panel) {
-directionsRenderer.setPanel(panel);
+    directionsRenderer.setPanel(panel);
 }
 
 directionsRenderer.setDirections(result);
@@ -55,7 +57,7 @@ if (panel) panel.scrollIntoView({ behavior: 'smooth' });
 }
 };
 
-// ALIGNED TO HTML CALLBACK: Exposing this to the window layer
+// 2. Assign the functional map engine logic to the global window hook
 window.initPerformanceEVMap = async function() {
 if (typeof google === 'undefined' || !google.maps) {
 setTimeout(window.initPerformanceEVMap, 300);
@@ -108,8 +110,9 @@ renderUI(places || [], AdvancedMarkerElement);
 } catch (e) { console.error("Search failed:", e); }
 });
 } catch (err) { console.error("Initialization Error", err); }
-}
+};
 
+// FIX: renderUI is now correctly inside the wrapper scope so it can use ev_Map and isPanning
 function renderUI(places, AdvancedMarkerElement) {
 ev_Markers.forEach(m => m.map = null);
 ev_Markers = [];
@@ -208,6 +211,4 @@ card.onclick = (e) => select(e);
 list.appendChild(card);
 });
 }
-
-// REMOVED start(); -> It is now driven entirely by the Google Script callback definition.
 })();
