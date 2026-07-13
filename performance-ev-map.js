@@ -2,6 +2,7 @@
 window.initPerformanceEVMap = null;
 
 (function() {
+// Keep ALL shared map infrastructure variables in the top scope of the single wrapper
 let ev_Map, ev_InfoWindow, directionsService, directionsRenderer;
 let ev_Markers = [];
 let isPanning = false;
@@ -42,15 +43,15 @@ destination: { lat: parseFloat(destLat), lng: parseFloat(destLng) },
 travelMode: google.maps.TravelMode.DRIVING
 }, (result, status) => {
 if (status === 'OK') {
-directionsRenderer.setMap(ev_Map);
+  directionsRenderer.setMap(ev_Map);
 
-if (panel) {
-directionsRenderer.setPanel(panel);
-}
+  if (panel) {
+      directionsRenderer.setPanel(panel);
+  }
 
-directionsRenderer.setDirections(result);
+  directionsRenderer.setDirections(result);
 
-if (panel) panel.scrollIntoView({ behavior: 'smooth' });
+  if (panel) panel.scrollIntoView({ behavior: 'smooth' });
 }
 });
 }, () => alert("Please enable location services for turn-by-turn directions."));
@@ -58,9 +59,7 @@ if (panel) panel.scrollIntoView({ behavior: 'smooth' });
 };
 
 // 2. Assign the functional map engine logic to the global window hook
-// Bind the namespace directly to window at the absolute top of the script
 window.initPerformanceEVMap = async function() {
-// If the maps API asset hasn't registered its global namespace, defer slightly
 if (typeof google === 'undefined' || !google.maps) {
 setTimeout(window.initPerformanceEVMap, 300);
 return;
@@ -114,16 +113,7 @@ renderUI(places || [], AdvancedMarkerElement);
 } catch (err) { console.error("Initialization Error", err); }
 };
 
-// Keep the internal variables and helper hooks encapsulated below it
-(function() {
-let ev_Map, ev_InfoWindow, directionsService, directionsRenderer;
-let ev_Markers = [];
-let isPanning = false;
-
-// Your existing formatConnector, calculateRoute, and renderUI functions go here...
-})();
-
-// FIX: renderUI is now correctly inside the wrapper scope so it can use ev_Map and isPanning
+// UI Rendering Engine Context safely inside scope bounds
 function renderUI(places, AdvancedMarkerElement) {
 ev_Markers.forEach(m => m.map = null);
 ev_Markers = [];
@@ -217,7 +207,8 @@ card.style.background = '#f8f9fa';
 card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 };
 
-marker.addListener('click', (e) => select(e));
+// FIX: Modern Advanced Markers require listening specifically to 'gmp-click'
+marker.addListener('gmp-click', (e) => select(e));
 card.onclick = (e) => select(e);
 list.appendChild(card);
 });
