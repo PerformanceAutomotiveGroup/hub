@@ -174,7 +174,7 @@ if (panelContent) panelContent.style.display = "block";
 if (panelTitle) panelTitle.textContent = loc.name;
 if (panelAddress) panelAddress.innerHTML = `📍 ${loc.address}`;
 
-if (ctaInventory && loc.ctas && loc.ctas.inventory) ctaInventory.href = loc.ctas.inventory;
+if (ctaInventory && loc.ctas && loc.ctas.dealershipHomeUrl) ctaInventory.href = loc.ctas.dealershipHomeUrl;
 if (ctaService && loc.ctas && loc.ctas.service) ctaService.href = loc.ctas.service;
 
 
@@ -223,7 +223,9 @@ const subnavCtaSvc = document.getElementById("subnavCtaService");
 
 if (subnavTitle) subnavTitle.textContent = loc.name;
 if (subnavRating) subnavRating.textContent = `★ ${loc.rating} from ${loc.count} reviews`;
-if (subnavCtaInv && loc.ctas?.inventory) subnavCtaInv.href = loc.ctas.inventory;
+
+// UPDATED: Floating Navigation mapping link switched to track dealershipHomeUrl
+if (subnavCtaInv && loc.ctas?.dealershipHomeUrl) subnavCtaInv.href = loc.ctas.dealershipHomeUrl;
 if (subnavCtaSvc && loc.ctas?.service) subnavCtaSvc.href = loc.ctas.service;
 
 if (panelReviews) panelReviews.innerHTML = "";
