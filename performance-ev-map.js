@@ -1,231 +1,438 @@
-(function() {
-let ev_Map, ev_InfoWindow, directionsService, directionsRenderer;
-let AdvancedMarker; 
-let ev_Markers = [];
-let routeMarkers = []; 
-let activePolyline = null; 
-let isPanning = false;
-let isRouting = false;
-
-const getSafeCoord = (val) => typeof val === 'function' ? val() : val;
-
-window.closeEVInfoWindow = function() {
-if (ev_InfoWindow) ev_InfoWindow.close();
-};
-
-window.calculateRoute = function(destLat, destLng) {
-if (!directionsService) return;
-
-const latNum = Number(destLat);
-const lngNum = Number(destLng);
-if (isNaN(latNum) || isNaN(lngNum)) return;
-
-if (navigator.geolocation) {
-navigator.geolocation.getCurrentPosition((position) => {
-isRouting = true; 
-const origin = { lat: position.coords.latitude, lng: position.coords.longitude };
-const destination = { lat: latNum, lng: lngNum };
-
-directionsService.route({
-origin: origin,
-destination: destination,
-travelMode: google.maps.TravelMode.DRIVING
-}, (result, status) => {
-if (status === 'OK') {
-const route = result.routes?.[0];
-const leg = route?.legs?.[0];
-const overview = route?.overview_polyline;
-
-if (!route || !leg || !overview) {
-isRouting = false;
-return;
-}
-
-// 1. CLEANUP: Clear old artifacts to stop the 'apply' crash
-if (activePolyline) activePolyline.setMap(null);
-routeMarkers.forEach(m => m.map = null);
-routeMarkers = [];
-
-// 2. STABLE PATH DECODING: Fixes the missing line and 'not a number' error
-const decodedPath = google.maps.geometry.encoding.decodePath(overview);
-const cleanPath = decodedPath.map(p => ({ lat: p.lat(), lng: p.lng() }));
-
-activePolyline = new google.maps.Polyline({
-path: cleanPath,
-geodesic: true,
-strokeColor: "#00838f",
-strokeOpacity: 1.0,
-strokeWeight: 6,
-map: ev_Map,
-zIndex: 150
-});
-
-// 3. UPDATED PIN LABELS: Direct object passing (2026 standard)
-const startMarker = new AdvancedMarker({
-map: ev_Map,
-position: leg.start_location,
-content: new google.maps.marker.PinElement({ 
-glyphText: "A", 
-background: "#00838f", 
-borderColor: "#fff", 
-glyphColor: "#fff" 
-}),
-zIndex: 200
-});
-
-const endMarker = new AdvancedMarker({
-map: ev_Map,
-position: leg.end_location,
-content: new google.maps.marker.PinElement({ 
-glyphText: "B", 
-background: "#d32f2f", 
-borderColor: "#fff", 
-glyphColor: "#fff" 
-}),
-zIndex: 201
-});
-
-routeMarkers.push(startMarker, endMarker);
-
-// 4. SYNC UI: Load text steps into panel and focus map
-directionsRenderer.setDirections(result);
-ev_Map.fitBounds(route.bounds);
-
-const panel = document.getElementById('ev-directions-panel');
-if (panel) panel.scrollIntoView({ behavior: 'smooth' });
-
-google.maps.event.addListenerOnce(ev_Map, "idle", () => {
-isRouting = false;
-});
-} else {
-isRouting = false;
-}
-});
-}, () => { isRouting = false; alert("Location services failed."); }, { timeout: 10000 });
-}
-};
-
-async function start() {
-if (typeof google === 'undefined' || !google.maps) {
-setTimeout(start, 300);
-return;
-}
+document.addEventListener("DOMContentLoaded", () => { 
+const dataScript = document.getElementById('locationsData');
+if (!dataScript) return;
+let locations;
 try {
-ev_InfoWindow = new google.maps.InfoWindow();
+locations = JSON.parse(dataScript.textContent);
+} catch (e) {
+console.error("JSON parsing error:", e);
+return;
+}
 
-const lib = await Promise.all([
-google.maps.importLibrary("maps"),
-google.maps.importLibrary("places"),
-google.maps.importLibrary("marker"),
-google.maps.importLibrary("geometry")
-]);
+const container = document.getElementById('locationsList');
+if (!container) return;
+const markers = [];
+const infoWindows = [];
+let map;
+let directionsService;
+let directionsRenderer;
+let selectedMode = 'DRIVING';
 
-const { Map } = lib[0];
-const { Place } = lib[1];
-AdvancedMarker = lib[2].AdvancedMarkerElement;
+const cityFilter = document.getElementById('cityFilter');
+const endSelect = document.querySelector('.end-location');
+
+/* ----- Populate city filter and end select defaults ----- */
+if (cityFilter) {
+cityFilter.innerHTML = '';
+const defaultCity = document.createElement('option');
+defaultCity.value = '';
+defaultCity.textContent = 'All Cities';
+cityFilter.appendChild(defaultCity);
+}
+
+if (endSelect) {
+endSelect.innerHTML = '';
+const defaultEnd = document.createElement('option');
+defaultEnd.value = '';
+defaultEnd.textContent = 'Select a location';
+endSelect.appendChild(defaultEnd);
+}
+
+const citiesSet = new Set();
+
+/* ----- Create cards ----- */
+locations.forEach((loc, index) => {
+const card = document.createElement('div');
+card.className = 'location-card';
+card.setAttribute('data-city', loc.city);
+card.setAttribute('data-index', index);
+
+/* ----- Card content ----- */
+const h5 = document.createElement('h5');
+h5.textContent = loc.name;
+card.appendChild(h5);
+
+const pAddress = document.createElement('p');
+pAddress.textContent = loc.address;
+card.appendChild(pAddress);
+
+const pCity = document.createElement('p');
+pCity.textContent = loc.city;
+card.appendChild(pCity);
+
+/* ----- Actions container ----- */
+const actionsDiv = document.createElement('div');
+actionsDiv.className = 'actions';
+
+const directionsBtn = document.createElement('a');
+directionsBtn.target = "_blank";
+directionsBtn.rel = "noopener";
+directionsBtn.className = 'btn btn-outline';
+directionsBtn.textContent = 'Map';
+
+actionsDiv.appendChild(directionsBtn);
+card.appendChild(actionsDiv);
+
+/* ----- Append card to container ----- */
+container.appendChild(card);
+
+citiesSet.add(loc.city);
+
+/* ----- Populate end-location dropdown once ----- */
+if (endSelect && index === 0) {
+endSelect.innerHTML = '';
+const defaultEnd = document.createElement('option');
+defaultEnd.value = '';
+defaultEnd.textContent = 'Select a location';
+endSelect.appendChild(defaultEnd);
+locations.forEach((locOption, idx) => {
+const opt = document.createElement('option');
+opt.value = idx;
+opt.textContent = locOption.name;
+endSelect.appendChild(opt);
+});
+}
+
+/* ----- Card click behavior to show marker ----- */
+card.addEventListener('click', () => {
+const marker = markers[index];
+const infoWindow = infoWindows[index];
+
+/* Close all other info windows */
+infoWindows.forEach(iw => iw.close());
+
+/* Open this card's marker info window */
+infoWindow.open(map, marker);
+
+/* Highlight the clicked card */
+document.querySelectorAll('.location-card').forEach(c => c.style.border = 'none');
+card.style.border = '2px solid #2c68b5';
+card.style.borderRadius = '8px';
+
+google.maps.event.addListenerOnce(infoWindows[index], 'domready', () => {
+const iwContainer = document.querySelector('.gm-style-iw');
+if (!iwContainer) return;
+
+/* ----- Container Styling ----- */
+iwContainer.style.padding = '20px 15px';
+iwContainer.style.fontSize = '14px';
+iwContainer.style.color = '#333';
+iwContainer.style.cursor = 'pointer';
+iwContainer.style.fontWeight = '600';
+iwContainer.style.borderTop = '1px solid #2c68b5';
+iwContainer.style.boxSizing = 'border-box';
+
+/* ----- Title ----- */
+const title = iwContainer.querySelector('strong');
+if (title) {
+title.style.display = 'block';
+title.style.color = '#2c68b5';
+title.style.marginBottom = '4px';
+title.style.borderBottom = '1px solid #777';
+title.style.paddingBottom = '2px';
+}
+
+/* ----- Address ----- */
+const iwAddress = document.createElement('p');
+iwAddress.textContent = locations[index].address+ ', ' + loc.city;
+iwAddress.style.margin = '4px 0 6px 0';
+iwAddress.style.fontWeight = '400';
+iwAddress.style.color = '#555';
+iwContainer.appendChild(iwAddress);
+
+/* ----- Get Directions link ----- */
+const learnMore = document.createElement('a');
+learnMore.textContent = 'Get Directions >';
+learnMore.className = 'btn btn-primary';
+iwContainer.appendChild(learnMore);
+
+learnMore.addEventListener('click', () => {
+const directionsSection = document.querySelector('.map-sidebar--directions__modes');
+if (directionsSection) directionsSection.scrollIntoView({
+	behavior: 'smooth',
+	block: 'start'
+});
+if (endSelect) {
+	endSelect.value = String(index);
+	endSelect.dispatchEvent(new Event('change', {
+		bubbles: true
+	}));
+	endSelect.focus();
+}
+});
+
+const getevdirections = document.createElement('a');
+getevdirections.textContent = 'Google Maps >';
+getevdirections.href = `https://www.google.com/maps/dir/?api=1&destination=${locations[index].lat},${locations[index].lng}`;
+getevdirections.target = "_blank";
+getevdirections.rel = "noopener";
+getevdirections.style.color = '#2c68b5';
+getevdirections.style.fontWeight = '500';
+getevdirections.style.fontSize = '13px';
+getevdirections.style.display = 'block';
+getevdirections.style.marginTop = '6px';
+iwContainer.appendChild(getevdirections);
+});
+
+/* Scroll map into view */
+const mapElement = document.getElementById('map');
+if (mapElement) mapElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+/* Center map on marker */
+map.panTo(marker.getPosition());
+});
+});
+
+/* ----- Populate city filter dropdown ----- */
+if (cityFilter) {
+Array.from(citiesSet).sort().forEach(city => {
+const opt = document.createElement('option');
+opt.value = city;
+opt.textContent = city;
+cityFilter.appendChild(opt);
+});
+}
+
+/* ----- Initialize map and markers ----- */
+function initMap() {
+map = new google.maps.Map(document.getElementById("map"), {
+center: { lat: 43.65107, lng: -79.347015 },
+zoom: 10
+});
 
 directionsService = new google.maps.DirectionsService();
-directionsRenderer = new google.maps.DirectionsRenderer({
-suppressMarkers: true, 
-map: null // Detach from map to prevent internal 'apply' crashes
+directionsRenderer = new google.maps.DirectionsRenderer({ map: map, panel: document.querySelector('.directions-results') });
+
+locations.forEach((loc, index) => {
+/* ----- Create marker ----- */
+const marker = new google.maps.Marker({
+map: map,
+position: { lat: loc.lat, lng: loc.lng },
+title: loc.name,
+icon: {
+url: 'https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2026/02/EV-charging-station-yellow-blk.png',
+scaledSize: new google.maps.Size(32, 32),
+}
 });
 
-ev_Map = new Map(document.getElementById("ev-map-canvas"), {
-center: { lat: 43.159, lng: -79.246 }, 
-zoom: 11,
-mapId: "e9da2b0d1db902e558a4a8df",
-mapTypeControl: false,
-streetViewControl: false
-});
+/* ----- Info window ----- */
+const infoWindow = new google.maps.InfoWindow({ content: `${loc.name}`});
 
-directionsRenderer.setPanel(document.getElementById('ev-directions-panel'));
+/* ----- Marker click behavior ----- */
+marker.addListener('click', () => {
+infoWindows.forEach(iw => iw.close());
+infoWindow.open(map, marker);
 
-ev_Map.addListener("idle", async () => {
-if (isPanning || isRouting) return;
-const bounds = ev_Map.getBounds();
-if (!bounds) return;
-
-const ne = bounds.getNorthEast();
-const sw = bounds.getSouthWest();
-const cleanBounds = {
-north: getSafeCoord(ne.lat),
-south: getSafeCoord(sw.lat),
-east: getSafeCoord(ne.lng),
-west: getSafeCoord(sw.lng)
-};
-
-const request = {
-textQuery: "EV Charging Station",
-fields: ["displayName", "location", "formattedAddress", "rating", "evChargeOptions", "photos", "editorialSummary"],
-locationRestriction: cleanBounds,
-maxResultCount: 20 
-};
-
-const { places } = await Place.searchByText(request);
-renderUI(places || []);
-});
-} catch (err) { console.error("Initialization Error", err); }
+/* Highlight the card */
+document.querySelectorAll('.location-card').forEach(c => c.style.border = 'none');
+const activeCard = Array.from(document.querySelectorAll('.location-card'))
+.find(c => c.textContent.includes(loc.name));
+if (activeCard) {
+activeCard.style.border = '2px solid #2c68b5';
+activeCard.style.borderRadius = '8px';
 }
 
-function renderUI(places) {
-ev_Markers.forEach(m => m.map = null);
-ev_Markers = [];
-const list = document.getElementById('ev-results-list');
-if (!list) return;
-list.innerHTML = '';
+/* InfoWindow customization and Get Directions link */
+google.maps.event.addListenerOnce(infoWindow, 'domready', () => {
+const iwContainer = document.querySelector('.gm-style-iw');
 
-places.forEach((place) => {
-const lat = getSafeCoord(place.location.lat);
-const lng = getSafeCoord(place.location.lng);
-const loc = { lat: lat, lng: lng };
+if (iwContainer) {
+/* ----- Container Styling ----- */
+iwContainer.style.padding = '20px 15px';
+iwContainer.style.fontSize = '14px';
+iwContainer.style.color = '#333';
+iwContainer.style.cursor = 'pointer';
+iwContainer.style.fontWeight = '600';
+iwContainer.style.borderTop = '1px solid #2c68b5';
+iwContainer.style.boxSizing = 'border-box'; /* ensure consistent sizing */
 
-const marker = new AdvancedMarker({
-map: ev_Map,
-position: loc,
-title: place.displayName,
-gmpClickable: true
-});
-ev_Markers.push(marker);
-
-const card = document.createElement('div');
-card.className = 'ev-location-card';
-card.style.cssText = "padding:16px; border-bottom:1px solid #e0e0e0; cursor:pointer; background:#fff;";
-
-card.innerHTML = `
-<div style="display:flex; justify-content:space-between; align-items:start;">
-<div style="width:78%"><h5 style="margin:0;">${place.displayName}</h5></div>
-<div style="text-align:center; color:#00838f; font-size:11px;" 
-onclick="event.stopPropagation(); window.calculateRoute(${loc.lat}, ${loc.lng})">
-<div style="width:34px; height:34px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">↗</div>
-7Directions
-</div>
-</div>`;
-
-const select = () => {
-isPanning = true; 
-ev_Map.panTo(loc);
-const photoUrl = place.photos?.[0]?.getURI({maxWidth: 400}) || '';
-const infoHtml = `
-<div style="width:300px; padding:10px; font-family:Arial;">
-${photoUrl ? `<img src="${photoUrl}" style="width:100%; border-radius:8px; margin-bottom:8px;">` : ''}
-<h3 style="margin:0 0 8px 0;">${place.displayName}</h3>
-<p style="font-size:13px; color:#555;">${place.formattedAddress}</p>
-<button onclick="window.calculateRoute(${loc.lat}, ${loc.lng})" 
-style="background:#00838f; color:#fff; border:none; padding:8px 12px; border-radius:4px; cursor:pointer; width:100%;">
-Get Directions
-</button>
-</div>`;
-
-if (ev_InfoWindow) {
-ev_InfoWindow.setOptions({ content: infoHtml });
-ev_InfoWindow.open({ anchor: marker, map: ev_Map });
+/* ----- Title Styling ----- */
+const title = iwContainer.querySelector('strong');
+if (title) {
+title.style.display = 'block';
+title.style.color = '#2c68b5';
+title.style.marginBottom = '4px';
+title.style.borderBottom = '1px solid #777';
+title.style.paddingBottom = '2px';
 }
+
+/* ----- Address Styling ----- */
+const iwAddress = document.createElement('p');
+iwAddress.textContent = loc.address + ', ' + loc.city;
+iwAddress.style.margin = '4px 0 6px 0';
+iwAddress.style.fontWeight = '400';
+iwAddress.style.color = '#555';
+iwContainer.appendChild(iwAddress);
+
+/* ----- Get Directions Link ----- */
+const learnMore = document.createElement('a');
+learnMore.textContent = 'Get Directions >';
+learnMore.className = 'btn btn-primary';
+iwContainer.appendChild(learnMore);
+
+learnMore.addEventListener('click', () => {
+const directionsSection = document.querySelector('.map-sidebar--directions__modes');
+if (directionsSection) directionsSection.scrollIntoView({
+	behavior: 'smooth',
+	block: 'start'
+});
+if (endSelect) {
+	endSelect.value = String(index);
+	endSelect.dispatchEvent(new Event('change', {
+		bubbles: true
+	}));
+	endSelect.focus();
+}
+});
+
+const getevdirections = document.createElement('a');
+getevdirections.textContent = 'Google Maps >';
+getevdirections.href = `https://www.google.com/maps/dir/?api=1&destination=${locations[index].lat},${locations[index].lng}`;
+getevdirections.target = "_blank";
+getevdirections.rel = "noopener";
+getevdirections.style.color = '#2c68b5';
+getevdirections.style.fontWeight = '500';
+getevdirections.style.fontSize = '13px';
+getevdirections.style.display = 'block';
+getevdirections.style.marginTop = '6px';
+iwContainer.appendChild(getevdirections);
+}
+});
+
+});
+
+markers.push(marker);
+infoWindows.push(infoWindow);
+});
+}
+
+/* ----- Filter locations ----- */
+function filterLocations() {
+const city = cityFilter ? cityFilter.value : '';
+const cards = document.querySelectorAll('#locationsList .location-card');
+let anyVisible = false;
+const bounds = new google.maps.LatLngBounds();
+
+cards.forEach(card => {
+const cardCity = card.getAttribute('data-city');
+const markerIndex = parseInt(card.getAttribute('data-index'), 10);
+
+const visible = !city || cardCity === city;
+
+card.style.display = visible ? 'inline-block' : 'none';
+if (markers[markerIndex]) {
+markers[markerIndex].setMap(visible ? map : null);
+if (visible) bounds.extend(markers[markerIndex].getPosition());
+}
+if (visible) anyVisible = true;
+});
+
+if (anyVisible && !bounds.isEmpty()) {
+map.fitBounds(bounds);
+}
+
+const noResults = document.getElementById('noResults');
+if (noResults) noResults.style.display = anyVisible ? 'none' : 'block';
+}
+
+/* ----- Reset filters ----- */
+function resetFilters() {
+if (cityFilter) cityFilter.value = '';
+if (endSelect) endSelect.value = '';
+if (directionsRenderer) directionsRenderer.setDirections({
+routes: []
+});
+filterLocations();
+infoWindows.forEach(iw => iw.close());
+document.querySelectorAll('.location-card').forEach(card => card.style.border = 'none');
+
+if (map) {
+const bounds = new google.maps.LatLngBounds();
+markers.forEach(marker => bounds.extend(marker.getPosition()));
+map.fitBounds(bounds);
+}
+selectedMode = 'DRIVING';
+document.querySelectorAll('.mode-button').forEach(btn => {
+btn.style.background = '#e5e7eb';
+btn.style.color = '#000';
+});
+
+const drivingBtn = document.querySelector('.mode-button[data-mode="DRIVING"]');
+if (drivingBtn) {
+drivingBtn.style.background = '#2c68b5';
+drivingBtn.style.color = '#fff';
+}
+}
+
+/* ----- MODE BUTTONS ----- */
+document.querySelectorAll('.mode-button').forEach(button => {
+button.addEventListener('click', () => {
+document.querySelectorAll('.mode-button').forEach(b => {
+b.style.background = '#e5e7eb';
+b.style.color = '#000';
+});
+
+button.style.background = '#2c68b5';
+button.style.color = '#fff';
+selectedMode = button.dataset.mode;
+const start = document.querySelector('.start-location').value;
+const endIndex = endSelect ? endSelect.value : '';
+if (start && endIndex !== "") {
+const destination = {
+lat: locations[endIndex].lat,
+lng: locations[endIndex].lng
 };
 
-marker.addListener('gmp-click', select);
-card.onclick = select;
-list.appendChild(card);
+directionsService.route({
+origin: start,
+destination: destination,
+travelMode: google.maps.TravelMode[selectedMode]
+}, (result, status) => {
+if (status === 'OK') directionsRenderer.setDirections(result);
+else document.querySelector('.directions-results').innerHTML = `Could not calculate directions: ${status}`;
 });
 }
-start();
-})();
+});
+}); 
+
+/* ----- GET DIRECTIONS ----- */
+const getDirBtn = document.querySelector('.get-directions');
+if (getDirBtn) {
+getDirBtn.addEventListener('click', () => {
+const start = document.querySelector('.start-location').value;
+const endIndex = endSelect ? endSelect.value : '';
+const results = document.querySelector('.directions-results');
+const infoDiv = document.querySelector('.directions-results-info');
+if (infoDiv) infoDiv.style.display = 'none';
+if (!start || endIndex === "") {
+results.innerHTML = 'Please enter your address and select a dealership.';
+return;
+}
+
+const destination = {
+lat: locations[endIndex].lat,
+lng: locations[endIndex].lng
+};
+
+directionsService.route({
+origin: start,
+destination: destination,
+travelMode: google.maps.TravelMode[selectedMode]
+}, (result, status) => {
+if (status === 'OK') directionsRenderer.setDirections(result);
+else results.innerHTML = `Could not calculate directions: ${status}`;
+});
+});
+} 
+
+/* ----- Event listeners ----- */
+cityFilter?.addEventListener('change', filterLocations);
+
+/* ----- Initialize map and filters ----- */
+initMap();
+filterLocations();
+
+/* ----- Expose for global use ----- */
+window.filterLocations = filterLocations;
+window.resetFilters = resetFilters;
+});
