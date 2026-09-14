@@ -56,7 +56,6 @@ if (status === 'OK') {
 }
 };
 
-// 2. Assign the functional map engine logic to the global window hook
 window.initPerformanceEVMap = async function() {
 if (typeof google === 'undefined' || !google.maps) {
 setTimeout(window.initPerformanceEVMap, 300);
@@ -111,7 +110,6 @@ renderUI(places || [], AdvancedMarkerElement);
 } catch (err) { console.error("Initialization Error", err); }
 };
 
-// FIX: renderUI is now correctly inside the wrapper scope so it can use ev_Map and isPanning
 function renderUI(places, AdvancedMarkerElement) {
 ev_Markers.forEach(m => m.map = null);
 ev_Markers = [];
@@ -205,7 +203,7 @@ card.style.background = '#f8f9fa';
 card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 };
 
-marker.addListener('click', (e) => select(e));
+marker.addListener('gmp-click', (e) => select(e));
 card.onclick = (e) => select(e);
 list.appendChild(card);
 });
