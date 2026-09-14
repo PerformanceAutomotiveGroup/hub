@@ -22,26 +22,55 @@ window.triggerNearbySearch = function(lat, lng) {
 if (!ev_Map) return;
 ev_Map.setCenter({lat: lat, lng: lng});
 ev_Map.setZoom(15); 
-// Logic for nearby search would follow here
 };
 
 window.calculateRoute = function(destLat, destLng) {
 if (!directionsService || !directionsRenderer) return;
+
+const panel = document.getElementById('ev-directions-panel');
+
 if (navigator.geolocation) {
 navigator.geolocation.getCurrentPosition((position) => {
-const origin = { lat: position.coords.latitude, lng: position.coords.longitude };
+const origin = { 
+lat: position.coords.latitude, 
+lng: position.coords.longitude 
+};
+
+const destination = { 
+lat: parseFloat(destLat), 
+lng: parseFloat(destLng) 
+};
+
 directionsService.route({
 origin: origin,
-destination: { lat: destLat, lng: destLng },
+destination: destination,
 travelMode: google.maps.TravelMode.DRIVING
 }, (result, status) => {
 if (status === 'OK') {
+// 1. Connect renderer to map and directions panel on success
+directionsRenderer.setMap(ev_Map);
+
+if (panel) {
+panel.innerHTML = ''; // Clear previous steps if any
+directionsRenderer.setPanel(panel);
+}
+
+// 2. Render route polyline on map and turn-by-turn list in panel
 directionsRenderer.setDirections(result);
-const panel = document.getElementById('ev-directions-panel');
-if (panel) panel.scrollIntoView({ behavior: 'smooth' });
+
+// 3. Scroll user down to the directions panel
+if (panel) {
+panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+} else {
+alert("Could not calculate directions: " + status);
 }
 });
-}, () => alert("Please enable location services for turn-by-turn directions."));
+}, (error) => {
+alert("Please enable location services in your browser to calculate turn-by-turn directions.");
+});
+} else {
+alert("Geolocation is not supported by your browser.");
 }
 };
 
@@ -52,7 +81,6 @@ return;
 }
 
 try {
-// Unified library loading
 const [{ Map }, { Place }, { AdvancedMarkerElement }] = await Promise.all([
 google.maps.importLibrary("maps"),
 google.maps.importLibrary("places"),
@@ -70,16 +98,15 @@ fullscreenControl: true
 
 directionsService = new google.maps.DirectionsService();
 directionsRenderer = new google.maps.DirectionsRenderer({
-map: ev_Map, // Bound to the same instance
 suppressMarkers: false,
 polylineOptions: {
 strokeColor: "#00838f",
-strokeWeight: 6
+strokeWeight: 6,
+zIndex: 999
 }
 });
 
 ev_InfoWindow = new google.maps.InfoWindow();
-directionsRenderer.setPanel(document.getElementById('ev-directions-panel'));
 
 ev_Map.addListener("idle", async () => {
 if (isPanning) { isPanning = false; return; }
@@ -130,7 +157,7 @@ let sidebarPlugs = '';
 sidebarPlugs += `<div style="display:flex; justify-content:space-between; font-size:13px; margin-top:8px;"><span style="color:#00838f;">⚡ ${formatConnector(agg.type)}</span><span style="background:#f1f3f4; padding:0 8px; border-radius:4px;">0/${agg.count || 1}</span></div>`;
 });
 
-card.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:start;"><div style="width:78%"><h5 style="margin:0; font-size:16px; font-weight:500; color:#202124;">${place.displayName}</h5><div style="font-size:12px; color:#70757a; margin:4px 0;">${ratingVal} <span style="color:#fbbc04;">★★★★★</span></div><p style="margin:4px 0; font-size:13px; color:#70757a;">${addr}</p>${sidebarPlugs}</div><div style="text-align:center; color:#00838f; font-size:11px;" onclick="window.calculateRoute(${place.location.lat()}, ${place.location.lng()})"><div style="width:34px; height:34px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">↗</div>Directions</div></div>`;
+card.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:start;"><div style="width:78%"><h5 style="margin:0; font-size:16px; font-weight:500; color:#202124;">${place.displayName}</h5><div style="font-size:12px; color:#70757a; margin:4px 0;">${ratingVal} <span style="color:#fbbc04;">★★★★★</span></div><p style="margin:4px 0; font-size:13px; color:#70757a;">${addr}</p>${sidebarPlugs}</div><div style="text-align:center; color:#00838f; font-size:11px;" onclick="event.stopPropagation(); window.calculateRoute(${place.location.lat()}, ${place.location.lng()})"><div style="width:34px; height:34px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">↗</div>Directions</div></div>`;
 
 const select = (e) => {
 if (e && e.stopImmediatePropagation) e.stopImmediatePropagation();
@@ -194,10 +221,12 @@ card.style.background = '#f8f9fa';
 card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 };
 
-marker.addListener('click', (e) => select(e));
+// Use gmp-click for Advanced Markers
+marker.addListener('gmp-click', (e) => select(e));
 card.onclick = (e) => select(e);
 list.appendChild(card);
 });
 }
+
 start();
 })();
