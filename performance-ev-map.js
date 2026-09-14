@@ -1,6 +1,82 @@
-window.initPerformanceEVMap = async function() {
+(function() {
+let ev_Map, ev_InfoWindow, directionsService, directionsRenderer;
+let ev_Markers = [];
+let isPanning = false;
+
+function formatConnector(type) {
+if (!type) return "Unknown";
+const types = { 
+'EV_CONNECTOR_TYPE_J1772': 'J1772', 
+'EV_CONNECTOR_TYPE_CCS_COMBO_1': 'CCS', 
+'EV_CONNECTOR_TYPE_CHADEMO': 'CHAdeMO', 
+'EV_CONNECTOR_TYPE_TESLA': 'Tesla' 
+};
+return types[type] || type.replace('EV_CONNECTOR_TYPE_', '').replace(/_/g, ' ');
+}
+
+window.closeEVInfoWindow = function() {
+if (ev_InfoWindow) ev_InfoWindow.close();
+};
+
+window.triggerNearbySearch = function(lat, lng) {
+if (!ev_Map) return;
+ev_Map.setCenter({lat: lat, lng: lng});
+ev_Map.setZoom(15); 
+};
+
+window.calculateRoute = function(destLat, destLng) {
+if (!directionsService || !directionsRenderer) return;
+
+const panel = document.getElementById('ev-directions-panel');
+
+if (navigator.geolocation) {
+navigator.geolocation.getCurrentPosition((position) => {
+const origin = { 
+lat: position.coords.latitude, 
+lng: position.coords.longitude 
+};
+
+const destination = { 
+lat: parseFloat(destLat), 
+lng: parseFloat(destLng) 
+};
+
+directionsService.route({
+origin: origin,
+destination: destination,
+travelMode: google.maps.TravelMode.DRIVING
+}, (result, status) => {
+if (status === 'OK') {
+// 1. Connect renderer to map and directions panel on success
+directionsRenderer.setMap(ev_Map);
+
+if (panel) {
+panel.innerHTML = ''; // Clear previous steps if any
+directionsRenderer.setPanel(panel);
+}
+
+// 2. Render route polyline on map and turn-by-turn list in panel
+directionsRenderer.setDirections(result);
+
+// 3. Scroll user down to the directions panel
+if (panel) {
+panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+} else {
+alert("Could not calculate directions: " + status);
+}
+});
+}, (error) => {
+alert("Please enable location services in your browser to calculate turn-by-turn directions.");
+});
+} else {
+alert("Geolocation is not supported by your browser.");
+}
+};
+
+async function start() {
 if (typeof google === 'undefined' || !google.maps) {
-setTimeout(window.initPerformanceEVMap, 300);
+setTimeout(start, 300);
 return;
 }
 
@@ -50,130 +126,7 @@ renderUI(places || [], AdvancedMarkerElement);
 } catch (e) { console.error("Search failed:", e); }
 });
 } catch (err) { console.error("Initialization Error", err); }
-};
-
-// 2. Shared variables and helper functions
-let ev_Map, ev_InfoWindow, directionsService, directionsRenderer;
-let ev_Markers = [];
-let isPanning = false;
-
-function formatConnector(type) {
-if (!type) return "Unknown";
-const types = { 
-'EV_CONNECTOR_TYPE_J1772': 'J1772', 
-'EV_CONNECTOR_TYPE_CCS_COMBO_1': 'CCS', 
-'EV_CONNECTOR_TYPE_CHADEMO': 'CHAdeMO', 
-'EV_CONNECTOR_TYPE_TESLA': 'Tesla' 
-};
-return types[type] || type.replace('EV_CONNECTOR_TYPE_', '').replace(/_/g, ' ');
 }
-
-window.closeEVInfoWindow = function() {
-if (ev_InfoWindow) ev_InfoWindow.close();
-};
-
-window.triggerNearbySearch = function(lat, lng) {
-if (!ev_Map) return;
-ev_Map.setCenter({lat: lat, lng: lng});
-ev_Map.setZoom(15); 
-};
-
-window.clearRoute = function() {
-if (directionsRenderer) {
-directionsRenderer.setMap(null);
-directionsRenderer.setDirections({ routes: [] });
-}
-
-// Restore station markers
-ev_Markers.forEach(m => m.map = ev_Map);
-
-// Empty panel
-const panel = document.getElementById('ev-directions-panel');
-if (panel) panel.innerHTML = '';
-
-const wrapper = document.getElementById('ev-map-wrapper');
-if (wrapper) wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
-};
-
-window.calculateRoute = function(destLat, destLng) {
-if (!directionsService || !directionsRenderer) return;
-
-const panel = document.getElementById('ev-directions-panel');
-
-if (!navigator.geolocation) {
-alert("Location services are not supported by your browser. Please enter a starting point manually.");
-return;
-}
-
-navigator.geolocation.getCurrentPosition(
-(position) => {
-const origin = { 
-lat: position.coords.latitude, 
-lng: position.coords.longitude 
-};
-
-const destination = { 
-lat: parseFloat(destLat), 
-lng: parseFloat(destLng) 
-};
-
-directionsService.route({
-origin: origin,
-destination: destination,
-travelMode: google.maps.TravelMode.DRIVING
-}, (result, status) => {
-if (status === 'OK') {
-if (ev_InfoWindow) ev_InfoWindow.close();
-
-// Hide pins while route is active
-ev_Markers.forEach(m => m.map = null);
-
-directionsRenderer.setMap(ev_Map);
-if (panel) {
-panel.innerHTML = '';
-directionsRenderer.setPanel(panel);
-}
-directionsRenderer.setDirections(result);
-
-if (panel) {
-const resetBtn = document.createElement('button');
-resetBtn.innerText = "✕ Exit Route & Show All Stations";
-resetBtn.style.cssText = "margin-bottom:15px; padding:8px 16px; background:#f1f3f4; border:1px solid #dadce0; border-radius:4px; cursor:pointer; font-weight:500; font-family:Roboto, Arial, sans-serif;";
-resetBtn.onclick = window.clearRoute;
-panel.prepend(resetBtn);
-
-panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-} else {
-alert("Unable to find a driving route: " + status);
-}
-});
-},
-(error) => {
-switch(error.code) {
-case error.PERMISSION_DENIED:
-alert(
-"Location access was blocked.\n\n" +
-"To view turn-by-turn directions:\n" +
-"1. Click the padlock/tune icon (🔒) in your browser address bar.\n" +
-"2. Set 'Location' permissions to 'Allow'.\n" +
-"3. Refresh the page and try again."
-);
-break;
-case error.POSITION_UNAVAILABLE:
-alert("Your current location could not be determined. Please ensure device location / GPS is enabled.");
-break;
-case error.TIMEOUT:
-alert("Locating your position timed out. Please check your connection and try again.");
-break;
-default:
-alert("An unknown error occurred while retrieving your location.");
-break;
-}
-},
-{ enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
-);
-};
 
 function renderUI(places, AdvancedMarkerElement) {
 ev_Markers.forEach(m => m.map = null);
@@ -268,8 +221,12 @@ card.style.background = '#f8f9fa';
 card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 };
 
+// Use gmp-click for Advanced Markers
 marker.addListener('gmp-click', (e) => select(e));
 card.onclick = (e) => select(e);
 list.appendChild(card);
 });
 }
+
+start();
+})();
