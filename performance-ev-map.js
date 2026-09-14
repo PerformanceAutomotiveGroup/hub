@@ -1,5 +1,3 @@
-window.initPerformanceEVMap = null;
-
 (function() {
 let ev_Map, ev_InfoWindow, directionsService, directionsRenderer;
 let ev_Markers = [];
