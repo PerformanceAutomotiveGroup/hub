@@ -3,9 +3,6 @@ let ev_Map, ev_InfoWindow, directionsService, directionsRenderer;
 let ev_Markers = [];
 let isPanning = false;
 
-// Mobile Detection
-const isMobile = window.innerWidth <= 768;
-
 function formatConnector(type) {
 if (!type) return "Unknown";
 const types = { 
@@ -25,14 +22,9 @@ window.triggerNearbySearch = function(lat, lng) {
 if (!ev_Map) return;
 ev_Map.setCenter({lat: lat, lng: lng});
 ev_Map.setZoom(15); 
-const request = {
-textQuery: "restaurants and coffee shops",
-locationBias: {lat: lat, lng: lng},
-maxResultCount: 10
-};
+// Logic for nearby search would follow here
 };
 
-// Calculate route and output steps to the panel below map
 window.calculateRoute = function(destLat, destLng) {
 if (!directionsService || !directionsRenderer) return;
 if (navigator.geolocation) {
@@ -54,33 +46,39 @@ if (panel) panel.scrollIntoView({ behavior: 'smooth' });
 };
 
 async function start() {
-const mapElement = document.getElementById("ev-map-canvas");
-if (!mapElement) {
+if (typeof google === 'undefined' || !google.maps) {
 setTimeout(start, 300);
 return;
 }
 
 try {
+// Unified library loading
 const [{ Map }, { Place }, { AdvancedMarkerElement }] = await Promise.all([
 google.maps.importLibrary("maps"),
 google.maps.importLibrary("places"),
 google.maps.importLibrary("marker")
 ]);
 
-directionsService = new google.maps.DirectionsService();
-directionsRenderer = new google.maps.DirectionsRenderer();
-ev_InfoWindow = new google.maps.InfoWindow();
-
-ev_Map = new Map(mapElement, {
+ev_Map = new Map(document.getElementById("ev-map-canvas"), {
 center: { lat: 43.159, lng: -79.246 }, 
-zoom: isMobile ? 10 : 11,
+zoom: 11,
 mapId: "e9da2b0d1db902e558a4a8df",
 mapTypeControl: false,
 streetViewControl: false,
-gestureHandling: isMobile ? "greedy" : "auto"
+fullscreenControl: true
 });
 
-directionsRenderer.setMap(ev_Map);
+directionsService = new google.maps.DirectionsService();
+directionsRenderer = new google.maps.DirectionsRenderer({
+map: ev_Map, // Bound to the same instance
+suppressMarkers: false,
+polylineOptions: {
+strokeColor: "#00838f",
+strokeWeight: 6
+}
+});
+
+ev_InfoWindow = new google.maps.InfoWindow();
 directionsRenderer.setPanel(document.getElementById('ev-directions-panel'));
 
 ev_Map.addListener("idle", async () => {
@@ -92,7 +90,7 @@ const request = {
 textQuery: "EV Charging Station",
 fields: ["displayName", "location", "formattedAddress", "rating", "evChargeOptions", "photos", "editorialSummary"],
 locationRestriction: bounds,
-maxResultCount: isMobile ? 12 : 20 
+maxResultCount: 20 
 };
 
 try {
@@ -122,27 +120,35 @@ ev_Markers.push(marker);
 const card = document.createElement('div');
 card.className = 'ev-location-card';
 card.id = `ev-card-${index}`;
-card.style.cssText = `padding:${isMobile ? '12px' : '16px'}; border-bottom:1px solid #e0e0e0; cursor:pointer; background:#fff; font-family:Roboto, Arial, sans-serif;`;
+card.style.cssText = "padding:16px; border-bottom:1px solid #e0e0e0; cursor:pointer; background:#fff; font-family:Roboto, Arial, sans-serif;";
 
 const ratingVal = place.rating ? place.rating.toFixed(1) : "5.0";
 const addr = place.formattedAddress || "";
 
-card.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:start;"><div style="width:78%"><h5 style="margin:0; font-size:${isMobile ? '14px' : '16px'}; font-weight:500;">${place.displayName}</h5><div style="font-size:12px; color:#70757a; margin:4px 0;">${ratingVal} ★★★★★</div><p style="margin:4px 0; font-size:12px; color:#70757a;">${addr}</p></div><div style="text-align:center; color:#00838f; font-size:10px;" onclick="window.calculateRoute(${place.location.lat()}, ${place.location.lng()})"><div style="width:34px; height:34px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">↗</div>Directions</div></div>`;
+let sidebarPlugs = '';
+(place.evChargeOptions?.connectorAggregations || []).forEach(agg => {
+sidebarPlugs += `<div style="display:flex; justify-content:space-between; font-size:13px; margin-top:8px;"><span style="color:#00838f;">⚡ ${formatConnector(agg.type)}</span><span style="background:#f1f3f4; padding:0 8px; border-radius:4px;">0/${agg.count || 1}</span></div>`;
+});
+
+card.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:start;"><div style="width:78%"><h5 style="margin:0; font-size:16px; font-weight:500; color:#202124;">${place.displayName}</h5><div style="font-size:12px; color:#70757a; margin:4px 0;">${ratingVal} <span style="color:#fbbc04;">★★★★★</span></div><p style="margin:4px 0; font-size:13px; color:#70757a;">${addr}</p>${sidebarPlugs}</div><div style="text-align:center; color:#00838f; font-size:11px;" onclick="window.calculateRoute(${place.location.lat()}, ${place.location.lng()})"><div style="width:34px; height:34px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">↗</div>Directions</div></div>`;
 
 const select = (e) => {
 if (e && e.stopImmediatePropagation) e.stopImmediatePropagation();
 isPanning = true; 
 ev_Map.panTo(place.location);
 
-const photoUrl = place.photos?.[0]?.getURI({maxWidth: 400}) || '';
-const aboutText = place.editorialSummary || "Electric vehicle charging station.";
+const photoUrl = place.photos && place.photos.length > 0 ? place.photos[0].getURI({maxWidth: 400}) : '';
+const aboutText = place.editorialSummary || "Electric vehicle charging station providing reliable power services.";
 
 const infoHtml = `
-<div style="width:${isMobile ? '280px' : '340px'}; font-family:Roboto, Arial; background:#fff; border-radius:12px; overflow:hidden; position:relative;">
+<div style="width:340px; font-family:Roboto, Arial; background:#fff; border-radius:12px; overflow:hidden; position:relative;">
 ${photoUrl ? `<div style="width:100%; height:140px; background:url('${photoUrl}') center/cover no-repeat;"></div>` : ''}
 <div onclick="window.closeEVInfoWindow()" style="position:absolute; top:12px; right:12px; background:#fff; width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,0.3); font-size:22px; z-index:100; color:#3c4043;">×</div>
 <div style="padding:16px 16px 0 16px;">
-<h2 style="margin:0; font-size:18px; font-weight:400;">${place.displayName}</h2>
+<h2 style="margin:0; font-size:20px; font-weight:400; color:#202124;">${place.displayName}</h2>
+<div style="display:flex; gap:4px; margin:4px 0; font-size:14px; align-items:center;">
+<span>${ratingVal}</span><span style="color:#fbbc04;">★★★★★</span><span style="color:#70757a;">(8)</span>
+</div>
 </div>
 <div style="display:flex; border-bottom:1px solid #e0e0e0; margin-top:8px;">
 <div id="tab-overview" style="flex:1; text-align:center; padding:12px; color:#00838f; border-bottom:3px solid #00838f; font-weight:500; cursor:pointer;" onclick="document.getElementById('info-content-about').style.display='none'; document.getElementById('info-content-overview').style.display='block'; this.style.color='#00838f'; this.style.borderBottom='3px solid #00838f'; document.getElementById('tab-about').style.color='#70757a'; document.getElementById('tab-about').style.borderBottom='none';">Overview</div>
@@ -150,18 +156,28 @@ ${photoUrl ? `<div style="width:100%; height:140px; background:url('${photoUrl}'
 </div>
 <div id="info-content-overview">
 <div style="display:flex; justify-content:space-around; padding:16px 8px; border-bottom:1px solid #f1f3f4;">
-    <div style="text-align:center; cursor:pointer;" onclick="window.calculateRoute(${place.location.lat()}, ${place.location.lng()})">
-        <div style="width:42px; height:42px; border-radius:50%; background:#00838f; color:#fff; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:20px;">↗</div>
-        <div style="font-size:11px; color:#00838f; font-weight:500; margin-top:6px;">Directions</div>
-    </div>
-    <div style="text-align:center; cursor:pointer;" onclick="window.triggerNearbySearch(${place.location.lat()}, ${place.location.lng()})">
-        <div style="width:42px; height:42px; border-radius:50%; border:1px solid #dadce0; color:#00838f; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">📍</div>
-        <div style="font-size:11px; color:#00838f; font-weight:500; margin-top:6px;">Nearby</div>
-    </div>
-    <div style="text-align:center; cursor:pointer;" onclick="if(navigator.share){navigator.share({title:'${place.displayName}', url:window.location.href})}">
-        <div style="width:42px; height:42px; border-radius:50%; border:1px solid #dadce0; color:#00838f; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">🔗</div>
-        <div style="font-size:11px; color:#00838f; font-weight:500; margin-top:6px;">Share</div>
-    </div>
+<div style="text-align:center; cursor:pointer;" onclick="window.calculateRoute(${place.location.lat()}, ${place.location.lng()})">
+<div style="width:42px; height:42px; border-radius:50%; background:#00838f; color:#fff; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:20px;">↗</div>
+<div style="font-size:11px; color:#00838f; font-weight:500; margin-top:6px;">Directions</div>
+</div>
+<div style="text-align:center; cursor:pointer;" onclick="window.triggerNearbySearch(${place.location.lat()}, ${place.location.lng()})">
+<div style="width:42px; height:42px; border-radius:50%; border:1px solid #dadce0; color:#00838f; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">📍</div>
+<div style="font-size:11px; color:#00838f; font-weight:500; margin-top:6px;">Nearby</div>
+</div>
+<div style="text-align:center; cursor:pointer;" onclick="if(navigator.share){navigator.share({title:'${place.displayName}', url:window.location.href})}">
+<div style="width:42px; height:42px; border-radius:50%; border:1px solid #dadce0; color:#00838f; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">🔗</div>
+<div style="font-size:11px; color:#00838f; font-weight:500; margin-top:6px;">Share</div>
+</div>
+</div>
+<div style="padding:16px;">
+<div style="display:flex; gap:12px; align-items:flex-start; margin-bottom:16px;">
+<span style="color:#00838f; font-size:18px;">📍</span>
+<span style="font-size:14px; color:#3c4043; line-height:1.4;">${addr}</span>
+</div>
+<div style="display:flex; gap:12px; align-items:center;">
+<span style="color:#188038; font-size:18px;">🕒</span>
+<span style="font-size:14px; color:#188038; font-weight:500;">Open 24 hours ▾</span>
+</div>
 </div>
 </div>
 <div id="info-content-about" style="display:none; padding:20px; font-size:14px; color:#3c4043; line-height:1.6;">
@@ -170,7 +186,7 @@ ${aboutText}
 </div>
 </div>`;
 
-ev_InfoWindow.setOptions({ content: infoHtml, headerDisabled: true, maxWidth: isMobile ? 300 : 350 });
+ev_InfoWindow.setOptions({ content: infoHtml, headerDisabled: true });
 ev_InfoWindow.open({ anchor: marker, map: ev_Map, shouldFocus: false });
 
 document.querySelectorAll('.ev-location-card').forEach(c => c.style.background = '#fff');
@@ -178,7 +194,7 @@ card.style.background = '#f8f9fa';
 card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 };
 
-marker.addListener('gmp-click', (e) => select(e));
+marker.addListener('click', (e) => select(e));
 card.onclick = (e) => select(e);
 list.appendChild(card);
 });
