@@ -47,18 +47,15 @@ destination: destination,
 travelMode: google.maps.TravelMode.DRIVING
 }, (result, status) => {
 if (status === 'OK') {
-// 1. Connect renderer to map and directions panel on success
 directionsRenderer.setMap(ev_Map);
 
 if (panel) {
-panel.innerHTML = ''; // Clear previous steps if any
+panel.innerHTML = ''; 
 directionsRenderer.setPanel(panel);
 }
 
-// 2. Render route polyline on map and turn-by-turn list in panel
 directionsRenderer.setDirections(result);
 
-// 3. Scroll user down to the directions panel
 if (panel) {
 panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
@@ -221,7 +218,6 @@ card.style.background = '#f8f9fa';
 card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 };
 
-// Use gmp-click for Advanced Markers
 marker.addListener('gmp-click', (e) => select(e));
 card.onclick = (e) => select(e);
 list.appendChild(card);
