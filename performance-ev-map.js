@@ -1,3 +1,5 @@
+window.initPerformanceEVMap = null;
+
 (function() {
 let ev_Map, ev_InfoWindow, directionsService, directionsRenderer;
 let ev_Markers = [];
@@ -22,40 +24,42 @@ window.triggerNearbySearch = function(lat, lng) {
 if (!ev_Map) return;
 ev_Map.setCenter({lat: lat, lng: lng});
 ev_Map.setZoom(15); 
-
-const request = {
-textQuery: "restaurants and coffee shops",
-locationBias: {lat: lat, lng: lng},
-maxResultCount: 10
-};
 };
 
-// Calculate route and output steps to the panel below map
 window.calculateRoute = function(destLat, destLng) {
 if (!directionsService || !directionsRenderer) return;
+
+const panel = document.getElementById('ev-directions-panel');
+
 if (navigator.geolocation) {
 navigator.geolocation.getCurrentPosition((position) => {
 const origin = { lat: position.coords.latitude, lng: position.coords.longitude };
+
 directionsService.route({
 origin: origin,
-destination: { lat: destLat, lng: destLng },
+destination: { lat: parseFloat(destLat), lng: parseFloat(destLng) },
 travelMode: google.maps.TravelMode.DRIVING
 }, (result, status) => {
 if (status === 'OK') {
-// This draws the route line on the map
-directionsRenderer.setDirections(result);
-// This handles the scrolling to the directions panel
-const panel = document.getElementById('ev-directions-panel');
-if (panel) panel.scrollIntoView({ behavior: 'smooth' });
+  directionsRenderer.setMap(ev_Map);
+
+  if (panel) {
+      directionsRenderer.setPanel(panel);
+  }
+
+  directionsRenderer.setDirections(result);
+
+  if (panel) panel.scrollIntoView({ behavior: 'smooth' });
 }
 });
 }, () => alert("Please enable location services for turn-by-turn directions."));
 }
 };
 
-async function start() {
+// 2. Assign the functional map engine logic to the global window hook
+window.initPerformanceEVMap = async function() {
 if (typeof google === 'undefined' || !google.maps) {
-setTimeout(start, 300);
+setTimeout(window.initPerformanceEVMap, 300);
 return;
 }
 
@@ -66,18 +70,6 @@ google.maps.importLibrary("places"),
 google.maps.importLibrary("marker")
 ]);
 
-// Initialize Directions Service/Renderer
-directionsService = new google.maps.DirectionsService();
-directionsRenderer = new google.maps.DirectionsRenderer({
-suppressMarkers: false,
-polylineOptions: {
-strokeColor: "#00838f",
-strokeWeight: 6
-}
-});
-
-ev_InfoWindow = new google.maps.InfoWindow();
-
 ev_Map = new Map(document.getElementById("ev-map-canvas"), {
 center: { lat: 43.159, lng: -79.246 }, 
 zoom: 11,
@@ -87,9 +79,17 @@ streetViewControl: false,
 fullscreenControl: true
 });
 
-// Bind directions to map and panel
-directionsRenderer.setMap(ev_Map);
-directionsRenderer.setPanel(document.getElementById('ev-directions-panel'));
+directionsService = new google.maps.DirectionsService();
+directionsRenderer = new google.maps.DirectionsRenderer({
+suppressMarkers: false,
+polylineOptions: {
+strokeColor: "#00838f",
+strokeWeight: 6,
+zIndex: 999
+}
+});
+
+ev_InfoWindow = new google.maps.InfoWindow();
 
 ev_Map.addListener("idle", async () => {
 if (isPanning) { isPanning = false; return; }
@@ -109,8 +109,9 @@ renderUI(places || [], AdvancedMarkerElement);
 } catch (e) { console.error("Search failed:", e); }
 });
 } catch (err) { console.error("Initialization Error", err); }
-}
+};
 
+// FIX: renderUI is now correctly inside the wrapper scope so it can use ev_Map and isPanning
 function renderUI(places, AdvancedMarkerElement) {
 ev_Markers.forEach(m => m.map = null);
 ev_Markers = [];
@@ -140,8 +141,7 @@ let sidebarPlugs = '';
 sidebarPlugs += `<div style="display:flex; justify-content:space-between; font-size:13px; margin-top:8px;"><span style="color:#00838f;">⚡ ${formatConnector(agg.type)}</span><span style="background:#f1f3f4; padding:0 8px; border-radius:4px;">0/${agg.count || 1}</span></div>`;
 });
 
-// Card remains exactly as you designed
-card.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:start;"><div style="width:78%"><h5 style="margin:0; font-size:16px; font-weight:500; color:#202124;">${place.displayName}</h5><div style="font-size:12px; color:#70757a; margin:4px 0;">${ratingVal} <span style="color:#fbbc04;">★★★★★</span></div><p style="margin:4px 0; font-size:13px; color:#70757a;">${addr}</p>${sidebarPlugs}</div><div style="text-align:center; color:#00838f; font-size:11px;" onclick="window.calculateRoute(${place.location.lat()}, ${place.location.lng()})"><div style="width:34px; height:34px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">↗</div>Directions</div></div>`;
+card.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:start;"><div style="width:78%"><h5 style="margin:0; font-size:16px; font-weight:500; color:#202124;">${place.displayName}</h5><div style="font-size:12px; color:#70757a; margin:4px 0;">${ratingVal} ★★★★★</div><p style="margin:4px 0; font-size:13px; color:#70757a;">${addr}</p>${sidebarPlugs}</div><div style="text-align:center; color:#00838f; font-size:11px;" onclick="window.calculateRoute(${place.location.lat()}, ${place.location.lng()})"><div style="width:34px; height:34px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">↗</div>Directions</div></div>`;
 
 const select = (e) => {
 if (e && e.stopImmediatePropagation) e.stopImmediatePropagation();
@@ -151,7 +151,6 @@ ev_Map.panTo(place.location);
 const photoUrl = place.photos && place.photos.length > 0 ? place.photos[0].getURI({maxWidth: 400}) : '';
 const aboutText = place.editorialSummary || "Electric vehicle charging station providing reliable power services.";
 
-// InfoHtml remains exactly as you designed
 const infoHtml = `
 <div style="width:340px; font-family:Roboto, Arial; background:#fff; border-radius:12px; overflow:hidden; position:relative;">
 ${photoUrl ? `<div style="width:100%; height:140px; background:url('${photoUrl}') center/cover no-repeat;"></div>` : ''}
@@ -206,10 +205,9 @@ card.style.background = '#f8f9fa';
 card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 };
 
-marker.addListener('gmp-click', (e) => select(e));
+marker.addListener('click', (e) => select(e));
 card.onclick = (e) => select(e);
 list.appendChild(card);
 });
 }
-start();
 })();
