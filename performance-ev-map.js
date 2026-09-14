@@ -1,3 +1,5 @@
+window.initPerformanceEVMap = null;
+
 (function() {
 let ev_Map, ev_InfoWindow, directionsService, directionsRenderer;
 let ev_Markers = [];
@@ -22,6 +24,24 @@ window.triggerNearbySearch = function(lat, lng) {
 if (!ev_Map) return;
 ev_Map.setCenter({lat: lat, lng: lng});
 ev_Map.setZoom(15); 
+};
+
+// Helper to clear the route and bring back all station pins
+window.clearRoute = function() {
+if (directionsRenderer) {
+directionsRenderer.setMap(null);
+directionsRenderer.setDirections({ routes: [] });
+}
+
+// Restore all station pins
+ev_Markers.forEach(m => m.map = ev_Map);
+
+// Clear out the turn-by-turn panel
+const panel = document.getElementById('ev-directions-panel');
+if (panel) panel.innerHTML = '';
+
+const wrapper = document.getElementById('ev-map-wrapper');
+if (wrapper) wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
 };
 
 window.calculateRoute = function(destLat, destLng) {
@@ -52,14 +72,28 @@ destination: destination,
 travelMode: google.maps.TravelMode.DRIVING
 }, (result, status) => {
 if (status === 'OK') {
+// Close any open info window popup
+if (ev_InfoWindow) ev_InfoWindow.close();
+
+// Hide browsing markers to prevent clutter and stacking over point B
+ev_Markers.forEach(m => m.map = null);
+
 directionsRenderer.setMap(ev_Map);
 if (panel) {
-panel.innerHTML = '';
-directionsRenderer.setPanel(panel);
+    panel.innerHTML = '';
+    directionsRenderer.setPanel(panel);
 }
 directionsRenderer.setDirections(result);
+
 if (panel) {
-panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Add Exit button at the top of the step-by-step panel
+    const resetBtn = document.createElement('button');
+    resetBtn.innerText = "✕ Exit Route & Show All Stations";
+    resetBtn.style.cssText = "margin-bottom:15px; padding:8px 16px; background:#f1f3f4; border:1px solid #dadce0; border-radius:4px; cursor:pointer; font-weight:500; font-family:Roboto, Arial, sans-serif;";
+    resetBtn.onclick = window.clearRoute;
+    panel.prepend(resetBtn);
+
+    panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 } else {
 alert("Unable to find a driving route: " + status);
@@ -70,11 +104,11 @@ alert("Unable to find a driving route: " + status);
 switch(error.code) {
 case error.PERMISSION_DENIED:
 alert(
-"Location access was blocked.\n\n" +
-"To view turn-by-turn directions:\n" +
-"1. Click the padlock/tune icon (🔒) in your browser address bar.\n" +
-"2. Set 'Location' permissions to 'Allow'.\n" +
-"3. Refresh the page and try again."
+    "Location access was blocked.\n\n" +
+    "To view turn-by-turn directions:\n" +
+    "1. Click the padlock/tune icon (🔒) in your browser address bar.\n" +
+    "2. Set 'Location' permissions to 'Allow'.\n" +
+    "3. Refresh the page and try again."
 );
 break;
 case error.POSITION_UNAVAILABLE:
@@ -92,9 +126,10 @@ break;
 );
 };
 
-async function start() {
+// Attached directly to window.initPerformanceEVMap for Google API callback
+window.initPerformanceEVMap = async function() {
 if (typeof google === 'undefined' || !google.maps) {
-setTimeout(start, 300);
+setTimeout(window.initPerformanceEVMap, 300);
 return;
 }
 
@@ -144,7 +179,7 @@ renderUI(places || [], AdvancedMarkerElement);
 } catch (e) { console.error("Search failed:", e); }
 });
 } catch (err) { console.error("Initialization Error", err); }
-}
+};
 
 function renderUI(places, AdvancedMarkerElement) {
 ev_Markers.forEach(m => m.map = null);
@@ -239,12 +274,10 @@ card.style.background = '#f8f9fa';
 card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 };
 
-// Use gmp-click for Advanced Markers
+// Use gmp-click for AdvancedMarkerElement
 marker.addListener('gmp-click', (e) => select(e));
 card.onclick = (e) => select(e);
 list.appendChild(card);
 });
 }
-
-start();
 })();
