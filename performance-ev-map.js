@@ -29,8 +29,13 @@ if (!directionsService || !directionsRenderer) return;
 
 const panel = document.getElementById('ev-directions-panel');
 
-if (navigator.geolocation) {
-navigator.geolocation.getCurrentPosition((position) => {
+if (!navigator.geolocation) {
+alert("Location services are not supported by your browser. Please enter a starting point manually.");
+return;
+}
+
+navigator.geolocation.getCurrentPosition(
+(position) => {
 const origin = { 
 lat: position.coords.latitude, 
 lng: position.coords.longitude 
@@ -47,31 +52,44 @@ destination: destination,
 travelMode: google.maps.TravelMode.DRIVING
 }, (result, status) => {
 if (status === 'OK') {
-// 1. Connect renderer to map and directions panel on success
 directionsRenderer.setMap(ev_Map);
-
 if (panel) {
-panel.innerHTML = ''; // Clear previous steps if any
+panel.innerHTML = '';
 directionsRenderer.setPanel(panel);
 }
-
-// 2. Render route polyline on map and turn-by-turn list in panel
 directionsRenderer.setDirections(result);
-
-// 3. Scroll user down to the directions panel
 if (panel) {
 panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 } else {
-alert("Could not calculate directions: " + status);
+alert("Unable to find a driving route: " + status);
 }
 });
-}, (error) => {
-alert("Please enable location services in your browser to calculate turn-by-turn directions.");
-});
-} else {
-alert("Geolocation is not supported by your browser.");
+},
+(error) => {
+switch(error.code) {
+case error.PERMISSION_DENIED:
+alert(
+"Location access was blocked.\n\n" +
+"To view turn-by-turn directions:\n" +
+"1. Click the padlock/tune icon (🔒) in your browser address bar.\n" +
+"2. Set 'Location' permissions to 'Allow'.\n" +
+"3. Refresh the page and try again."
+);
+break;
+case error.POSITION_UNAVAILABLE:
+alert("Your current location could not be determined. Please ensure device location / GPS is enabled.");
+break;
+case error.TIMEOUT:
+alert("Locating your position timed out. Please check your connection and try again.");
+break;
+default:
+alert("An unknown error occurred while retrieving your location.");
+break;
 }
+},
+{ enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+);
 };
 
 async function start() {
