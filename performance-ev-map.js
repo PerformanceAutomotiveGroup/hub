@@ -24,13 +24,48 @@ ev_Map.setCenter({lat: lat, lng: lng});
 ev_Map.setZoom(15); 
 };
 
+window.clearRoute = function() {
+if (directionsRenderer) {
+directionsRenderer.setMap(null);
+directionsRenderer.setDirections({ routes: [] });
+}
+
+// 1. Restore station map pins
+ev_Markers.forEach(m => m.map = ev_Map);
+
+// 2. Switch sidebar view back to station search results
+const resultsList = document.getElementById('ev-results-list');
+const panel = document.getElementById('ev-directions-panel');
+const title = document.getElementById('ev-sidebar-title');
+
+if (panel) {
+panel.style.display = 'none';
+panel.innerHTML = '';
+}
+if (resultsList) {
+resultsList.style.display = 'block';
+}
+if (title) {
+title.innerText = 'EV STATIONS';
+}
+};
+
 window.calculateRoute = function(destLat, destLng) {
 if (!directionsService || !directionsRenderer) return;
 
 const panel = document.getElementById('ev-directions-panel');
+const resultsList = document.getElementById('ev-results-list');
+const title = document.getElementById('ev-sidebar-title');
+const sidebar = document.getElementById('ev-sidebar');
+const icon = document.getElementById('toggle-icon');
 
-if (navigator.geolocation) {
-navigator.geolocation.getCurrentPosition((position) => {
+if (!navigator.geolocation) {
+alert("Location services are not supported by your browser. Please enter a starting point manually.");
+return;
+}
+
+navigator.geolocation.getCurrentPosition(
+(position) => {
 const origin = { 
 lat: position.coords.latitude, 
 lng: position.coords.longitude 
@@ -47,28 +82,67 @@ destination: destination,
 travelMode: google.maps.TravelMode.DRIVING
 }, (result, status) => {
 if (status === 'OK') {
-directionsRenderer.setMap(ev_Map);
+if (ev_InfoWindow) ev_InfoWindow.close();
+
+// Hide pins so only route points A & B show
+ev_Markers.forEach(m => m.map = null);
+
+// Ensure sidebar is open to display directions
+if (sidebar && sidebar.classList.contains('collapsed')) {
+sidebar.classList.remove('collapsed');
+if (icon) icon.innerText = '❮';
+}
+
+// Swap views inside the sidebar
+if (resultsList) resultsList.style.display = 'none';
+if (title) title.innerText = 'DIRECTIONS';
 
 if (panel) {
-panel.innerHTML = ''; 
+panel.innerHTML = '';
+panel.style.display = 'block';
+
+// Exit Route back button
+const resetBtn = document.createElement('button');
+resetBtn.className = 'ev-exit-route-btn';
+resetBtn.innerHTML = '✕ Exit Directions & View Stations';
+resetBtn.onclick = window.clearRoute;
+panel.appendChild(resetBtn);
+
+directionsRenderer.setMap(ev_Map);
 directionsRenderer.setPanel(panel);
+panel.scrollTop = 0;
 }
 
 directionsRenderer.setDirections(result);
-
-if (panel) {
-panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
 } else {
-alert("Could not calculate directions: " + status);
+alert("Unable to find a driving route: " + status);
 }
 });
-}, (error) => {
-alert("Please enable location services in your browser to calculate turn-by-turn directions.");
-});
-} else {
-alert("Geolocation is not supported by your browser.");
+},
+(error) => {
+switch(error.code) {
+case error.PERMISSION_DENIED:
+alert(
+"Location access was blocked.\n\n" +
+"To view turn-by-turn directions:\n" +
+"1. Click the padlock/tune icon (🔒) in your browser address bar.\n" +
+"2. Set 'Location' permissions to 'Allow'.\n" +
+"3. Refresh the page and try again."
+);
+break;
+case error.POSITION_UNAVAILABLE:
+alert("Your current location could not be determined. Please ensure device location / GPS is enabled.");
+break;
+case error.TIMEOUT:
+alert("Locating your position timed out. Please check your connection and try again.");
+break;
+default:
+alert("An unknown error occurred while retrieving your location.");
+break;
 }
+},
+{ enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+);
 };
 
 async function start() {
