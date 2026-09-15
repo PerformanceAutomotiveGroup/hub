@@ -179,12 +179,12 @@ if (ctaService && loc.ctas && loc.ctas.service) ctaService.href = loc.ctas.servi
 
 
 if (loc.googleMapsUrl && panelGlobalLink && panelGlobalLinkContainer) {
-  panelGlobalLink.href = loc.googleMapsUrl;
-  panelGlobalLink.textContent = `Read All ${loc.count} Reviews →`;
-  
-  panelGlobalLinkContainer.style.display = "block";
+panelGlobalLink.href = loc.googleMapsUrl;
+panelGlobalLink.textContent = `Read All ${loc.count} Reviews →`;
+
+panelGlobalLinkContainer.style.display = "block";
 } else if (panelGlobalLinkContainer) {
-  panelGlobalLinkContainer.style.display = "none";
+panelGlobalLinkContainer.style.display = "none";
 }
 
 // --- DYNAMIC HEADER 5-STAR RATING MATRIX ENGINE ---
@@ -363,5 +363,98 @@ if (document.readyState === "loading") {
 document.addEventListener("DOMContentLoaded", initEngine);
 } else {
 initEngine();
+}
+})();
+
+// =========================================================================
+// DEALERSHIP DIFFERENCE WIDGET (Single Store Inline Widget)
+// =========================================================================
+(function() {
+const initDealerDifferenceWidget = async () => {
+const widgetContainer = document.querySelector('.pag-dealership-difference');
+if (!widgetContainer) return; 
+
+if (!document.getElementById('pag-dealership-widget-styles')) {
+const styleTag = document.createElement('style');
+styleTag.id = 'pag-dealership-widget-styles';
+styleTag.textContent = `
+.pag-dealership-difference { margin-bottom: 30px; }
+.pag-dealership-difference .wrapper .widget__header { align-items: center; display: flex; flex-direction: column; }
+.pag-dealership-difference .wrapper .widget__header h2 { margin: 2rem 0 1rem; color: #413f40; text-align: center; text-transform: uppercase; }
+.pag-dealership-difference .wrapper .widget__header h2:after { content: ""; width: 5rem; height: 4px; display: block; background: var(--color-primary); margin: 0 auto; }
+.pag-dealership-difference .wrapper .widget__header .widget__header_sub { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; }
+.pag-dealership-difference .wrapper .widget__header .widget__header_sub span { display: flex; align-items: center; margin: 0 1rem; }
+.pag-dealership-difference .wrapper .widget__header .widget__header_sub span.average-rating { color: #ec7c1f; font-size: 1.5rem; }
+.pag-dealership-difference .wrapper .widget__header .widget__header_sub span.average-rating .average-rating-decimal { font-size: 3.5rem; margin-right: 0.5rem; color: #ed0000; font-weight: 600; line-height: 1; }
+.stars-wrapper { display: inline-flex; align-items: center; gap: 2px; }
+.pag-dealership-difference .wrapper .widget__header .widget__header_sub span.full-reviews-link a { font-weight: 600; text-decoration: underline; color: #ed0000; font-size: 1.5rem; }
+.pag-dealership-difference .wrapper .widget__header .widget__header_sub span.sub-header { color: #413f40; font-weight: 700; }
+.pag-dealership-difference .wrapper .widget__header .widget__header_sub span.sub-header i { margin-right: 0.5rem; }
+.pag-dealership-difference .wrapper .widget__header .widget__header_sub span.sub-header i.fa-award:before { content: url(https://performanceautoprod-com.cdn-convertus.com/uploads/sites/11/2022/03/trophy.png); }
+`;
+document.head.appendChild(styleTag);
+}
+
+const targetKey = widgetContainer.dataset.dealerKey;
+if (!targetKey) return;
+
+const JSON_URL = "https://storage.googleapis.com/pag-marketing-reviews-hub/reviews/reviews.json";
+
+try {
+let dealershipsList = window.locationsData?.dealerships;
+
+if (!dealershipsList) {
+const response = await fetch(JSON_URL);
+if (!response.ok) throw new Error("JSON fetch failed");
+const rawData = await response.json();
+dealershipsList = Array.isArray(rawData) ? rawData : (rawData.dealerships || []);
+}
+
+const store = dealershipsList.find(item => {
+const keyMatch = item.key && item.key.toLowerCase() === targetKey.toLowerCase();
+const nameMatch = item.name && item.name.toLowerCase().includes(targetKey.replace(/-/g, ' '));
+return keyMatch || nameMatch;
+});
+
+if (store) {
+const decimalEl = widgetContainer.querySelector('#dealerRatingDecimal');
+if (decimalEl && store.rating) {
+decimalEl.textContent = parseFloat(store.rating).toFixed(1);
+}
+
+const linkEl = widgetContainer.querySelector('#dealerGoogleLink');
+if (linkEl && store.googleMapsUrl) {
+linkEl.href = store.googleMapsUrl;
+}
+
+const starsContainer = widgetContainer.querySelector('#dealerStars');
+if (starsContainer && store.rating) {
+starsContainer.innerHTML = '';
+const ratingNum = parseFloat(store.rating);
+
+for (let i = 1; i <= 5; i++) {
+const starDiv = document.createElement('div');
+starDiv.className = 'single-star full';
+
+if (ratingNum >= i) {
+starDiv.innerHTML = '<i class="fas fa-star"></i>';
+} else if (ratingNum >= i - 0.5) {
+starDiv.innerHTML = '<i class="fas fa-star-half-alt"></i>';
+} else {
+starDiv.innerHTML = '<i class="far fa-star"></i>';
+}
+starsContainer.appendChild(starDiv);
+}
+}
+}
+} catch (error) {
+console.error("Dealership widget update error:", error);
+}
+};
+
+if (document.readyState === "loading") {
+document.addEventListener("DOMContentLoaded", initDealerDifferenceWidget);
+} else {
+initDealerDifferenceWidget();
 }
 })();
