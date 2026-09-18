@@ -412,7 +412,7 @@ if (!store) return;
 
 const rating = parseFloat(store.rating);
 const decimalEl = widget.querySelector('.average-rating-decimal');
-const linkEl = widget.querySelector('.full-reviews-link a');
+//const linkEl = widget.querySelector('.full-reviews-link a');
 const starsEl = widget.querySelector('.stars-wrapper');
 
 if (decimalEl && rating) decimalEl.textContent = rating.toFixed(1);
