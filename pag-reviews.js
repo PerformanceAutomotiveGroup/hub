@@ -382,7 +382,7 @@ if (!document.getElementById('pag-dealer-widget-css')) {
 const style = document.createElement('style');
 style.id = 'pag-dealer-widget-css';
 style.textContent = `
-.pag-dealership-difference { background-color: #f7f7f7; padding: 35px 0; border-bottom: 1px solid #e2e8f0; text-align: center; }
+.pag-dealership-difference { background-color: #f7f7f7; padding: 35px 15px; border-bottom: 1px solid #e2e8f0; text-align: center; }
 .pag-dealership-difference h2 { margin: 0 0 1rem; color: #413f40; text-transform: uppercase; }
 .pag-dealership-difference h2:after { content: ""; width: 5rem; height: 4px; display: block; background: var(--color-primary, #ed0000); margin: 0.5rem auto 0; }
 .pag-dealership-difference .widget__header_sub { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 1.5rem; }
