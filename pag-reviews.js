@@ -416,7 +416,7 @@ const linkEl = widget.querySelector('.full-reviews-link a');
 const starsEl = widget.querySelector('.stars-wrapper');
 
 if (decimalEl && rating) decimalEl.textContent = rating.toFixed(1);
-if (linkEl && store.googleMapsUrl) linkEl.href = store.googleMapsUrl;
+//if (linkEl && store.googleMapsUrl) linkEl.href = store.googleMapsUrl;
 
 if (starsEl && rating) {
 starsEl.innerHTML = [1, 2, 3, 4, 5].map(i => {
