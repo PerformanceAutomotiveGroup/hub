@@ -390,7 +390,7 @@ style.textContent = `
 .pag-dealership-difference .average-rating { color: #ec7c1f; font-size: 1.5rem; }
 .pag-dealership-difference .average-rating-decimal { font-size: 3.5rem; margin-right: 0.5rem; color: var(--color-primary, #ed0000); font-weight: 600; line-height: 1; }
 .pag-dealership-difference .stars-wrapper { display: inline-flex; gap: 3px; }
-.pag-dealership-difference .full-reviews-link a { font-weight: 600; text-decoration: underline; color: var(--color-primary, #ed0000); font-size: 1.5rem; }
+.pag-dealership-difference .full-reviews-url a { font-weight: 600; text-decoration: underline; color: var(--color-primary, #ed0000); font-size: 1.5rem; }
 .pag-dealership-difference .sub-header { color: #413f40; font-weight: 700; }
 .pag-dealership-difference .sub-header i { margin-right: 0.5rem; }
 .pag-dealership-difference .sub-header i.fa-award:before { content: url('https://performanceautoprod-com.cdn-convertus.com/uploads/sites/11/2022/03/trophy.png'); }
