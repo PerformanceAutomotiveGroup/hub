@@ -26,7 +26,7 @@ function createCustomEVIcon() {
 const pin = document.createElement('div');
 pin.className = 'custom-ev-pin';
 pin.innerHTML = `
-<svg width="32" height="40" viewBox="0 0 34 42" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); cursor: pointer;">
+<svg width="22" height="30" viewBox="0 0 34 42" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); cursor: pointer;">
 <!-- Outer Pin Body -->
 <path d="M17 41C17 41 32 26.5 32 16.5C32 7.3873 25.2843 0 17 0C8.71573 0 2 7.3873 2 16.5C2 26.5 17 41 17 41Z" fill="#ffffff" stroke="#ffffff" stroke-width="2"/>
 <!-- Inner Circular Badge -->
