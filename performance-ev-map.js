@@ -239,11 +239,11 @@ const photoUrl = place.photos && place.photos.length > 0 ? place.photos[0].getUR
 const aboutText = place.editorialSummary || "Electric vehicle charging station providing reliable power services.";
 
 const infoHtml = `
-<div style="width:340px; font-family:Roboto, Arial; background:#fff; border-radius:12px; overflow:hidden; position:relative;">
+<div style="width:250px; font-family:Roboto, Arial; background:#fff; border-radius:12px; overflow:hidden; position:relative;">
 ${photoUrl ? `<div style="width:100%; height:140px; background:url('${photoUrl}') center/cover no-repeat;"></div>` : ''}
 <div onclick="window.closeEVInfoWindow()" style="position:absolute; top:12px; right:12px; background:#fff; width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,0.3); font-size:22px; z-index:100; color:#3c4043;">×</div>
 <div style="padding:16px 16px 0 16px;">
-<h2 style="margin:0; font-size:20px; font-weight:400; color:#202124;">${place.displayName}</h2>
+<h2 style="margin:0; font-size:10px; font-weight:400; color:#202124; margin-right:30px;">${place.displayName}</h2>
 <div style="display:flex; gap:4px; margin:4px 0; font-size:14px; align-items:center;">
 </div>
 </div>
@@ -268,11 +268,9 @@ ${photoUrl ? `<div style="width:100%; height:140px; background:url('${photoUrl}'
 </div>
 <div style="padding:16px;">
 <div style="display:flex; gap:12px; align-items:flex-start; margin-bottom:16px;">
-<span style="color:#00838f; font-size:18px;">📍</span>
 <span style="font-size:14px; color:#3c4043; line-height:1.4;">${addr}</span>
 </div>
 <div style="display:flex; gap:12px; align-items:center;">
-<span style="color:#188038; font-size:18px;">🕒</span>
 <span style="font-size:14px; color:#188038; font-weight:500;">Open 24 hours ▾</span>
 </div>
 </div>
