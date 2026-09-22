@@ -125,7 +125,7 @@ case error.PERMISSION_DENIED:
 alert(
 "Location access was blocked.\n\n" +
 "To view turn-by-turn directions:\n" +
-"1. Click the padlock/tune icon (🔒) in your browser address bar.\n" +
+"1. Click the location/padlock icon (🔒) in your browser address bar.\n" +
 "2. Set 'Location' permissions to 'Allow'.\n" +
 "3. Refresh the page and try again."
 );
