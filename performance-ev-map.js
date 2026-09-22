@@ -3,11 +3,20 @@ let ev_Map, ev_InfoWindow, directionsService, directionsRenderer;
 let ev_Markers = [];
 let isPanning = false;
 
-// Multi-Hub Market Clusters for broad initial coverage
-const REGIONAL_HUBS = [
-{ name: "Peel/Halton", center: { lat: 43.630, lng: -79.720 }, radius: 18000 },
-{ name: "Hamilton",    center: { lat: 43.255, lng: -79.871 }, radius: 16000 },
-{ name: "Niagara",     center: { lat: 43.159, lng: -79.246 }, radius: 22000 }
+// Discrete Geographic Sectors to force independent 20-result queries across regions
+const REGIONAL_SECTORS = [
+{
+    name: "Peel/Halton",
+    bounds: { north: 43.820, south: 43.480, west: -79.920, east: -79.540 }
+},
+{
+    name: "Hamilton/Burlington",
+    bounds: { north: 43.450, south: 43.150, west: -80.100, east: -79.680 }
+},
+{
+    name: "Niagara Peninsula",
+    bounds: { north: 43.280, south: 42.850, west: -79.550, east: -79.020 }
+}
 ];
 
 function formatConnector(type) {
@@ -191,7 +200,7 @@ google.maps.importLibrary("marker")
 // Framing the Golden Horseshoe corridor (Brampton, Mississauga, Hamilton, Niagara)
 ev_Map = new Map(mapCanvas, {
 center: { lat: 43.460, lng: -79.670 }, 
-zoom: 9.3,
+zoom: 10,
 mapId: "e9da2b0d1db902e558a4a8df",
 mapTypeControl: false,
 streetViewControl: false,
@@ -239,20 +248,20 @@ renderUI(places || [], AdvancedMarkerElement);
 return;
 }
 
-// 2. Zoomed Out (Regional View): Multi-Hub query to bypass the 20-cap across dealership regions
+// 2. Zoomed Out (Regional View): 3 Parallel Sector-Restricted Queries (Loads up to 60 stations)
 try {
-const hubPromises = REGIONAL_HUBS.map(hub => {
+const sectorPromises = REGIONAL_SECTORS.map(sector => {
 return Place.searchByText({
 textQuery: "EV Charging Station",
 fields: ["displayName", "location", "formattedAddress", "evChargeOptions", "photos", "editorialSummary"],
-locationBias: { circle: { center: hub.center, radius: hub.radius } },
-maxResultCount: 15
+locationRestriction: sector.bounds,
+maxResultCount: 20
 }).then(res => res.places || []).catch(() => []);
 });
 
-const resultsArray = await Promise.all(hubPromises);
+const resultsArray = await Promise.all(sectorPromises);
 
-// Deduplicate stations returned across overlapping radii
+// Deduplicate stations returned across overlapping boundaries
 const allPlaces = [];
 const seenLocations = new Set();
 
@@ -267,7 +276,7 @@ allPlaces.push(place);
 
 renderUI(allPlaces, AdvancedMarkerElement);
 } catch (e) {
-console.error("Multi-hub search failed:", e);
+console.error("Multi-sector search failed:", e);
 }
 }
 
