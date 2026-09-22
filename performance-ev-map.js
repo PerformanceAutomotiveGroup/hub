@@ -171,8 +171,8 @@ directionsService = new google.maps.DirectionsService();
 directionsRenderer = new google.maps.DirectionsRenderer({
 suppressMarkers: false,
 polylineOptions: {
-strokeColor: "#00838f",
-strokeWeight: 6,
+strokeColor: "#2c68b5",
+strokeWeight: 5,
 zIndex: 999
 }
 });
