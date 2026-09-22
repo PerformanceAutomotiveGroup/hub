@@ -254,15 +254,15 @@ ${photoUrl ? `<div style="width:100%; height:140px; background:url('${photoUrl}'
 <div id="info-content-overview">
 <div style="display:flex; justify-content:space-around; padding:16px 8px; border-bottom:1px solid #f1f3f4;">
 <div style="text-align:center; cursor:pointer;" onclick="window.calculateRoute(${place.location.lat()}, ${place.location.lng()})">
-<div style="width:42px; height:42px; border-radius:50%; background:#2c68b5; color:#fff; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:20px;">↱</div>
+<div style="width:35px; height:35px; border-radius:50%; background:#2c68b5; color:#fff; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:20px;">↱</div>
 <div style="font-size:11px; color:#2c68b5; font-weight:500; margin-top:6px;">Directions</div>
 </div>
 <div style="text-align:center; cursor:pointer;" onclick="window.triggerNearbySearch(${place.location.lat()}, ${place.location.lng()})">
-<div style="width:42px; height:42px; border-radius:50%; border:1px solid #dadce0; color:#2c68b5; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">📍</div>
+<div style="width:35px; height:35px; border-radius:50%; border:1px solid #dadce0; color:#2c68b5; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">📍</div>
 <div style="font-size:11px; color:#2c68b5; font-weight:500; margin-top:6px;">Nearby</div>
 </div>
 <div style="text-align:center; cursor:pointer;" onclick="if(navigator.share){navigator.share({title:'${place.displayName}', url:window.location.href})}">
-<div style="width:42px; height:42px; border-radius:50%; border:1px solid #dadce0; color:#2c68b5; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">🔗</div>
+<div style="width:35px; height:35px; border-radius:50%; border:1px solid #dadce0; color:#2c68b5; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">🔗</div>
 <div style="font-size:11px; color:#2c68b5; font-weight:500; margin-top:6px;">Share</div>
 </div>
 </div>
