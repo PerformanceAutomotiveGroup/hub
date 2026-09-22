@@ -225,10 +225,10 @@ const addr = place.formattedAddress || "";
 
 let sidebarPlugs = '';
 (place.evChargeOptions?.connectorAggregations || []).forEach(agg => {
-sidebarPlugs += `<div style="display:flex; justify-content:space-between; font-size:13px; margin-top:8px;"><span style="color:#00838f;">⚡ ${formatConnector(agg.type)}</span><span style="background:#f1f3f4; padding:0 8px; border-radius:4px;">0/${agg.count || 1}</span></div>`;
+sidebarPlugs += `<div style="display:flex; justify-content:space-between; font-size:13px; margin-top:8px;"><span style="color:#2c68b5;">⚡ ${formatConnector(agg.type)}</span><span style="background:#f1f3f4; padding:0 8px; border-radius:4px;">0/${agg.count || 1}</span></div>`;
 });
 
-card.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:start;"><div style="width:78%"><h5 style="margin:0; font-size:16px; font-weight:500; color:#202124;">${place.displayName}</h5><div></div><p style="margin:4px 0; font-size:13px; color:#70757a;">${addr}</p>${sidebarPlugs}</div><div style="text-align:center; color:#00838f; font-size:11px;" onclick="event.stopPropagation(); window.calculateRoute(${place.location.lat()}, ${place.location.lng()})"><div style="width:34px; height:34px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">↱</div>Directions</div></div>`;
+card.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:start;"><div style="width:78%"><h5 style="margin:0; font-size:16px; font-weight:500; color:#202124;">${place.displayName}</h5><div></div><p style="margin:4px 0; font-size:13px; color:#70757a;">${addr}</p>${sidebarPlugs}</div><div style="text-align:center; color:#2c68b5; font-size:11px;" onclick="event.stopPropagation(); window.calculateRoute(${place.location.lat()}, ${place.location.lng()})"><div style="width:34px; height:34px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">↱</div>Directions</div></div>`;
 
 const select = (e) => {
 if (e && e.stopImmediatePropagation) e.stopImmediatePropagation();
@@ -248,22 +248,22 @@ ${photoUrl ? `<div style="width:100%; height:140px; background:url('${photoUrl}'
 </div>
 </div>
 <div style="display:flex; border-bottom:1px solid #e0e0e0; margin-top:8px;">
-<div id="tab-overview" style="flex:1; text-align:center; padding:12px; color:#00838f; border-bottom:3px solid #00838f; font-weight:500; cursor:pointer;" onclick="document.getElementById('info-content-about').style.display='none'; document.getElementById('info-content-overview').style.display='block'; this.style.color='#00838f'; this.style.borderBottom='3px solid #00838f'; document.getElementById('tab-about').style.color='#70757a'; document.getElementById('tab-about').style.borderBottom='none';">Overview</div>
-<div id="tab-about" style="flex:1; text-align:center; padding:12px; color:#70757a; font-weight:500; cursor:pointer;" onclick="document.getElementById('info-content-overview').style.display='none'; document.getElementById('info-content-about').style.display='block'; this.style.color='#00838f'; this.style.borderBottom='3px solid #00838f'; document.getElementById('tab-overview').style.color='#70757a'; document.getElementById('tab-overview').style.borderBottom='none';">About</div>
+<div id="tab-overview" style="flex:1; text-align:center; padding:12px; color:#2c68b5; border-bottom:3px solid #2c68b5; font-weight:500; cursor:pointer;" onclick="document.getElementById('info-content-about').style.display='none'; document.getElementById('info-content-overview').style.display='block'; this.style.color='#2c68b5'; this.style.borderBottom='3px solid #2c68b5'; document.getElementById('tab-about').style.color='#70757a'; document.getElementById('tab-about').style.borderBottom='none';">Overview</div>
+<div id="tab-about" style="flex:1; text-align:center; padding:12px; color:#70757a; font-weight:500; cursor:pointer;" onclick="document.getElementById('info-content-overview').style.display='none'; document.getElementById('info-content-about').style.display='block'; this.style.color='#2c68b5'; this.style.borderBottom='3px solid #2c68b5'; document.getElementById('tab-overview').style.color='#70757a'; document.getElementById('tab-overview').style.borderBottom='none';">About</div>
 </div>
 <div id="info-content-overview">
 <div style="display:flex; justify-content:space-around; padding:16px 8px; border-bottom:1px solid #f1f3f4;">
 <div style="text-align:center; cursor:pointer;" onclick="window.calculateRoute(${place.location.lat()}, ${place.location.lng()})">
-<div style="width:42px; height:42px; border-radius:50%; background:#00838f; color:#fff; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:20px;">↱</div>
-<div style="font-size:11px; color:#00838f; font-weight:500; margin-top:6px;">Directions</div>
+<div style="width:42px; height:42px; border-radius:50%; background:#2c68b5; color:#fff; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:20px;">↱</div>
+<div style="font-size:11px; color:#2c68b5; font-weight:500; margin-top:6px;">Directions</div>
 </div>
 <div style="text-align:center; cursor:pointer;" onclick="window.triggerNearbySearch(${place.location.lat()}, ${place.location.lng()})">
-<div style="width:42px; height:42px; border-radius:50%; border:1px solid #dadce0; color:#00838f; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">📍</div>
-<div style="font-size:11px; color:#00838f; font-weight:500; margin-top:6px;">Nearby</div>
+<div style="width:42px; height:42px; border-radius:50%; border:1px solid #dadce0; color:#2c68b5; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">📍</div>
+<div style="font-size:11px; color:#2c68b5; font-weight:500; margin-top:6px;">Nearby</div>
 </div>
 <div style="text-align:center; cursor:pointer;" onclick="if(navigator.share){navigator.share({title:'${place.displayName}', url:window.location.href})}">
-<div style="width:42px; height:42px; border-radius:50%; border:1px solid #dadce0; color:#00838f; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">🔗</div>
-<div style="font-size:11px; color:#00838f; font-weight:500; margin-top:6px;">Share</div>
+<div style="width:42px; height:42px; border-radius:50%; border:1px solid #dadce0; color:#2c68b5; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">🔗</div>
+<div style="font-size:11px; color:#2c68b5; font-weight:500; margin-top:6px;">Share</div>
 </div>
 </div>
 <div style="padding:16px;">
