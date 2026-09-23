@@ -6,16 +6,16 @@ let isPanning = false;
 // Discrete Geographic Sectors to force independent 20-result queries across regions
 const REGIONAL_SECTORS = [
 {
-    name: "Peel/Halton",
-    bounds: { north: 43.820, south: 43.480, west: -79.920, east: -79.540 }
+name: "Peel/Halton",
+bounds: { north: 43.820, south: 43.480, west: -79.920, east: -79.540 }
 },
 {
-    name: "Hamilton/Burlington",
-    bounds: { north: 43.450, south: 43.150, west: -80.100, east: -79.680 }
+name: "Hamilton/Burlington",
+bounds: { north: 43.450, south: 43.150, west: -80.100, east: -79.680 }
 },
 {
-    name: "Niagara Peninsula",
-    bounds: { north: 43.280, south: 42.850, west: -79.550, east: -79.020 }
+name: "Niagara Peninsula",
+bounds: { north: 43.280, south: 42.850, west: -79.550, east: -79.020 }
 }
 ];
 
@@ -134,12 +134,29 @@ if (panel) {
 panel.innerHTML = '';
 panel.style.display = 'block';
 
-// Exit Route button
+// 1. Container for both action buttons
+const btnContainer = document.createElement('div');
+btnContainer.className = 'ev-route-actions-group';
+
+// 2. Open in Google Maps navigation button
+const gmapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${origin.lat},${origin.lng}&destination=${destination.lat},${destination.lng}&travelmode=driving`;
+const gmapsBtn = document.createElement('a');
+gmapsBtn.className = 'ev-gmaps-nav-btn';
+gmapsBtn.href = gmapsUrl;
+gmapsBtn.target = '_blank';
+gmapsBtn.rel = 'noopener noreferrer';
+gmapsBtn.innerHTML = '<span>Open in Google Maps</span> ↗';
+
+// 3. Exit route button
 const resetBtn = document.createElement('button');
 resetBtn.className = 'ev-exit-route-btn';
 resetBtn.innerHTML = '✕ Exit Directions & View Stations';
 resetBtn.onclick = window.clearRoute;
-panel.appendChild(resetBtn);
+
+// 4. Append both buttons to the container, then add to panel
+btnContainer.appendChild(gmapsBtn);
+btnContainer.appendChild(resetBtn);
+panel.appendChild(btnContainer);
 
 directionsRenderer.setMap(ev_Map);
 directionsRenderer.setPanel(panel);
