@@ -30,7 +30,7 @@ const types = {
 return types[type] || type.replace('EV_CONNECTOR_TYPE_', '').replace(/_/g, ' ');
 }
 
-// Custom #2c68b5 SVG pin matching your updated design
+// Custom #2c68b5 SVG pin
 function createCustomEVIcon() {
 const pin = document.createElement('div');
 pin.className = 'custom-ev-pin';
