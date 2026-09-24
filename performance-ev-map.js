@@ -345,7 +345,7 @@ const aboutText = place.editorialSummary || "Electric vehicle charging station p
 
 // InfoWindow popup with custom SVG action icons
 const infoHtml = `
-<div style="width:250px; font-family:Roboto, Arial; background:#fff; border-radius:12px; overflow:hidden; position:relative;">
+<div style="width:230px; font-family:Roboto, Arial; background:#fff; border-radius:12px; overflow:hidden; position:relative;">
 ${photoUrl ? `<div style="width:100%; height:140px; background:url('${photoUrl}') center/cover no-repeat;"></div>` : ''}
 <div onclick="window.closeEVInfoWindow()" style="position:absolute; top:12px; right:12px; background:#fff; width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,0.3); font-size:22px; z-index:100; color:#3c4043;">×</div>
 <div style="padding:16px 16px 0 16px;">
