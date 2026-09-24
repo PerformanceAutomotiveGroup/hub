@@ -4,18 +4,19 @@ let ev_Markers = [];
 let isPanning = false;
 
 // Discrete Geographic Sectors to force independent 20-result queries across regions
+// Expanded & overlapping sectors to eliminate coverage gaps along the QEW/403/401 corridors
 const REGIONAL_SECTORS = [
 {
-name: "Peel/Halton",
-bounds: { north: 43.820, south: 43.480, west: -79.920, east: -79.540 }
+    name: "Peel/Halton",
+    bounds: { north: 43.880, south: 43.380, west: -80.000, east: -79.500 }
 },
 {
-name: "Hamilton/Burlington",
-bounds: { north: 43.450, south: 43.150, west: -80.100, east: -79.680 }
+    name: "Hamilton/Burlington",
+    bounds: { north: 43.480, south: 43.120, west: -80.150, east: -79.580 }
 },
 {
-name: "Niagara Peninsula",
-bounds: { north: 43.280, south: 42.850, west: -79.550, east: -79.020 }
+    name: "Niagara Region",
+    bounds: { north: 43.320, south: 42.820, west: -79.650, east: -78.980 }
 }
 ];
 
