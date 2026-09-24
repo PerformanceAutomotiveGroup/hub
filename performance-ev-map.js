@@ -175,7 +175,7 @@ case error.PERMISSION_DENIED:
 alert(
 "Location access was blocked.\n\n" +
 "To view turn-by-turn directions:\n" +
-"1. Click the location/padlock icon (🔒) in your browser address bar.\n" +
+"1. Click the blocked location icon (crossed-out pin) in your address bar.\n" +
 "2. Set 'Location' permissions to 'Allow'.\n" +
 "3. Refresh the page and try again."
 );
@@ -329,11 +329,11 @@ const addr = place.formattedAddress || "";
 
 let sidebarPlugs = '';
 (place.evChargeOptions?.connectorAggregations || []).forEach(agg => {
-sidebarPlugs += `<div style="display:flex; justify-content:space-between; font-size:13px; margin-top:8px;"><span style="color:#2c68b5;">⚡ ${formatConnector(agg.type)}</span><span style="background:#f1f3f4; padding:0 8px; border-radius:4px;">0/${agg.count || 1}</span></div>`;
+sidebarPlugs += `<div style="display:flex; justify-content:space-between; align-items:center; font-size:13px; margin-top:8px;"><span style="color:#2c68b5; display:inline-flex; align-items:center; gap:5px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="#2c68b5"><path d="M13 2L4.5 13.5H11.5L10 22L19.5 9.5H13.5L15 2H13Z"/></svg>${formatConnector(agg.type)}</span><span style="background:#f1f3f4; padding:0 8px; border-radius:4px;">0/${agg.count || 1}</span></div>`;
 });
 
 // Card without star ranking
-card.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:start;"><div style="width:78%"><h5 style="margin:0; font-size:16px; font-weight:500; color:#202124;">${place.displayName}</h5><p style="margin:4px 0; font-size:13px; color:#70757a;">${addr}</p>${sidebarPlugs}</div><div style="text-align:center; color:#2c68b5; font-size:11px;" onclick="event.stopPropagation(); window.calculateRoute(${place.location.lat()}, ${place.location.lng()})"><div style="width:34px; height:34px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">↱</div>Directions</div></div>`;
+card.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:start;"><div style="width:78%"><h5 style="margin:0; font-size:16px; font-weight:500; color:#202124;">${place.displayName}</h5><p style="margin:4px 0; font-size:13px; color:#70757a;">${addr}</p>${sidebarPlugs}</div><div style="text-align:center; color:#2c68b5; font-size:11px;" onclick="event.stopPropagation(); window.calculateRoute(${place.location.lat()}, ${place.location.lng()})"><div style="width:34px; height:34px; border-radius:50%; background:#e1f5fe; display:flex; align-items:center; justify-content:center; margin:0 auto; color:#2c68b5;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2c68b5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19V9a2 2 0 0 1 2-2h8"/><polyline points="15 3 19 7 15 11"/><circle cx="9" cy="19" r="1.5" fill="#2c68b5"/></svg></div>Directions</div></div>`;
 
 const select = (e) => {
 if (e && e.stopImmediatePropagation) e.stopImmediatePropagation();
@@ -343,7 +343,7 @@ ev_Map.panTo(place.location);
 const photoUrl = place.photos && place.photos.length > 0 ? place.photos[0].getURI({maxWidth: 400}) : '';
 const aboutText = place.editorialSummary || "Electric vehicle charging station providing reliable power services.";
 
-// InfoWindow popup without star ranking
+// InfoWindow popup with custom SVG action icons
 const infoHtml = `
 <div style="width:250px; font-family:Roboto, Arial; background:#fff; border-radius:12px; overflow:hidden; position:relative;">
 ${photoUrl ? `<div style="width:100%; height:140px; background:url('${photoUrl}') center/cover no-repeat;"></div>` : ''}
@@ -358,15 +358,28 @@ ${photoUrl ? `<div style="width:100%; height:140px; background:url('${photoUrl}'
 <div id="info-content-overview">
 <div style="display:flex; justify-content:space-around; padding:16px 8px; border-bottom:1px solid #f1f3f4;">
 <div style="text-align:center; cursor:pointer;" onclick="window.calculateRoute(${place.location.lat()}, ${place.location.lng()})">
-<div style="width:35px; height:35px; border-radius:50%; background:#2c68b5; color:#fff; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:20px;">↱</div>
+<div style="width:35px; height:35px; border-radius:50%; background:#2c68b5; color:#fff; display:flex; align-items:center; justify-content:center; margin:0 auto; box-shadow:0 2px 5px rgba(44,104,181,0.25);">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+<path d="M9 19V9a2 2 0 0 1 2-2h8"/><polyline points="15 3 19 7 15 11"/><circle cx="9" cy="19" r="1.5" fill="#ffffff"/>
+</svg>
+</div>
 <div style="font-size:11px; color:#2c68b5; font-weight:500; margin-top:6px;">Directions</div>
 </div>
 <div style="text-align:center; cursor:pointer;" onclick="window.triggerNearbySearch(${place.location.lat()}, ${place.location.lng()})">
-<div style="width:35px; height:35px; border-radius:50%; border:1px solid #dadce0; color:#2c68b5; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">📍</div>
+<div style="width:35px; height:35px; border-radius:50%; border:1px solid #dadce0; color:#2c68b5; display:flex; align-items:center; justify-content:center; margin:0 auto; background:#fff;">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#2c68b5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5" fill="#2c68b5"/>
+</svg>
+</div>
 <div style="font-size:11px; color:#2c68b5; font-weight:500; margin-top:6px;">Nearby</div>
 </div>
 <div style="text-align:center; cursor:pointer;" onclick="if(navigator.share){navigator.share({title:'${place.displayName}', url:window.location.href})}">
-<div style="width:35px; height:35px; border-radius:50%; border:1px solid #dadce0; color:#2c68b5; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;">🔗</div>
+<div style="width:35px; height:35px; border-radius:50%; border:1px solid #dadce0; color:#2c68b5; display:flex; align-items:center; justify-content:center; margin:0 auto; background:#fff;">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2c68b5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+<line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+</svg>
+</div>
 <div style="font-size:11px; color:#2c68b5; font-weight:500; margin-top:6px;">Share</div>
 </div>
 </div>
@@ -375,7 +388,7 @@ ${photoUrl ? `<div style="width:100%; height:140px; background:url('${photoUrl}'
 <span style="font-size:14px; color:#3c4043; line-height:1.4;">${addr}</span>
 </div>
 <div style="display:flex; gap:12px; align-items:center;">
-<span style="font-size:14px; color:#188038; font-weight:500;">Open 24 hours ▾</span>
+<span style="color:#188038; font-size:14px; font-weight:500;">Open 24 hours ▾</span>
 </div>
 </div>
 </div>
