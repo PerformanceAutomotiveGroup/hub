@@ -403,7 +403,7 @@ ev_InfoWindow.setOptions({ content: infoHtml, headerDisabled: true });
 ev_InfoWindow.open({ anchor: marker, map: ev_Map, shouldFocus: false });
 
 document.querySelectorAll('.ev-location-card').forEach(c => c.style.background = '#fff');
-card.style.background = '#f8f9fa';
+card.style.background = '#f2f8fd';
 card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 };
 
