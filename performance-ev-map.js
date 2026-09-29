@@ -7,16 +7,20 @@ let isPanning = false;
 // Expanded & overlapping sectors to eliminate coverage gaps along the QEW/403/401 corridors
 const REGIONAL_SECTORS = [
 {
-    name: "Peel/Halton",
-    bounds: { north: 43.880, south: 43.380, west: -80.000, east: -79.500 }
+    name: "Peel (Brampton / North Mississauga)",
+    bounds: { north: 43.830, south: 43.580, west: -79.850, east: -79.560 }
 },
 {
-    name: "Hamilton/Burlington",
-    bounds: { north: 43.480, south: 43.120, west: -80.150, east: -79.580 }
+    name: "Halton (Oakville / Milton / South Mississauga)",
+    bounds: { north: 43.580, south: 43.370, west: -79.950, east: -79.580 }
 },
 {
-    name: "Niagara Region",
-    bounds: { north: 43.320, south: 42.820, west: -79.650, east: -78.980 }
+    name: "Hamilton / Burlington / Grimsby",
+    bounds: { north: 43.430, south: 43.150, west: -80.050, east: -79.500 }
+},
+{
+    name: "Niagara Peninsula (Lincoln to Niagara Falls)",
+    bounds: { north: 43.280, south: 42.850, west: -79.550, east: -78.980 }
 }
 ];
 
