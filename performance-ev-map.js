@@ -330,7 +330,7 @@ const addr = place.formattedAddress || "";
 
 let sidebarPlugs = '';
 (place.evChargeOptions?.connectorAggregations || []).forEach(agg => {
-sidebarPlugs += `<div style="display:flex; justify-content:space-between; align-items:center; font-size:13px; margin-top:8px;"><span style="color:#2c68b5; display:inline-flex; align-items:center; gap:5px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="#2c68b5"><path d="M13 2L4.5 13.5H11.5L10 22L19.5 9.5H13.5L15 2H13Z"/></svg>${formatConnector(agg.type)}</span><span style="background:#f1f3f4; padding:0 8px; border-radius:4px;">0/${agg.count || 1}</span></div>`;
+sidebarPlugs += `<div style="display:flex; justify-content:space-between; align-items:center; font-size:13px; margin-top:8px;"><span style="color:#2c68b5; display:inline-flex; align-items:center; gap:5px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="#FFC20E"><path d="M13 2L4.5 13.5H11.5L10 22L19.5 9.5H13.5L15 2H13Z"/></svg>${formatConnector(agg.type)}</span><span style="background:#f1f3f4; padding:0 8px; border-radius:4px;">0/${agg.count || 1}</span></div>`;
 });
 
 // Card without star ranking
