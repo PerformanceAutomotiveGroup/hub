@@ -20,7 +20,7 @@ const REGIONAL_SECTORS = [
 },
 {
     name: "North Niagara (Lincoln / St. Catharines / Niagara Falls)",
-    bounds: { north: 43.280, south: 43.080, west: -79.550, east: -78.980 }
+    bounds: { north: 43.280, south: 43.140, west: -79.550, east: -78.980 }
 }
 ];
 
