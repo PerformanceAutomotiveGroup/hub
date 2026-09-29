@@ -15,12 +15,12 @@ const REGIONAL_SECTORS = [
     bounds: { north: 43.580, south: 43.370, west: -79.950, east: -79.580 }
 },
 {
-    name: "Hamilton / Burlington / Grimsby",
+    name: "Hamilton / Burlington / Grimsby Gateway",
     bounds: { north: 43.430, south: 43.150, west: -80.050, east: -79.500 }
 },
 {
-    name: "Niagara Peninsula (Lincoln to Niagara Falls)",
-    bounds: { north: 43.280, south: 42.850, west: -79.550, east: -78.980 }
+    name: "North Niagara (Lincoln / St. Catharines / Niagara Falls)",
+    bounds: { north: 43.280, south: 43.080, west: -79.550, east: -78.980 }
 }
 ];
 
