@@ -221,8 +221,8 @@ google.maps.importLibrary("marker")
 
 // Framing the Golden Horseshoe corridor (Brampton, Mississauga, Hamilton, Niagara)
 ev_Map = new Map(mapCanvas, {
-center: { lat: 43.460, lng: -79.670 }, 
-zoom: 10.5,
+center: { lat: 43.420, lng: -79.460 }, 
+zoom: 9.2,
 mapId: "e9da2b0d1db902e558a4a8df",
 mapTypeControl: false,
 streetViewControl: false,
