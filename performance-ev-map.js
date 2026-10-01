@@ -44,7 +44,7 @@ pin.innerHTML = `
 <!-- Outer Pin Body -->
 <path d="M17 41C17 41 32 26.5 32 16.5C32 7.3873 25.2843 0 17 0C8.71573 0 2 7.3873 2 16.5C2 26.5 17 41 17 41Z" fill="#ffffff" stroke="#ffffff" stroke-width="2"/>
 <!-- Inner Circular Badge -->
-<circle cx="17" cy="16.5" r="14" fill="#2c68b5" stroke="#ffffff" stroke-width="2"/>
+<circle cx="17" cy="16.5" r="14" fill="#ffc20e" stroke="#ffffff" stroke-width="2"/>
 <!-- White Lightning Bolt -->
 <path d="M17.5 9.5L13 16.5H16.5L15.5 22.5L21.5 15H17.5L18.5 9.5H17.5Z" fill="#ffffff"/>
 </svg>
