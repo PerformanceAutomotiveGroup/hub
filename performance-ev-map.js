@@ -7,20 +7,20 @@ let isPanning = false;
 // Expanded & overlapping sectors to eliminate coverage gaps along the QEW/403/401 corridors
 const REGIONAL_SECTORS = [
 {
-    name: "Peel (Brampton / North Mississauga)",
-    bounds: { north: 43.830, south: 43.580, west: -79.850, east: -79.560 }
+name: "Peel (Brampton / North Mississauga)",
+bounds: { north: 43.830, south: 43.580, west: -79.850, east: -79.560 }
 },
 {
-    name: "Halton (Oakville / Milton / South Mississauga)",
-    bounds: { north: 43.580, south: 43.370, west: -79.950, east: -79.580 }
+name: "Halton (Oakville / Milton / South Mississauga)",
+bounds: { north: 43.580, south: 43.370, west: -79.950, east: -79.580 }
 },
 {
-    name: "Hamilton / Burlington / Grimsby Gateway",
-    bounds: { north: 43.430, south: 43.150, west: -80.050, east: -79.500 }
+name: "Hamilton / Burlington / Grimsby Gateway",
+bounds: { north: 43.430, south: 43.150, west: -80.050, east: -79.500 }
 },
 {
-    name: "North Niagara (Lincoln / St. Catharines / Niagara Falls)",
-    bounds: { north: 43.280, south: 43.140, west: -79.550, east: -78.980 }
+name: "North Niagara (Lincoln / St. Catharines / Niagara Falls)",
+bounds: { north: 43.280, south: 43.140, west: -79.550, east: -78.980 }
 }
 ];
 
@@ -228,6 +228,30 @@ mapTypeControl: false,
 streetViewControl: false,
 fullscreenControl: true
 });
+
+const searchBar = document.getElementById("ev-places-search-bar");
+if (searchBar) {
+const autocomplete = new google.maps.places.Autocomplete(searchBar, {
+// Restriction and formatting: Standard addresses only
+types: ['geocode'], 
+fields: ['geometry', 'formatted_address']
+});
+
+autocomplete.bindTo('bounds', ev_Map);
+autocomplete.addListener('place_changed', async () => {
+const place = autocomplete.getPlace();
+
+if (!place.geometry || !place.geometry.location) {
+console.warn("Location selected is unavailable for routing.");
+return;
+}
+isPanning = true; 
+if (ev_InfoWindow) ev_InfoWindow.close();
+ev_Map.panTo(place.geometry.location);
+ev_Map.setZoom(14); 
+window.clearRoute(); 
+});
+}    
 
 directionsService = new google.maps.DirectionsService();
 directionsRenderer = new google.maps.DirectionsRenderer({
