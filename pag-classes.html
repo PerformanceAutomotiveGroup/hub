@@ -250,100 +250,100 @@ z-index: 999999;
 opacity: 1;
 transform: translateY(0);
 }
-  	/* HOME BANNERS SCROLL  */
+/* HOME BANNERS SCROLL  */
 
 .scroll-wrapper {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  isolation: isolate;
+position: relative;
+display: flex;
+flex-direction: column;
+isolation: isolate;
 }
 
 /* scrollable row */
 .button-block-widget__row {
-  display: flex;
-  flex-wrap: nowrap !important;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  scroll-behavior: smooth;
-  scroll-padding-inline: 2px;
-  /* Horizontal scrolling must clip at the sides. This internal top space keeps
-     the lifted card and its shadow inside that clipping viewport. */
-  margin-top:-22px;
-  padding:32px 2px 2px;
+display: flex;
+flex-wrap: nowrap !important;
+overflow-x: auto;
+overflow-y: hidden;
+scroll-snap-type: x mandatory;
+-webkit-overflow-scrolling: touch;
+scroll-behavior: smooth;
+scroll-padding-inline: 2px;
+/* Horizontal scrolling must clip at the sides. This internal top space keeps
+the lifted card and its shadow inside that clipping viewport. */
+margin-top:-22px;
+padding:32px 2px 2px;
 
-  /* hide native scrollbar */
-  scrollbar-width: none; /* Firefox */
+/* hide native scrollbar */
+scrollbar-width: none; /* Firefox */
 }
 .button-block-widget__row::-webkit-scrollbar {
-  display: none; /* Webkit */
+display: none; /* Webkit */
 }
 
 /* controls row: custom scrollbar + arrows */
 .scroll-controls {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 12px;
-  margin: -0.25rem 2px 1.6rem;
-  position: relative;
-	width:calc(100% - 4px);
+display: flex;
+align-items: center;
+justify-content: flex-end;
+gap: 12px;
+margin: -0.25rem 2px 1.6rem;
+position: relative;
+width:calc(100% - 4px);
 }
 
 /* fake scrollbar track */
 .custom-scrollbar {
-  flex: 1;
-  height: 6px;
-  background:color-mix(in srgb,var(--color-primary) 16%,transparent);
-  border:0;
-  border-radius: 999px;
-  margin-right: 8px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
+flex: 1;
+height: 6px;
+background:color-mix(in srgb,var(--color-primary) 16%,transparent);
+border:0;
+border-radius: 999px;
+margin-right: 8px;
+cursor: pointer;
+position: relative;
+overflow: hidden;
 }
 .custom-scrollbar-thumb {
-  height: 100%;
-  background:var(--color-primary);
-  border-radius: 999px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  cursor: grab;
-  transition: left .18s ease-out,width .18s ease-out,background .2s ease;
+height: 100%;
+background:var(--color-primary);
+border-radius: 999px;
+position: absolute;
+top: 0;
+left: 0;
+cursor: grab;
+transition: left .18s ease-out,width .18s ease-out,background .2s ease;
 }
 .custom-scrollbar-thumb:active {
-  cursor: grabbing;
+cursor: grabbing;
 }
 
 
 /* arrows */
 .scroll-arrow {
-  appearance:none;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  padding:0;
-  background: rgba(255,255,255,.92);
-  border: 1px solid rgba(0,0,0,.12);
-  box-shadow: 0 2px 8px rgba(0,0,0,.10),inset 0 1px 0 rgba(255,255,255,.9);
-  color:#2c68b5;
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  font-weight: 600;
-  font-size: 34px;
-  line-height: 1;
-  cursor: pointer;
-  transition: transform .22s ease,box-shadow .22s ease,background .22s ease,color .22s ease;
+appearance:none;
+display:inline-flex;
+align-items:center;
+justify-content:center;
+padding:0;
+background: rgba(255,255,255,.92);
+border: 1px solid rgba(0,0,0,.12);
+box-shadow: 0 2px 8px rgba(0,0,0,.10),inset 0 1px 0 rgba(255,255,255,.9);
+color:#2c68b5;
+width: 46px;
+height: 46px;
+border-radius: 50%;
+font-weight: 600;
+font-size: 34px;
+line-height: 1;
+cursor: pointer;
+transition: transform .22s ease,box-shadow .22s ease,background .22s ease,color .22s ease;
 }
 .scroll-arrow:hover {
-  background:#2c68b5;
-  color: #fff;
-  box-shadow:0 7px 18px rgba(44,104,181,.28);
-  transform: translateY(-2px) scale(1.03);
+background:#2c68b5;
+color: #fff;
+box-shadow:0 7px 18px rgba(44,104,181,.28);
+transform: translateY(-2px) scale(1.03);
 }
 .scroll-arrow-icon{display:block;transform:translateY(-2px)}
 .scroll-arrow:active{transform:translateY(0) scale(.96)}
@@ -351,252 +351,252 @@ transform: translateY(0);
 .scroll-arrow:disabled{opacity:.35;cursor:default;box-shadow:none;transform:none}
 .scroll-controls.is-static{opacity:.45;pointer-events:none}
 
-	.button_block_widget-8 .button-block-widget{padding-top:5rem!important;}
-	.button-block-5 .wrapper{width:144rem!important;}
-  .button_block_widget-8 .button-block-widget .button-block-button{
-    position:relative;
-    overflow:hidden;
-    border-radius:18px;
-    box-shadow:0 5px 18px rgba(15,30,50,.12);
-    transform:translateZ(0);
-    transition:transform .38s cubic-bezier(.2,.8,.2,1),box-shadow .38s cubic-bezier(.2,.8,.2,1);
-    will-change:transform;
-  }
-  .button_block_widget-8 .button-block-widget .button-block-button:hover{
-    box-shadow:inset -72px 0 56px rgba(8,25,47,.09),0 18px 38px rgba(15,30,50,.20);
-    transform:translateY(-7px) scale(1.008);
-  }
-  .button_block_widget-8 .button-block-widget .button-block-button img{
-    transition:transform .65s cubic-bezier(.2,.75,.25,1),filter .45s ease;
-    will-change:transform;
-  }
-  .button_block_widget-8 .button-block-widget .button-block-button:hover img{
-    filter:saturate(1.06) contrast(1.02);
-    transform:scale(1.045);
-  }
-  /* The live CTA has framework padding plus either an <i> icon or an ::after
-     Font Awesome arrow. Both paths share the same centred 14px treatment. */
-  .button-block-5 .button-block-widget .button-block-button__cta-wrapper{
-    display:flex!important;
-    align-items:center!important;
-    line-height:1!important;
-  }
-  .button-block-5 .button-block-widget .button-block-button__cta{
-    display:inline-flex!important;
-    align-items:center!important;
-    line-height:1!important;
-  }
-  .button-block-5 .button-block-widget .button-block-button__cta>i,
-  .button-block-5 .button-block-widget .button-block-button__cta>i::before,
-  .button-block-5 .button-block-widget .button-block-button__cta-wrapper::after{
-    display:inline-flex!important;
-    align-items:center!important;
-    justify-content:center!important;
-    width:14px!important;
-    height:14px!important;
-    margin:0 6px 0 0!important;
-    font-size:20px!important;
-    line-height:14px!important;
-    vertical-align:middle!important;
-    transform:none!important;
-  }
-  .button_block_widget-8 .button-block-widget .button-block-button:focus-within{
-    outline:3px solid rgba(0,113,227,.38);
-    outline-offset:4px;
-  }
-  @media(max-width:767px){
-    .button_block_widget-8 .button-block-widget{padding-top:1.5rem!important;padding-bottom:2.5rem!important}
-    .button-block-widget__row{margin-top:-14px;padding-top:24px}
-    .scroll-controls{gap:10px;margin:.35rem 2px .45rem;width:calc(100% - 4px)}
-    .scroll-arrow{width:44px;height:44px}
-    .scroll-arrow:hover{transform:scale(1.03)}
-    .button_block_widget-8 .button-block-widget .button-block-button{border-radius:14px}
-  }
-  @media(prefers-reduced-motion:reduce){
-    .button-block-widget__row{scroll-behavior:auto}
-    .scroll-arrow,.custom-scrollbar-thumb,.button_block_widget-8 .button-block-widget .button-block-button,.button_block_widget-8 .button-block-widget .button-block-button img{transition:none!important}
-    .button_block_widget-8 .button-block-widget .button-block-button:hover,.scroll-arrow:hover{transform:none}
-  }
+.button_block_widget-8 .button-block-widget{padding-top:5rem!important;}
+.button-block-5 .wrapper{width:144rem!important;}
+.button_block_widget-8 .button-block-widget .button-block-button{
+position:relative;
+overflow:hidden;
+border-radius:18px;
+box-shadow:0 5px 18px rgba(15,30,50,.12);
+transform:translateZ(0);
+transition:transform .38s cubic-bezier(.2,.8,.2,1),box-shadow .38s cubic-bezier(.2,.8,.2,1);
+will-change:transform;
+}
+.button_block_widget-8 .button-block-widget .button-block-button:hover{
+box-shadow:inset -72px 0 56px rgba(8,25,47,.09),0 18px 38px rgba(15,30,50,.20);
+transform:translateY(-7px) scale(1.008);
+}
+.button_block_widget-8 .button-block-widget .button-block-button img{
+transition:transform .65s cubic-bezier(.2,.75,.25,1),filter .45s ease;
+will-change:transform;
+}
+.button_block_widget-8 .button-block-widget .button-block-button:hover img{
+filter:saturate(1.06) contrast(1.02);
+transform:scale(1.045);
+}
+/* The live CTA has framework padding plus either an <i> icon or an ::after
+Font Awesome arrow. Both paths share the same centred 14px treatment. */
+.button-block-5 .button-block-widget .button-block-button__cta-wrapper{
+display:flex!important;
+align-items:center!important;
+line-height:1!important;
+}
+.button-block-5 .button-block-widget .button-block-button__cta{
+display:inline-flex!important;
+align-items:center!important;
+line-height:1!important;
+}
+.button-block-5 .button-block-widget .button-block-button__cta>i,
+.button-block-5 .button-block-widget .button-block-button__cta>i::before,
+.button-block-5 .button-block-widget .button-block-button__cta-wrapper::after{
+display:inline-flex!important;
+align-items:center!important;
+justify-content:center!important;
+width:14px!important;
+height:14px!important;
+margin:0 6px 0 0!important;
+font-size:20px!important;
+line-height:14px!important;
+vertical-align:middle!important;
+transform:none!important;
+}
+.button_block_widget-8 .button-block-widget .button-block-button:focus-within{
+outline:3px solid rgba(0,113,227,.38);
+outline-offset:4px;
+}
+@media(max-width:767px){
+.button_block_widget-8 .button-block-widget{padding-top:1.5rem!important;padding-bottom:2.5rem!important}
+.button-block-widget__row{margin-top:-14px;padding-top:24px}
+.scroll-controls{gap:10px;margin:.35rem 2px .45rem;width:calc(100% - 4px)}
+.scroll-arrow{width:44px;height:44px}
+.scroll-arrow:hover{transform:scale(1.03)}
+.button_block_widget-8 .button-block-widget .button-block-button{border-radius:14px}
+}
+@media(prefers-reduced-motion:reduce){
+.button-block-widget__row{scroll-behavior:auto}
+.scroll-arrow,.custom-scrollbar-thumb,.button_block_widget-8 .button-block-widget .button-block-button,.button_block_widget-8 .button-block-widget .button-block-button img{transition:none!important}
+.button_block_widget-8 .button-block-widget .button-block-button:hover,.scroll-arrow:hover{transform:none}
+}
 
 
 
 .banner-headings {
-  order: 1;
-  align-items: center;
+order: 1;
+align-items: center;
 }
 .banner-foreground {
-  order: 2;
-  margin: 1rem 0;
+order: 2;
+margin: 1rem 0;
 }
 .banner-ctas {
-  order: 3;
+order: 3;
 }
 
 .pag-htmlbanner-container {
-  position: relative;
-  width: 100%;
-  color: #fff;
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  overflow: hidden;
-  transition: background-position 2s ease;
-  background: url('https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/09/banner-bg-001.png') bottom/cover no-repeat;
-  display: flex;
-  align-items: center;
-  padding:0.5em 0;
+position: relative;
+width: 100%;
+color: #fff;
+font-family: "Helvetica Neue", Arial, sans-serif;
+overflow: hidden;
+transition: background-position 2s ease;
+background: url('https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/09/banner-bg-001.png') bottom/cover no-repeat;
+display: flex;
+align-items: center;
+padding:0.5em 0;
 }
 
 /* Grid wrapper */
 .banner-grid {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  max-width: 1200px;
-  margin: auto;
-  padding: 1rem;
-  gap: 2rem;
+display: flex;
+justify-content: space-between;
+align-items: center;
+width: 100%;
+max-width: 1200px;
+margin: auto;
+padding: 1rem;
+gap: 2rem;
 }
 
 /* Left column (text + CTAs) */
 .banner-headings {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  color:#333;
+display: flex;
+flex-direction: column;
+justify-content: center;
+color:#333;
 }
 .banner-content {
-  margin-bottom: 1.5rem;
+margin-bottom: 1.5rem;
 }
 .banner-heading {
-  font-size: 3rem;
-  font-weight: 500;
-  margin: 0;
-  text-transform: uppercase;
-  line-height: 1.2;
-  padding:0.8em 0 0 0;
+font-size: 3rem;
+font-weight: 500;
+margin: 0;
+text-transform: uppercase;
+line-height: 1.2;
+padding:0.8em 0 0 0;
 }
 .banner-heading span {
-  color:var(--color-primary, #407EC9);
+color:var(--color-primary, #407EC9);
 }
 .banner-subheading {
-  font-size: 1.6rem;
-  margin: 0.5rem 0 1.5rem;
-  line-height: 1.4;
-  font-weight: 700;
+font-size: 1.6rem;
+margin: 0.5rem 0 1.5rem;
+line-height: 1.4;
+font-weight: 700;
 }
 
 /* CTA buttons stacked */
 .banner-ctas {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+display: flex;
+flex-direction: column;
+gap: 0.75rem;
 }
 .banner-cta-1,
 .banner-cta-2 {
-  padding: 1rem;
-  font-weight: 600;
-  text-align: center;
-  border-radius: 4px;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  border: 2px solid var(--color-primary); /* var(--color-primary-dark, #407EC9) */
-  font-size: 1.3em;
+padding: 1rem;
+font-weight: 600;
+text-align: center;
+border-radius: 4px;
+text-decoration: none;
+transition: all 0.3s ease;
+border: 2px solid var(--color-primary); /* var(--color-primary-dark, #407EC9) */
+font-size: 1.3em;
 }
 .banner-cta-1 {
-  background:  var(--color-primary); /* var(--color-primary-dark, #407EC9) */
-  color: #fff;
+background:  var(--color-primary); /* var(--color-primary-dark, #407EC9) */
+color: #fff;
 }
 .banner-cta-1:hover {
-  background: transparent;
-  border: 2px solid var(--color-primary); /* var(--color-primary-dark, #407EC9) */
-  color: var(--color-primary); /* var(--color-primary-dark, #407EC9) */
+background: transparent;
+border: 2px solid var(--color-primary); /* var(--color-primary-dark, #407EC9) */
+color: var(--color-primary); /* var(--color-primary-dark, #407EC9) */
 }
 .banner-cta-2 {
-  background: transparent;
-  border: 2px solid var(--color-primary); /* var(--color-primary-dark, #407EC9) */
-  color: var(--color-primary); /* var(--color-primary-dark, #407EC9) */
+background: transparent;
+border: 2px solid var(--color-primary); /* var(--color-primary-dark, #407EC9) */
+color: var(--color-primary); /* var(--color-primary-dark, #407EC9) */
 }
 .banner-cta-2:hover {
-  background: var(--color-primary); /* var(--color-primary-dark, #407EC9) */
-  color: #fff;
+background: var(--color-primary); /* var(--color-primary-dark, #407EC9) */
+color: #fff;
 }
 
 /* Foreground car */
 .banner-foreground {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
+flex: 1;
+display: flex;
+justify-content: center;
+align-items: flex-end;
 }
 .banner-foreground img {
-  width: auto;
-  height: auto;
-  max-height: 110px;
-  max-width: 230px;
-  transition: transform 0.5s ease;
+width: auto;
+height: auto;
+max-height: 110px;
+max-width: 230px;
+transition: transform 0.5s ease;
 }
 .pag-htmlbanner-container:hover .banner-foreground img {
-  transform: translateX(-10px);
+transform: translateX(-10px);
 }
 
 /* Legal button */
 .banner-legal {
-  display: none;
-  position: absolute;
-  bottom: 1rem;
-  right: 1rem;
-  color: #fff;
-  font-size: 0.9rem;
-  background: #666;
-  padding: 2px 5px;
-  text-decoration: none;
-  z-index: 3;
+display: none;
+position: absolute;
+bottom: 1rem;
+right: 1rem;
+color: #fff;
+font-size: 0.9rem;
+background: #666;
+padding: 2px 5px;
+text-decoration: none;
+z-index: 3;
 }
 
 /* Tablet (same as desktop, full width) */
 @media (max-width: 1023px) {
-  .banner-heading { font-size: 3.6rem; }
-  .banner-subheading { font-size: 1.8rem; }
+.banner-heading { font-size: 3.6rem; }
+.banner-subheading { font-size: 1.8rem; }
 }
 
 /* Mobile (stack vertically: headings → car → CTAs) */
 @media (max-width: 767px) {
 
-  .banner-grid {
-    flex-direction: column;
-    text-align: center;
-    padding: 1rem;
-    gap: 0rem;
-  }
+.banner-grid {
+flex-direction: column;
+text-align: center;
+padding: 1rem;
+gap: 0rem;
+}
 
-  .banner-heading { padding:0;font-size: 3rem;max-width: 90%; margin: 0 auto;}
-  .banner-subheading { font-size: 1.8rem;max-width: 90%; margin: 0 auto; }
-  .banner-foreground img {max-width:280px;max-height:230px;}
+.banner-heading { padding:0;font-size: 3rem;max-width: 90%; margin: 0 auto;}
+.banner-subheading { font-size: 1.8rem;max-width: 90%; margin: 0 auto; }
+.banner-foreground img {max-width:280px;max-height:230px;}
 
-  .banner-headings {
-    order: 1;
-    align-items: center;
-  }
-  .banner-foreground {
-    order: 2;
-    margin: 1rem 0;
-  }
-  .banner-ctas {
-    order: 3;
-    width: 100%;
-  }
-  .banner-cta-1,
-  .banner-cta-2 {
-    width: 90% !important;
-    max-width: unset;
-    margin: 0 auto;
-  }
+.banner-headings {
+order: 1;
+align-items: center;
+}
+.banner-foreground {
+order: 2;
+margin: 1rem 0;
+}
+.banner-ctas {
+order: 3;
+width: 100%;
+}
+.banner-cta-1,
+.banner-cta-2 {
+width: 90% !important;
+max-width: unset;
+margin: 0 auto;
+}
 
 }
 
 
 
-	.widgettitle{display:none;}/*Hide title*/
+.widgettitle{display:none;}/*Hide title*/
 .facebookHome h2{color: var(--color-primary); font-weight: 300; text-transform: uppercase;}
 .facebookHome h2:after{    
 content: "";
@@ -729,6 +729,9 @@ font-size: 1.6rem!important;
 <div class="sg-nav">
 <a href="#section-buttons">Buttons & CTAs</a>
 <a href="#section-typography">Typography</a>
+<a href="#section-forms">Form Controls</a>
+<a href="#section-cards">Cards & Containers</a>
+<a href="#section-widgets">Accordions & Tabs</a>
 <a href="#section-badges">Badges & Tags</a>
 <a href="#section-flex">Flexbox Helpers</a>
 <a href="#section-grid">Grid Layouts</a>
@@ -962,6 +965,190 @@ font-size: 1.6rem!important;
 <h4 class="sg-item-name">CARFAX Badge</h4>
 <div class="sg-actions">
 <button class="sg-btn-copy" onclick="copyValue('carfax-badge', this)">Copy Class</button>
+<button class="sg-btn-copy" onclick="copySnippet(this)">Copy HTML</button>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- SECTION: FORM INPUTS & SELECTS -->
+<div class="sg-section" id="section-forms">
+<div class="sg-section-title">Form Controls & Dropdowns</div>
+<div class="sg-grid">
+
+<!-- Standard Text Input -->
+<div class="sg-card" data-search="input form field text-box">
+<div class="sg-preview" style="width: 100%;">
+<div class="input-group" style="width: 100%; max-width: 320px;">
+<label class="form-label" style="display: block; margin-bottom: 6px; font-weight: 600; font-size: 13px;">Full Name</label>
+<input type="text" class="input--with-icon" placeholder="Enter your full name" style="width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 4px;">
+</div>
+</div>
+<div class="sg-meta">
+<h4 class="sg-item-name">Input Field (.input-group)</h4>
+<div class="sg-actions">
+<button class="sg-btn-copy" onclick="copyValue('input-group', this)">Copy Class</button>
+<button class="sg-btn-copy" onclick="copySnippet(this)">Copy HTML</button>
+</div>
+</div>
+</div>
+
+<!-- Theme Select Dropdown -->
+<div class="sg-card" data-search="select dropdown select--alternate form">
+<div class="sg-preview" style="width: 100%;">
+<div style="width: 100%; max-width: 320px;">
+<label class="form-label" style="display: block; margin-bottom: 6px; font-weight: 600; font-size: 13px;">Select Model</label>
+<select class="select select--alternate" style="width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 4px; background: #fff;">
+<option>Choose a Vehicle Class...</option>
+<option>Sedan</option>
+<option>SUV / Crossover</option>
+<option>Truck</option>
+</select>
+</div>
+</div>
+<div class="sg-meta">
+<h4 class="sg-item-name">Dropdown (.select .select--alternate)</h4>
+<div class="sg-actions">
+<button class="sg-btn-copy" onclick="copyValue('select select--alternate', this)">Copy Class</button>
+<button class="sg-btn-copy" onclick="copySnippet(this)">Copy HTML</button>
+</div>
+</div>
+</div>
+
+<!-- Checkbox Consent Row -->
+<div class="sg-card" data-search="checkbox consent disclaimer form">
+<div class="sg-preview" style="width: 100%;">
+<label class="checkbox-input checkbox-input--disclaimer df aic" style="cursor: pointer; font-size: 13px; gap: 8px;">
+<input type="checkbox" class="consent_checkbox" checked>
+<span>I agree to receive communications and special offers.</span>
+</label>
+</div>
+<div class="sg-meta">
+<h4 class="sg-item-name">Consent Checkbox (.checkbox-input)</h4>
+<div class="sg-actions">
+<button class="sg-btn-copy" onclick="copyValue('checkbox-input checkbox-input--disclaimer', this)">Copy Class</button>
+<button class="sg-btn-copy" onclick="copySnippet(this)">Copy HTML</button>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- SECTION: CARDS & CONTAINERS -->
+<div class="sg-section" id="section-cards">
+<div class="sg-section-title">Feature & Vehicle Card Blocks</div>
+<div class="sg-grid">
+
+<!-- Feature Card Container -->
+<div class="sg-card" data-search="card feature-cards-widget container promo">
+<div class="sg-preview" style="width: 100%;">
+<div class="feature-cards-widget" style="width: 100%; max-width: 320px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+<div style="height: 140px; background: #e2e8f0; display: flex; align-items: center; justify-content: center; color: #64748b; font-size: 13px;">
+Feature Image (oem-image)
+</div>
+<div style="padding: 18px;">
+<span class="certified-badge" style="font-size: 11px;">Certified</span>
+<h3 class="widget-heading" style="font-size: 18px; margin: 10px 0 6px 0;">2024 Honda Civic</h3>
+<p class="sub-title" style="margin-bottom: 14px; font-size: 13px;">Touring Edition · 12,400 km</p>
+<div class="df aic jcsb">
+<span class="price-block__price price-block__price--primary" style="font-size: 20px; font-weight: 700;">$29,995</span>
+<a href="javascript:void(0)" class="button button--small">Details</a>
+</div>
+</div>
+</div>
+</div>
+<div class="sg-meta">
+<h4 class="sg-item-name">Feature Card Block</h4>
+<div class="sg-actions">
+<button class="sg-btn-copy" onclick="copyValue('feature-cards-widget', this)">Copy Class</button>
+<button class="sg-btn-copy" onclick="copySnippet(this)">Copy HTML</button>
+</div>
+</div>
+</div>
+
+<!-- Detailed Specs Row -->
+<div class="sg-card" data-search="detailed-specs single-spec vehicle specs">
+<div class="sg-preview" style="width: 100%;">
+<div class="detailed-specs" style="width: 100%; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px;">
+<div class="detailed-specs__single df aic jcsb" style="padding: 6px 0; border-bottom: 1px solid #f1f5f9; font-size: 13px;">
+<span class="detailed-specs__label" style="color: #64748b;">Transmission:</span>
+<strong>Automatic (CVT)</strong>
+</div>
+<div class="detailed-specs__single df aic jcsb" style="padding: 6px 0; font-size: 13px;">
+<span class="detailed-specs__label" style="color: #64748b;">Drivetrain:</span>
+<strong>All-Wheel Drive (AWD)</strong>
+</div>
+</div>
+</div>
+<div class="sg-meta">
+<h4 class="sg-item-name">Specs Table Row (.detailed-specs)</h4>
+<div class="sg-actions">
+<button class="sg-btn-copy" onclick="copyValue('detailed-specs detailed-specs__single', this)">Copy Class</button>
+<button class="sg-btn-copy" onclick="copySnippet(this)">Copy HTML</button>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- SECTION: INTERACTIVE & NAVIGATION WIDGETS -->
+<div class="sg-section" id="section-widgets">
+<div class="sg-section-title">Accordions, Tabs & Search Bars</div>
+<div class="sg-grid">
+
+<!-- Accordion Section -->
+<div class="sg-card" data-search="convertus-accordion accordion title wrap collapse">
+<div class="sg-preview" style="width: 100%;">
+<div class="convertus-accordion__wrap" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; overflow: hidden;">
+<div class="convertus-accordion__section" style="padding: 14px 16px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+<h4 class="convertus-accordion__title" style="margin: 0; font-size: 14px; font-weight: 600;">What warranty options are included?</h4>
+<i class="fas fa-angle-down"></i>
+</div>
+</div>
+</div>
+<div class="sg-meta">
+<h4 class="sg-item-name">Accordion Wrapper (.convertus-accordion__wrap)</h4>
+<div class="sg-actions">
+<button class="sg-btn-copy" onclick="copyValue('convertus-accordion__wrap convertus-accordion__section', this)">Copy Class</button>
+<button class="sg-btn-copy" onclick="copySnippet(this)">Copy HTML</button>
+</div>
+</div>
+</div>
+
+<!-- Tabbed Navigation Bar -->
+<div class="sg-card" data-search="nav-tabs tab menu tab-content">
+<div class="sg-preview" style="width: 100%;">
+<div class="nav-tabs df" style="border-bottom: 2px solid #e2e8f0; width: 100%; gap: 16px;">
+<div class="nav-tabs__tab" style="padding: 8px 12px; font-weight: 700; font-size: 13px; border-bottom: 2px solid #2c68b5; margin-bottom: -2px; color: #2c68b5; cursor: pointer;">Overview</div>
+<div class="nav-tabs__tab" style="padding: 8px 12px; font-weight: 600; font-size: 13px; color: #64748b; cursor: pointer;">Specifications</div>
+<div class="nav-tabs__tab" style="padding: 8px 12px; font-weight: 600; font-size: 13px; color: #64748b; cursor: pointer;">Financing</div>
+</div>
+</div>
+<div class="sg-meta">
+<h4 class="sg-item-name">Nav Tabs Bar (.nav-tabs)</h4>
+<div class="sg-actions">
+<button class="sg-btn-copy" onclick="copyValue('nav-tabs nav-tabs__tab', this)">Copy Class</button>
+<button class="sg-btn-copy" onclick="copySnippet(this)">Copy HTML</button>
+</div>
+</div>
+</div>
+
+<!-- Search Input Bar -->
+<div class="sg-card" data-search="searchbar search search-results header-search">
+<div class="sg-preview" style="width: 100%;">
+<div class="searchbar-search df aic" style="width: 100%; max-width: 340px; border: 1px solid #cbd5e1; border-radius: 50px; padding: 4px 12px; background: #fff;">
+<i class="fas fa-search" style="color: #64748b; margin-right: 8px; font-size: 13px;"></i>
+<input type="text" placeholder="Search inventory..." style="border: none; outline: none; width: 100%; font-size: 13px;">
+</div>
+</div>
+<div class="sg-meta">
+<h4 class="sg-item-name">Search Input Bar (.searchbar-search)</h4>
+<div class="sg-actions">
+<button class="sg-btn-copy" onclick="copyValue('searchbar-search', this)">Copy Class</button>
 <button class="sg-btn-copy" onclick="copySnippet(this)">Copy HTML</button>
 </div>
 </div>
