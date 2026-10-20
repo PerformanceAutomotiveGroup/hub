@@ -4,6 +4,11 @@
     --color-primary-light: #4783d0;
     --color-primary-lighter: #ceffff;
 }
+
+@keyframes sg-spin {
+  to { transform: rotate(360deg); }
+}
+
 .fa,.fab,.fal,.far,.fas {
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
