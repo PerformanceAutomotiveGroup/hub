@@ -10099,7 +10099,7 @@ ul.tabs__no-style {
 }
 
 .button:after {
-  content: "\f105" !important;
+  content: "\f105";
   font-family: "Font Awesome 5 Free", "FontAwesome" !important;
   font-weight: 900;
   display: inline-block;
