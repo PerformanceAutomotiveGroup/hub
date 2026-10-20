@@ -10093,12 +10093,16 @@ ul.tabs__no-style {
     box-shadow: 0 0 0 1px #bbb
 }
 
+.button::after,
 .button:after {
-    content: "\F105";
-    font-family: Font Awesome\ 5 Pro,sans-serif;
-    font-weight: 100;
-    margin-left: auto;
-    padding-left: .8rem
+  content: "\f105" !important;
+  font-family: "Font Awesome 5 Free", "FontAwesome" !important;
+  font-weight: 900 !important;
+  display: inline-block !important;
+  font-style: normal !important;
+  font-variant: normal !important;
+  text-rendering: auto !important;
+  -webkit-font-smoothing: antialiased;
 }
 
 .button[disabled] {
