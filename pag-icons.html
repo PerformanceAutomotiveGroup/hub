@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>PAG Global UI Classes Reference</title>
+<title>PAG Theme Icons Library</title>
 
-<!-- Font Awesome Icons -->
+<!-- Font Awesome Icons Bundle -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <!-- Performance.ca Live Global Stylesheet -->
@@ -14,7 +14,7 @@
 
 <style>
 /* -------------------------------------------------------------
-ISOLATED STYLE GUIDE SHELL (Does not interfere with main.css)
+ISOLATED STYLE GUIDE SHELL
 ------------------------------------------------------------- */
 body {
 margin: 0;
@@ -88,10 +88,13 @@ color: #334155;
 text-decoration: none;
 font-size: 12px;
 font-weight: 600;
-padding: 6px 12px;
+padding: 6px 14px;
 background: #f1f5f9;
 border-radius: 4px;
 transition: background 0.2s, color 0.2s;
+display: inline-flex;
+align-items: center;
+gap: 6px;
 }
 
 #sg-root .sg-nav a:hover {
@@ -114,8 +117,8 @@ margin-bottom: 18px;
 
 #sg-root .sg-grid {
 display: grid;
-grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-gap: 20px;
+grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+gap: 16px;
 }
 
 #sg-root .sg-card {
@@ -126,48 +129,58 @@ overflow: hidden;
 display: flex;
 flex-direction: column;
 box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+#sg-root .sg-card:hover {
+transform: translateY(-2px);
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 #sg-root .sg-preview {
-padding: 24px;
+padding: 20px 16px;
 background: #ffffff;
 display: flex;
 align-items: center;
 justify-content: center;
-min-height: 110px;
+min-height: 85px;
+font-size: 28px;
+color: #2c68b5;
 border-bottom: 1px solid #f1f5f9;
-position: relative;
 }
 
 #sg-root .sg-meta {
-padding: 16px;
+padding: 12px;
 background: #f8fafc;
 flex-grow: 1;
 display: flex;
 flex-direction: column;
 justify-content: space-between;
-gap: 12px;
+gap: 8px;
+text-align: center;
 }
 
 #sg-root .sg-item-name {
-font-size: 13px;
+font-size: 11px;
 font-weight: 700;
 color: #334155;
 margin: 0;
-text-transform: uppercase;
-letter-spacing: 0.5px;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+font-family: SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
 #sg-root .sg-actions {
 display: flex;
-gap: 8px;
-flex-wrap: wrap;
+gap: 6px;
+justify-content: center;
 }
 
 #sg-root .sg-btn-copy {
-font-size: 12px;
+font-size: 11px;
 font-weight: 600;
-padding: 6px 12px;
+padding: 4px 8px;
 border-radius: 4px;
 cursor: pointer;
 border: 1px solid #cbd5e1;
@@ -185,47 +198,6 @@ border-color: #94a3b8;
 background: #10b981;
 border-color: #10b981;
 color: #ffffff;
-}
-
-#sg-root .sg-table {
-width: 100%;
-background: #ffffff;
-border-collapse: collapse;
-border-radius: 8px;
-overflow: hidden;
-border: 1px solid #e2e8f0;
-font-size: 13px;
-}
-
-#sg-root .sg-table th, 
-#sg-root .sg-table td {
-padding: 12px 16px;
-text-align: left;
-border-bottom: 1px solid #e2e8f0;
-}
-
-#sg-root .sg-table th {
-background: #f8fafc;
-font-weight: 700;
-color: #475569;
-}
-
-#sg-root .sg-code-pill {
-font-family: SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-background: #f1f5f9;
-color: #0f172a;
-padding: 4px 8px;
-border-radius: 4px;
-border: 1px solid #e2e8f0;
-font-size: 12px;
-cursor: pointer;
-display: inline-block;
-margin: 2px 0;
-}
-
-#sg-root .sg-code-pill:hover {
-background: #e2e8f0;
-border-color: #cbd5e1;
 }
 
 #sg-toast {
@@ -250,492 +222,80 @@ z-index: 999999;
 opacity: 1;
 transform: translateY(0);
 }
-/* HOME BANNERS SCROLL  */
-
-.scroll-wrapper {
-position: relative;
-display: flex;
-flex-direction: column;
-isolation: isolate;
-}
-
-/* scrollable row */
-.button-block-widget__row {
-display: flex;
-flex-wrap: nowrap !important;
-overflow-x: auto;
-overflow-y: hidden;
-scroll-snap-type: x mandatory;
--webkit-overflow-scrolling: touch;
-scroll-behavior: smooth;
-scroll-padding-inline: 2px;
-/* Horizontal scrolling must clip at the sides. This internal top space keeps
-the lifted card and its shadow inside that clipping viewport. */
-margin-top:-22px;
-padding:32px 2px 2px;
-
-/* hide native scrollbar */
-scrollbar-width: none; /* Firefox */
-}
-.button-block-widget__row::-webkit-scrollbar {
-display: none; /* Webkit */
-}
-
-/* controls row: custom scrollbar + arrows */
-.scroll-controls {
-display: flex;
-align-items: center;
-justify-content: flex-end;
-gap: 12px;
-margin: -0.25rem 2px 1.6rem;
-position: relative;
-width:calc(100% - 4px);
-}
-
-/* fake scrollbar track */
-.custom-scrollbar {
-flex: 1;
-height: 6px;
-background:color-mix(in srgb,var(--color-primary) 16%,transparent);
-border:0;
-border-radius: 999px;
-margin-right: 8px;
-cursor: pointer;
-position: relative;
-overflow: hidden;
-}
-.custom-scrollbar-thumb {
-height: 100%;
-background:var(--color-primary);
-border-radius: 999px;
-position: absolute;
-top: 0;
-left: 0;
-cursor: grab;
-transition: left .18s ease-out,width .18s ease-out,background .2s ease;
-}
-.custom-scrollbar-thumb:active {
-cursor: grabbing;
-}
-
-
-/* arrows */
-.scroll-arrow {
-appearance:none;
-display:inline-flex;
-align-items:center;
-justify-content:center;
-padding:0;
-background: rgba(255,255,255,.92);
-border: 1px solid rgba(0,0,0,.12);
-box-shadow: 0 2px 8px rgba(0,0,0,.10),inset 0 1px 0 rgba(255,255,255,.9);
-color:#2c68b5;
-width: 46px;
-height: 46px;
-border-radius: 50%;
-font-weight: 600;
-font-size: 34px;
-line-height: 1;
-cursor: pointer;
-transition: transform .22s ease,box-shadow .22s ease,background .22s ease,color .22s ease;
-}
-.scroll-arrow:hover {
-background:#2c68b5;
-color: #fff;
-box-shadow:0 7px 18px rgba(44,104,181,.28);
-transform: translateY(-2px) scale(1.03);
-}
-.scroll-arrow-icon{display:block;transform:translateY(-2px)}
-.scroll-arrow:active{transform:translateY(0) scale(.96)}
-.scroll-arrow:focus-visible{outline:3px solid rgba(0,113,227,.32);outline-offset:3px}
-.scroll-arrow:disabled{opacity:.35;cursor:default;box-shadow:none;transform:none}
-.scroll-controls.is-static{opacity:.45;pointer-events:none}
-
-.button_block_widget-8 .button-block-widget{padding-top:5rem!important;}
-.button-block-5 .wrapper{width:144rem!important;}
-.button_block_widget-8 .button-block-widget .button-block-button{
-position:relative;
-overflow:hidden;
-border-radius:18px;
-box-shadow:0 5px 18px rgba(15,30,50,.12);
-transform:translateZ(0);
-transition:transform .38s cubic-bezier(.2,.8,.2,1),box-shadow .38s cubic-bezier(.2,.8,.2,1);
-will-change:transform;
-}
-.button_block_widget-8 .button-block-widget .button-block-button:hover{
-box-shadow:inset -72px 0 56px rgba(8,25,47,.09),0 18px 38px rgba(15,30,50,.20);
-transform:translateY(-7px) scale(1.008);
-}
-.button_block_widget-8 .button-block-widget .button-block-button img{
-transition:transform .65s cubic-bezier(.2,.75,.25,1),filter .45s ease;
-will-change:transform;
-}
-.button_block_widget-8 .button-block-widget .button-block-button:hover img{
-filter:saturate(1.06) contrast(1.02);
-transform:scale(1.045);
-}
-/* The live CTA has framework padding plus either an <i> icon or an ::after
-Font Awesome arrow. Both paths share the same centred 14px treatment. */
-.button-block-5 .button-block-widget .button-block-button__cta-wrapper{
-display:flex!important;
-align-items:center!important;
-line-height:1!important;
-}
-.button-block-5 .button-block-widget .button-block-button__cta{
-display:inline-flex!important;
-align-items:center!important;
-line-height:1!important;
-}
-.button-block-5 .button-block-widget .button-block-button__cta>i,
-.button-block-5 .button-block-widget .button-block-button__cta>i::before,
-.button-block-5 .button-block-widget .button-block-button__cta-wrapper::after{
-display:inline-flex!important;
-align-items:center!important;
-justify-content:center!important;
-width:14px!important;
-height:14px!important;
-margin:0 6px 0 0!important;
-font-size:20px!important;
-line-height:14px!important;
-vertical-align:middle!important;
-transform:none!important;
-}
-.button_block_widget-8 .button-block-widget .button-block-button:focus-within{
-outline:3px solid rgba(0,113,227,.38);
-outline-offset:4px;
-}
-@media(max-width:767px){
-.button_block_widget-8 .button-block-widget{padding-top:1.5rem!important;padding-bottom:2.5rem!important}
-.button-block-widget__row{margin-top:-14px;padding-top:24px}
-.scroll-controls{gap:10px;margin:.35rem 2px .45rem;width:calc(100% - 4px)}
-.scroll-arrow{width:44px;height:44px}
-.scroll-arrow:hover{transform:scale(1.03)}
-.button_block_widget-8 .button-block-widget .button-block-button{border-radius:14px}
-}
-@media(prefers-reduced-motion:reduce){
-.button-block-widget__row{scroll-behavior:auto}
-.scroll-arrow,.custom-scrollbar-thumb,.button_block_widget-8 .button-block-widget .button-block-button,.button_block_widget-8 .button-block-widget .button-block-button img{transition:none!important}
-.button_block_widget-8 .button-block-widget .button-block-button:hover,.scroll-arrow:hover{transform:none}
-}
-
-
-
-.banner-headings {
-order: 1;
-align-items: center;
-}
-.banner-foreground {
-order: 2;
-margin: 1rem 0;
-}
-.banner-ctas {
-order: 3;
-}
-
-.pag-htmlbanner-container {
-position: relative;
-width: 100%;
-color: #fff;
-font-family: "Helvetica Neue", Arial, sans-serif;
-overflow: hidden;
-transition: background-position 2s ease;
-background: url('https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/09/banner-bg-001.png') bottom/cover no-repeat;
-display: flex;
-align-items: center;
-padding:0.5em 0;
-}
-
-/* Grid wrapper */
-.banner-grid {
-display: flex;
-justify-content: space-between;
-align-items: center;
-width: 100%;
-max-width: 1200px;
-margin: auto;
-padding: 1rem;
-gap: 2rem;
-}
-
-/* Left column (text + CTAs) */
-.banner-headings {
-display: flex;
-flex-direction: column;
-justify-content: center;
-color:#333;
-}
-.banner-content {
-margin-bottom: 1.5rem;
-}
-.banner-heading {
-font-size: 3rem;
-font-weight: 500;
-margin: 0;
-text-transform: uppercase;
-line-height: 1.2;
-padding:0.8em 0 0 0;
-}
-.banner-heading span {
-color:var(--color-primary, #407EC9);
-}
-.banner-subheading {
-font-size: 1.6rem;
-margin: 0.5rem 0 1.5rem;
-line-height: 1.4;
-font-weight: 700;
-}
-
-/* CTA buttons stacked */
-.banner-ctas {
-display: flex;
-flex-direction: column;
-gap: 0.75rem;
-}
-.banner-cta-1,
-.banner-cta-2 {
-padding: 1rem;
-font-weight: 600;
-text-align: center;
-border-radius: 4px;
-text-decoration: none;
-transition: all 0.3s ease;
-border: 2px solid var(--color-primary); /* var(--color-primary-dark, #407EC9) */
-font-size: 1.3em;
-}
-.banner-cta-1 {
-background:  var(--color-primary); /* var(--color-primary-dark, #407EC9) */
-color: #fff;
-}
-.banner-cta-1:hover {
-background: transparent;
-border: 2px solid var(--color-primary); /* var(--color-primary-dark, #407EC9) */
-color: var(--color-primary); /* var(--color-primary-dark, #407EC9) */
-}
-.banner-cta-2 {
-background: transparent;
-border: 2px solid var(--color-primary); /* var(--color-primary-dark, #407EC9) */
-color: var(--color-primary); /* var(--color-primary-dark, #407EC9) */
-}
-.banner-cta-2:hover {
-background: var(--color-primary); /* var(--color-primary-dark, #407EC9) */
-color: #fff;
-}
-
-/* Foreground car */
-.banner-foreground {
-flex: 1;
-display: flex;
-justify-content: center;
-align-items: flex-end;
-}
-.banner-foreground img {
-width: auto;
-height: auto;
-max-height: 110px;
-max-width: 230px;
-transition: transform 0.5s ease;
-}
-.pag-htmlbanner-container:hover .banner-foreground img {
-transform: translateX(-10px);
-}
-
-/* Legal button */
-.banner-legal {
-display: none;
-position: absolute;
-bottom: 1rem;
-right: 1rem;
-color: #fff;
-font-size: 0.9rem;
-background: #666;
-padding: 2px 5px;
-text-decoration: none;
-z-index: 3;
-}
-
-/* Tablet (same as desktop, full width) */
-@media (max-width: 1023px) {
-.banner-heading { font-size: 3.6rem; }
-.banner-subheading { font-size: 1.8rem; }
-}
-
-/* Mobile (stack vertically: headings → car → CTAs) */
-@media (max-width: 767px) {
-
-.banner-grid {
-flex-direction: column;
-text-align: center;
-padding: 1rem;
-gap: 0rem;
-}
-
-.banner-heading { padding:0;font-size: 3rem;max-width: 90%; margin: 0 auto;}
-.banner-subheading { font-size: 1.8rem;max-width: 90%; margin: 0 auto; }
-.banner-foreground img {max-width:280px;max-height:230px;}
-
-.banner-headings {
-order: 1;
-align-items: center;
-}
-.banner-foreground {
-order: 2;
-margin: 1rem 0;
-}
-.banner-ctas {
-order: 3;
-width: 100%;
-}
-.banner-cta-1,
-.banner-cta-2 {
-width: 90% !important;
-max-width: unset;
-margin: 0 auto;
-}
-
-}
-
-
-
-.widgettitle{display:none;}/*Hide title*/
-.facebookHome h2{color: var(--color-primary); font-weight: 300; text-transform: uppercase;}
-.facebookHome h2:after{    
-content: "";
-display: block;
-width: 5rem;
-height: .3rem;
-margin-top: 0px;
-margin-bottom: 1.6rem!important;
-background-color: var(--color-primary);
-}
-.facebookHome p{padding: 10px;}
-
-
-.widgettitle{display:none;}/*Hide title*/
-
-.recent_blog_posts_widget-5 {
-padding: 4rem 1rem;
-background: #f8f8f8;
-}
-
-.widget-heading {
-margin: 4rem 0px;
-text-transform: uppercase;
-color: var(--color-primary);
-font-weight: 300;
-font-size: 3.5rem;
-}
-
-.widget-heading:after {
-margin-top: 0!important;
-}
-
-.blog-posts{
-margin: 0 auto;
-max-width: 110rem;
-width: 100%;
-}
-
-.blog-post {
-border-radius: 3px!important;
-box-shadow: 0 4px 12px rgba(0,0,0,0.08)!important;
-transition: transform 0.3s ease, box-shadow 0.3s ease;
-height: 100%;
-border: 1px solid #e6e6e6;
-max-width: 400px;        
-margin: 0 auto;     
-margin-bottom: 1.3rem;
-}
-
-.blog-post__main-info {
-height: 270px;
-font-size: 1.4rem;
-color: #000!important;
-}
-
-.blog-post:hover {
-transform: translateY(-6px);
-box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-}
-
-.blog-post__img--full {
-min-height: 150px;
-object-fit: cover;
-margin-bottom: 1.3rem!important;
-}
-
-.blog-post__content {
-padding: 1.5rem;
-flex-grow: 1;
-}
-
-.blog-post__title {
-font-size: 1.8rem;
-margin: 1rem 1.5rem 0.5rem!important;
-line-height: 1.4;
-}
-
-.blog-post__secondary-info {
-padding: 0 1.5rem 1.5rem;
-justify-content: center!important;
-}
-
-.blog-post__secondary-info .button {
-font-size: 1.3rem;
-text-transform: uppercase;
-}
-
-.blog-post__secondary-info .button:hover {
-background: #001f5c; 
-}
-
-
-/* ---- Mobile: show only one post --- */
-@media (max-width: 768px) {
-.recent_blog_posts_widget-5 {
-padding: 1.5rem 1rem;
-}
-
-.recent_blog_posts_widget-5 .blog-posts > .col {
-display: none !important;
-}
-
-.recent_blog_posts_widget-5 .blog-posts > .col:first-child {
-display: block !important;
-width: 100%;
-}
-
-.blog-post__secondary-info {        
-flex-direction: initial!important;
-}
-
-.blog-post__main-info {
-font-size: 1.6rem!important;
-}
-}
-
 </style>
 </head>
 
 <body>
+<div id="sg-root">
+<div class="sg-container">
+
+<!-- HEADER -->
+<div class="sg-header">
+<h1>Performance Auto Group Icon Library</h1>
+<p>Dynamic catalog of all icon classes detected in <code>theme-global.css</code>. Click any button to copy the class name or the ready-to-paste tag.</p>
+
+<input type="text" id="sg-search" class="sg-search-bar" placeholder="Search by name, category, or hex (e.g. phone, car, arrow, f105)..." onkeyup="filterIcons()">
+
 <div class="sg-nav">
-  <a href="./pag-classes.html">&larr; Back to UI Style Guide</a>
+<a href="./pag-classes.html">&larr; Back to UI Style Guide</a>
 </div>
-<!-- SECTION: THEME ICON LIBRARY -->
+</div>
+
+<!-- ICON LIBRARY GRID -->
 <div class="sg-section" id="section-icons">
 <div class="sg-section-title">Theme Icon Library (<span id="sg-icon-count">0</span> Icons)</div>
-<p style="font-size: 13px; color: #64748b; margin-top: -10px; margin-bottom: 20px;">
-Every icon detected in <code>theme-global.css</code>. Click any button to copy the class name or the ready-to-paste tag.
-</p>
+<div id="sg-icon-grid" class="sg-grid">
+<!-- Dynamically populated -->
+</div>
+</div>
 
-<div id="sg-icon-grid" class="sg-grid" style="grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px;">
-<!-- Icon tiles are injected here automatically -->
 </div>
 </div>
+
+<!-- TOAST NOTIFICATION -->
+<div id="sg-toast">Copied to clipboard!</div>
 
 <script>
 window.addEventListener('DOMContentLoaded', () => {
 renderAllIconsFromCSS();
 });
+
+function showToast(message) {
+const toast = document.getElementById('sg-toast');
+toast.innerText = message;
+toast.classList.add('show');
+setTimeout(() => {
+toast.classList.remove('show');
+}, 1500);
+}
+
+function copyValue(val, btnElement) {
+navigator.clipboard.writeText(val).then(() => {
+const originalText = btnElement.innerText;
+btnElement.innerText = 'Copied!';
+btnElement.classList.add('copied');
+showToast(`Copied: "${val}"`);
+
+setTimeout(() => {
+btnElement.innerText = originalText;
+btnElement.classList.remove('copied');
+}, 1200);
+});
+}
+
+function filterIcons() {
+const query = document.getElementById('sg-search').value.toLowerCase().trim();
+const cards = document.querySelectorAll('#sg-icon-grid .sg-card');
+
+cards.forEach(card => {
+const keywords = card.getAttribute('data-search') || '';
+if (!query || keywords.includes(query)) {
+card.style.display = 'flex';
+} else {
+card.style.display = 'none';
+}
+});
+}
 
 function renderAllIconsFromCSS() {
 const grid = document.getElementById('sg-icon-grid');
@@ -744,29 +304,27 @@ if (!grid) return;
 
 const iconMap = new Map();
 
-// 1. Scan loaded stylesheets for icon pseudo-elements
+// Scan loaded stylesheets for pseudo-element icons
 for (const sheet of document.styleSheets) {
 try {
 for (const rule of sheet.cssRules || []) {
-// Looks for rules targeting :before or ::before with content: "..."
 if (rule.selectorText && (rule.selectorText.includes(':before') || rule.selectorText.includes('::before'))) {
 const hasContent = rule.style && rule.style.content && rule.style.content !== 'none' && rule.style.content !== '""';
 
 if (hasContent) {
-// Extract the class names (e.g., fa-car, icon-x-twitter)
 const matches = rule.selectorText.match(/\.([a-zA-Z0-9_-]+)(?:::?before)/g);
 if (matches) {
 matches.forEach(m => {
 const cls = m.replace(/\.|\:before|\:\:before/g, '').trim();
-
-// Filter out non-icon classes that might use pseudo-content
 const isIcon = cls.startsWith('fa-') || cls.startsWith('icon-') || cls.includes('arrow') || cls.includes('check');
 
 if (isIcon && !iconMap.has(cls)) {
-// Extract unicode character hex if available
-const rawContent = rule.style.content.replace(/['"]/g, '');
-const charCode = rawContent.charCodeAt(0).toString(16).toUpperCase();
-iconMap.set(cls, charCode);
+let hex = '';
+const raw = rule.style.content.replace(/['"]/g, '');
+if (raw.length > 0) {
+hex = raw.charCodeAt(0).toString(16).toLowerCase();
+}
+iconMap.set(cls, hex);
 }
 });
 }
@@ -774,20 +332,18 @@ iconMap.set(cls, charCode);
 }
 }
 } catch (e) {
-// Skips any cross-origin sheets that cannot be accessed directly
+// Ignore cross-origin access blocks
 }
 }
 
 if (counter) counter.innerText = iconMap.size;
 
-// 2. Generate the DOM cards for each detected icon
 grid.innerHTML = '';
 Array.from(iconMap.keys()).sort().forEach(iconClass => {
 const hex = iconMap.get(iconClass);
 
-// Determine base prefix class (fas, fab, far, or standard)
 let prefix = 'fas';
-if (iconClass.includes('twitter') || iconClass.includes('facebook') || iconClass.includes('instagram') || iconClass.includes('youtube')) {
+if (iconClass.includes('twitter') || iconClass.includes('facebook') || iconClass.includes('instagram') || iconClass.includes('youtube') || iconClass.includes('linkedin') || iconClass.includes('yelp')) {
 prefix = 'fab';
 }
 
@@ -797,19 +353,16 @@ const searchTerms = `${iconClass} ${prefix} icon fa ${hex}`.toLowerCase();
 const card = document.createElement('div');
 card.className = 'sg-card';
 card.setAttribute('data-search', searchTerms);
-card.style.margin = '0';
 
 card.innerHTML = `
-<div class="sg-preview" style="min-height: 80px; font-size: 26px; color: #2c68b5; padding: 16px;">
+<div class="sg-preview">
 <i class="${fullClass}"></i>
 </div>
-<div class="sg-meta" style="padding: 10px; text-align: center; gap: 8px;">
-<h4 class="sg-item-name" style="font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${iconClass}">
-.${iconClass}
-</h4>
-<div class="sg-actions" style="justify-content: center; gap: 4px;">
-<button class="sg-btn-copy" style="font-size: 10px; padding: 4px 6px;" onclick="copyValue('${fullClass}', this)">Class</button>
-<button class="sg-btn-copy" style="font-size: 10px; padding: 4px 6px;" onclick="copyValue('<i class=&quot;${fullClass}&quot;></i>', this)">HTML</button>
+<div class="sg-meta">
+<h4 class="sg-item-name" title=".${iconClass}">.${iconClass}</h4>
+<div class="sg-actions">
+<button class="sg-btn-copy" onclick="copyValue('${fullClass}', this)">Class</button>
+<button class="sg-btn-copy" onclick="copyValue('<i class=&quot;${fullClass}&quot;></i>', this)">HTML</button>
 </div>
 </div>
 `;
