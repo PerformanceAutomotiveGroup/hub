@@ -8105,7 +8105,7 @@
 }
 
 @font-face {
-    font-family: Font Awesome\ free;
+    font-family: "Font Awesome 5 Free";
     font-style: normal;
     font-weight: 900;
     font-display: swap;
@@ -8118,7 +8118,7 @@
 }
 
 @font-face {
-    font-family: Font Awesome\ free;
+    font-family: "Font Awesome 5 Free";
     font-style: normal;
     font-weight: 400;
     font-display: swap;
@@ -8127,7 +8127,7 @@
 }
 
 .fa,.far,.fas {
-    font-family: Font Awesome\ free
+    font-family: "Font Awesome 5 Free"
 }
 
 .far {
@@ -8135,7 +8135,7 @@
 }
 
 @font-face {
-    font-family: Font Awesome\ free;
+    font-family: "Font Awesome 5 Free";
     font-style: normal;
     font-weight: 300;
     font-display: swap;
@@ -8144,7 +8144,7 @@
 }
 
 .fal {
-    font-family: Font Awesome\ free;
+    font-family: "Font Awesome 5 Free";
     font-weight: 300
 }
 
@@ -9936,7 +9936,7 @@ a img.aligncenter {
 
 .header .menu-item.menu-item-has-children>a:after {
     content: "\F107";
-    font-family: Font Awesome\ free,sans-serif;
+    font-family: "Font Awesome 5 Free",sans-serif;
     margin-left: .4rem;
     font-size: .7em;
     font-weight: 400
@@ -9970,7 +9970,7 @@ a img.aligncenter {
 .header .multiloc-navigation--mobile .menu-item.menu-item-has-children>a:after,.header .navigation--mobile .menu-item.menu-item-has-children>a:after {
     content: "\F067";
     font-weight: 700;
-    font-family: Font Awesome\ free,sans-serif;
+    font-family: "Font Awesome 5 Free",sans-serif;
     font-size: .7em;
     position: absolute;
     right: 1.6rem
@@ -10462,7 +10462,7 @@ label {
 }
 
 .select:after {
-    font-family: Font Awesome\ free,sans-serif;
+    font-family: "Font Awesome 5 Free",sans-serif;
     content: "\F107";
     float: right
 }
@@ -10526,7 +10526,7 @@ textarea:focus {
     font-weight: 900;
     font-size: 1.2rem;
     color: #333;
-    font-family: Font Awesome\ free,sans-serif;
+    font-family: "Font Awesome 5 Free",sans-serif;
     display: none
 }
 
@@ -11065,7 +11065,7 @@ textarea:focus {
 
 .header-popout__label:after {
     content: "\F0D7";
-    font-family: Font Awesome\ free,sans-serif;
+    font-family: "Font Awesome 5 Free",sans-serif;
     font-weight: 900;
     font-size: .8em;
     margin-left: .4rem
@@ -11503,7 +11503,7 @@ textarea:focus {
     content: "\F00D";
     font-weight: 700;
     font-size: 11px;
-    font-family: Font Awesome\ free,sans-serif
+    font-family: "Font Awesome 5 Free",sans-serif
 }
 
 .multiple-select.open .select {
@@ -12905,7 +12905,7 @@ textarea:focus {
 
 .convertus-accordion__title:after {
     content: "\F067";
-    font-family: Font Awesome\ free,sans-serif;
+    font-family: "Font Awesome 5 Free",sans-serif;
     font-size: 1.4rem;
     color: #777;
     transition: transform .2s
@@ -13222,7 +13222,7 @@ textarea:focus {
     height: 4rem;
     background-color: #fff;
     box-shadow: 0 .4rem 1.2rem rgba(0,0,0,.2);
-    font-family: Font Awesome\ free,sans-serif;
+    font-family: "Font Awesome 5 Free",sans-serif;
     color: #777;
     border: 0;
     border-radius: 50%;
@@ -13308,7 +13308,7 @@ textarea:focus {
 .h-vehicle-card__headline:before {
     content: "\F058";
     font-weight: 900;
-    font-family: Font Awesome\ free,sans-serif;
+    font-family: "Font Awesome 5 Free",sans-serif;
     margin-right: .4rem
 }
 
@@ -13694,7 +13694,7 @@ textarea:focus {
 .g-vehicle-card__headline:before {
     content: "\F058";
     font-weight: 900;
-    font-family: Font Awesome\ free,sans-serif;
+    font-family: "Font Awesome 5 Free",sans-serif;
     margin-right: .4rem
 }
 
@@ -14143,7 +14143,7 @@ textarea:focus {
 }
 
 .wpcf7-form .validated:before {
-    font-family: Font Awesome\ free,sans-serif;
+    font-family: "Font Awesome 5 Free",sans-serif;
     font-weight: 700;
     font-size: 1.4rem;
     content: "\F058";
@@ -14831,7 +14831,7 @@ textarea:focus {
     height: 30px;
     background-color: initial;
     color: #fff;
-    font-family: Font Awesome\ free,sans-serif;
+    font-family: "Font Awesome 5 Free",sans-serif;
     border: none;
     cursor: pointer
 }
@@ -15347,7 +15347,7 @@ textarea:focus {
 }
 
 .modal-carfax__lists {
-    font-family: Font Awesome\ free,sans-serif;
+    font-family: "Font Awesome 5 Free",sans-serif;
     list-style: none;
     color: #222
 }
@@ -17115,7 +17115,7 @@ p {
 }
 
 .tns-controls button {
-    font-family: Font Awesome\ free,sans-serif!important
+    font-family: "Font Awesome 5 Free",sans-serif!important
 }
 
 a.button {
