@@ -17201,3 +17201,171 @@ body:not(.show-oem-prices) .model-card__sub-info,body:not(.show-oem-prices) .mod
         transform: none!important
     }
 }
+
+	/* HOME BANNERS SCROLL  */
+
+.scroll-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  isolation: isolate;
+}
+
+/* scrollable row */
+.button-block-widget__row {
+  display: flex;
+  flex-wrap: nowrap !important;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  scroll-padding-inline: 2px;
+  /* Horizontal scrolling must clip at the sides. This internal top space keeps
+     the lifted card and its shadow inside that clipping viewport. */
+  margin-top:-22px;
+  padding:32px 2px 2px;
+
+  /* hide native scrollbar */
+  scrollbar-width: none; /* Firefox */
+}
+.button-block-widget__row::-webkit-scrollbar {
+  display: none; /* Webkit */
+}
+
+/* controls row: custom scrollbar + arrows */
+.scroll-controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin: -0.25rem 2px 1.6rem;
+  position: relative;
+	width:calc(100% - 4px);
+}
+
+/* fake scrollbar track */
+.custom-scrollbar {
+  flex: 1;
+  height: 6px;
+  background:color-mix(in srgb,var(--color-primary) 16%,transparent);
+  border:0;
+  border-radius: 999px;
+  margin-right: 8px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.custom-scrollbar-thumb {
+  height: 100%;
+  background:var(--color-primary);
+  border-radius: 999px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: grab;
+  transition: left .18s ease-out,width .18s ease-out,background .2s ease;
+}
+.custom-scrollbar-thumb:active {
+  cursor: grabbing;
+}
+
+
+/* arrows */
+.scroll-arrow {
+  appearance:none;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:0;
+  background: rgba(255,255,255,.92);
+  border: 1px solid rgba(0,0,0,.12);
+  box-shadow: 0 2px 8px rgba(0,0,0,.10),inset 0 1px 0 rgba(255,255,255,.9);
+  color:#2c68b5;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  font-weight: 600;
+  font-size: 34px;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform .22s ease,box-shadow .22s ease,background .22s ease,color .22s ease;
+}
+.scroll-arrow:hover {
+  background:#2c68b5;
+  color: #fff;
+  box-shadow:0 7px 18px rgba(44,104,181,.28);
+  transform: translateY(-2px) scale(1.03);
+}
+.scroll-arrow-icon{display:block;transform:translateY(-2px)}
+.scroll-arrow:active{transform:translateY(0) scale(.96)}
+.scroll-arrow:focus-visible{outline:3px solid rgba(0,113,227,.32);outline-offset:3px}
+.scroll-arrow:disabled{opacity:.35;cursor:default;box-shadow:none;transform:none}
+.scroll-controls.is-static{opacity:.45;pointer-events:none}
+
+	.button_block_widget-8 .button-block-widget{padding-top:5rem!important;}
+	.button-block-5 .wrapper{width:144rem!important;}
+  .button_block_widget-8 .button-block-widget .button-block-button{
+    position:relative;
+    overflow:hidden;
+    border-radius:18px;
+    box-shadow:0 5px 18px rgba(15,30,50,.12);
+    transform:translateZ(0);
+    transition:transform .38s cubic-bezier(.2,.8,.2,1),box-shadow .38s cubic-bezier(.2,.8,.2,1);
+    will-change:transform;
+  }
+  .button_block_widget-8 .button-block-widget .button-block-button:hover{
+    box-shadow:inset -72px 0 56px rgba(8,25,47,.09),0 18px 38px rgba(15,30,50,.20);
+    transform:translateY(-7px) scale(1.008);
+  }
+  .button_block_widget-8 .button-block-widget .button-block-button img{
+    transition:transform .65s cubic-bezier(.2,.75,.25,1),filter .45s ease;
+    will-change:transform;
+  }
+  .button_block_widget-8 .button-block-widget .button-block-button:hover img{
+    filter:saturate(1.06) contrast(1.02);
+    transform:scale(1.045);
+  }
+  /* The live CTA has framework padding plus either an <i> icon or an ::after
+     Font Awesome arrow. Both paths share the same centred 14px treatment. */
+  .button-block-5 .button-block-widget .button-block-button__cta-wrapper{
+    display:flex!important;
+    align-items:center!important;
+    line-height:1!important;
+  }
+  .button-block-5 .button-block-widget .button-block-button__cta{
+    display:inline-flex!important;
+    align-items:center!important;
+    line-height:1!important;
+  }
+  .button-block-5 .button-block-widget .button-block-button__cta>i,
+  .button-block-5 .button-block-widget .button-block-button__cta>i::before,
+  .button-block-5 .button-block-widget .button-block-button__cta-wrapper::after{
+    display:inline-flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    width:14px!important;
+    height:14px!important;
+    margin:0 6px 0 0!important;
+    font-size:20px!important;
+    line-height:14px!important;
+    vertical-align:middle!important;
+    transform:none!important;
+  }
+  .button_block_widget-8 .button-block-widget .button-block-button:focus-within{
+    outline:3px solid rgba(0,113,227,.38);
+    outline-offset:4px;
+  }
+  @media(max-width:767px){
+    .button_block_widget-8 .button-block-widget{padding-top:1.5rem!important;padding-bottom:2.5rem!important}
+    .button-block-widget__row{margin-top:-14px;padding-top:24px}
+    .scroll-controls{gap:10px;margin:.35rem 2px .45rem;width:calc(100% - 4px)}
+    .scroll-arrow{width:44px;height:44px}
+    .scroll-arrow:hover{transform:scale(1.03)}
+    .button_block_widget-8 .button-block-widget .button-block-button{border-radius:14px}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .button-block-widget__row{scroll-behavior:auto}
+    .scroll-arrow,.custom-scrollbar-thumb,.button_block_widget-8 .button-block-widget .button-block-button,.button_block_widget-8 .button-block-widget .button-block-button img{transition:none!important}
+    .button_block_widget-8 .button-block-widget .button-block-button:hover,.scroll-arrow:hover{transform:none}
+  }
