@@ -10093,7 +10093,6 @@ ul.tabs__no-style {
     box-shadow: 0 0 0 1px #bbb
 }
 
-.button::after,
 .button:after {
   content: "\f105" !important;
   font-family: "Font Awesome 5 Free", "FontAwesome" !important;
