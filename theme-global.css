@@ -10074,12 +10074,12 @@ ul.tabs__no-style {
     max-width: 26rem;
     font-weight: 700;
     cursor: pointer;
-    transition: all .3s
+    transition: all .3s;
 }
 
 @media (max-width: 767px) {
     .button {
-        padding:.4rem 1.6rem
+        padding:.4rem 1.6rem;
     }
 }
 
@@ -10096,27 +10096,29 @@ ul.tabs__no-style {
 .button:after {
   content: "\f105" !important;
   font-family: "Font Awesome 5 Free", "FontAwesome" !important;
-  font-weight: 900 !important;
-  display: inline-block !important;
-  font-style: normal !important;
-  font-variant: normal !important;
-  text-rendering: auto !important;
+  font-weight: 900;
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
   -webkit-font-smoothing: antialiased;
+    margin-left: auto;
+    padding-left: .8rem;
 }
 
 .button[disabled] {
     cursor: default;
     background: #bbb;
-    box-shadow: none
+    box-shadow: none;
 }
 
 .button--small {
     width: auto;
-    font-size: 1.4rem
+    font-size: 1.4rem;
 }
 
 .button--small:after {
-    margin-left: .8rem
+    margin-left: .8rem;
 }
 
 .button--alternate {
