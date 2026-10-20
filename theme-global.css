@@ -15899,3 +15899,1299 @@ textarea:focus {
 .icon-x-twitter:before {
     content: "\E800"
 }
+@import url(https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600);@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600);body {
+    font-family: Montserrat,sans-serif;
+    -moz-osx-font-smoothing: grayscale;
+    color: #000!important
+}
+
+body.mega-menu.no-scroll {
+    overflow: auto;
+    padding-right: 0!important
+}
+
+@media (max-width: 767px) {
+    .page-title h1,.page-title h1 span {
+        font-size:2.9rem
+    }
+}
+
+.page-title.autoplanet-page-banner {
+    text-transform: uppercase;
+    padding: 9.2rem calc(50% - 55rem) 3.4rem
+}
+
+.page-title.autoplanet-page-banner h1 {
+    font-weight: 500;
+    text-shadow: 0 2px 4px rgba(0,0,0,.7)
+}
+
+.page-title.autoplanet-page-banner:before {
+    content: "";
+    background: linear-gradient(90deg,#ffcc01 45%,#00b100 60%);
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 10px;
+    bottom: 0;
+    z-index: 10
+}
+
+.page-title.autoplanet-page-banner:after {
+    background-color: rgba(0,0,0,.2)
+}
+
+p {
+    line-height: 1.571;
+    font-size: 14px
+}
+
+::selection {
+    background-color: #035987;
+    color: #fff
+}
+
+.mega-menu .mega-menu-fragment-container__fragment h3 {
+    font-size: 2rem!important
+}
+
+.bottom-controls .tns-controls {
+    bottom: 57%;
+    width: 115%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9
+}
+
+.mobile-center a.btn.btn-primary.servicebtn,a.btn.btn-primary.servicebtn[href="/vehicles/certified/"] {
+    background: #e62335;
+    color: #fff;
+    padding: 2rem 6rem;
+    border-radius: 1.5rem;
+    text-decoration: none;
+    transition: color .3s;
+    font-weight: 400;
+    font-size: 1.6rem;
+    line-height: 3
+}
+
+.mobile-center a.btn.btn-primary.servicebtn:hover,a.btn.btn-primary.servicebtn[href="/vehicles/certified/"]:hover {
+    background: #000;
+    transition: all .5s
+}
+
+.compare-card .compare-card__price .tax,.convertus-gmaps-wrapper .convertus-gmaps__infowindow__website {
+    display: none
+}
+
+.pricing-tabs__tab:first-child:after {
+    background: transparent!important
+}
+
+.heading-space {
+    height: 60px
+}
+
+.header-banner-top {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 99999;
+    height: 60px;
+    color: #fff;
+    background-repeat: repeat
+}
+
+.colflexbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row
+}
+
+.colflexbox .title {
+    font-size: 22px
+}
+
+.colflexbox .title,.colflexbox a {
+    font-weight: 700;
+    padding: 1rem 2rem
+}
+
+.colflexbox a {
+    background-color: #fff;
+    border: 0;
+    color: #2d51bf;
+    font-size: 12px;
+    text-transform: none!important;
+    line-height: inherit;
+    margin: 0
+}
+
+.colflexbox a:hover {
+    background-color: #e21f2f;
+    color: #fff
+}
+
+.details-options__label,.details-options__price {
+    display: none
+}
+
+@media (min-width: 500px) and (max-width:991px) {
+    aside.performance .sidebar {
+        margin:1rem;
+        max-width: 98%;
+        display: grid;
+        grid-template-columns: 49% 49%;
+        grid-gap: 2%;
+        justify-items: center
+    }
+
+    aside.performance .sidebar .sidebar-hours-of-operation-1 .nav-tabs {
+        justify-content: left
+    }
+
+    aside.performance .sidebar .sidebar-title {
+        margin-bottom: .8rem;
+        color: #bbb;
+        justify-content: left;
+        align-self: start;
+        flex-direction: row-reverse;
+        display: inline-flex
+    }
+
+    aside.performance .sidebar .sidebar-title i {
+        margin-right: 2rem
+    }
+
+    aside.performance .sidebar .contact-block__link strong {
+        min-width: auto!important;
+        margin-right: 1rem
+    }
+
+    aside.performance .sidebar .contact-block__link:hover span {
+        transform: translateX(0)
+    }
+
+    aside.performance .sidebar .hours.hours--simple {
+        margin: 0
+    }
+}
+
+.performance-specials-page-template .primary-wrapper {
+    padding: 6.4rem calc(50% - 65rem)
+}
+
+@media (max-width: 1320px) and (min-width:1235px) {
+    .performance-specials-page-template .primary-wrapper {
+        padding:6.4rem calc(50% - 61rem)
+    }
+}
+
+@media (max-width: 1235px) and (min-width:920px) {
+    .performance-specials-page-template .primary-wrapper {
+        padding:6.4rem calc(50% - 50rem)
+    }
+}
+
+@media (max-width: 919px) and (min-width:770px) {
+    .performance-specials-page-template .primary-wrapper {
+        padding:6.4rem calc(50% - 42rem)
+    }
+}
+
+@media (max-width: 770px) and (min-width:605px) {
+    .performance-specials-page-template .primary-wrapper {
+        padding:6.4rem calc(50% - 35rem)
+    }
+}
+
+@media (max-width: 605px) and (min-width:478px) {
+    .performance-specials-page-template .primary-wrapper {
+        padding:6.4rem calc(50% - 28rem)
+    }
+}
+
+@media screen and (max-width: 478px) {
+    .performance-specials-page-template .primary-wrapper {
+        padding:6.4rem calc(50% - 22rem)
+    }
+}
+
+.performance-specials-page-template .primary-wrapper #specials-app .filter-wrap {
+    z-index: 1
+}
+
+.performance-specials-page-template .single-special {
+    padding: 1rem
+}
+
+.performance-specials-page-template .single-special .wrapper {
+    box-shadow: 0 1px 2px rgba(0,0,0,.5);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%
+}
+
+.performance-specials-page-template .single-special .wrapper:hover {
+    box-shadow: 1px 3px 5px rgba(0,0,0,.5)
+}
+
+.performance-specials-page-template .single-special .wrapper .image-wrapper {
+    cursor: pointer;
+    display: flex;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50%;
+    height: 32rem;
+    max-width: 100%;
+    width: 100%
+}
+
+@media (max-width: 1320px) and (min-width:1235px) {
+    .performance-specials-page-template .single-special .wrapper .image-wrapper {
+        height:30rem
+    }
+}
+
+@media (max-width: 1234px) and (min-width:991px) {
+    .performance-specials-page-template .single-special .wrapper .image-wrapper {
+        height:25rem
+    }
+}
+
+@media (max-width: 990px) and (min-width:920px) {
+    .performance-specials-page-template .single-special .wrapper .image-wrapper {
+        height:38rem
+    }
+}
+
+@media (max-width: 920px) and (min-width:769px) {
+    .performance-specials-page-template .single-special .wrapper .image-wrapper {
+        height:32rem
+    }
+}
+
+@media (max-width: 769px) and (min-width:606px) {
+    .performance-specials-page-template .single-special .wrapper .image-wrapper {
+        height:26rem
+    }
+}
+
+@media (max-width: 606px) and (min-width:478px) {
+    .performance-specials-page-template .single-special .wrapper .image-wrapper {
+        height:21rem
+    }
+}
+
+@media screen and (max-width: 478px) {
+    .performance-specials-page-template .single-special .wrapper .image-wrapper {
+        height:34rem
+    }
+}
+
+.performance-specials-page-template .single-special .wrapper .content-wrapper {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    width: 100%;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    align-self: center
+}
+
+.performance-specials-page-template .single-special .wrapper .content-wrapper .title-wrapper {
+    width: 100%;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    margin-bottom: 1rem;
+    height: 10rem
+}
+
+.performance-specials-page-template .single-special .wrapper .content-wrapper .title-wrapper h3 {
+    display: flex;
+    align-self: center;
+    font-size: 2.5rem;
+    text-align: left;
+    justify-content: start;
+    line-height: 25px;
+    font-weight: 500
+}
+
+.performance-specials-page-template .single-special .wrapper .content-wrapper .info-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    flex: 1;
+    line-height: 35px
+}
+
+.performance-specials-page-template .single-special .wrapper .content-wrapper .disclaimer-info-wrapper {
+    width: 100%;
+    padding: 1rem 0;
+    font-size: 1.4rem;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    margin-bottom: .8rem;
+    line-height: 1.2;
+    overflow-wrap: break-word
+}
+
+.performance-specials-page-template .single-special .wrapper .content-wrapper .disclaimer-info-wrapper a {
+    text-decoration: underline
+}
+
+.performance-specials-page-template .single-special .wrapper .content-wrapper .disclaimer-info-wrapper .discalimer-content {
+    display: none;
+    position: absolute;
+    top: 2%;
+    z-index: -1;
+    opacity: 0;
+    background: #fff;
+    height: 0;
+    width: 95%;
+    border: 2px solid #eee;
+    transition: height .7s
+}
+
+.performance-specials-page-template .single-special .wrapper .content-wrapper .disclaimer-info-wrapper .discalimer-content.open {
+    display: flex;
+    flex-direction: column;
+    z-index: 999;
+    opacity: 1;
+    height: 95%;
+    overflow-y: scroll
+}
+
+.performance-specials-page-template .single-special .wrapper .content-wrapper .disclaimer-info-wrapper .discalimer-content.open .close-button {
+    text-align: right;
+    font-size: 2rem;
+    margin-right: 2rem
+}
+
+.performance-specials-page-template .single-special .wrapper .content-wrapper .disclaimer-info-wrapper .discalimer-content p {
+    flex-wrap: wrap;
+    word-break: break-word;
+    padding: 1rem 1.5rem
+}
+
+.performance-specials-page-template .single-special .wrapper .content-wrapper .cta-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: auto;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    align-self: center;
+    bottom: 1.5rem
+}
+
+.performance-specials-page-template .single-special .wrapper .content-wrapper .cta-wrapper a {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    align-self: center;
+    width: 95%;
+    padding: .6rem 0;
+    background: #e21f2f;
+    color: #fff;
+    transition: all 1s;
+    border-radius: 1rem;
+    margin: .5rem 0;
+    font-size: 1.4rem
+}
+
+.performance-specials-page-template .single-special .wrapper .content-wrapper .cta-wrapper a:hover {
+    color: #fff;
+    background: #b61825
+}
+
+.performance-specials-page-template .single-special .wrapper .content-wrapper .cta-wrapper a.schedule-test-drive {
+    background: #545353;
+    color: #fff
+}
+
+.performance-specials-page-template .single-special .wrapper .content-wrapper .cta-wrapper a.schedule-test-drive:hover {
+    color: #fff;
+    background: #000
+}
+
+@media screen and (max-width: 767px) {
+    .performance-specials-page-template .single-special .wrapper .content-wrapper .cta-wrapper a {
+        padding:1rem 0
+    }
+}
+
+.performance-specials-page-template .single-special .wrapper .content-wrapper .cta-wrapper .modal-window {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 20;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: all .7s
+}
+
+.performance-specials-page-template .single-special .wrapper .content-wrapper .cta-wrapper .modal-window.open {
+    visibility: visible;
+    opacity: 1;
+    transition: all .7s
+}
+
+.performance-specials-page-template .single-special .wrapper .content-wrapper .cta-wrapper .modal-window .modal__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 21;
+    background-color: rgba(0,0,0,.7)
+}
+
+.performance-specials-page-template .single-special .wrapper .content-wrapper .cta-wrapper .modal-window .modal__container {
+    position: fixed;
+    z-index: 22;
+    width: 50%;
+    height: 85%;
+    top: 50%;
+    transform: translateY(-50%) translateX(50%);
+    box-shadow: 1px 2px 3px rgba(0,0,0,.5);
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #fff;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-width: 100%
+}
+
+.performance-specials-page-template .single-special .wrapper .content-wrapper .cta-wrapper .overlay {
+    z-index: -1;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: #000;
+    opacity: 0;
+    transition: all .7s
+}
+
+.performance-specials-page-template .single-special .wrapper .content-wrapper .input-group a {
+    all: unset;
+    color: var(--color-primary)
+}
+
+.performance-specials-page-template .single-special .wrapper .content-wrapper .input-group a:hover {
+    all: unset;
+    color: var(--color-primary);
+    cursor: pointer
+}
+
+#team-app #team-modal .modal-content {
+    max-width: 72rem
+}
+
+#team-app #team-modal .modal-content .col-lg-3 {
+    flex-basis: 40%;
+    width: 100%;
+    max-width: none
+}
+
+@media only screen and (max-width: 600px) {
+    #team-app #team-modal .modal-content .col-lg-3 {
+        flex-basis:100%;
+        width: 100%;
+        max-width: none
+    }
+}
+
+.page-template-template-drive-change .primary-wrapper {
+    padding-left: 0;
+    padding-right: 0
+}
+
+.autoplanet-landing-page {
+    padding-bottom: 6rem
+}
+
+.autoplanet-landing-page iframe {
+    border: none;
+    box-shadow: none
+}
+
+.autoplanet-landing-page .p-lg {
+    font-size: 1.8rem
+}
+
+.autoplanet-landing-page .button {
+    background-color: #3fae2a;
+    font-size: 1.8rem;
+    height: 5.4rem;
+    cursor: pointer
+}
+
+.autoplanet-landing-page .button>i {
+    font-size: 3rem
+}
+
+.autoplanet-landing-page .button-block-4 {
+    position: relative;
+    z-index: 1
+}
+
+.autoplanet-landing-page .button-block-4+.about-5 {
+    position: relative;
+    padding-top: 6.4rem
+}
+
+.autoplanet-landing-page .button-block-4+.about-5:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: -24rem;
+    background-image: url(/wp-content/themes/convertus-platinum-performance/achilles/assets/images/background_blue_crossovers.png);
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    height: 111rem
+}
+
+.autoplanet-landing-page .page-content {
+    position: relative;
+    width: 100%;
+    min-height: 100px;
+    background: #fff;
+    color: #000;
+    border: 0 solid #ccc;
+    background-image: linear-gradient(#e7ecf0 4%,rgba(230,235,241,0));
+    padding: 55px 0;
+    margin-top: 25px
+}
+
+.autoplanet-landing-page .page-content:before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-color: #fff transparent transparent;
+    border-style: solid;
+    border-width: 20px 25px 0
+}
+
+.autoplanet-landing-page .page-content h3 {
+    color: #585c5b;
+    font-size: 2rem;
+    margin: 0 10px
+}
+
+.autoplanet-landing-page .page-content p {
+    color: #585c5b;
+    margin: 0 10px
+}
+
+.autoplanet-landing-page .contact-form-1 .widget-heading {
+    text-align: center;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0;
+    color: var(--color-primary)
+}
+
+.autoplanet-landing-page .contact-form-1 .widget-heading:after,.autoplanet-landing-page .contact-form-1 .widget-heading:before {
+    content: "";
+    height: 1px;
+    background-color: #333;
+    width: auto;
+    display: block;
+    flex: auto;
+    margin-top: 0;
+    margin-bottom: 0
+}
+
+.autoplanet-landing-page .contact-form-1 .widget-heading:after {
+    margin-left: 1rem
+}
+
+.autoplanet-landing-page .contact-form-1 .widget-heading:before {
+    margin-right: 1rem
+}
+
+.autoplanet-landing-page .contact-form-1+.about-5 {
+    background-image: linear-gradient(#e7ecf0 4%,rgba(230,235,241,0));
+    position: relative;
+    margin-top: 6.4rem
+}
+
+.autoplanet-landing-page .contact-form-1+.about-5:before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-color: #fff transparent transparent;
+    border-style: solid;
+    border-width: 20px 25px 0
+}
+
+.autoplanet-landing-page .simple-text-widget__title {
+    color: var(--color-primary);
+    font-size: 2rem;
+    margin-bottom: 1rem
+}
+
+.showroom-trims-wrapper .details-options .details-options__price {
+    display: none!important
+}
+
+.convertus-accordion {
+    margin-top: 2rem
+}
+
+.convertus-accordion__title {
+    background: #eaeaea;
+    padding: 1.5rem!important;
+    font-size: 1.5rem
+}
+
+.convertus-accordion__section.expanded .convertus-accordion__wrap {
+    padding: 1.5rem;
+    font-size: 1.4rem
+}
+
+.sidebar-contact-info-1 .fa-envelope,.sidebar-contact-info-1 .fa-envelope+div {
+    display: none
+}
+
+.inventory-search-widget {
+    background-color: #f4f4f4!important;
+    padding: 6.8rem 1.6rem 20rem!important
+}
+
+@media (max-width: 767px) {
+    .inventory-search-widget {
+        padding-bottom:6.5rem
+    }
+}
+
+.dark:after {
+    display: block;
+    opacity: .7;
+    background: #000
+}
+
+.hero-widget {
+    background: #05305f;
+    min-height: 70vh;
+    padding-top: 0
+}
+
+.hero-widget .icon-buttons__single:hover {
+    color: #fff;
+    text-decoration: underline
+}
+
+.hero-widget .icon-buttons__single:hover .icon-buttons__label {
+    color: #fff!important;
+    text-decoration: underline
+}
+
+.showroom-carousel-1>div {
+    background: #fff url(https://performancedemo1.performanceautodev.com/wp-content/uploads/sites/36/2020/02/Performance-Hyundai_02-1.png) no-repeat 50%
+}
+
+.showroom-carousel-1 h2.widget-heading {
+    text-align: center;
+    color: #413f40
+}
+
+@media (max-width: 767px) {
+    .showroom-carousel-1 h2.widget-heading {
+        font-size:3rem;
+        line-height: 1.2
+    }
+}
+
+.showroom-carousel-1 h2.widget-heading:after {
+    margin: 0 auto 2rem
+}
+
+@media (max-width: 767px) {
+    .showroom-carousel-1 .showroom-carousel-widget {
+        background:none
+    }
+}
+
+.showroom-carousel-1 .showroom-carousel-widget.dark {
+    background: none
+}
+
+.showroom-carousel-1 .showroom-carousel-widget.dark .body-filter__label,.showroom-carousel-1 .showroom-carousel-widget.dark .body-filter__single,.showroom-carousel-1 .showroom-carousel-widget.dark .body-filter__single.active,.showroom-carousel-1 .showroom-carousel-widget.dark .showroom-carousel-card__model-name,.showroom-carousel-1 .showroom-carousel-widget.dark .showroom-carousel-card__model-year,.showroom-carousel-1 .showroom-carousel-widget.dark .widget-heading {
+    color: #fff!important
+}
+
+.showroom-carousel-1 .showroom-carousel-widget.dark .showroom-carousel-card__details {
+    color: #fff
+}
+
+@media (max-width: 767px) {
+    .showroom-carousel-1 .showroom-carousel-widget.dark .showroom-carousel-card__button {
+        background:var(--color-primary);
+        color: #fff;
+        text-transform: uppercase
+    }
+}
+
+.showroom-carousel-1 .showroom-carousel-widget.dark .showroom-carousel-card:hover {
+    background-color: #222;
+    box-shadow: none
+}
+
+.showroom-carousel-1 .showroom-carousel-widget .body-filter__single {
+    color: #413f40;
+    font-weight: 300!important;
+    font-size: 1.4rem
+}
+
+.showroom-carousel-1 .showroom-carousel-widget .body-filter__label {
+    color: #413f40;
+    font-weight: 300;
+    font-size: 1.4rem
+}
+
+.showroom-carousel-1 .showroom-carousel-widget .showroom-carousel-card:not(:hover) {
+    background: none
+}
+
+.showroom-carousel-1 .showroom-carousel-widget .showroom-carousel-card__model-year {
+    display: inline;
+    color: #333;
+    font-size: 2.5rem
+}
+
+.showroom-carousel-1 .showroom-carousel-widget .showroom-carousel-card__model-name {
+    display: inline;
+    color: #333;
+    font-size: 2.5rem!important
+}
+
+.showroom-carousel-1 .showroom-carousel-widget .showroom-carousel-card__details {
+    color: #333!important;
+    font-weight: 600;
+    font-size: 2rem
+}
+
+@media (max-width: 767px) {
+    .showroom-carousel-1 .showroom-carousel-widget .showroom-carousel-card__button {
+        background:var(--color-primary);
+        color: #fff;
+        text-transform: uppercase
+    }
+}
+
+.showroom-carousel-1 .showroom-carousel-widget .showroom-carousel-card:hover .showroom-carousel-card__button {
+    background: var(--color-primary);
+    color: #fff;
+    border: none
+}
+
+.about-2 h2 {
+    margin-left: -.8rem;
+    margin-bottom: 2.5rem
+}
+
+.about-2 .about-widget {
+    background: #f2f2f2
+}
+
+@media (max-width: 767px) {
+    .about-2 .about-widget {
+        padding:30rem 2.4rem 6.4rem
+    }
+}
+
+.about-2 .about-widget__background-container {
+    width: 50%!important;
+    background-position: 100% 50%!important
+}
+
+@media (max-width: 767px) {
+    .about-2 .about-widget__background-container {
+        width:100%;
+        top: 0
+    }
+}
+
+.about-2 .about-widget__background-container:after,.about-2 .about-widget__excerpt {
+    display: none
+}
+
+.about-2 .about-widget .col-lg-offset-6 {
+    padding-left: 5rem
+}
+
+@media (max-width: 767px) {
+    .about-2 .about-widget .col-lg-offset-6 {
+        background:#f2f2f2;
+        padding-top: 3rem
+    }
+}
+
+.about-2 .about-widget .col-lg-offset-6 h2 {
+    color: var(--color-primary);
+    font-weight: 300;
+    display: block;
+    position: relative;
+    margin-bottom: 3rem
+}
+
+@media (max-width: 767px) {
+    .about-2 .about-widget .col-lg-offset-6 h2 {
+        font-size:2.5rem
+    }
+}
+
+.about-2 .about-widget .col-lg-offset-6 h2 span {
+    font-weight: 600
+}
+
+.about-2 .about-widget .col-lg-offset-6 h2:after {
+    width: 5rem;
+    height: 4px;
+    background: var(--color-primary);
+    display: block;
+    content: ""
+}
+
+.about-2 .about-widget .col-lg-offset-6 form {
+    display: flex
+}
+
+.about-2 .about-widget .col-lg-offset-6 form label {
+    color: var(--color-primary);
+    font-weight: 600
+}
+
+.about-2 .about-widget .col-lg-offset-6 form .input-group {
+    flex: 0 0 45%;
+    margin: 0 3% 2rem 0
+}
+
+@media (max-width: 767px) {
+    .about-2 .about-widget .col-lg-offset-6 form .input-group {
+        flex:0 0 100%
+    }
+}
+
+.about-2 .about-widget .col-lg-offset-6 form .input-group input {
+    background: #fff;
+    box-shadow: none;
+    border: 1px solid #d0d0d0
+}
+
+.about-2 .about-widget .col-lg-offset-6 form .button {
+    background: var(--color-primary) url(https://performancedemo1.performanceautodev.com/wp-content/uploads/sites/36/2020/02/Vector-Smart-Object.png) no-repeat;
+    padding-right: 10rem;
+    background-position: 90% 50%
+}
+
+.about-2 .about-widget .col-lg-offset-6 form .button:hover {
+    padding-right: 10rem;
+    background: #333 url(https://performancedemo1.performanceautodev.com/wp-content/uploads/sites/36/2020/02/Vector-Smart-Object.png) no-repeat 90% 50%
+}
+
+.about-2 .about-widget.dark {
+    background-color: var(--color-primary);
+    color: #fff;
+    padding: 10rem 8rem 14rem
+}
+
+.about-2 .about-widget.dark label {
+    color: #fff;
+    font-weight: 600
+}
+
+.about-2 .about-widget.dark .button {
+    background-color: #fff;
+    color: var(--color-primary)
+}
+
+.about-2 .about-widget.dark .col-lg-6 form {
+    display: flex
+}
+
+.about-2 .about-widget.dark .col-lg-6 form .input-group {
+    flex: 0 0 45%;
+    margin: 0 3% 2rem 0
+}
+
+@media (max-width: 767px) {
+    .about-2 .about-widget.dark .col-lg-6 form .input-group {
+        flex:0 0 100%
+    }
+}
+
+.video-player-1 h2.widget-heading {
+    text-align: center
+}
+
+.video-player-1 h2.widget-heading:after {
+    margin: 1rem auto;
+    background: #333
+}
+
+.button-block-4 .wrapper {
+    max-width: 100%
+}
+
+.button-block-4 .button-block-widget {
+    padding-top: 1.6rem!important
+}
+
+.button-block-4 .button-block-widget .button-block-widget__row {
+    flex-wrap: nowrap;
+    margin-top: 0
+}
+
+.button-block-4 .button-block-widget .button-block-widget__column {
+    flex: 0 1 auto;
+    padding-left: .8rem;
+    padding-right: .8rem
+}
+
+.button-block-4 .button-block-widget .button-block-widget__row .button-block-button {
+    border-radius: 0;
+    min-height: 40rem!important
+}
+
+.button-block-4 .button-block-widget .button-block-button:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 30%;
+    left: 0;
+    background: linear-gradient(180deg,rgba(0,0,0,.6),transparent)
+}
+
+.button-block-4 .button-block-widget .button-block-button .button-block-button__header .icon {
+    display: none
+}
+
+.button-block-4 .button-block-widget .button-block-button .button-block-button__title {
+    color: #fff;
+    font-weight: bolder;
+    position: relative;
+    z-index: 99
+}
+
+.button-block-4 .button-block-widget .button-block-button .button-block-button__subtitle {
+    color: #fff;
+    z-index: 99;
+    position: relative
+}
+
+.button-block-4 .button-block-widget .button-block-button .button-block-button__background {
+    transition: .8s
+}
+
+.button-block-4 .button-block-widget .button-block-button:hover .button-block-button__background {
+    transform: scale(1.2)
+}
+
+.button-block-4 .button-block-widget .button-block-button:hover .button-block-button__background:before {
+    padding: 2em
+}
+
+.button-block-4 .button-block-widget .button-block-button:hover .button-block-button__cta-wrapper {
+    background-color: var(--color-primary-dark)!important
+}
+
+.button-block-4 .button-block-widget .button-block-button__cta-wrapper {
+    background-color: var(--color-primary)
+}
+
+.button-block-4 .button-block-widget .button-block-button__cta>b {
+    visibility: visible!important;
+    margin-left: 0!important
+}
+
+@media (min-width: 991px) {
+    .button-block-4 #nextBtn,.button-block-4 #prevBtn {
+        display:none
+    }
+}
+
+@media screen and (max-width: 991px) {
+    .button-block-4 .wrapper {
+        position:relative
+    }
+
+    .button-block-4 .button-block-widget__row {
+        flex-direction: column
+    }
+}
+
+@media screen and (max-width: 991px) and (max-width:991px) {
+    .button-block-4 .button-block-widget__row {
+        flex-direction:row
+    }
+}
+
+@media screen and (max-width: 991px) {
+    .button-block-4 .button-block-widget__column {
+        flex:0 0 100%;
+        max-width: 100%;
+        min-width: 100%;
+        flex: 1;
+        margin-bottom: 0;
+        padding-left: 0;
+        padding-right: 0
+    }
+
+    .button-block-4 .nav-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0,0,0,.5);
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        width: 4rem;
+        height: 4rem;
+        font-size: 15px;
+        border-radius: 50%;
+        z-index: 99
+    }
+
+    .button-block-4 #prevBtn {
+        left: 0
+    }
+
+    .button-block-4 #nextBtn {
+        right: 0
+    }
+}
+
+.kia-showroom-model-video {
+    padding: 4rem 0;
+    background: #fff
+}
+
+.kia-showroom-model-video__title {
+    margin: 0 0 1.6rem;
+    text-align: center
+}
+
+.kia-showroom-model-video__frame {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 0;
+    padding-top: 56.25%
+}
+
+.kia-showroom-model-video iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0
+}
+
+@media screen and (max-width: 767px) {
+    .kia-showroom-model-video {
+        padding:3.2rem 0
+    }
+
+    .kia-showroom-model-video .wrapper {
+        padding: 0 1.6rem
+    }
+}
+
+@media only screen and (max-width: 767px) and (min-width:600px) {
+    .g-vehicle-card__image {
+        height:40rem
+    }
+}
+
+@media (min-width: 992px) {
+    .g-vehicle-card__details-list {
+        min-height:100px
+    }
+
+    .g-vehicle-card__specs {
+        min-height: 70px;
+        line-height: 1.2
+    }
+}
+
+.contact-info-shortcode {
+    background-color: #fff;
+    margin: 2.4rem auto;
+    box-shadow: 0 .6rem 3.6rem rgba(0,0,0,.15);
+    border-radius: 5px;
+    padding: 3.2rem;
+    max-width: 45rem
+}
+
+.contact-info-shortcode section:not(:last-child) .shortcode__section {
+    padding-bottom: 1.6rem;
+    border-bottom: 1px solid #ececec;
+    margin-bottom: 1.6rem
+}
+
+@media (max-width: 991px) {
+    .contact-info-shortcode {
+        width:100%;
+        max-width: 40rem;
+        margin: 2.4rem auto;
+        background-color: initial;
+        box-shadow: 0 .6rem 3.6rem rgba(0,0,0,.15);
+        padding: 3.2rem
+    }
+}
+
+.contact-info-shortcode__dropdown {
+    height: 6rem
+}
+
+@media (max-width: 991px) {
+    .contact-info-shortcode .nav-tabs {
+        justify-content:flex-start
+    }
+}
+
+.contact-info-shortcode .shortcode-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: .8rem;
+    color: #bbb
+}
+
+.g-vehicle-card .g-vehicle-card__image {
+    height: 26rem
+}
+
+.mega-menu__inventory .g-vehicle-card .g-vehicle-card__image.oem-image:not(.g-vehicle-card__lazyload-img) {
+    transform: translate(-6%) scale(1.6)
+}
+
+.tns-controls button {
+    font-family: Font Awesome\ 5 Pro,sans-serif!important
+}
+
+a.button {
+    text-transform: capitalize
+}
+
+html form.wpcf7-form.updated-form-ui .wpcf7-list-item-label {
+    font-size: 14px
+}
+
+@media (max-width: 991px) {
+    footer.footer .menu-main-menu-container .main-menu li:first-child {
+        border-top:none
+    }
+
+    footer.footer .menu-main-menu-container li.menu-item-has-children a:after,footer.footer .menu-main-menu-container li.menu-item-has-children ul.sub-menu li:before {
+        color: var(--color-primary)
+    }
+}
+
+body .showroom-models-wrapper .model-card .motocommerce-build-and-price {
+    margin-top: 0
+}
+
+body .showroom-models-wrapper .model-card .model-card__ctas--build-and-price {
+    margin-bottom: .8rem!important
+}
+
+body .showroom-models-wrapper .model-card .model-card-custom__ctas {
+    width: 100%;
+    margin-bottom: .8rem
+}
+
+body .showroom-models-wrapper .model-card .model-card-custom__ctas .button {
+    width: 100%;
+    max-width: none
+}
+
+body .showroom-models-wrapper .model-card .model-card__ctas {
+    margin-bottom: .8rem
+}
+
+body .showroom-models-wrapper .model-card .model-card__ctas .button {
+    width: 100%;
+    max-width: none
+}
+
+body .showroom-models-wrapper .model-card .button:hover {
+    background: var(--color-primary-dark)!important;
+    color: #fff!important
+}
+
+@media (min-width: 1300px) {
+    body .showroom-trims-wrapper .model-hero {
+        padding:3.2rem calc(50% - 65rem)
+    }
+}
+
+body .showroom-trims-wrapper .model-information__view-inventory .button {
+    width: 100%;
+    max-width: 26rem
+}
+
+body .showroom-trims-wrapper .model-information__view-inventory,body .showroom-trims-wrapper .motocommerce-build-and-price {
+    margin-top: .8rem
+}
+
+@media (max-width: 767px) {
+    body .showroom-trims-wrapper .model-information__view-inventory .button,body .showroom-trims-wrapper .motocommerce-build-and-price .button {
+        max-width:100%
+    }
+}
+
+body .showroom-trims-wrapper .model-gallery-widget .tns-nav {
+    bottom: 2rem
+}
+
+body .showroom-trims-wrapper .model-gallery-widget .mobile-slider__single {
+    margin: 0 50px;
+    box-shadow: none
+}
+
+body:not(.show-oem-prices) .model-card__sub-info,body:not(.show-oem-prices) .model-information .price-card,body:not(.show-oem-prices) .model-overview-widget__trims--trim-info>div>p:first-child,body:not(.show-oem-prices) .model-overview-widget__trims--trim-info>hr+p,body:not(.show-oem-prices) .model-overview-widget__trims--trim-price,body:not(.show-oem-prices) .model-overview-widget__trims--trim-price+.disclaimer__tooltip-wrapper,body:not(.show-oem-prices) .showroom-carousel-card__details {
+    display: none!important
+}
+
+@media (min-width: 992px) {
+    body .advanced-filters-wrap {
+        position:-webkit-sticky!important;
+        position: sticky!important;
+        top: 10rem;
+        align-self: flex-start;
+        transform: none!important
+    }
+}
