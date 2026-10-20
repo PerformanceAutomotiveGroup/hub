@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="https://performance.ca/wp-content/themes/convertus-platinum-performance/styles/global/main.css">
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<title>Convertus Theme UI & Class Reference</title>
+
+<style>
+/* -------------------------------------------------------------
+GUIDE SHELL STYLING (Isolated with #sg-root to prevent layout clash)
+------------------------------------------------------------- */
+#sg-root {
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+background-color: #f4f6f9;
+color: #1e293b;
+padding: 36px 20px;
+line-height: 1.5;
+}
+
+#sg-root * {
+box-sizing: border-box;
+}
+
+#sg-root .sg-container {
+max-width: 1240px;
+margin: 0 auto;
+}
+
+#sg-root .sg-header {
+background: #ffffff;
+padding: 28px 32px;
+border-radius: 8px;
+border: 1px solid #e2e8f0;
+margin-bottom: 32px;
+box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+#sg-root .sg-header h1 {
+font-size: 26px;
+font-weight: 700;
+color: #0f172a;
+margin: 0 0 6px 0;
+}
+
+#sg-root .sg-header p {
+margin: 0 0 20px 0;
+color: #64748b;
+font-size: 14px;
+}
+
+#sg-root .sg-search-bar {
+width: 100%;
+max-width: 480px;
+padding: 10px 16px;
+font-size: 14px;
+border: 1px solid #cbd5e1;
+border-radius: 6px;
+outline: none;
+transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#sg-root .sg-search-bar:focus {
+border-color: #2c68b5;
+box-shadow: 0 0 0 3px rgba(44, 104, 181, 0.15);
+}
+
+#sg-root .sg-nav {
+display: flex;
+gap: 10px;
+margin-top: 18px;
+flex-wrap: wrap;
+}
+
+#sg-root .sg-nav a {
+color: #334155;
+text-decoration: none;
+font-size: 12px;
+font-weight: 600;
+padding: 6px 12px;
+background: #f1f5f9;
+border-radius: 4px;
+transition: background 0.2s, color 0.2s;
+}
+
+#sg-root .sg-nav a:hover {
+background: #2c68b5;
+color: #ffffff;
+}
+
+#sg-root .sg-section {
+margin-bottom: 44px;
+}
+
+#sg-root .sg-section-title {
+font-size: 18px;
+font-weight: 700;
+color: #0f172a;
+border-left: 4px solid #2c68b5;
+padding-left: 12px;
+margin-bottom: 18px;
+}
+
+#sg-root .sg-grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+gap: 20px;
+}
+
+#sg-root .sg-card {
+background: #ffffff;
+border: 1px solid #e2e8f0;
+border-radius: 8px;
+overflow: hidden;
+display: flex;
+flex-direction: column;
+box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+
+#sg-root .sg-preview {
+padding: 24px;
+background: #ffffff;
+display: flex;
+align-items: center;
+justify-content: center;
+min-height: 110px;
+border-bottom: 1px solid #f1f5f9;
+}
+
+#sg-root .sg-preview.dark-surface {
+background: #1e293b;
+}
+
+#sg-root .sg-meta {
+padding: 16px;
+background: #f8fafc;
+flex-grow: 1;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+gap: 12px;
+}
+
+#sg-root .sg-item-name {
+font-size: 13px;
+font-weight: 700;
+color: #334155;
+margin: 0;
+text-transform: uppercase;
+letter-spacing: 0.5px;
+}
+
+#sg-root .sg-actions {
+display: flex;
+gap: 8px;
+flex-wrap: wrap;
+}
+
+#sg-root .sg-btn-copy {
+font-size: 12px;
+font-weight: 600;
+padding: 6px 12px;
+border-radius: 4px;
+cursor: pointer;
+border: 1px solid #cbd5e1;
+background: #ffffff;
+color: #0f172a;
+transition: all 0.15s ease-in-out;
+}
+
+#sg-root .sg-btn-copy:hover {
+background: #f1f5f9;
+border-color: #94a3b8;
+}
+
+#sg-root .sg-btn-copy.copied {
+background: #10b981;
+border-color: #10b981;
+color: #ffffff;
+}
+
+/* Reference Table */
+#sg-root .sg-table {
+width: 100%;
+background: #ffffff;
+border-collapse: collapse;
+border-radius: 8px;
+overflow: hidden;
+border: 1px solid #e2e8f0;
+font-size: 13px;
+}
+
+#sg-root .sg-table th, 
+#sg-root .sg-table td {
+padding: 12px 16px;
+text-align: left;
+border-bottom: 1px solid #e2e8f0;
+}
+
+#sg-root .sg-table th {
+background: #f8fafc;
+font-weight: 700;
+color: #475569;
+}
+
+#sg-root .sg-code-pill {
+font-family: SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+background: #f1f5f9;
+color: #0f172a;
+padding: 3px 8px;
+border-radius: 4px;
+border: 1px solid #e2e8f0;
+font-size: 12px;
+cursor: pointer;
+}
+
+#sg-root .sg-code-pill:hover {
+background: #e2e8f0;
+border-color: #cbd5e1;
+}
+
+/* Notification Toast */
+#sg-toast {
+position: fixed;
+bottom: 24px;
+right: 24px;
+background: #0f172a;
+color: #ffffff;
+padding: 12px 20px;
+border-radius: 6px;
+font-size: 13px;
+font-weight: 500;
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+opacity: 0;
+transform: translateY(10px);
+transition: opacity 0.2s, transform 0.2s;
+pointer-events: none;
+z-index: 999999;
+}
+
+#sg-toast.show {
+opacity: 1;
+transform: translateY(0);
+}
+</style>
+</head>
+
+<body>
+<div id="sg-root">
+<div class="sg-container">
+
+<div class="sg-header">
+<h1>Convertus Global UI Cheatsheet</h1>
+<p>Live visual preview of theme components from <code>styles/global/main.css</code>. Click any item or chip to copy classes or markup directly to your clipboard.</p>
+<input type="text" id="sg-search" class="sg-search-bar" placeholder="Search buttons, typography, columns, spacing, badges..." onkeyup="filterComponents()">
+
+<div class="sg-nav">
+<a href="#section-buttons">Buttons & CTAs</a>
+<a href="#section-typography">Typography</a>
+<a href="#section-badges">Badges & Tags</a>
+<a href="#section-flex">Flexbox Helpers</a>
+<a href="#section-grid">Grid (Rows & Cols)</a>
+<a href="#section-spacing">Spacing (Margin & Padding)</a>
+</div>
+</div>
+
+<!-- 1. BUTTONS & CTAS -->
+<div class="sg-section" id="section-buttons">
+<div class="sg-section-title">Buttons & Actions</div>
+<div class="sg-grid">
+
+<!-- Standard Primary Button -->
+<div class="sg-card" data-search="button primary cta standard">
+<div class="sg-preview">
+<a href="javascript:void(0)" class="button">Primary Button</a>
+</div>
+<div class="sg-meta">
+<h4 class="sg-item-name">Default / Primary CTA</h4>
+<div class="sg-actions">
+<button class="sg-btn-copy" onclick="copyValue('button', this)">Copy Class</button>
+<button class="sg-btn-copy" onclick="copySnippet(this)">Copy HTML</button>
+</div>
+</div>
+</div>
+
+<!-- Button Alternate -->
+<div class="sg-card" data-search="button button--alternate secondary cta">
+<div class="sg-preview">
+<a href="javascript:void(0)" class="button button--alternate">Alternate Button</a>
+</div>
+<div class="sg-meta">
+<h4 class="sg-item-name">Alternate Button</h4>
+<div class="sg-actions">
+<button class="sg-btn-copy" onclick="copyValue('button button--alternate', this)">Copy Class</button>
+<button class="sg-btn-copy" onclick="copySnippet(this)">Copy HTML</button>
+</div>
+</div>
+</div>
+
+<!-- Hollow / Outline Button -->
+<div class="sg-card" data-search="button button--hollow outline ghost border">
+<div class="sg-preview">
+<a href="javascript:void(0)" class="button button--hollow">Hollow Button</a>
+</div>
+<div class="sg-meta">
+<h4 class="sg-item-name">Hollow / Outline</h4>
+<div class="sg-actions">
+<button class="sg-btn-copy" onclick="copyValue('button button--hollow', this)">Copy Class</button>
+<button class="sg-btn-copy" onclick="copySnippet(this)">Copy HTML</button>
+</div>
+</div>
+</div>
+
+<!-- Alternate Dark Button -->
+<div class="sg-card" data-search="button button--alternate--dark dark slate">
+<div class="sg-preview">
+<a href="javascript:void(0)" class="button button--alternate--dark">Alternate Dark</a>
+</div>
+<div class="sg-meta">
+<h4 class="sg-item-name">Dark Button</h4>
+<div class="sg-actions">
+<button class="sg-btn-copy" onclick="copyValue('button button--alternate--dark', this)">Copy Class</button>
+<button class="sg-btn-copy" onclick="copySnippet(this)">Copy HTML</button>
+</div>
+</div>
+</div>
+
+<!-- Small Button -->
+<div class="sg-card" data-search="button button--small compact">
+<div class="sg-preview">
+<a href="javascript:void(0)" class="button button--small">Small Button</a>
+</div>
+<div class="sg-meta">
+<h4 class="sg-item-name">Small Sized Button</h4>
+<div class="sg-actions">
+<button class="sg-btn-copy" onclick="copyValue('button button--small', this)">Copy Class</button>
+<button class="sg-btn-copy" onclick="copySnippet(this)">Copy HTML</button>
+</div>
+</div>
+</div>
+
+<!-- Transparent / Link Button -->
+<div class="sg-card" data-search="button button--transparent text-only link">
+<div class="sg-preview">
+<a href="javascript:void(0)" class="button button--transparent">Transparent Button</a>
+</div>
+<div class="sg-meta">
+<h4 class="sg-item-name">Transparent Button</h4>
+<div class="sg-actions">
+<button class="sg-btn-copy" onclick="copyValue('button button--transparent', this)">Copy Class</button>
+<button class="sg-btn-copy" onclick="copySnippet(this)">Copy HTML</button>
+</div>
+</div>
+</div>
+
+<!-- Animated CTA -->
+<div class="sg-card" data-search="button animated-cta motion hover">
+<div class="sg-preview">
+<a href="javascript:void(0)" class="button animated-cta">Animated CTA</a>
+</div>
+<div class="sg-meta">
+<h4 class="sg-item-name">Animated CTA</h4>
+<div class="sg-actions">
+<button class="sg-btn-copy" onclick="copyValue('button animated-cta', this)">Copy Class</button>
+<button class="sg-btn-copy" onclick="copySnippet(this)">Copy HTML</button>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- 2. TYPOGRAPHY -->
+<div class="sg-section" id="section-typography">
+<div class="sg-section-title">Headings & Typography</div>
+<div class="sg-grid">
+
+<div class="sg-card" data-search="page-title title h1 main display">
+<div class="sg-preview">
+<h1 class="page-title" style="margin:0;">Page Title</h1>
+</div>
+<div class="sg-meta">
+<h4 class="sg-item-name">Page Title (.page-title)</h4>
+<div class="sg-actions">
+<button class="sg-btn-copy" onclick="copyValue('page-title', this)">Copy Class</button>
+<button class="sg-btn-copy" onclick="copySnippet(this)">Copy HTML</button>
+</div>
+</div>
+</div>
+
+<div class="sg-card" data-search="widget-heading section title h2">
+<div class="sg-preview">
+<h2 class="widget-heading" style="margin:0;">Widget Heading</h2>
+</div>
+<div class="sg-meta">
+<h4 class="sg-item-name">Widget Heading (.widget-heading)</h4>
+<div class="sg-actions">
+<button class="sg-btn-copy" onclick="copyValue('widget-heading', this)">Copy Class</button>
+<button class="sg-btn-copy" onclick="copySnippet(this)">Copy HTML</button>
+</div>
+</div>
+</div>
+
+<div class="sg-card" data-search="widget-heading--centered center align header">
+<div class="sg-preview">
+<h2 class="widget-heading widget-heading--centered" style="margin:0; width: 100%;">Centered Heading</h2>
+</div>
+<div class="sg-meta">
+<h4 class="sg-item-name">Centered Heading</h4>
+<div class="sg-actions">
+<button class="sg-btn-copy" onclick="copyValue('widget-heading widget-heading--centered', this)">Copy Class</button>
+<button class="sg-btn-copy" onclick="copySnippet(this)">Copy HTML</button>
+</div>
+</div>
+</div>
+
+<div class="sg-card" data-search="sub-title subtitle text muted secondary">
+<div class="sg-preview">
+<p class="sub-title" style="margin:0;">Supporting Subtitle Copy</p>
+</div>
+<div class="sg-meta">
+<h4 class="sg-item-name">Subtitle (.sub-title)</h4>
+<div class="sg-actions">
+<button class="sg-btn-copy" onclick="copyValue('sub-title', this)">Copy Class</button>
+<button class="sg-btn-copy" onclick="copySnippet(this)">Copy HTML</button>
+</div>
+</div>
+</div>
+
+<div class="sg-card" data-search="text-larger large lead intro font">
+<div class="sg-preview">
+<p class="text-larger" style="margin:0;">Larger body paragraph text.</p>
+</div>
+<div class="sg-meta">
+<h4 class="sg-item-name">Larger Text (.text-larger)</h4>
+<div class="sg-actions">
+<button class="sg-btn-copy" onclick="copyValue('text-larger', this)">Copy Class</button>
+<button class="sg-btn-copy" onclick="copySnippet(this)">Copy HTML</button>
+</div>
+</div>
+</div>
+
+<div class="sg-card" data-search="text-smaller small disclaimer font">
+<div class="sg-preview">
+<p class="text-smaller" style="margin:0;">Small metadata or disclaimer text.</p>
+</div>
+<div class="sg-meta">
+<h4 class="sg-item-name">Smaller Text (.text-smaller)</h4>
+<div class="sg-actions">
+<button class="sg-btn-copy" onclick="copyValue('text-smaller', this)">Copy Class</button>
+<button class="sg-btn-copy" onclick="copySnippet(this)">Copy HTML</button>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- 3. BADGES & LABELS -->
+<div class="sg-section" id="section-badges">
+<div class="sg-section-title">Badges, Pills & Labels</div>
+<div class="sg-grid">
+
+<div class="sg-card" data-search="certified-badge badge pill trust certified">
+<div class="sg-preview">
+<span class="certified-badge">Certified Pre-Owned</span>
+</div>
+<div class="sg-meta">
+<h4 class="sg-item-name">Certified Badge</h4>
+<div class="sg-actions">
+<button class="sg-btn-copy" onclick="copyValue('certified-badge', this)">Copy Class</button>
+<button class="sg-btn-copy" onclick="copySnippet(this)">Copy HTML</button>
+</div>
+</div>
+</div>
+
+<div class="sg-card" data-search="price-badge pill promo savings cost">
+<div class="sg-preview">
+<span class="price-badge">Great Deal</span>
+</div>
+<div class="sg-meta">
+<h4 class="sg-item-name">Price Badge</h4>
+<div class="sg-actions">
+<button class="sg-btn-copy" onclick="copyValue('price-badge', this)">Copy Class</button>
+<button class="sg-btn-copy" onclick="copySnippet(this)">Copy HTML</button>
+</div>
+</div>
+</div>
+
+<div class="sg-card" data-search="carfax-badge carproof history verified">
+<div class="sg-preview">
+<span class="carfax-badge">CARFAX 1-Owner</span>
+</div>
+<div class="sg-meta">
+<h4 class="sg-item-name">CARFAX Badge</h4>
+<div class="sg-actions">
+<button class="sg-btn-copy" onclick="copyValue('carfax-badge', this)">Copy Class</button>
+<button class="sg-btn-copy" onclick="copySnippet(this)">Copy HTML</button>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- 4. FLEXBOX UTILITIES -->
+<div class="sg-section" id="section-flex">
+<div class="sg-section-title">Layout & Flexbox Shorthands</div>
+<p style="font-size: 13px; color: #64748b; margin-top: -10px; margin-bottom: 16px;">
+Convertus includes standard abbreviated Flexbox classes. Click any pill to copy the class directly:
+</p>
+<table class="sg-table">
+<thead>
+<tr>
+<th>Class Name (Click to copy)</th>
+<th>CSS Equivalent</th>
+<th>Common Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="sg-code-pill" onclick="copyValue('df', this)">df</span></td>
+<td><code>display: flex;</code></td>
+<td>Base flex container wrapper</td>
+</tr>
+<tr>
+<td><span class="sg-code-pill" onclick="copyValue('aic', this)">aic</span></td>
+<td><code>align-items: center;</code></td>
+<td>Vertically centering text, buttons, and icons</td>
+</tr>
+<tr>
+<td><span class="sg-code-pill" onclick="copyValue('jcc', this)">jcc</span></td>
+<td><code>justify-content: center;</code></td>
+<td>Horizontally centering content</td>
+</tr>
+<tr>
+<td><span class="sg-code-pill" onclick="copyValue('jcsb', this)">jcsb</span></td>
+<td><code>justify-content: space-between;</code></td>
+<td>Pushing elements to opposite edges (e.g. Card Title vs. Price)</td>
+</tr>
+<tr>
+<td><span class="sg-code-pill" onclick="copyValue('fw', this)">fw</span></td>
+<td><code>flex-wrap: wrap;</code></td>
+<td>Allowing items to wrap onto the next line on mobile</td>
+</tr>
+<tr>
+<td><span class="sg-code-pill" onclick="copyValue('fdc', this)">fdc</span></td>
+<td><code>flex-direction: column;</code></td>
+<td>Stacking items vertically</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<!-- 5. GRID SYSTEM -->
+<div class="sg-section" id="section-grid">
+<div class="sg-section-title">Responsive Column Grids</div>
+<div class="sg-card" style="margin-bottom: 20px;" data-search="row col grid layout columns">
+<div class="sg-preview" style="display: block; width: 100%;">
+<div class="row" style="background: #f8fafc; border: 1px dashed #cbd5e1; padding: 12px;">
+<div class="col-xs-12 col-md-6" style="background: #e2e8f0; padding: 10px; text-align: center; border: 1px solid #cbd5e1;">col-xs-12 col-md-6</div>
+<div class="col-xs-12 col-md-6" style="background: #e2e8f0; padding: 10px; text-align: center; border: 1px solid #cbd5e1;">col-xs-12 col-md-6</div>
+</div>
+</div>
+<div class="sg-meta">
+<h4 class="sg-item-name">2-Column Responsive Layout</h4>
+<div class="sg-actions">
+<button class="sg-btn-copy" onclick="copyValue('row', this)">Copy Row Class</button>
+<button class="sg-btn-copy" onclick="copyValue('col-xs-12 col-md-6', this)">Copy Column Classes</button>
+<button class="sg-btn-copy" onclick="copySnippet(this)">Copy Full Grid HTML</button>
+</div>
+</div>
+</div>
+
+<div class="sg-card" data-search="row col grid layout 3 columns col-md-4">
+<div class="sg-preview" style="display: block; width: 100%;">
+<div class="row" style="background: #f8fafc; border: 1px dashed #cbd5e1; padding: 12px;">
+<div class="col-xs-12 col-md-4" style="background: #e2e8f0; padding: 10px; text-align: center; border: 1px solid #cbd5e1;">col-md-4</div>
+<div class="col-xs-12 col-md-4" style="background: #e2e8f0; padding: 10px; text-align: center; border: 1px solid #cbd5e1;">col-md-4</div>
+<div class="col-xs-12 col-md-4" style="background: #e2e8f0; padding: 10px; text-align: center; border: 1px solid #cbd5e1;">col-md-4</div>
+</div>
+</div>
+<div class="sg-meta">
+<h4 class="sg-item-name">3-Column Card Layout</h4>
+<div class="sg-actions">
+<button class="sg-btn-copy" onclick="copyValue('col-xs-12 col-md-4', this)">Copy Column Classes</button>
+<button class="sg-btn-copy" onclick="copySnippet(this)">Copy Full Grid HTML</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- 6. SPACING UTILITIES -->
+<div class="sg-section" id="section-spacing">
+<div class="sg-section-title">Spacing Utilities (Margin & Padding)</div>
+<p style="font-size: 13px; color: #64748b; margin-top: -10px; margin-bottom: 16px;">
+Use these helper classes instead of hardcoding inline margins/paddings. Click any class to copy:
+</p>
+<table class="sg-table">
+<thead>
+<tr>
+<th>Property</th>
+<th>Available Sizes (Click to copy)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Margin Top</strong></td>
+<td>
+<span class="sg-code-pill" onclick="copyValue('mt-none', this)">mt-none</span>
+<span class="sg-code-pill" onclick="copyValue('mt-xxs', this)">mt-xxs</span>
+<span class="sg-code-pill" onclick="copyValue('mt-xs', this)">mt-xs</span>
+<span class="sg-code-pill" onclick="copyValue('mt-sm', this)">mt-sm</span>
+<span class="sg-code-pill" onclick="copyValue('mt-md', this)">mt-md</span>
+<span class="sg-code-pill" onclick="copyValue('mt-lg', this)">mt-lg</span>
+<span class="sg-code-pill" onclick="copyValue('mt-xl', this)">mt-xl</span>
+<span class="sg-code-pill" onclick="copyValue('mt-xxl', this)">mt-xxl</span>
+</td>
+</tr>
+<tr>
+<td><strong>Margin Bottom</strong></td>
+<td>
+<span class="sg-code-pill" onclick="copyValue('mb-none', this)">mb-none</span>
+<span class="sg-code-pill" onclick="copyValue('mb-xxs', this)">mb-xxs</span>
+<span class="sg-code-pill" onclick="copyValue('mb-xs', this)">mb-xs</span>
+<span class="sg-code-pill" onclick="copyValue('mb-sm', this)">mb-sm</span>
+<span class="sg-code-pill" onclick="copyValue('mb-md', this)">mb-md</span>
+<span class="sg-code-pill" onclick="copyValue('mb-lg', this)">mb-lg</span>
+<span class="sg-code-pill" onclick="copyValue('mb-xl', this)">mb-xl</span>
+<span class="sg-code-pill" onclick="copyValue('mb-xxl', this)">mb-xxl</span>
+</td>
+</tr>
+<tr>
+<td><strong>Padding Top</strong></td>
+<td>
+<span class="sg-code-pill" onclick="copyValue('pt-none', this)">pt-none</span>
+<span class="sg-code-pill" onclick="copyValue('pt-sm', this)">pt-sm</span>
+<span class="sg-code-pill" onclick="copyValue('pt-md', this)">pt-md</span>
+<span class="sg-code-pill" onclick="copyValue('pt-lg', this)">pt-lg</span>
+<span class="sg-code-pill" onclick="copyValue('pt-xl', this)">pt-xl</span>
+<span class="sg-code-pill" onclick="copyValue('pt-xxl', this)">pt-xxl</span>
+</td>
+</tr>
+<tr>
+<td><strong>Padding Bottom</strong></td>
+<td>
+<span class="sg-code-pill" onclick="copyValue('pb-none', this)">pb-none</span>
+<span class="sg-code-pill" onclick="copyValue('pb-sm', this)">pb-sm</span>
+<span class="sg-code-pill" onclick="copyValue('pb-md', this)">pb-md</span>
+<span class="sg-code-pill" onclick="copyValue('pb-lg', this)">pb-lg</span>
+<span class="sg-code-pill" onclick="copyValue('pb-xl', this)">pb-xl</span>
+<span class="sg-code-pill" onclick="copyValue('pb-xxl', this)">pb-xxl</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+</div>
+</div>
+
+<div id="sg-toast">Copied to clipboard!</div>
+
+<!-- INTERACTIVITY SCRIPT -->
+<script>
+function showToast(message) {
+const toast = document.getElementById('sg-toast');
+toast.innerText = message;
+toast.classList.add('show');
+setTimeout(() => {
+toast.classList.remove('show');
+}, 1800);
+}
+
+function copyValue(val, btnElement) {
+navigator.clipboard.writeText(val).then(() => {
+const originalText = btnElement.innerText;
+btnElement.innerText = 'Copied!';
+btnElement.classList.add('copied');
+showToast(`Copied: "${val}"`);
+
+setTimeout(() => {
+btnElement.innerText = originalText;
+btnElement.classList.remove('copied');
+}, 1400);
+});
+}
+
+function copySnippet(btnElement) {
+const card = btnElement.closest('.sg-card');
+const preview = card.querySelector('.sg-preview');
+const cleanHtml = preview.innerHTML.trim();
+
+navigator.clipboard.writeText(cleanHtml).then(() => {
+const originalText = btnElement.innerText;
+btnElement.innerText = 'Copied HTML!';
+btnElement.classList.add('copied');
+showToast('HTML structure copied to clipboard!');
+
+setTimeout(() => {
+btnElement.innerText = originalText;
+btnElement.classList.remove('copied');
+}, 1400);
+});
+}
+
+function filterComponents() {
+const query = document.getElementById('sg-search').value.toLowerCase();
+const cards = document.querySelectorAll('.sg-card');
+
+cards.forEach(card => {
+const keywords = card.getAttribute('data-search') ? card.getAttribute('data-search').toLowerCase() : '';
+const text = card.innerText.toLowerCase();
+
+if (keywords.includes(query) || text.includes(query)) {
+card.style.display = 'flex';
+} else {
+card.style.display = 'none';
+}
+});
+}
+</script>
+</body>
+</html>
