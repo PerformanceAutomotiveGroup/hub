@@ -1,19 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="stylesheet" href="https://performance.ca/wp-content/themes/convertus-platinum-performance/styles/global/main.css">
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>Convertus Theme UI & Class Reference</title>
+<title>PAG Global UI Classes Reference</title>
+
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- Performance.ca Live Global Stylesheet -->
+<link rel="stylesheet" href="https://performance.ca/wp-content/themes/convertus-platinum-performance/styles/global/main.css">
 
 <style>
 /* -------------------------------------------------------------
-GUIDE SHELL STYLING (Isolated with #sg-root to prevent layout clash)
+ISOLATED STYLE GUIDE SHELL (Does not interfere with main.css)
 ------------------------------------------------------------- */
+body {
+margin: 0;
+padding: 0;
+background-color: #f1f5f9;
+}
+
 #sg-root {
 font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-background-color: #f4f6f9;
-color: #1e293b;
+color: #0f172a;
 padding: 36px 20px;
 line-height: 1.5;
 }
@@ -33,7 +44,7 @@ padding: 28px 32px;
 border-radius: 8px;
 border: 1px solid #e2e8f0;
 margin-bottom: 32px;
-box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 #sg-root .sg-header h1 {
@@ -44,7 +55,7 @@ margin: 0 0 6px 0;
 }
 
 #sg-root .sg-header p {
-margin: 0 0 20px 0;
+margin: 0 0 18px 0;
 color: #64748b;
 font-size: 14px;
 }
@@ -103,7 +114,7 @@ margin-bottom: 18px;
 
 #sg-root .sg-grid {
 display: grid;
-grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
 gap: 20px;
 }
 
@@ -114,7 +125,7 @@ border-radius: 8px;
 overflow: hidden;
 display: flex;
 flex-direction: column;
-box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
 #sg-root .sg-preview {
@@ -125,10 +136,7 @@ align-items: center;
 justify-content: center;
 min-height: 110px;
 border-bottom: 1px solid #f1f5f9;
-}
-
-#sg-root .sg-preview.dark-surface {
-background: #1e293b;
+position: relative;
 }
 
 #sg-root .sg-meta {
@@ -179,7 +187,6 @@ border-color: #10b981;
 color: #ffffff;
 }
 
-/* Reference Table */
 #sg-root .sg-table {
 width: 100%;
 background: #ffffff;
@@ -207,11 +214,13 @@ color: #475569;
 font-family: SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 background: #f1f5f9;
 color: #0f172a;
-padding: 3px 8px;
+padding: 4px 8px;
 border-radius: 4px;
 border: 1px solid #e2e8f0;
 font-size: 12px;
 cursor: pointer;
+display: inline-block;
+margin: 2px 0;
 }
 
 #sg-root .sg-code-pill:hover {
@@ -219,7 +228,6 @@ background: #e2e8f0;
 border-color: #cbd5e1;
 }
 
-/* Notification Toast */
 #sg-toast {
 position: fixed;
 bottom: 24px;
@@ -249,9 +257,10 @@ transform: translateY(0);
 <div id="sg-root">
 <div class="sg-container">
 
+<!-- HEADER & SEARCH -->
 <div class="sg-header">
-<h1>Convertus Global UI Cheatsheet</h1>
-<p>Live visual preview of theme components from <code>styles/global/main.css</code>. Click any item or chip to copy classes or markup directly to your clipboard.</p>
+<h1>Performance Auto Group UI Cheatsheet</h1>
+<p>Real rendered components powered by <code>styles/global/main.css</code>. Click any button or pill to copy classes or HTML.</p>
 <input type="text" id="sg-search" class="sg-search-bar" placeholder="Search buttons, typography, columns, spacing, badges..." onkeyup="filterComponents()">
 
 <div class="sg-nav">
@@ -259,23 +268,23 @@ transform: translateY(0);
 <a href="#section-typography">Typography</a>
 <a href="#section-badges">Badges & Tags</a>
 <a href="#section-flex">Flexbox Helpers</a>
-<a href="#section-grid">Grid (Rows & Cols)</a>
-<a href="#section-spacing">Spacing (Margin & Padding)</a>
+<a href="#section-grid">Grid Layouts</a>
+<a href="#section-spacing">Spacing Utilities</a>
 </div>
 </div>
 
 <!-- 1. BUTTONS & CTAS -->
 <div class="sg-section" id="section-buttons">
-<div class="sg-section-title">Buttons & Actions</div>
+<div class="sg-section-title">Buttons & CTAs</div>
 <div class="sg-grid">
 
-<!-- Standard Primary Button -->
-<div class="sg-card" data-search="button primary cta standard">
+<!-- Primary Button -->
+<div class="sg-card" data-search="button primary cta default">
 <div class="sg-preview">
 <a href="javascript:void(0)" class="button">Primary Button</a>
 </div>
 <div class="sg-meta">
-<h4 class="sg-item-name">Default / Primary CTA</h4>
+<h4 class="sg-item-name">Primary Button</h4>
 <div class="sg-actions">
 <button class="sg-btn-copy" onclick="copyValue('button', this)">Copy Class</button>
 <button class="sg-btn-copy" onclick="copySnippet(this)">Copy HTML</button>
@@ -289,7 +298,7 @@ transform: translateY(0);
 <a href="javascript:void(0)" class="button button--alternate">Alternate Button</a>
 </div>
 <div class="sg-meta">
-<h4 class="sg-item-name">Alternate Button</h4>
+<h4 class="sg-item-name">Button Alternate</h4>
 <div class="sg-actions">
 <button class="sg-btn-copy" onclick="copyValue('button button--alternate', this)">Copy Class</button>
 <button class="sg-btn-copy" onclick="copySnippet(this)">Copy HTML</button>
@@ -303,7 +312,7 @@ transform: translateY(0);
 <a href="javascript:void(0)" class="button button--hollow">Hollow Button</a>
 </div>
 <div class="sg-meta">
-<h4 class="sg-item-name">Hollow / Outline</h4>
+<h4 class="sg-item-name">Button Hollow</h4>
 <div class="sg-actions">
 <button class="sg-btn-copy" onclick="copyValue('button button--hollow', this)">Copy Class</button>
 <button class="sg-btn-copy" onclick="copySnippet(this)">Copy HTML</button>
@@ -314,10 +323,10 @@ transform: translateY(0);
 <!-- Alternate Dark Button -->
 <div class="sg-card" data-search="button button--alternate--dark dark slate">
 <div class="sg-preview">
-<a href="javascript:void(0)" class="button button--alternate--dark">Alternate Dark</a>
+<a href="javascript:void(0)" class="button button--alternate--dark">Dark Button</a>
 </div>
 <div class="sg-meta">
-<h4 class="sg-item-name">Dark Button</h4>
+<h4 class="sg-item-name">Alternate Dark</h4>
 <div class="sg-actions">
 <button class="sg-btn-copy" onclick="copyValue('button button--alternate--dark', this)">Copy Class</button>
 <button class="sg-btn-copy" onclick="copySnippet(this)">Copy HTML</button>
@@ -326,7 +335,7 @@ transform: translateY(0);
 </div>
 
 <!-- Small Button -->
-<div class="sg-card" data-search="button button--small compact">
+<div class="sg-card" data-search="button button--small compact sm">
 <div class="sg-preview">
 <a href="javascript:void(0)" class="button button--small">Small Button</a>
 </div>
@@ -339,8 +348,8 @@ transform: translateY(0);
 </div>
 </div>
 
-<!-- Transparent / Link Button -->
-<div class="sg-card" data-search="button button--transparent text-only link">
+<!-- Transparent Button -->
+<div class="sg-card" data-search="button button--transparent link text">
 <div class="sg-preview">
 <a href="javascript:void(0)" class="button button--transparent">Transparent Button</a>
 </div>
@@ -375,9 +384,10 @@ transform: translateY(0);
 <div class="sg-section-title">Headings & Typography</div>
 <div class="sg-grid">
 
+<!-- Page Title -->
 <div class="sg-card" data-search="page-title title h1 main display">
-<div class="sg-preview">
-<h1 class="page-title" style="margin:0;">Page Title</h1>
+<div class="sg-preview" style="width: 100%;">
+<h1 class="page-title" style="margin: 0;">Main Page Title</h1>
 </div>
 <div class="sg-meta">
 <h4 class="sg-item-name">Page Title (.page-title)</h4>
@@ -388,25 +398,13 @@ transform: translateY(0);
 </div>
 </div>
 
-<div class="sg-card" data-search="widget-heading section title h2">
-<div class="sg-preview">
-<h2 class="widget-heading" style="margin:0;">Widget Heading</h2>
+<!-- Widget Heading Centered -->
+<div class="sg-card" data-search="widget-heading widget-heading--centered title h2">
+<div class="sg-preview" style="width: 100%; text-align: center;">
+<h2 class="widget-heading widget-heading--centered" style="margin: 0; width: 100%;">Featured Inventory</h2>
 </div>
 <div class="sg-meta">
-<h4 class="sg-item-name">Widget Heading (.widget-heading)</h4>
-<div class="sg-actions">
-<button class="sg-btn-copy" onclick="copyValue('widget-heading', this)">Copy Class</button>
-<button class="sg-btn-copy" onclick="copySnippet(this)">Copy HTML</button>
-</div>
-</div>
-</div>
-
-<div class="sg-card" data-search="widget-heading--centered center align header">
-<div class="sg-preview">
-<h2 class="widget-heading widget-heading--centered" style="margin:0; width: 100%;">Centered Heading</h2>
-</div>
-<div class="sg-meta">
-<h4 class="sg-item-name">Centered Heading</h4>
+<h4 class="sg-item-name">Centered Section Heading</h4>
 <div class="sg-actions">
 <button class="sg-btn-copy" onclick="copyValue('widget-heading widget-heading--centered', this)">Copy Class</button>
 <button class="sg-btn-copy" onclick="copySnippet(this)">Copy HTML</button>
@@ -414,9 +412,10 @@ transform: translateY(0);
 </div>
 </div>
 
+<!-- Subtitle -->
 <div class="sg-card" data-search="sub-title subtitle text muted secondary">
-<div class="sg-preview">
-<p class="sub-title" style="margin:0;">Supporting Subtitle Copy</p>
+<div class="sg-preview" style="width: 100%;">
+<p class="sub-title" style="margin: 0;">Explore the latest promotional offers across Ontario dealerships.</p>
 </div>
 <div class="sg-meta">
 <h4 class="sg-item-name">Subtitle (.sub-title)</h4>
@@ -427,9 +426,10 @@ transform: translateY(0);
 </div>
 </div>
 
+<!-- Text Larger -->
 <div class="sg-card" data-search="text-larger large lead intro font">
-<div class="sg-preview">
-<p class="text-larger" style="margin:0;">Larger body paragraph text.</p>
+<div class="sg-preview" style="width: 100%;">
+<p class="text-larger" style="margin: 0;">Prominent body text designed for lead paragraphs.</p>
 </div>
 <div class="sg-meta">
 <h4 class="sg-item-name">Larger Text (.text-larger)</h4>
@@ -440,9 +440,10 @@ transform: translateY(0);
 </div>
 </div>
 
-<div class="sg-card" data-search="text-smaller small disclaimer font">
-<div class="sg-preview">
-<p class="text-smaller" style="margin:0;">Small metadata or disclaimer text.</p>
+<!-- Text Smaller -->
+<div class="sg-card" data-search="text-smaller small disclaimer font legal">
+<div class="sg-preview" style="width: 100%;">
+<p class="text-smaller" style="margin: 0;">*Legal disclaimers, pricing conditions, and license fees.</p>
 </div>
 <div class="sg-meta">
 <h4 class="sg-item-name">Smaller Text (.text-smaller)</h4>
@@ -458,9 +459,10 @@ transform: translateY(0);
 
 <!-- 3. BADGES & LABELS -->
 <div class="sg-section" id="section-badges">
-<div class="sg-section-title">Badges, Pills & Labels</div>
+<div class="sg-section-title">Badges & Indicators</div>
 <div class="sg-grid">
 
+<!-- Certified Badge -->
 <div class="sg-card" data-search="certified-badge badge pill trust certified">
 <div class="sg-preview">
 <span class="certified-badge">Certified Pre-Owned</span>
@@ -474,7 +476,8 @@ transform: translateY(0);
 </div>
 </div>
 
-<div class="sg-card" data-search="price-badge pill promo savings cost">
+<!-- Price Badge -->
+<div class="sg-card" data-search="price-badge savings deal offer">
 <div class="sg-preview">
 <span class="price-badge">Great Deal</span>
 </div>
@@ -487,6 +490,7 @@ transform: translateY(0);
 </div>
 </div>
 
+<!-- CARFAX Badge -->
 <div class="sg-card" data-search="carfax-badge carproof history verified">
 <div class="sg-preview">
 <span class="carfax-badge">CARFAX 1-Owner</span>
@@ -503,17 +507,17 @@ transform: translateY(0);
 </div>
 </div>
 
-<!-- 4. FLEXBOX UTILITIES -->
+<!-- 4. FLEXBOX HELPERS -->
 <div class="sg-section" id="section-flex">
-<div class="sg-section-title">Layout & Flexbox Shorthands</div>
+<div class="sg-section-title">Flexbox Shorthands</div>
 <p style="font-size: 13px; color: #64748b; margin-top: -10px; margin-bottom: 16px;">
-Convertus includes standard abbreviated Flexbox classes. Click any pill to copy the class directly:
+Built-in Flexbox utilities from the theme. Click any pill to copy the class name:
 </p>
 <table class="sg-table">
 <thead>
 <tr>
-<th>Class Name (Click to copy)</th>
-<th>CSS Equivalent</th>
+<th>Class Name</th>
+<th>CSS Property</th>
 <th>Common Use Case</th>
 </tr>
 </thead>
@@ -541,25 +545,31 @@ Convertus includes standard abbreviated Flexbox classes. Click any pill to copy 
 <tr>
 <td><span class="sg-code-pill" onclick="copyValue('fw', this)">fw</span></td>
 <td><code>flex-wrap: wrap;</code></td>
-<td>Allowing items to wrap onto the next line on mobile</td>
+<td>Allowing child blocks to wrap down cleanly on mobile</td>
 </tr>
 <tr>
 <td><span class="sg-code-pill" onclick="copyValue('fdc', this)">fdc</span></td>
 <td><code>flex-direction: column;</code></td>
-<td>Stacking items vertically</td>
+<td>Stacking elements vertically</td>
 </tr>
 </tbody>
 </table>
 </div>
 
-<!-- 5. GRID SYSTEM -->
+<!-- 5. GRID LAYOUTS -->
 <div class="sg-section" id="section-grid">
 <div class="sg-section-title">Responsive Column Grids</div>
-<div class="sg-card" style="margin-bottom: 20px;" data-search="row col grid layout columns">
+
+<!-- 2-Column Example -->
+<div class="sg-card" style="margin-bottom: 20px;" data-search="row col grid layout columns 2-column">
 <div class="sg-preview" style="display: block; width: 100%;">
 <div class="row" style="background: #f8fafc; border: 1px dashed #cbd5e1; padding: 12px;">
-<div class="col-xs-12 col-md-6" style="background: #e2e8f0; padding: 10px; text-align: center; border: 1px solid #cbd5e1;">col-xs-12 col-md-6</div>
-<div class="col-xs-12 col-md-6" style="background: #e2e8f0; padding: 10px; text-align: center; border: 1px solid #cbd5e1;">col-xs-12 col-md-6</div>
+<div class="col-xs-12 col-md-6" style="background: #e2e8f0; padding: 12px; text-align: center; border: 1px solid #cbd5e1; font-weight: 600;">
+col-xs-12 col-md-6
+</div>
+<div class="col-xs-12 col-md-6" style="background: #e2e8f0; padding: 12px; text-align: center; border: 1px solid #cbd5e1; font-weight: 600;">
+col-xs-12 col-md-6
+</div>
 </div>
 </div>
 <div class="sg-meta">
@@ -572,12 +582,19 @@ Convertus includes standard abbreviated Flexbox classes. Click any pill to copy 
 </div>
 </div>
 
+<!-- 3-Column Example -->
 <div class="sg-card" data-search="row col grid layout 3 columns col-md-4">
 <div class="sg-preview" style="display: block; width: 100%;">
 <div class="row" style="background: #f8fafc; border: 1px dashed #cbd5e1; padding: 12px;">
-<div class="col-xs-12 col-md-4" style="background: #e2e8f0; padding: 10px; text-align: center; border: 1px solid #cbd5e1;">col-md-4</div>
-<div class="col-xs-12 col-md-4" style="background: #e2e8f0; padding: 10px; text-align: center; border: 1px solid #cbd5e1;">col-md-4</div>
-<div class="col-xs-12 col-md-4" style="background: #e2e8f0; padding: 10px; text-align: center; border: 1px solid #cbd5e1;">col-md-4</div>
+<div class="col-xs-12 col-md-4" style="background: #e2e8f0; padding: 12px; text-align: center; border: 1px solid #cbd5e1; font-weight: 600;">
+col-xs-12 col-md-4
+</div>
+<div class="col-xs-12 col-md-4" style="background: #e2e8f0; padding: 12px; text-align: center; border: 1px solid #cbd5e1; font-weight: 600;">
+col-xs-12 col-md-4
+</div>
+<div class="col-xs-12 col-md-4" style="background: #e2e8f0; padding: 12px; text-align: center; border: 1px solid #cbd5e1; font-weight: 600;">
+col-xs-12 col-md-4
+</div>
 </div>
 </div>
 <div class="sg-meta">
@@ -594,13 +611,13 @@ Convertus includes standard abbreviated Flexbox classes. Click any pill to copy 
 <div class="sg-section" id="section-spacing">
 <div class="sg-section-title">Spacing Utilities (Margin & Padding)</div>
 <p style="font-size: 13px; color: #64748b; margin-top: -10px; margin-bottom: 16px;">
-Use these helper classes instead of hardcoding inline margins/paddings. Click any class to copy:
+Standard spacing increments from <code>main.css</code>[cite: 1]. Click any class to copy:
 </p>
 <table class="sg-table">
 <thead>
 <tr>
-<th>Property</th>
-<th>Available Sizes (Click to copy)</th>
+<th style="width: 180px;">Property</th>
+<th>Available Classes (Click to copy)</th>
 </tr>
 </thead>
 <tbody>
@@ -661,7 +678,7 @@ Use these helper classes instead of hardcoding inline margins/paddings. Click an
 
 <div id="sg-toast">Copied to clipboard!</div>
 
-<!-- INTERACTIVITY SCRIPT -->
+<!-- INTERACTIVITY & CLIPBOARD SCRIPT -->
 <script>
 function showToast(message) {
 const toast = document.getElementById('sg-toast');
@@ -669,7 +686,7 @@ toast.innerText = message;
 toast.classList.add('show');
 setTimeout(() => {
 toast.classList.remove('show');
-}, 1800);
+}, 1600);
 }
 
 function copyValue(val, btnElement) {
@@ -682,7 +699,7 @@ showToast(`Copied: "${val}"`);
 setTimeout(() => {
 btnElement.innerText = originalText;
 btnElement.classList.remove('copied');
-}, 1400);
+}, 1200);
 });
 }
 
@@ -695,12 +712,12 @@ navigator.clipboard.writeText(cleanHtml).then(() => {
 const originalText = btnElement.innerText;
 btnElement.innerText = 'Copied HTML!';
 btnElement.classList.add('copied');
-showToast('HTML structure copied to clipboard!');
+showToast('HTML structure copied!');
 
 setTimeout(() => {
 btnElement.innerText = originalText;
 btnElement.classList.remove('copied');
-}, 1400);
+}, 1200);
 });
 }
 
