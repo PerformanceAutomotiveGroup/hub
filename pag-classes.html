@@ -728,7 +728,7 @@ font-size: 1.6rem!important;
 
 <div class="sg-nav">
 <a href="#section-buttons">Buttons & CTAs</a>
-<a href="#section-icons">Icon Library</a>
+<a href="./pag-icons.html" style="background: #2c68b5; color: #ffffff;">Browse Full Icon Library &rarr;</a>
 <a href="#section-typography">Typography</a>
 <a href="#section-forms">Form Controls</a>
 <a href="#section-cards">Cards & Containers</a>
@@ -972,18 +972,6 @@ font-size: 1.6rem!important;
 </div>
 </div>
 
-</div>
-</div>
-
-<!-- SECTION: THEME ICON LIBRARY -->
-<div class="sg-section" id="section-icons">
-<div class="sg-section-title">Theme Icon Library (<span id="sg-icon-count">0</span> Icons)</div>
-<p style="font-size: 13px; color: #64748b; margin-top: -10px; margin-bottom: 20px;">
-Every icon detected in <code>theme-global.css</code>. Click any button to copy the class name or the ready-to-paste tag.
-</p>
-
-<div id="sg-icon-grid" class="sg-grid" style="grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px;">
-<!-- Icon tiles are injected here automatically -->
 </div>
 </div>
 
@@ -1834,91 +1822,5 @@ card.style.display = 'none';
 }
 </script>
 
-<script>
-window.addEventListener('DOMContentLoaded', () => {
-renderAllIconsFromCSS();
-});
-
-function renderAllIconsFromCSS() {
-const grid = document.getElementById('sg-icon-grid');
-const counter = document.getElementById('sg-icon-count');
-if (!grid) return;
-
-const iconMap = new Map();
-
-// 1. Scan loaded stylesheets for icon pseudo-elements
-for (const sheet of document.styleSheets) {
-try {
-for (const rule of sheet.cssRules || []) {
-// Looks for rules targeting :before or ::before with content: "..."
-if (rule.selectorText && (rule.selectorText.includes(':before') || rule.selectorText.includes('::before'))) {
-const hasContent = rule.style && rule.style.content && rule.style.content !== 'none' && rule.style.content !== '""';
-
-if (hasContent) {
-// Extract the class names (e.g., fa-car, icon-x-twitter)
-const matches = rule.selectorText.match(/\.([a-zA-Z0-9_-]+)(?:::?before)/g);
-if (matches) {
-matches.forEach(m => {
-const cls = m.replace(/\.|\:before|\:\:before/g, '').trim();
-
-// Filter out non-icon classes that might use pseudo-content
-const isIcon = cls.startsWith('fa-') || cls.startsWith('icon-') || cls.includes('arrow') || cls.includes('check');
-
-if (isIcon && !iconMap.has(cls)) {
-// Extract unicode character hex if available
-const rawContent = rule.style.content.replace(/['"]/g, '');
-const charCode = rawContent.charCodeAt(0).toString(16).toUpperCase();
-iconMap.set(cls, charCode);
-}
-});
-}
-}
-}
-}
-} catch (e) {
-// Skips any cross-origin sheets that cannot be accessed directly
-}
-}
-
-if (counter) counter.innerText = iconMap.size;
-
-// 2. Generate the DOM cards for each detected icon
-grid.innerHTML = '';
-Array.from(iconMap.keys()).sort().forEach(iconClass => {
-const hex = iconMap.get(iconClass);
-
-// Determine base prefix class (fas, fab, far, or standard)
-let prefix = 'fas';
-if (iconClass.includes('twitter') || iconClass.includes('facebook') || iconClass.includes('instagram') || iconClass.includes('youtube')) {
-prefix = 'fab';
-}
-
-const fullClass = `${prefix} ${iconClass}`;
-const searchTerms = `${iconClass} ${prefix} icon fa ${hex}`.toLowerCase();
-
-const card = document.createElement('div');
-card.className = 'sg-card';
-card.setAttribute('data-search', searchTerms);
-card.style.margin = '0';
-
-card.innerHTML = `
-<div class="sg-preview" style="min-height: 80px; font-size: 26px; color: #2c68b5; padding: 16px;">
-<i class="${fullClass}"></i>
-</div>
-<div class="sg-meta" style="padding: 10px; text-align: center; gap: 8px;">
-<h4 class="sg-item-name" style="font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${iconClass}">
-.${iconClass}
-</h4>
-<div class="sg-actions" style="justify-content: center; gap: 4px;">
-<button class="sg-btn-copy" style="font-size: 10px; padding: 4px 6px;" onclick="copyValue('${fullClass}', this)">Class</button>
-<button class="sg-btn-copy" style="font-size: 10px; padding: 4px 6px;" onclick="copyValue('<i class=&quot;${fullClass}&quot;></i>', this)">HTML</button>
-</div>
-</div>
-`;
-
-grid.appendChild(card);
-});
-}
-</script>
 </body>
 </html>
