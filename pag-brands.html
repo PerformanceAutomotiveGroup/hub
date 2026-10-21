@@ -171,6 +171,36 @@ justify-content: space-between;
 align-items: center;
 }
 
+/* Location Selector Pills */
+.store-pills-bar {
+display: flex;
+flex-wrap: wrap;
+gap: 8px;
+margin-bottom: 16px;
+padding-bottom: 14px;
+border-bottom: 1px dashed #cbd5e1;
+}
+.store-pill {
+background: #ffffff;
+border: 1px solid #cbd5e1;
+padding: 6px 12px;
+border-radius: 4px;
+font-size: 12px;
+font-weight: 600;
+cursor: pointer;
+color: #334155;
+transition: all 0.15s ease;
+}
+.store-pill:hover {
+border-color: #0668B3;
+color: #0668B3;
+}
+.store-pill.active {
+background: #0668B3;
+border-color: #0668B3;
+color: #ffffff;
+}
+
 /* Storefront Display */
 .storefront-wrapper {
 display: grid;
@@ -350,7 +380,7 @@ cursor: pointer;
 background: #e2e8f0;
 }
 
-/* Buttons Display Container */
+/* Buttons Section */
 .three-buttons-grid {
 display: grid;
 grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -436,16 +466,24 @@ transform: translateY(0);
 </a>
 </div>
 
-<!-- 1. Storefront Image -->
+<!-- 1. Storefront Image with Multiple Location Support -->
 <div class="card-section">
-<div class="section-title">Dealership Storefront</div>
+<div class="section-title">
+<span>Dealership Storefronts</span>
+<span id="store-count-badge" style="font-size: 12px; color: #64748b; font-weight: 600; text-transform: none;"></span>
+</div>
+
+<!-- Storefront Location Selector (renders if >1 dealership) -->
+<div id="store-pills-container" class="store-pills-bar" style="display: none;"></div>
+
 <div class="storefront-wrapper">
 <div class="storefront-img-box">
 <img id="active-storefront-img" src="" alt="Dealership Storefront">
 </div>
 <div style="display: flex; flex-direction: column; gap: 10px;">
-<div style="font-size: 15px; color: #64748b;">
-High-resolution storefront photography for location.
+<div>
+<div id="active-store-name" style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 2px;">Dealership Name</div>
+<a id="active-store-domain" href="#" target="_blank" rel="noopener" style="font-size: 13px; color: #0668B3; text-decoration: none;">domain.ca &rarr;</a>
 </div>
 <div style="font-family: monospace; font-size: 11px; color: #475569;" id="active-storefront-path"></div>
 <a id="btn-download-storefront" href="#" download class="action-btn" style="width: fit-content;">
@@ -541,7 +579,7 @@ View All Brand Logos &rarr;
 <div>
 <span style="font-size: 13px; font-weight: 700; color: #64748b; text-transform: uppercase;">1. Primary Button</span>
 <div class="button-stage">
-<a href="#" class="button">Primary Button </a>
+<a href="#" class="button">Primary Button <i class="fa fa-angle-right"></i></a>
 </div>
 </div>
 <button type="button" class="action-btn" onclick="copyButtonHtml('primary')">Copy Primary Button HTML</button>
@@ -552,7 +590,7 @@ View All Brand Logos &rarr;
 <div>
 <span style="font-size: 13px; font-weight: 700; color: #64748b; text-transform: uppercase;">2. Alternate Button</span>
 <div class="button-stage">
-<a href="#" class="button button--alternate">Alternate Button </a>
+<a href="#" class="button button--alternate">Alternate Button <i class="fa fa-angle-right"></i></a>
 </div>
 </div>
 <button type="button" class="action-btn" onclick="copyButtonHtml('alternate')">Copy Alternate Button HTML</button>
@@ -563,7 +601,7 @@ View All Brand Logos &rarr;
 <div>
 <span style="font-size: 13px; font-weight: 700; color: #64748b; text-transform: uppercase;">3. Centered Button</span>
 <div class="button-stage" style="width: 100%;">
-<a href="#" class="button button--centered">Centered Button</a>
+<a href="#" class="button button--centered">Centered Button <i class="fa fa-angle-right"></i></a>
 </div>
 </div>
 <button type="button" class="action-btn" onclick="copyButtonHtml('centered')">Copy Centered Button HTML</button>
@@ -582,7 +620,9 @@ const BRAND_DATA = [
 {
 slug: "performance-auto-group",
 brand: "Performance Auto Group",
-storefront: "images/brands/pag-storefront.jpg",
+stores: [
+{ name: "Performance Auto Group Corporate", domain: "performance.ca", image: "images/brands/pag-storefront.jpg" }
+],
 logoLight: "images/brands/pag.png",
 logoDark: "images/brands/pag-white.png",
 fontName: "Convertus Modern Sans",
@@ -596,7 +636,11 @@ colors: [
 {
 slug: "acura",
 brand: "Acura",
-storefront: "images/brands/acura-storefront.jpg",
+stores: [
+{ name: "Acura 2000", domain: "acura2000.ca", image: "images/brands/acura2000-storefront.jpg" },
+{ name: "Acura North Mississauga", domain: "acuranorthmississauga.ca", image: "images/brands/acuranorthmississauga-storefront.jpg" },
+{ name: "Performance Acura", domain: "performanceacura.com", image: "images/brands/performanceacura-storefront.jpg" }
+],
 logoLight: "images/brands/acura.png",
 logoDark: "images/brands/acura-white.png",
 fontName: "Acura Sans / Helvetica Neue",
@@ -610,7 +654,9 @@ colors: [
 {
 slug: "audi",
 brand: "Audi",
-storefront: "images/brands/audi-storefront.jpg",
+stores: [
+{ name: "Audi Niagara", domain: "audiniagara.com", image: "images/brands/audiniagara-storefront.jpg" }
+],
 logoLight: "images/brands/audi.png",
 logoDark: "images/brands/audi-white.png",
 fontName: "Audi Type / Helvetica Neue",
@@ -624,7 +670,9 @@ colors: [
 {
 slug: "bmw",
 brand: "BMW",
-storefront: "images/brands/bmw-storefront.jpg",
+stores: [
+{ name: "Performance BMW", domain: "performance-bmw.com", image: "images/brands/performance-bmw-storefront.jpg" }
+],
 logoLight: "images/brands/bmw.png",
 logoDark: "images/brands/bmw-white.png",
 fontName: "BMW Type Next / Arial",
@@ -638,7 +686,11 @@ colors: [
 {
 slug: "chrysler-dodge",
 brand: "Chrysler/Dodge",
-storefront: "images/brands/chrysler-dodge-storefront.jpg",
+stores: [
+{ name: "Brampton Chrysler", domain: "bramptonchrysler.ca", image: "images/brands/bramptonchrysler-storefront.jpg" },
+{ name: "Performance Chrysler Dodge Jeep Ram", domain: "performancechryslerdealer.com", image: "images/brands/performancechryslerdealer-storefront.jpg" },
+{ name: "Huntsville Dodge Chrysler Jeep Ram", domain: "huntsvilledodge.ca", image: "images/brands/huntsvilledodge-storefront.jpg" }
+],
 logoLight: "images/brands/chrysler-dodge.png",
 logoDark: "images/brands/chrysler-dodge-white.png",
 fontName: "Titling Gothic / Arial",
@@ -652,7 +704,9 @@ colors: [
 {
 slug: "ford",
 brand: "Ford",
-storefront: "images/brands/ford-storefront.jpg",
+stores: [
+{ name: "Planet Ford", domain: "planetford.ca", image: "images/brands/planetford-storefront.jpg" }
+],
 logoLight: "images/brands/ford.png",
 logoDark: "images/brands/ford-white.png",
 fontName: "Ford Antenna / Arial",
@@ -666,7 +720,10 @@ colors: [
 {
 slug: "genesis",
 brand: "Genesis",
-storefront: "images/brands/genesis-storefront.jpg",
+stores: [
+{ name: "Genesis Brampton", domain: "genesisbrampton.ca", image: "images/brands/genesisbrampton-storefront.jpg" },
+{ name: "Genesis Niagara", domain: "genesisniagara.ca", image: "images/brands/genesisniagara-storefront.jpg" }
+],
 logoLight: "images/brands/genesis.png",
 logoDark: "images/brands/genesis-white.png",
 fontName: "Genesis Sans / Cormorant",
@@ -680,7 +737,13 @@ colors: [
 {
 slug: "honda",
 brand: "Honda",
-storefront: "images/brands/honda-storefront.jpg",
+stores: [
+{ name: "Classic Honda", domain: "classichonda.ca", image: "images/brands/classichonda-storefront.jpg" },
+{ name: "Bolton Honda", domain: "boltonhonda.ca", image: "images/brands/boltonhonda-storefront.jpg" },
+{ name: "Performance Honda Mayfield", domain: "performancehondamayfield.ca", image: "images/brands/performancehondamayfield-storefront.jpg" },
+{ name: "Precision Honda", domain: "precisionhonda.ca", image: "images/brands/precisionhonda-storefront.jpg" },
+{ name: "Huntsville Honda", domain: "huntsvillehonda.ca", image: "images/brands/huntsvillehonda-storefront.jpg" }
+],
 logoLight: "images/brands/honda.png",
 logoDark: "images/brands/honda-white.png",
 fontName: "Honda Form / Helvetica",
@@ -694,7 +757,13 @@ colors: [
 {
 slug: "hyundai",
 brand: "Hyundai",
-storefront: "images/brands/hyundai-storefront.jpg",
+stores: [
+{ name: "Bolton Hyundai", domain: "boltonhyundai.com", image: "images/brands/boltonhyundai-storefront.jpg" },
+{ name: "Performance Hyundai Brampton", domain: "performancehyundaibrampton.com", image: "images/brands/performancehyundaibrampton-storefront.jpg" },
+{ name: "Performance Hyundai St. Catharines", domain: "performancehyundai.com", image: "images/brands/performancehyundai-storefront.jpg" },
+{ name: "Grimsby Hyundai", domain: "grimsbyhyundai.com", image: "images/brands/grimsbyhyundai-storefront.jpg" },
+{ name: "Hyundai of Muskoka", domain: "hyundaiofmuskoka.com", image: "images/brands/hyundaiofmuskoka-storefront.jpg" }
+],
 logoLight: "images/brands/hyundai.png",
 logoDark: "images/brands/hyundai-white.png",
 fontName: "Hyundai Sans Head / Arial",
@@ -708,7 +777,9 @@ colors: [
 {
 slug: "infiniti",
 brand: "INFINITI",
-storefront: "images/brands/infiniti-storefront.jpg",
+stores: [
+{ name: "Performance INFINITI Brampton", domain: "performanceinfinitibrampton.ca", image: "images/brands/performanceinfinitibrampton-storefront.jpg" }
+],
 logoLight: "images/brands/infiniti.png",
 logoDark: "images/brands/infiniti-white.png",
 fontName: "INFINITI Brand Font / Century Gothic",
@@ -722,7 +793,10 @@ colors: [
 {
 slug: "kia",
 brand: "Kia",
-storefront: "images/brands/kia-storefront.jpg",
+stores: [
+{ name: "Kia of Brampton", domain: "kiaofbrampton.ca", image: "images/brands/kiaofbrampton-storefront.jpg" },
+{ name: "Performance Kia Mayfield", domain: "performancekiamayfield.ca", image: "images/brands/performancekiamayfield-storefront.jpg" }
+],
 logoLight: "images/brands/kia.png",
 logoDark: "images/brands/kia-white.png",
 fontName: "Kia Signature / Trebuchet MS",
@@ -736,7 +810,9 @@ colors: [
 {
 slug: "lexus",
 brand: "Lexus",
-storefront: "images/brands/lexus-storefront.jpg",
+stores: [
+{ name: "Performance Lexus", domain: "performancelexus.ca", image: "images/brands/performancelexus-storefront.jpg" }
+],
 logoLight: "images/brands/lexus.png",
 logoDark: "images/brands/lexus-white.png",
 fontName: "Nobel / Century Gothic",
@@ -750,7 +826,10 @@ colors: [
 {
 slug: "mazda",
 brand: "Mazda",
-storefront: "images/brands/mazda-storefront.jpg",
+stores: [
+{ name: "Mazda of Brampton", domain: "mazdaofbrampton.ca", image: "images/brands/mazdaofbrampton-storefront.jpg" },
+{ name: "Motion Mazda", domain: "motionmazda.ca", image: "images/brands/motionmazda-storefront.jpg" }
+],
 logoLight: "images/brands/mazda.png",
 logoDark: "images/brands/mazda-white.png",
 fontName: "Mazda Type / Arial",
@@ -764,7 +843,9 @@ colors: [
 {
 slug: "mercedes",
 brand: "Mercedes",
-storefront: "images/brands/mercedes-storefront.jpg",
+stores: [
+{ name: "Performance Mercedes-Benz", domain: "mercedes-benz-performance.ca", image: "images/brands/mercedes-benz-performance-storefront.jpg" }
+],
 logoLight: "images/brands/mercedes.png",
 logoDark: "images/brands/mercedes-white.png",
 fontName: "Daimler CS / Corporate A",
@@ -778,7 +859,9 @@ colors: [
 {
 slug: "mini",
 brand: "MINI",
-storefront: "images/brands/mini-storefront.jpg",
+stores: [
+{ name: "MINI St. Catharines", domain: "ministcatharines.ca", image: "images/brands/ministcatharines-storefront.jpg" }
+],
 logoLight: "images/brands/mini.png",
 logoDark: "images/brands/mini-white.png",
 fontName: "MINI Serif / Arial",
@@ -792,7 +875,9 @@ colors: [
 {
 slug: "mitsubishi",
 brand: "Mitsubishi",
-storefront: "images/brands/mitsubishi-storefront.jpg",
+stores: [
+{ name: "Brampton Mitsubishi", domain: "bramptonmitsubishi.ca", image: "images/brands/bramptonmitsubishi-storefront.jpg" }
+],
 logoLight: "images/brands/mitsubishi.png",
 logoDark: "images/brands/mitsubishi-white.png",
 fontName: "MMC Modern / Arial",
@@ -806,7 +891,10 @@ colors: [
 {
 slug: "nissan",
 brand: "Nissan",
-storefront: "images/brands/nissan-storefront.jpg",
+stores: [
+{ name: "Brampton North Nissan", domain: "bramptonnorthnissan.ca", image: "images/brands/bramptonnorthnissan-storefront.jpg" },
+{ name: "Bolton Nissan", domain: "boltonnissan.ca", image: "images/brands/boltonnissan-storefront.jpg" }
+],
 logoLight: "images/brands/nissan.png",
 logoDark: "images/brands/nissan-white.png",
 fontName: "Nissan Brand / Arial",
@@ -820,7 +908,9 @@ colors: [
 {
 slug: "subaru",
 brand: "Subaru",
-storefront: "images/brands/subaru-storefront.jpg",
+stores: [
+{ name: "Subaru of Brampton", domain: "subaruofbrampton.ca", image: "images/brands/subaruofbrampton-storefront.jpg" }
+],
 logoLight: "images/brands/subaru.png",
 logoDark: "images/brands/subaru-white.png",
 fontName: "Subaru Sans / Arial",
@@ -834,7 +924,11 @@ colors: [
 {
 slug: "toyota",
 brand: "Toyota",
-storefront: "images/brands/toyota-storefront.jpg",
+stores: [
+{ name: "Brantford Toyota", domain: "brantfordtoyota.ca", image: "images/brands/brantfordtoyota-storefront.jpg" },
+{ name: "Mississauga Toyota", domain: "mississaugatoyota.com", image: "images/brands/mississaugatoyota-storefront.jpg" },
+{ name: "Performance Toyota", domain: "performancetoyota.ca", image: "images/brands/performancetoyota-storefront.jpg" }
+],
 logoLight: "images/brands/toyota.png",
 logoDark: "images/brands/toyota-white.png",
 fontName: "Toyota Type / Helvetica",
@@ -848,7 +942,10 @@ colors: [
 {
 slug: "volkswagen",
 brand: "Volkswagen",
-storefront: "images/brands/volkswagen-storefront.jpg",
+stores: [
+{ name: "Don Valley Volkswagen", domain: "donvalleyvolkswagen.ca", image: "images/brands/donvalleyvolkswagen-storefront.jpg" },
+{ name: "St. Catharines Volkswagen", domain: "stcatharinesvolkswagen.com", image: "images/brands/stcatharinesvolkswagen-storefront.jpg" }
+],
 logoLight: "images/brands/volkswagen.png",
 logoDark: "images/brands/volkswagen-white.png",
 fontName: "VW Head / Arial",
@@ -885,11 +982,11 @@ copyVal(tag);
 function copyButtonHtml(type) {
 let html = '';
 if (type === 'primary') {
-html = '<a href="#" class="button">Primary Button</a>';
+html = '<a href="#" class="button">Primary Button <i class="fa fa-angle-right"></i></a>';
 } else if (type === 'alternate') {
-html = '<a href="#" class="button button--alternate">Alternate Button</a>';
+html = '<a href="#" class="button button--alternate">Alternate Button <i class="fa fa-angle-right"></i></a>';
 } else if (type === 'centered') {
-html = '<a href="#" class="button button--centered">Centered Button</a>';
+html = '<a href="#" class="button button--centered">Centered Button <i class="fa fa-angle-right"></i></a>';
 }
 copyVal(html);
 }
@@ -900,6 +997,27 @@ document.querySelectorAll('.brand-pill').forEach(pill => {
 const name = pill.innerText.toLowerCase();
 pill.style.display = (!query || name.includes(query)) ? 'inline-block' : 'none';
 });
+}
+
+function selectStore(store, clickedBtn) {
+if (clickedBtn) {
+document.querySelectorAll('.store-pill').forEach(p => p.classList.remove('active'));
+clickedBtn.classList.add('active');
+}
+
+const sfImg = document.getElementById('active-storefront-img');
+sfImg.src = store.image;
+document.getElementById('active-store-name').innerText = store.name;
+
+const domainLink = document.getElementById('active-store-domain');
+domainLink.href = `https://${store.domain}`;
+domainLink.innerText = `${store.domain} ↗`;
+
+document.getElementById('active-storefront-path').innerText = store.image;
+
+const sfDownload = document.getElementById('btn-download-storefront');
+sfDownload.href = store.image;
+sfDownload.setAttribute('download', store.image.split('/').pop());
 }
 
 function renderActiveBrand(brand) {
@@ -917,13 +1035,24 @@ const hubUrl = `https://sites.google.com/performance.ca/brandresources/home/${br
 document.getElementById('active-brand-title').innerText = brand.brand;
 document.getElementById('active-external-hub').href = hubUrl;
 
-// 1. Storefront
-const sfImg = document.getElementById('active-storefront-img');
-sfImg.src = brand.storefront;
-document.getElementById('active-storefront-path').innerText = brand.storefront;
-const sfDownload = document.getElementById('btn-download-storefront');
-sfDownload.href = brand.storefront;
-sfDownload.setAttribute('download', `${brand.slug}-storefront.jpg`);
+// 1. Storefront & Locations
+const storeCount = brand.stores.length;
+document.getElementById('store-count-badge').innerText = `${storeCount} ${storeCount === 1 ? 'Location' : 'Locations'}`;
+
+const storePillsContainer = document.getElementById('store-pills-container');
+if (storeCount > 1) {
+storePillsContainer.style.display = 'flex';
+storePillsContainer.innerHTML = brand.stores.map((s, idx) => `
+<button type="button" class="store-pill ${idx === 0 ? 'active' : ''}" onclick="selectStore(activeBrand.stores[${idx}], this)">
+${s.name}
+</button>
+`).join('');
+} else {
+storePillsContainer.style.display = 'none';
+}
+
+// Load first store initially
+selectStore(brand.stores[0]);
 
 // 2. Logos & External Hub Link
 document.getElementById('active-logo-hub-link').href = hubUrl;
