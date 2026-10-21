@@ -9,6 +9,13 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <style>
+:root {
+--color-primary: #0668B3;
+--color-secondary: #E0E1E2;
+--color-accent: #FFFFFF;
+--font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
 body {
 margin: 0;
 padding: 0;
@@ -339,7 +346,48 @@ cursor: pointer;
 background: #e2e8f0;
 }
 
-/* Buttons Section */
+/* Convertus global.css Button Architecture */
+.button {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+gap: 8px;
+padding: 12px 24px;
+border-radius: 4px;
+font-size: 14px;
+font-weight: 700;
+line-height: 1.2;
+text-decoration: none;
+cursor: pointer;
+background-color: var(--color-primary);
+color: #ffffff;
+border: 2px solid var(--color-primary);
+font-family: var(--font-family-base);
+transition: all 0.15s ease-in-out;
+}
+.button:hover {
+opacity: 0.9;
+}
+
+.button.button--alternate {
+background-color: transparent;
+color: var(--color-primary);
+border: 2px solid var(--color-primary);
+}
+.button.button--alternate:hover {
+background-color: var(--color-primary);
+color: #ffffff;
+}
+
+.button.button--centered {
+display: flex;
+width: 100%;
+max-width: 240px;
+margin: 0 auto;
+text-align: center;
+}
+
+/* Buttons Section Display Grid */
 .three-buttons-grid {
 display: grid;
 grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -356,14 +404,14 @@ justify-content: space-between;
 gap: 14px;
 }
 .button-stage {
-min-height: 60px;
+min-height: 75px;
 display: flex;
 align-items: center;
 justify-content: center;
 background: #f8fafc;
 border: 1px dashed #cbd5e1;
 border-radius: 4px;
-padding: 10px;
+padding: 14px;
 }
 
 /* Toast */
@@ -525,45 +573,37 @@ View All Brand Logos &rarr;
 
 <div class="three-buttons-grid">
 
-<!-- Button 1: Solid Primary CTA -->
+<!-- Button 1: Primary Button -->
 <div class="button-preview-card">
 <div>
-<span style="font-size: 13px; font-weight: 700; color: #64748b; text-transform: uppercase;">1. Solid Primary CTA</span>
+<span style="font-size: 13px; font-weight: 700; color: #64748b; text-transform: uppercase;">1. Primary Button</span>
 <div class="button-stage">
-<a id="btn-demo-primary" href="javascript:void(0)" style="padding: 10px 20px; border-radius: 4px; font-weight: 700; color: #ffffff; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; font-size: 13px;">
-<span>Explore Inventory</span>
-<i class="fa fa-angle-right"></i>
-</a>
+<a id="btn-demo-primary" href="#" class="button">Primary Button</a>
 </div>
 </div>
 <button type="button" class="action-btn" onclick="copyButtonHtml('primary')">Copy Primary Button HTML</button>
 </div>
 
-<!-- Button 2: Secondary / Outline CTA -->
+<!-- Button 2: Alternate Button -->
 <div class="button-preview-card">
 <div>
-<span style="font-size: 13px; font-weight: 700; color: #64748b; text-transform: uppercase;">2. Secondary Outline CTA</span>
+<span style="font-size: 13px; font-weight: 700; color: #64748b; text-transform: uppercase;">2. Alternate Button</span>
 <div class="button-stage">
-<a id="btn-demo-secondary" href="javascript:void(0)" style="padding: 8px 18px; border-radius: 4px; font-weight: 700; background: transparent; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; font-size: 13px; border: 2px solid #000;">
-<span>Book Service</span>
-</a>
+<a id="btn-demo-secondary" href="#" class="button button--alternate">Alternate Button</a>
 </div>
 </div>
-<button type="button" class="action-btn" onclick="copyButtonHtml('secondary')">Copy Secondary Button HTML</button>
+<button type="button" class="action-btn" onclick="copyButtonHtml('alternate')">Copy Alternate Button HTML</button>
 </div>
 
-<!-- Button 3: Alternate / Neutral Action -->
+<!-- Button 3: Centered Button -->
 <div class="button-preview-card">
 <div>
-<span style="font-size: 13px; font-weight: 700; color: #64748b; text-transform: uppercase;">3. Alternate / Accent Action</span>
-<div class="button-stage">
-<a id="btn-demo-alt" href="javascript:void(0)" style="padding: 10px 20px; border-radius: 4px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; font-size: 13px;">
-<span>Value Your Trade</span>
-<i class="fa fa-tag"></i>
-</a>
+<span style="font-size: 13px; font-weight: 700; color: #64748b; text-transform: uppercase;">3. Centered Button</span>
+<div class="button-stage" style="width: 100%;">
+<a id="btn-demo-alt" href="#" class="button button--centered">Centered Button</a>
 </div>
 </div>
-<button type="button" class="action-btn" onclick="copyButtonHtml('alt')">Copy Alternate Button HTML</button>
+<button type="button" class="action-btn" onclick="copyButtonHtml('centered')">Copy Centered Button HTML</button>
 </div>
 
 </div>
@@ -880,19 +920,13 @@ copyVal(tag);
 }
 
 function copyButtonHtml(type) {
-const pColor = activeBrand.colors[0].hex;
-const sColor = activeBrand.colors[1].hex;
-const aColor = activeBrand.colors[2].hex;
 let html = '';
-
 if (type === 'primary') {
-html = `<a href="#" class="button btn-primary" style="background-color: ${pColor}; color: #ffffff; padding: 10px 22px; border-radius: 4px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">Explore Inventory <i class="fa fa-angle-right"></i></a>`;
-} else if (type === 'secondary') {
-html = `<a href="#" class="button btn-secondary" style="background: transparent; color: ${pColor}; border: 2px solid ${pColor}; padding: 8px 20px; border-radius: 4px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">Book Service</a>`;
-} else if (type === 'alt') {
-const isWhite = aColor.toUpperCase() === '#FFFFFF' || aColor.toUpperCase() === '#F4F4F4' || aColor.toUpperCase() === '#F5F5F5';
-const bg = isWhite ? sColor : aColor;
-html = `<a href="#" class="button btn-alt" style="background-color: ${bg}; color: #ffffff; padding: 10px 22px; border-radius: 4px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">Value Your Trade <i class="fa fa-tag"></i></a>`;
+html = '<a href="#" class="button">Primary Button</a>';
+} else if (type === 'alternate') {
+html = '<a href="#" class="button button--alternate">Alternate Button</a>';
+} else if (type === 'centered') {
+html = '<a href="#" class="button button--centered">Centered Button</a>';
 }
 copyVal(html);
 }
@@ -907,6 +941,12 @@ pill.style.display = (!query || name.includes(query)) ? 'inline-block' : 'none';
 
 function renderActiveBrand(brand) {
 activeBrand = brand;
+
+// Set CSS Root Variables for global.css button classes
+document.documentElement.style.setProperty('--color-primary', brand.colors[0].hex);
+document.documentElement.style.setProperty('--color-secondary', brand.colors[1].hex);
+document.documentElement.style.setProperty('--color-accent', brand.colors[2].hex);
+document.documentElement.style.setProperty('--font-family-base', brand.fontStack);
 
 // Construct dynamic Google Sites Hub URL
 const hubUrl = `https://sites.google.com/performance.ca/brandresources/home/${brand.slug}`;
@@ -961,29 +1001,6 @@ return `
 </div>
 `;
 }).join('');
-
-// 5. Three Theme Buttons
-const primaryHex = brand.colors[0].hex;
-const secondaryHex = brand.colors[1].hex;
-const altHex = brand.colors[2].hex;
-
-// Button 1: Solid Primary
-const bPrimary = document.getElementById('btn-demo-primary');
-bPrimary.style.backgroundColor = primaryHex;
-bPrimary.style.fontFamily = brand.fontStack;
-
-// Button 2: Outline
-const bSecondary = document.getElementById('btn-demo-secondary');
-bSecondary.style.borderColor = primaryHex;
-bSecondary.style.color = primaryHex;
-bSecondary.style.fontFamily = brand.fontStack;
-
-// Button 3: Alternate
-const bAlt = document.getElementById('btn-demo-alt');
-const isAltWhite = altHex.toUpperCase() === '#FFFFFF' || altHex.toUpperCase() === '#F4F4F4' || altHex.toUpperCase() === '#F5F5F5';
-bAlt.style.backgroundColor = isAltWhite ? secondaryHex : altHex;
-bAlt.style.color = (isAltWhite && (secondaryHex.toUpperCase() === '#E0E1E2' || secondaryHex.toUpperCase() === '#F2F2F2' || secondaryHex.toUpperCase() === '#F7F7F7')) ? '#0f172a' : '#ffffff';
-bAlt.style.fontFamily = brand.fontStack;
 }
 
 function init() {
