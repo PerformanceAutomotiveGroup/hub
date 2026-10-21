@@ -4,321 +4,249 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>PAG OEM Brand Guidelines & Asset Hub</title>
+<title>PAG OEM Brand Reference</title>
 
-<!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-<!-- Theme Stylesheet -->
-<link rel="stylesheet" href="./theme-global.css">
 
 <style>
 body {
 margin: 0;
 padding: 0;
-background-color: #f1f5f9;
-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+background: #f1f5f9;
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 color: #0f172a;
 line-height: 1.5;
 }
-
-* {
-box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 .brand-container {
-max-width: 1240px;
+max-width: 1100px;
 margin: 0 auto;
-padding: 36px 20px;
+padding: 32px 20px;
 }
 
-/* Header */
 .brand-header {
 background: #ffffff;
-padding: 28px 32px;
+padding: 24px 28px;
 border-radius: 8px;
 border: 1px solid #e2e8f0;
-margin-bottom: 28px;
-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+margin-bottom: 24px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+flex-wrap: wrap;
+gap: 16px;
 }
-
 .brand-header h1 {
-font-size: 26px;
+margin: 0 0 4px 0;
+font-size: 24px;
 font-weight: 700;
-margin: 0 0 6px 0;
 }
-
 .brand-header p {
-margin: 0 0 18px 0;
+margin: 0;
 color: #64748b;
 font-size: 14px;
 }
-
-.brand-nav-links {
-display: flex;
-gap: 10px;
-flex-wrap: wrap;
-margin-top: 18px;
-border-top: 1px solid #f1f5f9;
-padding-top: 14px;
-}
-
-.brand-nav-links a {
+.nav-link {
 color: #334155;
 text-decoration: none;
-font-size: 12px;
+font-size: 13px;
 font-weight: 600;
-padding: 6px 12px;
+padding: 8px 14px;
 background: #f8fafc;
-border: 1px solid #e2e8f0;
-border-radius: 4px;
-transition: all 0.15s ease-in-out;
-}
-
-.brand-nav-links a:hover {
-background: #2c68b5;
-color: #ffffff;
-border-color: #2c68b5;
-}
-
-/* Brand Search & Filter Bar */
-.brand-search-box {
-width: 100%;
-max-width: 420px;
-padding: 10px 14px;
-font-size: 14px;
 border: 1px solid #cbd5e1;
 border-radius: 6px;
-outline: none;
-margin-bottom: 16px;
-transition: border-color 0.2s, box-shadow 0.2s;
+}
+.nav-link:hover {
+background: #0668B3;
+color: #fff;
+border-color: #0668B3;
 }
 
-.brand-search-box:focus {
-border-color: #2c68b5;
-box-shadow: 0 0 0 3px rgba(44, 104, 181, 0.15);
-}
-
-/* Brand Selection Pills */
-.brand-pill-bar {
+/* Brand Selection Strip */
+.brand-pills {
 display: flex;
 flex-wrap: wrap;
 gap: 8px;
-margin-bottom: 28px;
+margin-bottom: 24px;
 }
-
 .brand-pill {
+background: #fff;
 border: 1px solid #cbd5e1;
-background: #ffffff;
-color: #334155;
+padding: 8px 14px;
+border-radius: 20px;
 font-size: 13px;
 font-weight: 600;
-padding: 8px 16px;
-border-radius: 20px;
 cursor: pointer;
+color: #334155;
 transition: all 0.15s ease;
 }
-
 .brand-pill:hover {
-border-color: #2c68b5;
-color: #2c68b5;
-background: #f8fafc;
+border-color: #0668B3;
+color: #0668B3;
 }
-
 .brand-pill.active {
-background: #2c68b5;
-border-color: #2c68b5;
-color: #ffffff;
-box-shadow: 0 2px 6px rgba(44, 104, 181, 0.25);
+background: #0668B3;
+border-color: #0668B3;
+color: #fff;
 }
 
-/* Layout Sections */
-.brand-card {
-background: #ffffff;
+/* Main Showcase Panel */
+.brand-panel {
+background: #fff;
 border: 1px solid #e2e8f0;
 border-radius: 8px;
-padding: 24px;
-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-margin-bottom: 28px;
-display: flex;
-flex-direction: column;
-justify-content: space-between;
+padding: 28px;
+box-shadow: 0 1px 3px rgba(0,0,0,0.03);
 }
 
-.card-title {
-font-size: 13px;
+.brand-top-row {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 24px;
+border-bottom: 1px solid #e2e8f0;
+padding-bottom: 16px;
+}
+.brand-name {
+margin: 0;
+font-size: 24px;
 font-weight: 700;
-color: #64748b;
-text-transform: uppercase;
-letter-spacing: 0.5px;
-margin: 0 0 16px 0;
-border-bottom: 1px solid #f1f5f9;
-padding-bottom: 8px;
-display: flex;
-justify-content: space-between;
-align-items: center;
 }
 
-/* Dual Logo Stage */
-.logo-grid {
+/* 4-Box Quick Grid */
+.grid-sections {
 display: grid;
-grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 gap: 20px;
+margin-bottom: 28px;
 }
-
-.logo-box {
-border-radius: 6px;
-display: flex;
-align-items: center;
-justify-content: center;
-min-height: 140px;
-padding: 20px;
-margin-bottom: 14px;
-position: relative;
-}
-
-.logo-box img {
-max-width: 100%;
-max-height: 90px;
-object-fit: contain;
-}
-
-.logo-box--light {
-background: #ffffff;
-border: 1px solid #e2e8f0;
-}
-
-.logo-box--dark {
-background: #0f172a;
-border: 1px solid #1e293b;
-}
-
-/* Typography Box */
-.font-sample-box {
+.section-card {
 background: #f8fafc;
 border: 1px solid #e2e8f0;
 border-radius: 6px;
 padding: 18px;
-margin-bottom: 16px;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+}
+.section-title {
+font-size: 11px;
+font-weight: 700;
+text-transform: uppercase;
+letter-spacing: 0.5px;
+color: #64748b;
+margin-bottom: 12px;
 }
 
-.font-spec-name {
-font-size: 18px;
+/* Logo Box */
+.logo-view {
+background: #fff;
+border: 1px solid #e2e8f0;
+border-radius: 4px;
+height: 90px;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 12px;
+margin-bottom: 14px;
+}
+.logo-view img {
+max-height: 100%;
+max-width: 100%;
+object-fit: contain;
+}
+
+/* Typography Box */
+.font-info {
+margin-bottom: 14px;
+}
+.font-name {
+font-size: 16px;
 font-weight: 700;
 color: #0f172a;
-margin: 0 0 6px 0;
+margin-bottom: 4px;
 }
-
-.font-spec-stack {
+.font-stack {
 font-family: monospace;
-font-size: 12px;
+font-size: 11px;
 color: #64748b;
-margin: 0 0 12px 0;
 word-break: break-all;
 }
 
-.font-spec-preview {
-font-size: 20px;
-color: #1e293b;
-line-height: 1.3;
-outline: none;
-}
-
-/* Notes Box */
-.brand-notes-box {
-background: #fffbeb;
-border: 1px solid #fef3c7;
-color: #92400e;
-border-radius: 6px;
-padding: 12px 16px;
-font-size: 13px;
-margin-bottom: 20px;
+/* Swatches */
+.swatches-row {
 display: flex;
-align-items: center;
 gap: 10px;
+margin-bottom: 12px;
 }
-
-/* Color Swatches Grid */
-.color-swatch-grid {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-gap: 16px;
-}
-
-.color-swatch-item {
-background: #ffffff;
-border: 1px solid #e2e8f0;
-border-radius: 8px;
-overflow: hidden;
-display: flex;
-flex-direction: column;
-box-shadow: 0 1px 3px rgba(0,0,0,0.02);
-}
-
-.color-tile {
-height: 95px;
-width: 100%;
-border-bottom: 1px solid rgba(0,0,0,0.06);
+.swatch {
+flex: 1;
+height: 54px;
+border-radius: 4px;
+border: 1px solid rgba(0,0,0,0.1);
 cursor: pointer;
+position: relative;
 }
-
-.color-details {
-padding: 14px;
+.color-meta-list {
 display: flex;
 flex-direction: column;
 gap: 6px;
-background: #f8fafc;
+font-size: 12px;
 }
-
-.color-role {
-font-size: 11px;
-font-weight: 700;
-color: #64748b;
-text-transform: uppercase;
-}
-
-.color-name {
-font-size: 14px;
-font-weight: 700;
-color: #0f172a;
-margin: 0;
-}
-
-.color-hex-row {
+.color-meta-item {
 display: flex;
-align-items: center;
 justify-content: space-between;
-margin-top: 4px;
-}
-
-.color-hex-label {
-font-family: monospace;
-font-size: 13px;
-font-weight: 700;
-color: #2c68b5;
-}
-
-/* Copy Button */
-.btn-copy {
-font-size: 11px;
-font-weight: 600;
-padding: 4px 10px;
+align-items: center;
+background: #fff;
+padding: 4px 8px;
 border-radius: 4px;
-cursor: pointer;
-border: 1px solid #cbd5e1;
-background: #ffffff;
-color: #0f172a;
-transition: all 0.15s ease-in-out;
+border: 1px solid #e2e8f0;
 }
 
-.btn-copy:hover {
+/* Buttons Component Area */
+.components-area {
+background: #f8fafc;
+border: 1px solid #e2e8f0;
+border-radius: 6px;
+padding: 20px;
+}
+.components-row {
+display: flex;
+gap: 16px;
+align-items: center;
+flex-wrap: wrap;
+margin-top: 14px;
+}
+
+/* Action Links & Copy Buttons */
+.ext-btn {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+gap: 6px;
+background: #fff;
+border: 1px solid #cbd5e1;
+color: #0f172a;
+padding: 7px 12px;
+border-radius: 4px;
+font-size: 12px;
+font-weight: 600;
+text-decoration: none;
+cursor: pointer;
+transition: all 0.15s ease;
+}
+.ext-btn:hover {
 background: #f1f5f9;
 border-color: #94a3b8;
 }
-
-.btn-copy.copied {
-background: #10b981;
-border-color: #10b981;
-color: #ffffff;
+.btn-copy-code {
+font-size: 11px;
+padding: 3px 6px;
+border-radius: 3px;
+border: 1px solid #cbd5e1;
+background: #fff;
+cursor: pointer;
 }
 
 /* Toast */
@@ -328,18 +256,15 @@ bottom: 24px;
 right: 24px;
 background: #0f172a;
 color: #ffffff;
-padding: 12px 20px;
+padding: 10px 18px;
 border-radius: 6px;
 font-size: 13px;
-font-weight: 500;
-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
 opacity: 0;
-transform: translateY(10px);
-transition: opacity 0.2s, transform 0.2s;
 pointer-events: none;
+transition: opacity 0.2s, transform 0.2s;
+transform: translateY(10px);
 z-index: 999999;
 }
-
 #brand-toast.show {
 opacity: 1;
 transform: translateY(0);
@@ -348,541 +273,444 @@ transform: translateY(0);
 </head>
 
 <body>
-
 <div class="brand-container">
 
-<!-- HEADER -->
+<!-- Top Bar -->
 <div class="brand-header">
-<h1>Performance Auto Group OEM Brand Guide</h1>
-<p>Official asset hub for authorized OEM logos, typography, and certified web palettes across our dealership network.</p>
-
-<div class="brand-nav-links">
-<a href="./pag-classes.html">&larr; UI Components & Classes</a>
-<a href="https://performance.ca/pag-icons/" target="_blank">Font Awesome Icon Library &rarr;</a>
-</div>
-</div>
-
-<!-- SEARCH & BRAND PILLS -->
 <div>
-<input type="text" id="brand-search" class="brand-search-box" placeholder="Quick search brand (e.g. BMW, Honda, Toyota)..." onkeyup="filterBrands()">
-<div id="brand-pill-list" class="brand-pill-bar">
-<!-- Populated via JS -->
+<h1>PAG OEM Brand Reference</h1>
+<p>Convertus / autoTRADER theme identity parameters across our dealership network.</p>
 </div>
-</div>
-
-<!-- DUAL LOGO SHOWCASE (LIGHT & DARK) -->
-<div class="brand-card">
-<div class="card-title">
-<span>Authorized Brand Logos (Light & Dark Variants)</span>
-<span id="active-brand-heading" style="color: #2c68b5; font-size: 14px;"></span>
+<a href="./pag-classes.html" class="nav-link">&larr; Back to UI Classes</a>
 </div>
 
-<div class="logo-grid">
-<!-- Light Theme Logo -->
-<div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px;">
-<span style="display: block; font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 8px;">Standard / Light Background</span>
-<div class="logo-box logo-box--light">
-<img id="logo-light-img" src="" alt="Light Logo">
-</div>
-<div style="font-size: 11px; color: #64748b; margin-bottom: 12px; font-family: monospace;" id="logo-light-path"></div>
-<div style="display: flex; gap: 8px;">
-<button type="button" class="btn-copy" style="flex: 1;" onclick="copyLogoPath('light', this)">Copy Path</button>
-<button type="button" class="btn-copy" style="flex: 1;" onclick="copyLogoTag('light', this)">Copy &lt;img&gt; Tag</button>
-</div>
+<!-- Brand Tabs -->
+<div id="brand-pill-list" class="brand-pills"></div>
+
+<!-- Active Brand Showcase Panel -->
+<div class="brand-panel">
+<div class="brand-top-row">
+<h2 id="active-brand-title" class="brand-name">Brand Name</h2>
+<span id="active-brand-bg-badge" style="font-size: 12px; color: #64748b; font-family: monospace;">Background: #FFFFFF</span>
 </div>
 
-<!-- Dark Theme Logo -->
-<div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 18px;">
-<span style="display: block; font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 8px;">Reversed / Dark Background</span>
-<div class="logo-box logo-box--dark">
-<img id="logo-dark-img" src="" alt="Dark Logo">
-</div>
-<div style="font-size: 11px; color: #64748b; margin-bottom: 12px; font-family: monospace;" id="logo-dark-path"></div>
-<div style="display: flex; gap: 8px;">
-<button type="button" class="btn-copy" style="flex: 1;" onclick="copyLogoPath('dark', this)">Copy Path</button>
-<button type="button" class="btn-copy" style="flex: 1;" onclick="copyLogoTag('dark', this)">Copy &lt;img&gt; Tag</button>
-</div>
-</div>
-</div>
-</div>
+<!-- 3 Primary Information Pillars -->
+<div class="grid-sections">
 
-<!-- LIVE CONVERTUS UI PARITY TEST DRIVE -->
-<div class="brand-card">
-<div class="card-title">Live Convertus Component Parity</div>
-<div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: center; padding: 14px 0;">
-<a id="preview-primary-btn" href="javascript:void(0)" class="button" style="text-decoration: none; padding: 10px 20px; border-radius: 4px; font-weight: 700; color: #ffffff; display: inline-flex; align-items: center; gap: 8px;">
-<span>Explore Inventory</span>
-<i class="fas fa-angle-right"></i>
+<!-- 1. Logo Block -->
+<div class="section-card">
+<div class="section-title">Brand Logo</div>
+<div class="logo-view">
+<img id="active-logo-img" src="" alt="Brand Logo">
+</div>
+<a id="active-logo-ext" href="#" target="_blank" rel="noopener" class="ext-btn">
+<span>Download All Brand Logos</span>
+<i class="fa fa-external-link-alt" style="font-size: 11px;"></i>
 </a>
-<a id="preview-secondary-btn" href="javascript:void(0)" style="text-decoration: none; padding: 9px 20px; border-radius: 4px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; border: 2px solid #000; background: #fff;">
-<span>Book Service</span>
+</div>
+
+<!-- 2. Typography Block -->
+<div class="section-card">
+<div class="section-title">Typography</div>
+<div class="font-info">
+<div id="active-font-name" class="font-name">Font Name</div>
+<div id="active-font-stack" class="font-stack">font-stack</div>
+</div>
+<a id="active-font-ext" href="#" target="_blank" rel="noopener" class="ext-btn">
+<span>Download Brand Fonts</span>
+<i class="fa fa-download" style="font-size: 11px;"></i>
 </a>
-<span id="preview-badge" style="padding: 6px 14px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">
-Certified Pre-Owned
-</span>
-</div>
 </div>
 
-<!-- TYPOGRAPHY -->
-<div class="brand-card">
-<div>
-<div class="card-title">Brand Web Typography</div>
-<div class="font-sample-box">
-<div id="active-brand-font-name" class="font-spec-name"></div>
-<div id="active-brand-font-stack" class="font-spec-stack"></div>
-<div id="active-brand-font-sample" class="font-spec-preview" contenteditable="true" title="Click to test custom text">
-The quick brown fox jumps over the lazy dog. 0123456789
+<!-- 3. Palette & Hex Codes -->
+<div class="section-card">
+<div class="section-title">Web Palette</div>
+<div class="swatches-row">
+<div id="swatch-primary" class="swatch" title="Click to copy Primary Hex"></div>
+<div id="swatch-secondary" class="swatch" title="Click to copy Secondary Hex"></div>
+<div id="swatch-alt" class="swatch" title="Click to copy Alternate Hex"></div>
 </div>
-</div>
-</div>
-<div style="display: flex; gap: 8px; flex-wrap: wrap;">
-<button type="button" class="btn-copy" style="padding: 8px 14px;" onclick="copyActiveFontFamily(this)">Copy Font-Family</button>
-<button type="button" class="btn-copy" style="padding: 8px 14px;" onclick="copyBrandVariables(this)">Copy CSS :root Variables</button>
-</div>
-</div>
-
-<!-- COLOR PALETTE SECTION -->
-<div class="brand-card">
-<div class="card-title">Official Web Colour Scheme</div>
-<div id="active-brand-notes" class="brand-notes-box">
-<i class="fas fa-info-circle"></i>
-<span id="notes-text"></span>
-</div>
-<div id="active-brand-swatches" class="color-swatch-grid">
-<!-- Color swatches rendered dynamically -->
-</div>
+<div class="color-meta-list" id="color-meta-list"></div>
 </div>
 
 </div>
 
-<!-- TOAST NOTIFICATION -->
-<div id="brand-toast">Copied to clipboard!</div>
+<!-- 4. Standard Convertus Buttons Component -->
+<div class="components-area">
+<div class="section-title">Standard Convertus Theme Buttons</div>
+<div class="components-row">
+
+<!-- Primary CTA Preview -->
+<div style="display: flex; flex-direction: column; gap: 8px;">
+<a id="btn-preview-primary" href="javascript:void(0)" style="padding: 10px 22px; border-radius: 4px; font-weight: 700; color: #fff; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; font-size: 14px;">
+<span>View Inventory</span>
+<i class="fa fa-angle-right"></i>
+</a>
+<button type="button" class="btn-copy-code" onclick="copySnippet('primary')">Copy Primary Button HTML</button>
+</div>
+
+<!-- Secondary CTA Preview -->
+<div style="display: flex; flex-direction: column; gap: 8px;">
+<a id="btn-preview-secondary" href="javascript:void(0)" style="padding: 8px 20px; border-radius: 4px; font-weight: 700; background: transparent; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; font-size: 14px; border: 2px solid #000;">
+<span>Contact Us</span>
+</a>
+<button type="button" class="btn-copy-code" onclick="copySnippet('secondary')">Copy Secondary Button HTML</button>
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+
+<div id="brand-toast">Copied!</div>
 
 <script>
+// OEM Data directly from Sheet1.csv with links for logos & typography
 const BRAND_DATA = [
 {
-id: "pag",
 brand: "Performance Auto Group",
-logoLight: "images/brands/pag.png",
-logoDark: "images/brands/pag-white.png",
+logo: "images/brands/pag-logo.png",
+logoDriveLink: "https://drive.google.com/", // Add your shared Drive / Brandfolder folder URL
 fontName: "Convertus Modern Sans",
-fontStack: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif',
-notes: "Approved group-level corporate digital assets and web palette.",
-colors: [
-{ role: "Primary", name: "PAG Blue", hex: "#0668B3" },
-{ role: "Secondary", name: "PAG Silver", hex: "#E0E1E2" },
-{ role: "Alternate", name: "White", hex: "#FFFFFF" }
-]
+fontStack: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+fontDownloadLink: "https://fonts.google.com/",
+bgColor: "#FFFFFF",
+primaryHex: "#0668B3", primaryName: "PAG Blue",
+secondaryHex: "#E0E1E2", secondaryName: "PAG Silver",
+altHex: "#FFFFFF", altName: "White"
 },
 {
-id: "acura",
 brand: "Acura",
-logoLight: "images/brands/acura.png",
-logoDark: "images/brands/acura-white.png",
+logo: "images/brands/acura.png",
+logoDriveLink: "https://drive.google.com/",
 fontName: "Acura Sans / Helvetica Neue",
 fontStack: '"Acura Sans", "Helvetica Neue", Helvetica, Arial, sans-serif',
-notes: "Keep backgrounds light (#F4F4F4) with high-contrast black typography.",
-colors: [
-{ role: "Primary", name: "Black", hex: "#000000" },
-{ role: "Secondary", name: "Light Grey", hex: "#F4F4F4" },
-{ role: "Alternate", name: "White", hex: "#FFFFFF" }
-]
+fontDownloadLink: "https://drive.google.com/",
+bgColor: "#FFFFFF",
+primaryHex: "#000000", primaryName: "Black",
+secondaryHex: "#F4F4F4", secondaryName: "Light Grey",
+altHex: "#FFFFFF", altName: "White"
 },
 {
-id: "audi",
 brand: "Audi",
-logoLight: "images/brands/audi.png",
-logoDark: "images/brands/audi-white.png",
+logo: "images/brands/audi.png",
+logoDriveLink: "https://drive.google.com/",
 fontName: "Audi Type / Helvetica Neue",
 fontStack: '"Audi Type", "Helvetica Neue", Helvetica, Arial, sans-serif',
-notes: "Audi Progressive Red (#F50537) is reserved strictly for primary interactive CTAs.",
-colors: [
-{ role: "Primary", name: "Black", hex: "#000000" },
-{ role: "Secondary", name: "Light Grey", hex: "#E5E5E5" },
-{ role: "Alternate", name: "Audi Progressive Red", hex: "#F50537" }
-]
+fontDownloadLink: "https://drive.google.com/",
+bgColor: "#FFFFFF",
+primaryHex: "#000000", primaryName: "Black",
+secondaryHex: "#E5E5E5", secondaryName: "Light Grey",
+altHex: "#F50537", altName: "Audi Progressive Red"
 },
 {
-id: "bmw",
 brand: "BMW",
-logoLight: "images/brands/bmw.png",
-logoDark: "images/brands/bmw-white.png",
+logo: "images/brands/bmw.png",
+logoDriveLink: "https://drive.google.com/",
 fontName: "BMW Type Next / Arial",
 fontStack: '"BMW Type Next", "Helvetica Neue", Arial, sans-serif',
-notes: "Ensure BMW Blue (#1C69D4) leads interactive navigation and primary actions.",
-colors: [
-{ role: "Primary", name: "BMW Blue", hex: "#1C69D4" },
-{ role: "Secondary", name: "Light Grey", hex: "#F2F2F2" },
-{ role: "Alternate", name: "Dark Grey", hex: "#E6E6E6" }
-]
+fontDownloadLink: "https://drive.google.com/",
+bgColor: "#FFFFFF",
+primaryHex: "#1C69D4", primaryName: "BMW Blue",
+secondaryHex: "#F2F2F2", secondaryName: "Light Grey",
+altHex: "#E6E6E6", altName: "Dark Grey"
 },
 {
-id: "chrysler-dodge",
 brand: "Chrysler/Dodge",
-logoLight: "images/brands/chrysler-dodge.png",
-logoDark: "images/brands/chrysler-dodge-white.png",
+logo: "images/brands/chrysler-dodge.png",
+logoDriveLink: "https://drive.google.com/",
 fontName: "Titling Gothic / Arial",
 fontStack: '"Titling Gothic", "Arial Black", Arial, sans-serif',
-notes: "Use Blue (#0D65BF) for action elements and high-contrast headlines.",
-colors: [
-{ role: "Primary", name: "Blue", hex: "#0D65BF" },
-{ role: "Secondary", name: "Light Grey", hex: "#F7F7F7" },
-{ role: "Alternate", name: "Black", hex: "#000000" }
-]
+fontDownloadLink: "https://drive.google.com/",
+bgColor: "#FFFFFF",
+primaryHex: "#0D65BF", primaryName: "Blue",
+secondaryHex: "#F7F7F7", secondaryName: "Light Grey",
+altHex: "#000000", altName: "Black"
 },
 {
-id: "ford",
 brand: "Ford",
-logoLight: "images/brands/ford.png",
-logoDark: "images/brands/ford-white.png",
+logo: "images/brands/ford.png",
+logoDriveLink: "https://drive.google.com/",
 fontName: "Ford Antenna / Arial",
 fontStack: '"Ford Antenna", "Helvetica Neue", Arial, sans-serif',
-notes: "Pair Ford Blue (#00095B) with Skyview Blue (#066FEF) accents on landing pages.",
-colors: [
-{ role: "Primary", name: "Ford Blue", hex: "#00095B" },
-{ role: "Secondary", name: "Ford Skyview Blue", hex: "#066FEF" },
-{ role: "Alternate", name: "Light Grey", hex: "#F0F0F0" }
-]
+fontDownloadLink: "https://drive.google.com/",
+bgColor: "#FFFFFF",
+primaryHex: "#00095B", primaryName: "Ford Blue",
+secondaryHex: "#066FEF", secondaryName: "Ford Skyview Blue",
+altHex: "#F0F0F0", altName: "Light Grey"
 },
 {
-id: "genesis",
 brand: "Genesis",
-logoLight: "images/brands/genesis.png",
-logoDark: "images/brands/genesis-white.png",
+logo: "images/brands/genesis.png",
+logoDriveLink: "https://drive.google.com/",
 fontName: "Genesis Sans / Cormorant",
 fontStack: '"Genesis Sans", "Times New Roman", serif',
-notes: "Genesis Copper (#C36F51) is used exclusively for badges, highlights, and micro-accents.",
-colors: [
-{ role: "Primary", name: "Black", hex: "#000000" },
-{ role: "Secondary", name: "Dark Grey", hex: "#AAA8A6" },
-{ role: "Alternate", name: "Genesis Copper", hex: "#C36F51" }
-]
+fontDownloadLink: "https://drive.google.com/",
+bgColor: "#FFFFFF",
+primaryHex: "#000000", primaryName: "Black",
+secondaryHex: "#AAA8A6", secondaryName: "Dark Grey",
+altHex: "#C36F51", altName: "Genesis Copper"
 },
 {
-id: "honda",
 brand: "Honda",
-logoLight: "images/brands/honda.png",
-logoDark: "images/brands/honda-white.png",
+logo: "images/brands/honda.png",
+logoDriveLink: "https://drive.google.com/",
 fontName: "Honda Form / Helvetica",
 fontStack: '"Honda Form", "Helvetica Neue", Arial, sans-serif',
-notes: "Honda Red (#E3173E) is the primary CTA highlight color across all templates.",
-colors: [
-{ role: "Primary", name: "Honda Red", hex: "#E3173E" },
-{ role: "Secondary", name: "Black", hex: "#1B1B1B" },
-{ role: "Alternate", name: "White", hex: "#FFFFFF" }
-]
+fontDownloadLink: "https://drive.google.com/",
+bgColor: "#FFFFFF",
+primaryHex: "#E3173E", primaryName: "Honda Red",
+secondaryHex: "#1B1B1B", secondaryName: "Black",
+altHex: "#FFFFFF", altName: "White"
 },
 {
-id: "hyundai",
 brand: "Hyundai",
-logoLight: "images/brands/hyundai.png",
-logoDark: "images/brands/hyundai-white.png",
+logo: "images/brands/hyundai.png",
+logoDriveLink: "https://drive.google.com/",
 fontName: "Hyundai Sans Head / Arial",
 fontStack: '"Hyundai Sans Head", "Arial", sans-serif',
-notes: "Utilize warm Sand tints (#F6F3F2 / #E4DCD3) for neutral section backgrounds.",
-colors: [
-{ role: "Primary", name: "Hyundai Blue", hex: "#002C5F" },
-{ role: "Secondary", name: "Hyundai Light Sand", hex: "#F6F3F2" },
-{ role: "Alternate", name: "Hyundai Sand", hex: "#E4DCD3" }
-]
+fontDownloadLink: "https://drive.google.com/",
+bgColor: "#FFFFFF",
+primaryHex: "#002C5F", primaryName: "Hyundai Blue",
+secondaryHex: "#F6F3F2", secondaryName: "Hyundai Light Sand",
+altHex: "#E4DCD3", altName: "Hyundai Sand"
 },
 {
-id: "infiniti",
 brand: "INFINITI",
-logoLight: "images/brands/infiniti.png",
-logoDark: "images/brands/infiniti-white.png",
+logo: "images/brands/infiniti.png",
+logoDriveLink: "https://drive.google.com/",
 fontName: "INFINITI Brand Font / Century Gothic",
 fontStack: '"Century Gothic", AppleGothic, sans-serif',
-notes: "INFINITI Gold (#B0A591) provides secondary borders and accent highlights.",
-colors: [
-{ role: "Primary", name: "INFINITI Blue", hex: "#020B24" },
-{ role: "Secondary", name: "INFINITI Gold", hex: "#B0A591" },
-{ role: "Alternate", name: "INFINITI Gold 20%", hex: "#EFEDE9" }
-]
+fontDownloadLink: "https://drive.google.com/",
+bgColor: "#FFFFFF",
+primaryHex: "#020B24", primaryName: "INFINITI Blue",
+secondaryHex: "#B0A591", secondaryName: "INFINITI Gold",
+altHex: "#EFEDE9", altName: "INFINITI Gold 20%"
 },
 {
-id: "kia",
 brand: "Kia",
-logoLight: "images/brands/kia.png",
-logoDark: "images/brands/kia-white.png",
+logo: "images/brands/kia.png",
+logoDriveLink: "https://drive.google.com/",
 fontName: "Kia Signature / Trebuchet MS",
 fontStack: '"Kia Signature", "Trebuchet MS", Arial, sans-serif',
-notes: "Maintain clean monochrome contrasts with Kia Midnight Black (#05141F).",
-colors: [
-{ role: "Primary", name: "Kia Midnight Black", hex: "#05141F" },
-{ role: "Secondary", name: "Light Grey", hex: "#C7C8CA" },
-{ role: "Alternate", name: "Medium Grey", hex: "#939598" }
-]
+fontDownloadLink: "https://drive.google.com/",
+bgColor: "#FFFFFF",
+primaryHex: "#05141F", primaryName: "Kia Midnight Black",
+secondaryHex: "#C7C8CA", secondaryName: "Light Grey",
+altHex: "#939598", altName: "Medium Grey"
 },
 {
-id: "lexus",
 brand: "Lexus",
-logoLight: "images/brands/lexus.png",
-logoDark: "images/brands/lexus-white.png",
+logo: "images/brands/lexus.png",
+logoDriveLink: "https://drive.google.com/",
 fontName: "Nobel / Century Gothic",
 fontStack: '"Nobel", "Century Gothic", Arial, sans-serif',
-notes: "Lexus Platinum (#B9C0C2) serves as subtle separator lines and neutral accents.",
-colors: [
-{ role: "Primary", name: "Black", hex: "#000000" },
-{ role: "Secondary", name: "Platinum", hex: "#B9C0C2" },
-{ role: "Alternate", name: "White", hex: "#FFFFFF" }
-]
+fontDownloadLink: "https://drive.google.com/",
+bgColor: "#FFFFFF",
+primaryHex: "#000000", primaryName: "Black",
+secondaryHex: "#B9C0C2", secondaryName: "Platinum",
+altHex: "#FFFFFF", altName: "White"
 },
 {
-id: "mazda",
 brand: "Mazda",
-logoLight: "images/brands/mazda.png",
-logoDark: "images/brands/mazda-white.png",
+logo: "images/brands/mazda.png",
+logoDriveLink: "https://drive.google.com/",
 fontName: "Mazda Type / Arial",
 fontStack: '"Mazda Type", "Helvetica Neue", Arial, sans-serif',
-notes: "Minimalist black and light grey aesthetic with generous whitespace.",
-colors: [
-{ role: "Primary", name: "Black", hex: "#000000" },
-{ role: "Secondary", name: "White", hex: "#FFFFFF" },
-{ role: "Alternate", name: "Light Grey", hex: "#F5F5F5" }
-]
+fontDownloadLink: "https://drive.google.com/",
+bgColor: "#FFFFFF",
+primaryHex: "#000000", primaryName: "Black",
+secondaryHex: "#FFFFFF", secondaryName: "White",
+altHex: "#F5F5F5", altName: "Light Grey"
 },
 {
-id: "mercedes",
 brand: "Mercedes",
-logoLight: "images/brands/mercedes.png",
-logoDark: "images/brands/mercedes-white.png",
+logo: "images/brands/mercedes.png",
+logoDriveLink: "https://drive.google.com/",
 fontName: "Daimler CS / Corporate A",
 fontStack: '"Daimler CS", Georgia, serif',
-notes: "Pure Blue (#00ADEF) is strictly reserved for CTAs and callouts only. Never use as full-width backgrounds.",
-colors: [
-{ role: "Primary", name: "Black", hex: "#000000" },
-{ role: "Secondary", name: "Pure Blue (CTAs Only)", hex: "#00ADEF" },
-{ role: "Alternate", name: "Arrowsilver (Light Grey)", hex: "#0D0D0D" }
-]
+fontDownloadLink: "https://drive.google.com/",
+bgColor: "#FFFFFF",
+primaryHex: "#000000", primaryName: "Black",
+secondaryHex: "#00ADEF", secondaryName: "Pure Blue (CTAs Only)",
+altHex: "#0D0D0D", altName: "Arrowsilver"
 },
 {
-id: "mini",
 brand: "MINI",
-logoLight: "images/brands/mini.png",
-logoDark: "images/brands/mini-white.png",
-fontName: "MINI Serif / Arial Bold",
+logo: "images/brands/mini.png",
+logoDriveLink: "https://drive.google.com/",
+fontName: "MINI Serif / Arial",
 fontStack: '"MINI Serif", Georgia, serif',
-notes: "Bold black backgrounds paired with energetic MINI Blue (#1584B2) buttons.",
-colors: [
-{ role: "Primary", name: "Black", hex: "#000000" },
-{ role: "Secondary", name: "Blue", hex: "#1584B2" },
-{ role: "Alternate", name: "White", hex: "#FFFFFF" }
-]
+fontDownloadLink: "https://drive.google.com/",
+bgColor: "#FFFFFF",
+primaryHex: "#000000", primaryName: "Black",
+secondaryHex: "#1584B2", secondaryName: "Blue",
+altHex: "#FFFFFF", altName: "White"
 },
 {
-id: "mitsubishi",
 brand: "Mitsubishi",
-logoLight: "images/brands/mitsubishi.png",
-logoDark: "images/brands/mitsubishi-white.png",
+logo: "images/brands/mitsubishi.png",
+logoDriveLink: "https://drive.google.com/",
 fontName: "MMC Modern / Arial",
 fontStack: '"MMC Modern", "Helvetica Neue", Arial, sans-serif',
-notes: "Mitsubishi Red (#ED0000) drives all direct conversion elements and promo badges.",
-colors: [
-{ role: "Primary", name: "Black", hex: "#000000" },
-{ role: "Secondary", name: "Mitsubishi Red", hex: "#ED0000" },
-{ role: "Alternate", name: "Concrete Grey", hex: "#E3E5E6" }
-]
+fontDownloadLink: "https://drive.google.com/",
+bgColor: "#FFFFFF",
+primaryHex: "#000000", primaryName: "Black",
+secondaryHex: "#ED0000", secondaryName: "Mitsubishi Red",
+altHex: "#E3E5E6", altName: "Concrete Grey"
 },
 {
-id: "nissan",
 brand: "Nissan",
-logoLight: "images/brands/nissan.png",
-logoDark: "images/brands/nissan-white.png",
-fontName: "Nissan Brand / Arial Bold",
+logo: "images/brands/nissan.png",
+logoDriveLink: "https://drive.google.com/",
+fontName: "Nissan Brand / Arial",
 fontStack: '"Nissan Brand", "Helvetica Neue", Arial, sans-serif',
-notes: "High-contrast palette centered around bold Nissan Red (#C3002F) accents.",
-colors: [
-{ role: "Primary", name: "Nissan Red", hex: "#C3002F" },
-{ role: "Secondary", name: "Black", hex: "#000000" },
-{ role: "Alternate", name: "Light Grey", hex: "#EFEFEF" }
-]
+fontDownloadLink: "https://drive.google.com/",
+bgColor: "#FFFFFF",
+primaryHex: "#C3002F", primaryName: "Nissan Red",
+secondaryHex: "#000000", secondaryName: "Black",
+altHex: "#EFEFEF", altName: "Light Grey"
 },
 {
-id: "subaru",
 brand: "Subaru",
-logoLight: "images/brands/subaru.png",
-logoDark: "images/brands/subaru-white.png",
+logo: "images/brands/subaru.png",
+logoDriveLink: "https://drive.google.com/",
 fontName: "Subaru Sans / Arial",
 fontStack: '"Subaru Sans", "Helvetica Neue", Arial, sans-serif',
-notes: "Subaru Blue (#002290) and Bright Blue (#00A0DC) create primary depth.",
-colors: [
-{ role: "Primary", name: "Subaru Blue", hex: "#002290" },
-{ role: "Secondary", name: "Bright Blue", hex: "#00A0DC" },
-{ role: "Alternate", name: "Silver", hex: "#DDE2E6" }
-]
+fontDownloadLink: "https://drive.google.com/",
+bgColor: "#FFFFFF",
+primaryHex: "#002290", primaryName: "Subaru Blue",
+secondaryHex: "#00A0DC", secondaryName: "Bright Blue",
+altHex: "#DDE2E6", altName: "Silver"
 },
 {
-id: "toyota",
 brand: "Toyota",
-logoLight: "images/brands/toyota.png",
-logoDark: "images/brands/toyota-white.png",
+logo: "images/brands/toyota.png",
+logoDriveLink: "https://drive.google.com/",
 fontName: "Toyota Type / Helvetica",
 fontStack: '"Toyota Type", "Helvetica Neue", Arial, sans-serif',
-notes: "Toyota Red (#EB0A1E) commands key actions; balance with cool neutral greys.",
-colors: [
-{ role: "Primary", name: "Toyota Red", hex: "#EB0A1E" },
-{ role: "Secondary", name: "Light Grey", hex: "#DFE5EA" },
-{ role: "Alternate", name: "Dark Grey", hex: "#939598" }
-]
+fontDownloadLink: "https://drive.google.com/",
+bgColor: "#FFFFFF",
+primaryHex: "#EB0A1E", primaryName: "Toyota Red",
+secondaryHex: "#DFE5EA", secondaryName: "Light Grey",
+altHex: "#939598", altName: "Dark Grey"
 },
 {
-id: "volkswagen",
 brand: "Volkswagen",
-logoLight: "images/brands/volkswagen.png",
-logoDark: "images/brands/volkswagen-white.png",
+logo: "images/brands/volkswagen.png",
+logoDriveLink: "https://drive.google.com/",
 fontName: "VW Head / Arial",
 fontStack: '"VW Head", "Helvetica Neue", Arial, sans-serif',
-notes: "VW Dark Blue (#001E50) serves as primary anchor alongside clean Tin Grey tones.",
-colors: [
-{ role: "Primary", name: "VW Dark Blue", hex: "#001E50" },
-{ role: "Secondary", name: "VW Light Grey", hex: "#DFE4E8" },
-{ role: "Alternate", name: "VW Tin Grey", hex: "#C2CACF" }
-]
+fontDownloadLink: "https://drive.google.com/",
+bgColor: "#FFFFFF",
+primaryHex: "#001E50", primaryName: "VW Dark Blue",
+secondaryHex: "#DFE4E8", secondaryName: "VW Light Grey",
+altHex: "#C2CACF", altName: "VW Tin Grey"
 }
 ];
 
-let currentBrand = BRAND_DATA[0];
+let activeBrand = BRAND_DATA[0];
 
-function showToast(message) {
+function showToast(msg) {
 const toast = document.getElementById('brand-toast');
-toast.innerText = message;
+toast.innerText = msg;
 toast.classList.add('show');
-setTimeout(() => toast.classList.remove('show'), 1500);
+setTimeout(() => toast.classList.remove('show'), 1400);
 }
 
-function copyText(val, btn) {
+function copyVal(val) {
 navigator.clipboard.writeText(val).then(() => {
-const orig = btn.innerText;
-btn.innerText = 'Copied!';
-btn.classList.add('copied');
-showToast(`Copied: "${val}"`);
-setTimeout(() => {
-btn.innerText = orig;
-btn.classList.remove('copied');
-}, 1200);
+showToast('Copied: ' + val);
 });
 }
 
-function copyLogoPath(variant, btn) {
-const path = variant === 'light' ? currentBrand.logoLight : currentBrand.logoDark;
-copyText(path, btn);
+function copySnippet(type) {
+const pColor = activeBrand.primaryHex;
+let html = '';
+if (type === 'primary') {
+html = `<a href="#" class="button btn-primary" style="background-color: ${pColor}; color: #ffffff; padding: 10px 22px; border-radius: 4px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">View Inventory <i class="fa fa-angle-right"></i></a>`;
+} else {
+html = `<a href="#" class="button btn-secondary" style="background: transparent; color: ${pColor}; border: 2px solid ${pColor}; padding: 8px 20px; border-radius: 4px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">Contact Us</a>`;
 }
-
-function copyLogoTag(variant, btn) {
-const path = variant === 'light' ? currentBrand.logoLight : currentBrand.logoDark;
-const tag = `<img src="${path}" alt="${currentBrand.brand} Logo">`;
-copyText(tag, btn);
-}
-
-function copyActiveFontFamily(btn) {
-copyText(`font-family: ${currentBrand.fontStack};`, btn);
-}
-
-function copyBrandVariables(btn) {
-const css = `:root {\n  --color-primary: ${currentBrand.colors[0].hex};\n  --color-secondary: ${currentBrand.colors[1].hex};\n  --color-accent: ${currentBrand.colors[2].hex};\n  --font-family-base: ${currentBrand.fontStack};\n}`;
-copyText(css, btn);
-}
-
-function filterBrands() {
-const query = document.getElementById('brand-search').value.toLowerCase().trim();
-const pills = document.querySelectorAll('.brand-pill');
-
-pills.forEach(pill => {
-const name = pill.innerText.toLowerCase();
-pill.style.display = (!query || name.includes(query)) ? 'inline-block' : 'none';
-});
+copyVal(html);
 }
 
 function renderActiveBrand(brand) {
-currentBrand = brand;
+activeBrand = brand;
 
-document.getElementById('active-brand-heading').innerText = brand.brand;
+document.getElementById('active-brand-title').innerText = brand.brand;
+document.getElementById('active-brand-bg-badge').innerText = `Default BG: ${brand.bgColor}`;
 
-// Update Logos
-const lightImg = document.getElementById('logo-light-img');
-lightImg.src = brand.logoLight;
-lightImg.alt = `${brand.brand} Light Logo`;
-document.getElementById('logo-light-path').innerText = brand.logoLight;
+// 1. Logo
+document.getElementById('active-logo-img').src = brand.logo;
+document.getElementById('active-logo-ext').href = brand.logoDriveLink;
 
-const darkImg = document.getElementById('logo-dark-img');
-darkImg.src = brand.logoDark;
-darkImg.alt = `${brand.brand} Dark Logo`;
-document.getElementById('logo-dark-path').innerText = brand.logoDark;
+// 2. Typography
+document.getElementById('active-font-name').innerText = brand.fontName;
+document.getElementById('active-font-stack').innerText = brand.fontStack;
+document.getElementById('active-font-ext').href = brand.fontDownloadLink;
 
-// Update Live UI Parity Components
-const primaryHex = brand.colors[0].hex;
-const secondaryHex = brand.colors[1].hex;
+// 3. Swatches
+const sPrimary = document.getElementById('swatch-primary');
+const sSecondary = document.getElementById('swatch-secondary');
+const sAlt = document.getElementById('swatch-alt');
 
-const pBtn = document.getElementById('preview-primary-btn');
-pBtn.style.backgroundColor = primaryHex;
+sPrimary.style.backgroundColor = brand.primaryHex;
+sPrimary.onclick = () => copyVal(brand.primaryHex);
 
-const sBtn = document.getElementById('preview-secondary-btn');
-sBtn.style.borderColor = primaryHex;
-sBtn.style.color = primaryHex;
+sSecondary.style.backgroundColor = brand.secondaryHex;
+sSecondary.onclick = () => copyVal(brand.secondaryHex);
 
-const badge = document.getElementById('preview-badge');
-badge.style.backgroundColor = secondaryHex;
-const isSecLight = secondaryHex.toUpperCase() === '#FFFFFF' || secondaryHex.toUpperCase() === '#F4F4F4' || secondaryHex.toUpperCase() === '#F7F7F7';
-badge.style.color = isSecLight ? '#0f172a' : '#0f172a';
-if (isSecLight) {
-badge.style.border = '1px solid #cbd5e1';
-} else {
-badge.style.border = 'none';
-}
+sAlt.style.backgroundColor = brand.altHex;
+sAlt.onclick = () => copyVal(brand.altHex);
 
-// Update Typography section
-document.getElementById('active-brand-font-name').innerText = brand.fontName;
-document.getElementById('active-brand-font-stack').innerText = `font-family: ${brand.fontStack}`;
-const sample = document.getElementById('active-brand-font-sample');
-sample.style.fontFamily = brand.fontStack;
-
-// Update Notes
-document.getElementById('notes-text').innerText = brand.notes || "Follow brand standard guidelines for web contrast and spacing.";
-
-// Update Colors section
-const swatchGrid = document.getElementById('active-brand-swatches');
-swatchGrid.innerHTML = brand.colors.map(col => {
-const isWhite = col.hex.toUpperCase() === '#FFFFFF' || col.hex.toUpperCase() === '#F4F4F4' || col.hex.toUpperCase() === '#F7F7F7';
-const borderStyle = isWhite ? 'border: 1px solid #e2e8f0;' : '';
-
-return `
-<div class="color-swatch-item">
-<div class="color-tile" style="background-color: ${col.hex}; ${borderStyle}" onclick="copyText('${col.hex}', this)"></div>
-<div class="color-details">
-<span class="color-role">${col.role} Colour</span>
-<h4 class="color-name">${col.name}</h4>
-<div class="color-hex-row">
-<span class="color-hex-label">${col.hex}</span>
-<button type="button" class="btn-copy" onclick="copyText('${col.hex}', this)">Copy Hex</button>
+// Color Meta List
+const meta = document.getElementById('color-meta-list');
+meta.innerHTML = `
+<div class="color-meta-item">
+<span><strong>Primary:</strong> ${brand.primaryName}</span>
+<span style="font-family: monospace; cursor:pointer;" onclick="copyVal('${brand.primaryHex}')">${brand.primaryHex}</span>
 </div>
+<div class="color-meta-item">
+<span><strong>Secondary:</strong> ${brand.secondaryName}</span>
+<span style="font-family: monospace; cursor:pointer;" onclick="copyVal('${brand.secondaryHex}')">${brand.secondaryHex}</span>
 </div>
+<div class="color-meta-item">
+<span><strong>Accent:</strong> ${brand.altName}</span>
+<span style="font-family: monospace; cursor:pointer;" onclick="copyVal('${brand.altHex}')">${brand.altHex}</span>
 </div>
 `;
-}).join('');
+
+// 4. Buttons Parity
+const pBtn = document.getElementById('btn-preview-primary');
+pBtn.style.backgroundColor = brand.primaryHex;
+pBtn.style.fontFamily = brand.fontStack;
+
+const sBtn = document.getElementById('btn-preview-secondary');
+sBtn.style.borderColor = brand.primaryHex;
+sBtn.style.color = brand.primaryHex;
+sBtn.style.fontFamily = brand.fontStack;
 }
 
-function initPills() {
-const pillList = document.getElementById('brand-pill-list');
-pillList.innerHTML = '';
-
+function init() {
+const list = document.getElementById('brand-pill-list');
 BRAND_DATA.forEach((b, idx) => {
-const pill = document.createElement('button');
-pill.type = 'button';
-pill.className = `brand-pill ${idx === 0 ? 'active' : ''}`;
-pill.innerText = b.brand;
-pill.onclick = function() {
-document.querySelectorAll('.brand-pill').forEach(p => p.classList.remove('active'));
+const btn = document.createElement('button');
+btn.className = `brand-pill ${idx === 0 ? 'active' : ''}`;
+btn.innerText = b.brand;
+btn.onclick = function() {
+document.querySelectorAll('.brand-pill').forEach(el => el.classList.remove('active'));
 this.classList.add('active');
 renderActiveBrand(b);
 };
-pillList.appendChild(pill);
+list.appendChild(btn);
 });
 
 renderActiveBrand(BRAND_DATA[0]);
 }
 
-document.addEventListener('DOMContentLoaded', initPills);
+document.addEventListener('DOMContentLoaded', init);
 </script>
 </body>
 </html>
