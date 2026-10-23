@@ -13,6 +13,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.SYNC_PAT }}
+          fetch-depth: 0
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
@@ -36,5 +37,6 @@ jobs:
             echo "No new assets found. Repository clean."
           else
             git commit -m "chore(assets): sync latest brand logos from GCS"
-            git push
+            git pull --rebase origin main
+            git push origin main
           fi
