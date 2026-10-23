@@ -25,7 +25,7 @@ jobs:
       - name: Sync Logos from GCS
         run: |
           mkdir -p hub/brands
-          gcloud storage rsync -r gs://pag-brand-logos/brands/ ./hub/brands/
+          gcloud storage cp -r "gs://pag-brand-logos/brands/*" ./hub/brands/
 
       - name: Commit and Push Changes
         run: |
