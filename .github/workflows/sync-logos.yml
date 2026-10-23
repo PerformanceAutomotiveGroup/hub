@@ -5,15 +5,14 @@ on:
     - cron: '0 6 * * *'
   workflow_dispatch:
 
-permissions:
-  contents: write
-
 jobs:
   sync-assets:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
+      - name: Checkout Repository with PAT
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.SYNC_PAT }}
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
@@ -34,7 +33,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add hub/brands/
           if git diff --staged --quiet; then
-            echo "No changes found. Assets up to date."
+            echo "No new assets found. Repository clean."
           else
             git commit -m "chore(assets): sync latest brand logos from GCS"
             git push
