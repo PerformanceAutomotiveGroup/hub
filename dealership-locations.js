@@ -65,7 +65,7 @@ panel.classList.toggle('open');
 
 // Bootstrap Directory Application
 async function initDealerDirectory() {
-const res = await fetch('https://performanceautomotivegroup.github.io/hub/dealerships.json');
+const res = await fetch('https://performanceautomotivegroup.github.io/hub/dealership-locations.json');
 locations = await res.json();
 
 try {
