@@ -1,129 +1,439 @@
-let map;
-let directionsService;
-let directionsRenderer;
-let markers = [];
+const DEALERSHIPS_DATA_URL = 'https://performanceautomotivegroup.github.io/hub/dealership-locations.json';
+
+// Brand logos lookup map
+const BRAND_LOGOS = {
+"Acura": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Acura-1.png",
+"Audi": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Audi.png",
+"BMW": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/BMW.png",
+"Chrysler": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Chrysler-1.png",
+"Dodge": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Dodge.png",
+"Fiat": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/03-logo-06-fiat.png",
+"Ford": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Ford.png",
+"Genesis": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Genesis.png",
+"Honda": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Honda.png",
+"Hyundai": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/02-logo-10-hyundai.png",
+"INFINITI": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2023/06/INFINITI-Brampton.png",
+"Jeep": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Jeep.png",
+"Kia": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/KIA-175_175.png",
+"Lexus": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Lexus.png",
+"MINI": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/MINI.png",
+"Mazda": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/LOGO-15.png",
+"Mercedes-Benz": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Mercedes-Benz.png",
+"Mercedez-Benz": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Mercedes-Benz.png",
+"Mitsubishi": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Mitsbusihi.png",
+"Nissan": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Nissan.png",
+"RAM": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/RAM.png",
+"Subaru": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/logo-21-subaru.png",
+"Toyota": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/02-logo-22-toyota.png",
+"Volkswagen": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Volkswagen.png",
+"AutoPlanet": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2020/11/Auto-Planet-Direct-Locations.png",
+"Performance Collision": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/12/PERF-COLLISION-HORZ-RGB.png"
+};
+
 let locations = [];
-let activeFacilityType = 'all'; 
-let selectedCity = '';         
-let searchTerm = '';
-let activeCardIndex = null;
-let selectedBrand = '';
+let markers = [];
+let map = null;
+let activeInfoWindow = null;
 let userCoords = null;
+let currentFacilityType = 'all';
+let directionsService = null;
+let directionsRenderer = null;
 
-// PAG OEM Brands & Official Logos
-const brandLogos = [
-{ name: "Acura", logo: "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Acura-1.png" },
-{ name: "Audi", logo: "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Audi.png" },
-{ name: "BMW", logo: "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/BMW.png" },
-{ name: "Chrysler", logo: "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Chrysler-1.png" },
-{ name: "Dodge", logo: "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Dodge.png" },
-{ name: "Ford", logo: "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Ford.png" },
-{ name: "Genesis", logo: "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Genesis.png" },
-{ name: "Honda", logo: "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Honda.png" },
-{ name: "Hyundai", logo: "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/02-logo-10-hyundai.png" },
-{ name: "INFINITI", logo: "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2023/06/INFINITI-Brampton.png" },
-{ name: "Jeep", logo: "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Jeep.png" },
-{ name: "Kia", logo: "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/KIA-175_175.png" },
-{ name: "Lexus", logo: "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Lexus.png" },
-{ name: "MINI", logo: "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/MINI.png" },
-{ name: "Mazda", logo: "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/LOGO-15.png" },
-{ name: "Mercedes-Benz", logo: "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Mercedes-Benz.png" },
-{ name: "Mitsubishi", logo: "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Mitsbusihi.png" },
-{ name: "Nissan", logo: "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Nissan.png" },
-{ name: "RAM", logo: "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/RAM.png" },
-{ name: "Subaru", logo: "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/logo-21-subaru.png" },
-{ name: "Toyota", logo: "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/02-logo-22-toyota.png" },
-{ name: "Volkswagen", logo: "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Volkswagen.png" },
-{ name: "AutoPlanet", logo: "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2020/11/Auto-Planet-Direct-Locations.png" },
-{ name: "Collision", logo: "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/12/PERF-COLLISION-HORZ-RGB.png" }
-];
-
-// Helper: Lookup matching logo URL by brand name
-function getBrandLogoUrl(brandString, isCollision) {
-if (isCollision) {
-return "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/12/PERF-COLLISION-HORZ-RGB.png";
+// Helper to resolve brand logo URL
+function getBrandLogoUrl(brandString) {
+if (!brandString) return '';
+if (brandString.includes('Performance Collision')) {
+return BRAND_LOGOS['Performance Collision'];
 }
-if (!brandString) return "";
-const primaryBrand = brandString.split('/')[0].trim().toLowerCase();
-const match = brandLogos.find(b => b.name.toLowerCase() === primaryBrand || primaryBrand.includes(b.name.toLowerCase()));
-return match ? match.logo : "";
+const primaryBrand = brandString.split('/')[0].trim();
+return BRAND_LOGOS[primaryBrand] || BRAND_LOGOS['AutoPlanet'] || '';
 }
 
-// Toggle Left Sidebar (matches EV Map behavior)
-function toggleSidebar() {
+// Distance calculation (Haversine km)
+function calculateDistance(lat1, lon1, lat2, lon2) {
+const R = 6371;
+const dLat = (lat2 - lat1) * Math.PI / 180;
+const dLon = (lon2 - lon1) * Math.PI / 180;
+const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+Math.sin(dLon / 2) * Math.sin(dLon / 2);
+const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+return (R * c).toFixed(1);
+}
+
+// Global toggle functions
+window.toggleSidebar = function() {
 const sidebar = document.getElementById('dealer-sidebar');
 const icon = document.getElementById('toggle-icon');
+if (!sidebar) return;
 sidebar.classList.toggle('collapsed');
-icon.innerText = sidebar.classList.contains('collapsed') ? '❯' : '❮';
+if (icon) icon.innerText = sidebar.classList.contains('collapsed') ? '❯' : '❮';
+if (map) {
+setTimeout(() => google.maps.event.trigger(map, 'resize'), 320);
 }
+};
 
-// Toggle Floating Brand Flyout Panel
-function toggleBrandFlyout() {
-const panel = document.getElementById('brand-flyout-panel');
-panel.classList.toggle('open');
+window.toggleBrandFlyout = function() {
+const flyout = document.getElementById('brand-flyout-panel');
+if (flyout) flyout.classList.toggle('open');
+};
+
+window.resetAllFilters = function() {
+const searchInput = document.getElementById('dealer-places-search-bar');
+const brandSelect = document.getElementById('brandSelectFilter');
+const citySelect = document.getElementById('citySelectFilter');
+const nearMeBtn = document.getElementById('near-me-btn');
+
+if (searchInput) searchInput.value = '';
+if (brandSelect) brandSelect.value = '';
+if (citySelect) citySelect.value = '';
+if (nearMeBtn) nearMeBtn.classList.remove('active');
+
+currentFacilityType = 'all';
+document.querySelectorAll('.seg-btn').forEach(btn => {
+btn.classList.toggle('active', btn.dataset.type === 'all');
+});
+
+document.querySelectorAll('.brand-logo-tile').forEach(tile => tile.classList.remove('active'));
+
+closeDirections();
+applyFilters();
+
+if (map && markers.length > 0) {
+const bounds = new google.maps.LatLngBounds();
+markers.forEach(m => bounds.extend(m.getPosition()));
+map.fitBounds(bounds);
 }
+};
 
-// Bootstrap Directory Application
-async function initDealerDirectory() {
-const res = await fetch('https://performanceautomotivegroup.github.io/hub/dealership-locations.json');
-locations = await res.json();
-
-try {
-locations = JSON.parse(rawDataEl.textContent);
-} catch (err) {
-console.error("Failed to parse locations manifest JSON", err);
+window.locateUser = function() {
+const btn = document.getElementById('near-me-btn');
+if (!navigator.geolocation) {
+alert("Geolocation is not supported by your browser.");
 return;
 }
 
-// Initialize Google Map Canvas centered over Southern Ontario
-map = new google.maps.Map(document.getElementById("dealer-map-canvas"), {
-center: { lat: 43.68, lng: -79.62 },
-zoom: 9.3,
-mapTypeControl: false,
-streetViewControl: false,
-fullscreenControl: false,
-styles: [
-{ featureType: "poi.business", stylers: [{ visibility: "off" }] },
-{ featureType: "transit", stylers: [{ visibility: "simplified" }] }
-]
+if (btn) btn.innerHTML = '<span>Locating...</span>';
+
+navigator.geolocation.getCurrentPosition(
+(pos) => {
+userCoords = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+if (btn) {
+btn.classList.add('active');
+btn.innerHTML = `
+<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+<path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-7.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/>
+</svg>
+<span>Near Me ✓</span>`;
+}
+
+// Compute distances
+locations.forEach(loc => {
+loc.distance = parseFloat(calculateDistance(userCoords.lat, userCoords.lng, loc.lat, loc.lng));
 });
 
+// Sort locations ascending by distance
+locations.sort((a, b) => (a.distance || 0) - (b.distance || 0));
+
+applyFilters();
+
+if (map) {
+map.setCenter(userCoords);
+map.setZoom(11);
+}
+},
+(err) => {
+console.warn("Geolocation failed:", err);
+if (btn) {
+btn.innerHTML = '<span>Location off</span>';
+setTimeout(() => {
+btn.innerHTML = `
+<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+<path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-7.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/>
+</svg>
+<span>Near Me</span>`;
+}, 2000);
+}
+}
+);
+};
+
+// Start routing directions panel
+window.calculateRoute = function(destIndex) {
+const loc = locations[destIndex];
+if (!loc) return;
+
+const resultsList = document.getElementById('dealer-results-list');
+const dirPanel = document.getElementById('dealer-directions-panel');
+if (!dirPanel || !resultsList) return;
+
+resultsList.style.display = 'none';
+dirPanel.style.display = 'block';
+
+dirPanel.innerHTML = `
+<div class="route-actions-group">
+<a class="gmaps-launch-btn" href="${loc.googleMapsUrl || `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(loc.address)}`}" target="_blank" rel="noopener">
+<span>Open Turn-by-Turn in Google Maps</span> ↗
+</a>
+<button type="button" class="exit-directions-btn" onclick="closeDirections()">← Back to Directory List</button>
+</div>
+<div id="dir-steps-container" style="font-size:13px; color:#444;">Calculating best route...</div>
+`;
+
+const destLatLng = { lat: loc.lat, lng: loc.lng };
+
+if (userCoords) {
+runDirections(userCoords, destLatLng);
+} else if (navigator.geolocation) {
+navigator.geolocation.getCurrentPosition(
+(pos) => {
+userCoords = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+runDirections(userCoords, destLatLng);
+},
+() => {
+document.getElementById('dir-steps-container').innerHTML = `
+<p style="color:#666;">Please allow location access, or click the button above to navigate directly on Google Maps.</p>
+`;
+}
+);
+}
+};
+
+function runDirections(origin, destination) {
+if (!directionsService || !directionsRenderer) {
 directionsService = new google.maps.DirectionsService();
 directionsRenderer = new google.maps.DirectionsRenderer({
 map: map,
-panel: document.getElementById('dealer-directions-panel'),
-suppressMarkers: false
+panel: document.getElementById('dir-steps-container')
 });
-
-populateFilterDropdowns();
-updateFacetCounts();
-buildMarkers();
-buildBrandFlyout();
-renderCardsList();
-setupEventListeners();
+} else {
+directionsRenderer.setMap(map);
+directionsRenderer.setPanel(document.getElementById('dir-steps-container'));
 }
 
-// Populate dynamic Brand & City dropdown options based on active locations
-function populateFilterDropdowns() {
+directionsService.route({
+origin: origin,
+destination: destination,
+travelMode: google.maps.TravelMode.DRIVING
+}, (response, status) => {
+if (status === 'OK') {
+directionsRenderer.setDirections(response);
+} else {
+const container = document.getElementById('dir-steps-container');
+if (container) container.innerHTML = `<p style="color:#d9534f;">Unable to calculate route: ${status}</p>`;
+}
+});
+}
+
+window.closeDirections = function() {
+const resultsList = document.getElementById('dealer-results-list');
+const dirPanel = document.getElementById('dealer-directions-panel');
+if (dirPanel) dirPanel.style.display = 'none';
+if (resultsList) resultsList.style.display = 'block';
+
+if (directionsRenderer) {
+directionsRenderer.setMap(null);
+directionsRenderer.setPanel(null);
+}
+};
+
+// Filter & Card Render Loop
+function applyFilters() {
+const query = (document.getElementById('dealer-places-search-bar')?.value || '').toLowerCase().trim();
+const brandVal = (document.getElementById('brandSelectFilter')?.value || '').toLowerCase().trim();
+const cityVal = (document.getElementById('citySelectFilter')?.value || '').toLowerCase().trim();
+
+let visibleCount = 0;
+const bounds = new google.maps.LatLngBounds();
+
+locations.forEach((loc, index) => {
+const isCollision = loc.brand === "Performance Collision";
+
+// 1. Facility Type Segment
+let passType = true;
+if (currentFacilityType === 'dealerships' && isCollision) passType = false;
+if (currentFacilityType === 'collision' && !isCollision) passType = false;
+
+// 2. Dual Dropdowns
+let passBrand = true;
+if (brandVal) {
+const bList = (loc.brand || '').toLowerCase().split('/').map(b => b.trim());
+passBrand = bList.includes(brandVal);
+}
+
+let passCity = true;
+if (cityVal && (loc.city || '').toLowerCase().trim() !== cityVal) {
+passCity = false;
+}
+
+// 3. Search Bar query
+let passQuery = true;
+if (query) {
+const searchTarget = `${loc.name} ${loc.address} ${loc.city} ${loc.brand}`.toLowerCase();
+passQuery = searchTarget.includes(query);
+}
+
+const isVisible = passType && passBrand && passCity && passQuery;
+const cardEl = document.getElementById(`dealer-card-${index}`);
+
+if (cardEl) {
+cardEl.style.display = isVisible ? 'block' : 'none';
+}
+
+if (markers[index]) {
+markers[index].setVisible(isVisible);
+if (isVisible) {
+bounds.extend(markers[index].getPosition());
+visibleCount++;
+}
+}
+});
+
+const countBadge = document.getElementById('visible-dealers-count');
+if (countBadge) countBadge.innerText = visibleCount;
+
+// Fit bounds if search narrowed
+if (map && visibleCount > 0 && (query || brandVal || cityVal || currentFacilityType !== 'all')) {
+map.fitBounds(bounds);
+if (visibleCount === 1) map.setZoom(14);
+}
+}
+
+// Build cards & markers
+function renderDealerListAndMarkers() {
+const listContainer = document.getElementById('dealer-results-list');
+if (!listContainer) return;
+listContainer.innerHTML = '';
+
+// Clear existing markers
+markers.forEach(m => m.setMap(null));
+markers = [];
+
+const bounds = new google.maps.LatLngBounds();
+
+locations.forEach((loc, index) => {
+// 1. Build Card
+const isCollision = loc.brand === "Performance Collision";
+const brandLogoUrl = getBrandLogoUrl(loc.brand);
+
+const card = document.createElement('div');
+card.className = 'dealer-location-card';
+card.id = `dealer-card-${index}`;
+
+card.innerHTML = `
+<div class="card-top-header">
+<h5>${loc.name}</h5>
+<div class="dealer-brand-logo-badge" title="${loc.brand}">
+${brandLogoUrl ? `<img src="${brandLogoUrl}" alt="${loc.brand}" loading="lazy">` : ''}
+</div>
+</div>
+<div class="card-address-txt">${loc.address}</div>
+<div class="card-contact-row">
+<span>${loc.phone ? `<a href="tel:${loc.phone.replace(/[^0-9]/g, '')}">${loc.phone}</a>` : ''}</span>
+${loc.distance !== undefined ? `<span class="dealer-dist-tag">${loc.distance} km</span>` : ''}
+</div>
+
+<!-- Quick Services -->
+${loc.services && loc.services.length > 0 ? `
+<div class="card-service-tags">
+${loc.services.map(s => `
+<a href="${s.link}" target="_blank" rel="noopener" class="card-service-pill">${s.name}</a>
+`).join('')}
+</div>
+` : ''}
+
+<!-- Actions Grid -->
+<div class="card-actions-grid">
+<a href="${loc.website}" target="_blank" rel="noopener" class="card-btn btn-card-primary">Website ↗</a>
+<button type="button" class="card-btn btn-card-secondary" onclick="calculateRoute(${index})">Directions</button>
+</div>
+`;
+
+// Click card to center on map
+card.addEventListener('click', (e) => {
+if (e.target.tagName.toLowerCase() === 'a' || e.target.tagName.toLowerCase() === 'button') return;
+selectDealership(index);
+});
+
+listContainer.appendChild(card);
+
+// 2. Build Map Marker
+const marker = new google.maps.Marker({
+position: { lat: loc.lat, lng: loc.lng },
+map: map,
+title: loc.name,
+icon: {
+path: google.maps.SymbolPath.CIRCLE,
+scale: isCollision ? 7.5 : 8.5,
+fillColor: isCollision ? '#E21F2F' : '#0668B3',
+fillOpacity: 1,
+strokeColor: '#FFFFFF',
+strokeWeight: 2
+}
+});
+
+marker.addListener('click', () => {
+selectDealership(index);
+});
+
+markers.push(marker);
+bounds.extend(marker.getPosition());
+});
+
+if (map && markers.length > 0) {
+map.fitBounds(bounds);
+}
+}
+
+function selectDealership(index) {
+const loc = locations[index];
+const marker = markers[index];
+if (!loc || !marker) return;
+
+// Highlight card
+document.querySelectorAll('.dealer-location-card').forEach(c => c.classList.remove('active-selected'));
+const activeCard = document.getElementById(`dealer-card-${index}`);
+if (activeCard) {
+activeCard.classList.add('active-selected');
+activeCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// InfoWindow popup
+if (activeInfoWindow) activeInfoWindow.close();
+
+activeInfoWindow = new google.maps.InfoWindow({
+content: `
+<div class="dealer-info-bubble">
+<h4>${loc.name}</h4>
+<p>${loc.address}<br><strong>${loc.phone || ''}</strong></p>
+<a href="${loc.website}" target="_blank" rel="noopener" class="dealer-bubble-btn">Visit Website</a>
+</div>
+`
+});
+
+activeInfoWindow.open(map, marker);
+map.panTo(marker.getPosition());
+map.setZoom(14);
+}
+
+// Populate Brand & City Dropdowns + Floating Flyout
+function populateFilterControls() {
 const brandSelect = document.getElementById('brandSelectFilter');
 const citySelect = document.getElementById('citySelectFilter');
-if (!brandSelect || !citySelect) return;
+const brandFlyoutContainer = document.getElementById('brand-logos-container');
 
 const brandSet = new Set();
 const citySet = new Set();
 
 locations.forEach(loc => {
-if (loc.isCollision) {
-brandSet.add("Performance Collision");
-} else if (loc.brand) {
+if (loc.city) citySet.add(loc.city.trim());
+if (loc.brand) {
 loc.brand.split('/').forEach(b => brandSet.add(b.trim()));
-}
-if (loc.city) {
-citySet.add(loc.city.trim());
 }
 });
 
-// Populate Brands
+// 1. Populate Brand Select
+if (brandSelect) {
 brandSelect.innerHTML = '<option value="">All Brands</option>';
 Array.from(brandSet).sort().forEach(brand => {
 const opt = document.createElement('option');
@@ -131,8 +441,18 @@ opt.value = brand;
 opt.textContent = brand;
 brandSelect.appendChild(opt);
 });
+brandSelect.addEventListener('change', () => {
+applyFilters();
+// Sync flyout active tile
+const selVal = brandSelect.value.toLowerCase();
+document.querySelectorAll('.brand-logo-tile').forEach(tile => {
+tile.classList.toggle('active', tile.dataset.brand.toLowerCase() === selVal);
+});
+});
+}
 
-// Populate Cities
+// 2. Populate City Select
+if (citySelect) {
 citySelect.innerHTML = '<option value="">All Cities</option>';
 Array.from(citySet).sort().forEach(city => {
 const opt = document.createElement('option');
@@ -140,450 +460,129 @@ opt.value = city;
 opt.textContent = city;
 citySelect.appendChild(opt);
 });
+citySelect.addEventListener('change', applyFilters);
 }
 
-// Calculate Haversine distance in KM
-function computeDistanceKm(lat1, lon1, lat2, lon2) {
-const R = 6371;
-const dLat = (lat2 - lat1) * Math.PI / 180;
-const dLon = (lon2 - lon1) * Math.PI / 180;
-const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-Math.sin(dLon/2) * Math.sin(dLon/2);
-const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-return (R * c).toFixed(1);
-}
+// 3. Populate Floating Brand Flyout Modal
+if (brandFlyoutContainer) {
+brandFlyoutContainer.innerHTML = '';
+const sortedBrands = Object.keys(BRAND_LOGOS).filter(b => b !== "Mercedez-Benz"); // Deduplicate
 
-// Geolocation trigger ("Near Me")
-function locateUser() {
-const btn = document.getElementById('near-me-btn');
-if (!navigator.geolocation) {
-return;
-}
-btn.innerText = 'Locating...';
-navigator.geolocation.getCurrentPosition(
-(pos) => {
-userCoords = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-btn.classList.add('active');
-btn.innerHTML = `
-<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-<span>Near Me</span>
-`;
-locations.forEach(loc => {
-loc._dist = parseFloat(computeDistanceKm(userCoords.lat, userCoords.lng, loc.lat, loc.lng));
-});
-locations.sort((a, b) => (a._dist || 9999) - (b._dist || 9999));
-buildMarkers();
-renderCardsList();
-map.panTo(userCoords);
-map.setZoom(11);
-},
-() => {
-btn.innerText = 'Near Me';
-},
-{ timeout: 7000 }
-);
-}
-
-// Update Live Facet Counts
-function updateFacetCounts() {
-const totalAll = locations.length;
-const totalCollision = locations.filter(l => l.isCollision).length;
-const totalDealerships = totalAll - totalCollision;
-
-document.getElementById('count-all').innerText = totalAll;
-document.getElementById('count-dealerships').innerText = totalDealerships;
-document.getElementById('count-collision').innerText = totalCollision;
-}
-
-// Build Floating Brand Filter Flyout
-function buildBrandFlyout() {
-const container = document.getElementById('brand-logos-container');
-container.innerHTML = '';
-
-brandLogos.forEach(b => {
+sortedBrands.forEach(brand => {
 const tile = document.createElement('div');
 tile.className = 'brand-logo-tile';
-if (selectedBrand.toLowerCase() === b.name.toLowerCase()) tile.classList.add('active');
-
+tile.dataset.brand = brand;
 tile.innerHTML = `
-<img src="${b.logo}" alt="${b.name}" loading="lazy" onerror="this.style.display='none'">
-<span>${b.name}</span>
+<img src="${BRAND_LOGOS[brand]}" alt="${brand}" loading="lazy">
+<span>${brand}</span>
 `;
 
 tile.addEventListener('click', () => {
-if (selectedBrand.toLowerCase() === b.name.toLowerCase()) {
-clearBrandSelection();
-} else {
-selectedBrand = b.name;
-const brandSelect = document.getElementById('brandSelectFilter');
-if (brandSelect) {
-const matchingOpt = Array.from(brandSelect.options).find(o => o.value.toLowerCase().includes(b.name.toLowerCase()));
-if (matchingOpt) brandSelect.value = matchingOpt.value;
-}
+const isActive = tile.classList.contains('active');
 document.querySelectorAll('.brand-logo-tile').forEach(t => t.classList.remove('active'));
+
+if (!isActive) {
 tile.classList.add('active');
-document.getElementById('brand-selected-badge').innerText = b.name.split(' ')[0];
+if (brandSelect) brandSelect.value = brand;
+} else {
+if (brandSelect) brandSelect.value = '';
+}
+
+applyFilters();
 toggleBrandFlyout();
-renderCardsList();
-}
 });
 
-container.appendChild(tile);
+brandFlyoutContainer.appendChild(tile);
 });
 }
 
-function clearBrandSelection() {
-selectedBrand = '';
-const brandSelect = document.getElementById('brandSelectFilter');
-if (brandSelect) brandSelect.value = '';
-document.querySelectorAll('.brand-logo-tile').forEach(t => t.classList.remove('active'));
-document.getElementById('brand-selected-badge').innerText = '24';
-const panel = document.getElementById('brand-flyout-panel');
-if (panel.classList.contains('open')) toggleBrandFlyout();
-renderCardsList();
+// Update header counts
+const countAll = document.getElementById('count-all');
+const countDealers = document.getElementById('count-dealerships');
+const countCollision = document.getElementById('count-collision');
+
+const collisionCount = locations.filter(l => l.brand === "Performance Collision").length;
+const dealerCount = locations.length - collisionCount;
+
+if (countAll) countAll.innerText = locations.length;
+if (countDealers) countDealers.innerText = dealerCount;
+if (countCollision) countCollision.innerText = collisionCount;
 }
 
-// Construct Custom Google Maps Markers
-function buildMarkers() {
-markers.forEach(m => m.setMap(null));
-markers = [];
-
-locations.forEach((loc, idx) => {
-const pinSvg = loc.isCollision 
-? `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
-<svg xmlns="http://www.w3.org/2000/svg" width="34" height="42" viewBox="0 0 34 42">
-<path d="M17 0C7.6 0 0 7.6 0 17c0 12.8 17 25 17 25s17-12.2 17-25C34 7.6 26.4 0 17 0z" fill="#E21F2F"/>
-<circle cx="17" cy="15" r="7" fill="#ffffff"/>
-<path d="M14 12l6 6m0-6l-6 6" stroke="#E21F2F" stroke-width="2" stroke-linecap="round"/>
-</svg>`)}`
-: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
-<svg xmlns="http://www.w3.org/2000/svg" width="34" height="42" viewBox="0 0 34 42">
-<path d="M17 0C7.6 0 0 7.6 0 17c0 12.8 17 25 17 25s17-12.2 17-25C34 7.6 26.4 0 17 0z" fill="#0668B3"/>
-<circle cx="17" cy="15" r="7" fill="#ffffff"/>
-<circle cx="17" cy="15" r="4.5" fill="#0668B3"/>
-</svg>`)}`;
-
-const marker = new google.maps.Marker({
-position: { lat: loc.lat, lng: loc.lng },
-map: map,
-title: loc.name,
-icon: {
-url: pinSvg,
-scaledSize: new google.maps.Size(30, 38),
-anchor: new google.maps.Point(15, 38)
-}
-});
-
-const infoWindow = new google.maps.InfoWindow({
-content: `
-<div class="dealer-info-bubble">
-<h4>${loc.name}</h4>
-<p>${loc.address}<br><strong>${loc.phone}</strong></p>
-<div style="display:flex; gap:6px;">
-<a href="${loc.website}" target="_blank" rel="noopener" class="dealer-bubble-btn">Website</a>
-<button type="button" class="dealer-bubble-btn" style="background:#555;" onclick="triggerDirections(${idx})">Route</button>
-</div>
-</div>
-`
-});
-
-marker.addListener('click', () => {
-markers.forEach(m => m.infoWindow?.close());
-infoWindow.open(map, marker);
-marker.infoWindow = infoWindow;
-highlightCard(idx, true);
-});
-
-marker.infoWindow = infoWindow;
-markers.push(marker);
-});
-}
-
-// Filter & Render Sidebar Cards
-function renderCardsList() {
-const listEl = document.getElementById('dealer-results-list');
-listEl.innerHTML = '';
-
-let visibleCount = 0;
-const bounds = new google.maps.LatLngBounds();
-
-locations.forEach((loc, index) => {
-// 1. Facility Type Segment Filter
-let matchesType = true;
-if (activeFacilityType === 'dealerships') matchesType = !loc.isCollision;
-else if (activeFacilityType === 'collision') matchesType = !!loc.isCollision;
-
-// 2. City Dropdown Filter
-let matchesCity = true;
-if (selectedCity) {
-matchesCity = (loc.city || '').toLowerCase().trim() === selectedCity.toLowerCase().trim();
-}
-
-// 3. Brand Filter (synced between dropdown & flyout)
-let matchesBrand = true;
-if (selectedBrand) {
-if (selectedBrand === 'Collision' || selectedBrand === 'Performance Collision') {
-matchesBrand = !!loc.isCollision;
-} else {
-matchesBrand = (loc.brand || '').toLowerCase().includes(selectedBrand.toLowerCase());
-}
-}
-
-// 4. Search Query (name, address, city, brand)
-const query = searchTerm.toLowerCase().trim();
-const matchesSearch = !query || 
-loc.name.toLowerCase().includes(query) ||
-loc.brand.toLowerCase().includes(query) ||
-loc.city.toLowerCase().includes(query) ||
-loc.address.toLowerCase().includes(query);
-
-const isVisible = matchesType && matchesCity && matchesBrand && matchesSearch;
-
-if (markers[index]) {
-markers[index].setMap(isVisible ? map : null);
-if (isVisible) {
-bounds.extend(markers[index].getPosition());
-}
-}
-
-if (!isVisible) return;
-visibleCount++;
-
-// Get matching brand logo URL
-const logoUrl = getBrandLogoUrl(loc.brand, loc.isCollision);
-
-// Build Card Element
-const card = document.createElement('div');
-card.className = `dealer-location-card ${activeCardIndex === index ? 'active-selected' : ''}`;
-card.setAttribute('data-card-idx', index);
-
-card.innerHTML = `
-<div class="card-top-header">
-<div>
-<h5>${loc.name}</h5>
-<div class="card-address-txt">${loc.address}</div>
-</div>
-${logoUrl ? `
-<div class="dealer-brand-logo-badge">
-<img src="${logoUrl}" alt="${loc.brand}" loading="lazy">
-</div>
-` : ''}
-</div>
-
-<div class="card-contact-row">
-<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-<a href="tel:${loc.phone.replace(/[^0-9]/g, '')}">${loc.phone}</a>
-${loc._dist ? `<span class="dealer-dist-tag">${loc._dist} km away</span>` : ''}
-</div>
-
-<!-- Services Quick Links -->
-<div class="card-service-tags">
-${(loc.services || []).map(s => `
-<a href="${s.link}" target="_blank" rel="noopener" class="card-service-pill">${s.name}</a>
-`).join('')}
-</div>
-
-<!-- Action Buttons -->
-<div class="card-actions-grid">
-<a href="${loc.website}" target="_blank" rel="noopener" class="card-btn btn-card-primary">Website</a>
-<button type="button" class="card-btn btn-card-secondary" onclick="triggerDirections(${index})">
-<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
-Directions
-</button>
-</div>
-`;
-
-card.addEventListener('click', (e) => {
-if (e.target.tagName.toLowerCase() === 'a' || e.target.tagName.toLowerCase() === 'button') return;
-highlightCard(index, false);
-});
-
-listEl.appendChild(card);
-});
-
-document.getElementById('visible-dealers-count').innerText = visibleCount;
-
-if (visibleCount === 0) {
-listEl.innerHTML = `
-<div style="padding: 30px 20px; text-align: center; color: #777;">
-<p style="font-size:14px; font-weight:600; margin-bottom:6px;">No locations found</p>
-<p style="font-size:12.5px;">Try clearing filters or selecting another brand or city.</p>
-</div>
-`;
-} else if (searchTerm || activeFacilityType !== 'all' || selectedBrand || selectedCity) {
-map.fitBounds(bounds, { top: 40, right: 40, bottom: 40, left: 40 });
-}
-}
-
-// Highlight Card & Pan Map
-function highlightCard(index, scrollCard = true) {
-activeCardIndex = index;
-const target = locations[index];
-if (!target) return;
-
-document.querySelectorAll('.dealer-location-card').forEach(c => c.classList.remove('active-selected'));
-const activeCard = document.querySelector(`.dealer-location-card[data-card-idx="${index}"]`);
-if (activeCard) {
-activeCard.classList.add('active-selected');
-if (scrollCard) {
-activeCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-}
-}
-
-map.panTo({ lat: target.lat, lng: target.lng });
-map.setZoom(13.5);
-
-if (markers[index]) {
-markers.forEach(m => m.infoWindow?.close());
-markers[index].infoWindow?.open(map, markers[index]);
-}
-}
-
-// Turn-by-Turn Route Calculator in Panel (EV Map parity)
-function triggerDirections(index) {
-const loc = locations[index];
-if (!loc) return;
-
-const directionsPanel = document.getElementById('dealer-directions-panel');
-const resultsList = document.getElementById('dealer-results-list');
-
-resultsList.style.display = 'none';
-directionsPanel.style.display = 'block';
-
-directionsPanel.innerHTML = `
-<div class="route-actions-group">
-<a href="https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(loc.address)}" target="_blank" rel="noopener" class="gmaps-launch-btn">
-Open in Google Maps App
-</a>
-<button type="button" class="exit-directions-btn" onclick="exitDirections()">
-← Back to Dealership List
-</button>
-</div>
-<div id="turn-by-turn-steps">
-<p style="font-size:13px; color:#666; text-align:center; padding:15px;">Calculating route from current location...</p>
-</div>
-`;
-
-if (navigator.geolocation) {
-navigator.geolocation.getCurrentPosition(
-(pos) => {
-const origin = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-const destination = { lat: loc.lat, lng: loc.lng };
-directionsService.route({
-origin: origin,
-destination: destination,
-travelMode: google.maps.TravelMode.DRIVING
-}, (res, status) => {
-if (status === 'OK') {
-directionsRenderer.setDirections(res);
-directionsRenderer.setPanel(document.getElementById('turn-by-turn-steps'));
-} else {
-document.getElementById('turn-by-turn-steps').innerHTML = `
-<p style="padding:15px; color:#c00;">Route calculation failed. Click "Open in Google Maps App" above for instant directions.</p>
-`;
-}
-});
-},
-() => {
-document.getElementById('turn-by-turn-steps').innerHTML = `
-<p style="padding:15px; font-size:13px; color:#555;">Location permission denied. Click "Open in Google Maps App" above to enter your starting point manually.</p>
-`;
-}
-);
-}
-}
-
-function exitDirections() {
-directionsRenderer.setDirections({ routes: [] });
-document.getElementById('dealer-directions-panel').style.display = 'none';
-document.getElementById('dealer-results-list').style.display = 'block';
-}
-
-// Reset All Filters
-function resetAllFilters() {
-searchTerm = '';
-selectedBrand = '';
-selectedCity = '';
-activeFacilityType = 'all';
-
-document.getElementById('dealer-places-search-bar').value = '';
-document.getElementById('brand-selected-badge').innerText = '24';
-
-const brandSelect = document.getElementById('brandSelectFilter');
-if (brandSelect) brandSelect.value = '';
-
-const citySelect = document.getElementById('citySelectFilter');
-if (citySelect) citySelect.value = '';
-
-document.querySelectorAll('.brand-logo-tile').forEach(t => t.classList.remove('active'));
-
-const segButtons = document.querySelectorAll('.seg-btn');
-segButtons.forEach(b => b.classList.remove('active'));
-document.getElementById('seg-all').classList.add('active');
-
-const nearBtn = document.getElementById('near-me-btn');
-nearBtn.classList.remove('active');
-nearBtn.innerHTML = `
-<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-7.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>
-<span>Near Me</span>
-`;
-
-exitDirections();
-renderCardsList();
-map.setCenter({ lat: 43.68, lng: -79.62 });
-map.setZoom(9.3);
-}
-
-// Event Listeners for Filters & Search Bar
+// Setup Event Listeners
 function setupEventListeners() {
+// Search input with debounce
 const searchInput = document.getElementById('dealer-places-search-bar');
-searchInput.addEventListener('input', (e) => {
-searchTerm = e.target.value;
-renderCardsList();
-});
-
-// Brand Select Dropdown
-const brandSelect = document.getElementById('brandSelectFilter');
-brandSelect.addEventListener('change', (e) => {
-selectedBrand = e.target.value;
-
-// Sync badge and flyout active state
-const badge = document.getElementById('brand-selected-badge');
-if (badge) badge.innerText = selectedBrand ? selectedBrand.split(' ')[0] : '24';
-
-document.querySelectorAll('.brand-logo-tile').forEach(tile => {
-const name = tile.querySelector('span')?.innerText;
-if (selectedBrand && name && (name.toLowerCase() === selectedBrand.toLowerCase() || (selectedBrand.includes('Collision') && name === 'Collision'))) {
-tile.classList.add('active');
-} else {
-tile.classList.remove('active');
+if (searchInput) {
+searchInput.addEventListener('input', applyFilters);
 }
-});
 
-renderCardsList();
-});
-
-// City Select Dropdown
-const citySelect = document.getElementById('citySelectFilter');
-citySelect.addEventListener('change', (e) => {
-selectedCity = e.target.value;
-renderCardsList();
-});
-
-// Tier 1: Facility Type Segmented Control
-const segButtons = document.querySelectorAll('.seg-btn');
-segButtons.forEach(btn => {
+// Segmented Type Buttons (All / Dealerships / Collision)
+document.querySelectorAll('.seg-btn').forEach(btn => {
 btn.addEventListener('click', () => {
-segButtons.forEach(b => b.classList.remove('active'));
+document.querySelectorAll('.seg-btn').forEach(b => b.classList.remove('active'));
 btn.classList.add('active');
-activeFacilityType = btn.getAttribute('data-type');
-renderCardsList();
+currentFacilityType = btn.dataset.type;
+applyFilters();
 });
 });
 }
 
-// Load and bootstrap
-window.addEventListener('load', () => {
-initDealerDirectory();
+// Master Initialization Function
+async function initDealerDirectory() {
+const mapCanvas = document.getElementById("dealer-map-canvas");
+if (!mapCanvas) return;
+
+// Initialize Map
+map = new google.maps.Map(mapCanvas, {
+center: { lat: 43.6532, lng: -79.3832 },
+zoom: 9,
+mapTypeControl: false,
+fullscreenControl: true,
+streetViewControl: false,
+styles: [
+{ featureType: "poi.business", stylers: [{ visibility: "off" }] }
+]
 });
+
+// Fetch Master JSON
+try {
+const res = await fetch(DEALERSHIPS_DATA_URL);
+if (!res.ok) throw new Error(`HTTP error ${res.status}`);
+locations = await res.json();
+} catch (err) {
+console.error("Failed to load dealership locations JSON from GitHub:", err);
+const container = document.getElementById('dealer-results-list');
+if (container) {
+container.innerHTML = `
+<div style="padding:24px; text-align:center; color:#c00;">
+<p><strong>Unable to load locations directory.</strong></p>
+<p style="font-size:12px; color:#666; margin-top:6px;">Please ensure dealerships.json is accessible at ${DEALERSHIPS_DATA_URL}</p>
+</div>
+`;
+}
+return;
+}
+
+// Setup DOM and Markers
+populateFilterControls();
+renderDealerListAndMarkers();
+setupEventListeners();
+}
+
+// Fire on DOM load or Google Maps callback
+if (document.readyState === 'loading') {
+document.addEventListener('DOMContentLoaded', () => {
+if (window.google && window.google.maps) {
+initDealerDirectory();
+} else {
+window.addEventListener('load', initDealerDirectory);
+}
+});
+} else {
+if (window.google && window.google.maps) {
+initDealerDirectory();
+} else {
+window.addEventListener('load', initDealerDirectory);
+}
+}
