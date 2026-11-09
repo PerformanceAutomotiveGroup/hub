@@ -1,8 +1,9 @@
 [
 {
 "name": "Performance Collision Brampton",
-"address": "105 Van Kirk Dr, Brampton, ON L7A 1A4",
-"phone": "(905) 457‑1684",
+"storeLogo": "images/brands/performance-collision-brampton.png",
+"address": "105 Van Kirk Dr, Brampton, ON L7A 1A4",
+"phone": "(905) 457-1684",
 "hours": "",
 "lat": 43.7068323,
 "lng": -79.8043701,
@@ -15,13 +16,14 @@
 ]
 },
 {
-"name": "Performance Collision St. Catharines",
-"address": "342 Ontario St, St. Catharines, ON L2R 5L8",
-"phone": "(905) 688‑4160",
+"name": "Performance Collision St. Catharines",
+"storeLogo": "images/brands/performance-collision-st-catharines.png",
+"address": "342 Ontario St, St. Catharines, ON L2R 5L8",
+"phone": "(905) 688-4160",
 "hours": "",
 "lat": 43.1710641,
 "lng": -79.2654384,
-"city": "St. Catharines",
+"city": "St. Catharines",
 "brand": "Performance Collision",
 "website": "https://www.performancecollisionstcatharines.ca",
 "services": [
@@ -31,9 +33,10 @@
 },
 {
 "name": "Performance Collision Grimsby",
-"address": "569  Main  St  W, Grimsby, ON L3M 1V1",
-"phone": "(905) 643‑1221",
-"hours": "", 
+"storeLogo": "images/brands/performance-collision-grimsby.png",
+"address": "569 Main St W, Grimsby, ON L3M 1V1",
+"phone": "(905) 643-1221",
+"hours": "",
 "lat": 43.2053526,
 "lng": -79.6295375,
 "city": "Grimsby",
@@ -46,12 +49,13 @@
 },
 {
 "name": "Performance Collision Toronto",
+"storeLogo": "images/brands/performance-collision-toronto.png",
 "address": "15 Mobile Dr, Toronto, ON M4A 1J6",
-"phone": "(416) 751‑5190",
+"phone": "(416) 751-5190",
 "hours": "",
 "lat": 43.7248433,
 "lng": -79.3175963,
-"city": "North York",
+"city": "North York",
 "brand": "Performance Collision",
 "website": "https://www.performancecollisiontoronto.ca",
 "services": [
@@ -61,6 +65,7 @@
 },
 {
 "name": "Classic Honda",
+"storeLogo": "images/brands/classic-honda.png",
 "address": "30 Van Kirk Dr, Brampton, ON L7A 2Y4",
 "phone": "(905) 454-1434",
 "hours": "",
@@ -72,10 +77,12 @@
 "services": [
 { "name": "Vehicles", "link": "https://www.classichonda.ca/vehicles" },
 { "name": "Service", "link": "https://www.classichonda.ca/service-schedule-your-service-appointment" },
-{ "name": "Parts", "link": "https://www.classichonda.ca/parts/" }]
+{ "name": "Parts", "link": "https://www.classichonda.ca/parts/" }
+]
 },
 {
 "name": "Mazda of Brampton",
+"storeLogo": "images/brands/mazda-of-brampton.png",
 "address": "15 Van Kirk Dr, Brampton, ON L7A 1W4",
 "phone": "(905) 459-0290",
 "hours": "",
@@ -87,10 +94,12 @@
 "services": [
 { "name": "Vehicles", "link": "https://www.mazdaofbrampton.ca/vehicles" },
 { "name": "Service", "link": "https://www.mazdaofbrampton.ca/service-schedule-your-service-appointment" },
-{ "name": "Parts", "link": "https://www.mazdaofbrampton.ca/parts" }]
+{ "name": "Parts", "link": "https://www.mazdaofbrampton.ca/parts" }
+]
 },
 {
 "name": "Kia of Brampton",
+"storeLogo": "images/brands/kia-of-brampton.png",
 "address": "85 Canam Crescent, Brampton, ON L7A 1G1",
 "phone": "(905) 457-8410",
 "hours": "",
@@ -102,10 +111,12 @@
 "services": [
 { "name": "Vehicles", "link": "https://www.kiaofbrampton.ca/vehicles" },
 { "name": "Service", "link": "https://www.kiaofbrampton.ca/service-schedule-your-service-appointment" },
-{ "name": "Parts", "link": "https://www.kiaofbrampton.ca/parts" }]
+{ "name": "Parts", "link": "https://www.kiaofbrampton.ca/parts" }
+]
 },
 {
 "name": "Brampton Mitsubishi",
+"storeLogo": "images/brands/brampton-mitsubishi.png",
 "address": "47 Bovaird Dr W, Brampton, ON L6X 0G9",
 "phone": "(905) 459-2600",
 "hours": "",
@@ -117,10 +128,12 @@
 "services": [
 { "name": "Vehicles", "link": "https://www.bramptonmitsubishi.ca/vehicles" },
 { "name": "Service", "link": "https://www.bramptonmitsubishi.ca/service-schedule-your-service-appointment" },
-{ "name": "Parts", "link": "https://www.bramptonmitsubishi.ca/parts" }]
+{ "name": "Parts", "link": "https://www.bramptonmitsubishi.ca/parts" }
+]
 },
 {
 "name": "Planet Ford",
+"storeLogo": "images/brands/planet-ford.png",
 "address": "111 Canam Crescent, Brampton, ON L7A 1G1",
 "phone": "(905) 451-1040",
 "hours": "",
@@ -132,10 +145,12 @@
 "services": [
 { "name": "Vehicles", "link": "https://www.planetford.ca/vehicles" },
 { "name": "Service", "link": "https://www.planetford.ca/service-schedule-your-service-appointment" },
-{ "name": "Parts", "link": "https://www.planetford.ca/parts" }]
+{ "name": "Parts", "link": "https://www.planetford.ca/parts" }
+]
 },
 {
 "name": "Brampton North Nissan",
+"storeLogo": "images/brands/brampton-north-nissan.png",
 "address": "195 Canam Crescent, Brampton, ON L7A 1G1",
 "phone": "(905) 459-1600",
 "hours": "",
@@ -147,10 +162,12 @@
 "services": [
 { "name": "Vehicles", "link": "https://www.bramptonnorthnissan.ca/vehicles" },
 { "name": "Service", "link": "https://www.bramptonnorthnissan.ca/service-schedule-your-service-appointment" },
-{ "name": "Parts", "link": "https://www.bramptonnorthnissan.ca/parts" }]
+{ "name": "Parts", "link": "https://www.bramptonnorthnissan.ca/parts" }
+]
 },
 {
 "name": "Subaru of Brampton",
+"storeLogo": "images/brands/subaru-of-brampton.png",
 "address": "9 Canam Crescent, Brampton, ON L7A 1G1",
 "phone": "(905) 455-3883",
 "hours": "",
@@ -162,10 +179,12 @@
 "services": [
 { "name": "Vehicles", "link": "https://www.subaruofbrampton.ca/vehicles" },
 { "name": "Service", "link": "https://www.subaruofbrampton.ca/service-schedule-your-service-appointment" },
-{ "name": "Parts", "link": "https://www.subaruofbrampton.ca/parts" }]
+{ "name": "Parts", "link": "https://www.subaruofbrampton.ca/parts" }
+]
 },
 {
 "name": "Performance Honda Mayfield",
+"storeLogo": "images/brands/performance-honda-mayfield.png",
 "address": "30 Ace Dr, Brampton, ON L6R 3Y2",
 "phone": "(905) 460-3760",
 "hours": "",
@@ -177,10 +196,12 @@
 "services": [
 { "name": "Vehicles", "link": "https://www.performancehondamayfield.ca/vehicles" },
 { "name": "Service", "link": "https://www.performancehondamayfield.ca/service-schedule-your-service-appointment" },
-{ "name": "Parts", "link": "https://www.performancehondamayfield.ca/parts" }]
+{ "name": "Parts", "link": "https://www.performancehondamayfield.ca/parts" }
+]
 },
 {
 "name": "Genesis Brampton",
+"storeLogo": "images/brands/genesis-brampton.png",
 "address": "70 Coachworks Crescent, Brampton, ON L6R 3Y2",
 "phone": "1-888-571-8179",
 "hours": "",
@@ -191,10 +212,12 @@
 "website": "https://www.genesisbrampton.ca",
 "services": [
 { "name": "Vehicles", "link": "https://www.genesisbrampton.ca/vehicles" },
-{ "name": "Service", "link": "https://www.genesisbrampton.ca/service/" }]
+{ "name": "Service", "link": "https://www.genesisbrampton.ca/service/" }
+]
 },
 {
 "name": "Performance Hyundai Brampton",
+"storeLogo": "images/brands/performance-hyundai-brampton.png",
 "address": "80 Coachworks Crescent, Brampton, ON L6R 3Y2",
 "phone": "(905) 863-1160",
 "hours": "",
@@ -206,12 +229,14 @@
 "services": [
 { "name": "Vehicles", "link": "https://www.performancehyundaibrampton.com/vehicles" },
 { "name": "Service", "link": "https://www.performancehyundaibrampton.com/service-schedule-your-service-appointment" },
-{ "name": "Parts", "link": "https://www.performancehyundaibrampton.com/parts/" }]
+{ "name": "Parts", "link": "https://www.performancehyundaibrampton.com/parts/" }
+]
 },
 {
 "name": "Performance Kia Mayfield",
-"address": "85 Ace Drive, Brampton, ON L6R 3Y2",
-"phone": "(905) 863‑2255",
+"storeLogo": "images/brands/performance-kia-mayfield.png",
+"address": "85 Ace Drive, Brampton, ON L6R 3Y2",
+"phone": "(905) 863-2255",
 "hours": "",
 "lat": 43.7578022,
 "lng": -79.7933779,
@@ -221,12 +246,14 @@
 "services": [
 { "name": "Vehicles", "link": "https://www.performancekiamayfield.ca/vehicles" },
 { "name": "Service", "link": "https://www.performancekiamayfield.ca/service-schedule-your-service-appointment" },
-{ "name": "Parts", "link": "https://www.performancekiamayfield.ca/parts" }]
+{ "name": "Parts", "link": "https://www.performancekiamayfield.ca/parts" }
+]
 },
 {
 "name": "Performance INFINITI Brampton",
-"address": "195 Canam Crescent, Brampton, ON L7A 1G1",
-"phone": "(905) 459‑0190",
+"storeLogo": "images/brands/performance-infiniti-brampton.png",
+"address": "195 Canam Crescent, Brampton, ON L7A 1G1",
+"phone": "(905) 459-0190",
 "hours": "",
 "lat": 43.6997037,
 "lng": -79.7988836,
@@ -236,12 +263,14 @@
 "services": [
 { "name": "Vehicles", "link": "https://www.infinitibrampton.ca/vehicles" },
 { "name": "Service", "link": "https://www.infinitibrampton.ca/service-schedule-your-service-appointment" },
-{ "name": "Parts", "link": "https://www.infinitibrampton.ca/parts" }]
+{ "name": "Parts", "link": "https://www.infinitibrampton.ca/parts" }
+]
 },
 {
 "name": "Brampton Chrysler",
-"address": "190 Canam Crescent, Brampton, ON L7A 1A9",
-"phone": "(905) 459‑1810",
+"storeLogo": "images/brands/brampton-chrysler.png",
+"address": "190 Canam Crescent, Brampton, ON L7A 1A9",
+"phone": "(905) 459-1810",
 "hours": "",
 "lat": 43.6991767,
 "lng": -79.798046,
@@ -251,12 +280,14 @@
 "services": [
 { "name": "Vehicles", "link": "https://www.bramptonchrysler.ca/vehicles" },
 { "name": "Service", "link": "https://www.bramptonchrysler.ca/service-schedule-your-service-appointment" },
-{ "name": "Parts", "link": "https://www.bramptonchrysler.ca/parts" }]
+{ "name": "Parts", "link": "https://www.bramptonchrysler.ca/parts" }
+]
 },
 {
 "name": "Bolton Honda",
-"address": "65 Pillsworth Rd, Bolton, ON L7E 4E9",
-"phone": "(905) 457‑0888",
+"storeLogo": "images/brands/bolton-honda.png",
+"address": "65 Pillsworth Rd, Bolton, ON L7E 4E9",
+"phone": "(905) 457-0888",
 "hours": "",
 "lat": 43.8543396,
 "lng": -79.707554,
@@ -266,12 +297,14 @@
 "services": [
 { "name": "Vehicles", "link": "https://www.boltonhonda.ca/vehicles" },
 { "name": "Service", "link": "https://www.boltonhonda.ca/service-schedule-your-service-appointment" },
-{ "name": "Parts", "link": "https://www.boltonhonda.ca/parts" }]
+{ "name": "Parts", "link": "https://www.boltonhonda.ca/parts" }
+]
 },
 {
 "name": "Motion Mazda",
-"address": "753007 2 Line EHS Mono, Orangeville, ON L9W 2Z7",
-"phone": "(519) 943‑1100",
+"storeLogo": "images/brands/motion-mazda.png",
+"address": "753007 2 Line EHS Mono, Orangeville, ON L9W 2Z7",
+"phone": "(519) 943-1100",
 "hours": "",
 "lat": 43.9308011,
 "lng": -80.0500909,
@@ -281,12 +314,14 @@
 "services": [
 { "name": "Vehicles", "link": "https://www.motionmazda.ca/vehicles" },
 { "name": "Service", "link": "https://www.motionmazda.ca/service-schedule-your-service-appointment" },
-{ "name": "Parts", "link": "https://www.motionmazda.ca/parts" }]
+{ "name": "Parts", "link": "https://www.motionmazda.ca/parts" }
+]
 },
 {
 "name": "Bolton Nissan",
-"address": "71 Pillsworth Rd, Bolton, ON L7E 4E9",
-"phone": "(905) 457‑2224",
+"storeLogo": "images/brands/bolton-nissan.png",
+"address": "71 Pillsworth Rd, Bolton, ON L7E 4E9",
+"phone": "(905) 457-2224",
 "hours": "",
 "lat": 43.8537393,
 "lng": -79.7065548,
@@ -296,12 +331,14 @@
 "services": [
 { "name": "Vehicles", "link": "https://www.boltonnissan.ca/vehicles" },
 { "name": "Service", "link": "https://www.boltonnissan.ca/service-schedule-your-service-appointment" },
-{ "name": "Parts", "link": "https://www.boltonnissan.ca/parts" }]
+{ "name": "Parts", "link": "https://www.boltonnissan.ca/parts" }
+]
 },
 {
 "name": "Bolton Hyundai",
-"address": "69 Pillsworth Rd, Bolton, ON L7E 4E9",
-"phone": "(905) 457‑5553",
+"storeLogo": "images/brands/bolton-hyundai.png",
+"address": "69 Pillsworth Rd, Bolton, ON L7E 4E9",
+"phone": "(905) 457-5553",
 "hours": "",
 "lat": 43.8536733,
 "lng": -79.7070642,
@@ -311,12 +348,14 @@
 "services": [
 { "name": "Vehicles", "link": "https://www.boltonhyundai.com/vehicles" },
 { "name": "Service", "link": "https://www.boltonhyundai.com/service-schedule-your-service-appointment" },
-{ "name": "Parts", "link": "https://www.boltonhyundai.com/parts" }]
+{ "name": "Parts", "link": "https://www.boltonhyundai.com/parts" }
+]
 },
 {
 "name": "Brantford Toyota",
-"address": "5 Woodyatt Dr, Brantford, ON N3R 7K3",
-"phone": "(519) 752‑1039",
+"storeLogo": "images/brands/brantford-toyota.png",
+"address": "5 Woodyatt Dr, Brantford, ON N3R 7K3",
+"phone": "(519) 752-1039",
 "hours": "",
 "lat": 43.1735104,
 "lng": -80.2399821,
@@ -326,12 +365,14 @@
 "services": [
 { "name": "Vehicles", "link": "https://www.brantfordtoyota.ca/vehicles" },
 { "name": "Service", "link": "https://www.brantfordtoyota.ca/service-schedule-your-service-appointment" },
-{ "name": "Parts", "link": "https://www.brantfordtoyota.ca/parts" }]
+{ "name": "Parts", "link": "https://www.brantfordtoyota.ca/parts" }
+]
 },
 {
 "name": "Performance Acura North Mississauga",
-"address": "860 Ivandale Dr, Mississauga, ON L5V 2Y6",
-"phone": "(905) 855‑4410",
+"storeLogo": "images/brands/performance-acura-north-mississauga.png",
+"address": "860 Ivandale Dr, Mississauga, ON L5V 2Y6",
+"phone": "(905) 855-4410",
 "hours": "",
 "lat": 43.6157276,
 "lng": -79.7057397,
@@ -341,12 +382,14 @@
 "services": [
 { "name": "Vehicles", "link": "https://www.acuranorthmississauga.ca/vehicles" },
 { "name": "Service", "link": "https://www.acuranorthmississauga.ca/service-schedule-your-service-appointment" },
-{ "name": "Parts", "link": "https://www.acuranorthmississauga.ca/parts" }]
+{ "name": "Parts", "link": "https://www.acuranorthmississauga.ca/parts" }
+]
 },
 {
 "name": "Don Valley Volkswagen",
-"address": "1695 Eglinton Ave E, Toronto, ON M4A 1J6",
-"phone": "(416) 751‑3131",
+"storeLogo": "images/brands/don-valley-volkswagen.png",
+"address": "1695 Eglinton Ave E, Toronto, ON M4A 1J6",
+"phone": "(416) 751-3131",
 "hours": "",
 "lat": 43.725476,
 "lng": -79.3176432,
@@ -356,12 +399,14 @@
 "services": [
 { "name": "Vehicles", "link": "https://www.donvalleyvolkswagen.ca/vehicles" },
 { "name": "Service", "link": "https://www.donvalleyvolkswagen.ca/service-schedule-your-service-appointment" },
-{ "name": "Parts", "link": "https://www.donvalleyvolkswagen.ca/parts" }]
+{ "name": "Parts", "link": "https://www.donvalleyvolkswagen.ca/parts" }
+]
 },
 {
 "name": "Precision Honda",
-"address": "230 Dundas St E, Mississauga, ON L5A 1W9",
-"phone": "(905) 896‑3500",
+"storeLogo": "images/brands/precision-honda.png",
+"address": "230 Dundas St E, Mississauga, ON L5A 1W9",
+"phone": "(905) 896-3500",
 "hours": "",
 "lat": 43.5850374,
 "lng": -79.6145256,
@@ -376,8 +421,9 @@
 },
 {
 "name": "Mississauga Toyota",
-"address": "2215 Dundas St E, Mississauga, ON L4X 2X2",
-"phone": "(905) 625‑3420",
+"storeLogo": "images/brands/mississauga-toyota.png",
+"address": "2215 Dundas St E, Mississauga, ON L4X 2X2",
+"phone": "(905) 625-3420",
 "hours": "",
 "lat": 43.6271858,
 "lng": -79.5682524,
@@ -392,8 +438,9 @@
 },
 {
 "name": "Huntsville Chrysler Dodge Jeep Ram",
-"address": "111 North Kinton Ave, Huntsville, ON P1H 0A9",
-"phone": "(705) 789‑5591",
+"storeLogo": "images/brands/huntsville-chrysler-dodge-jeep-ram.png",
+"address": "111 North Kinton Ave, Huntsville, ON P1H 0A9",
+"phone": "(705) 789-5591",
 "hours": "",
 "lat": 45.341341,
 "lng": -79.2297264,
@@ -408,8 +455,9 @@
 },
 {
 "name": "Hyundai of Muskoka",
-"address": "20 King William St, Huntsville, ON P1H 1G5",
-"phone": "(705) 789‑7505",
+"storeLogo": "images/brands/hyundai-of-muskoka.png",
+"address": "20 King William St, Huntsville, ON P1H 1G5",
+"phone": "(705) 789-7505",
 "hours": "",
 "lat": 45.3305435,
 "lng": -79.2132224,
@@ -424,8 +472,9 @@
 },
 {
 "name": "Huntsville Honda",
-"address": "8 Ott Dr, Huntsville, ON P1H 0A2",
-"phone": "(705) 789‑5333",
+"storeLogo": "images/brands/huntsville-honda.png",
+"address": "8 Ott Dr, Huntsville, ON P1H 0A2",
+"phone": "(705) 789-5333",
 "hours": "",
 "lat": 45.3400195,
 "lng": -79.2240937,
@@ -439,14 +488,15 @@
 ]
 },
 {
-"name": "Performance Mercedes‑Benz",
-"address": "371 Ontario St, St. Catharines, ON L2R 5L3",
-"phone": "(905) 685‑3838",
+"name": "Performance Mercedes-Benz",
+"storeLogo": "images/brands/performance-mercedes-benz.png",
+"address": "371 Ontario St, St. Catharines, ON L2R 5L3",
+"phone": "(905) 685-3838",
 "hours": "",
 "lat": 43.1742115,
 "lng": -79.2687739,
-"city": "St. Catharines",
-"brand": "Mercedez-Benz",
+"city": "St. Catharines",
+"brand": "Mercedes-Benz",
 "website": "https://www.mercedes-benz-performance.ca",
 "services": [
 { "name": "Vehicles", "link": "https://www.mercedes-benz-performance.ca/vehicles" },
@@ -456,12 +506,13 @@
 },
 {
 "name": "Performance Chrysler",
-"address": "357 Ontario St, St. Catharines, ON L2R 5L3",
-"phone": "(905) 688‑2802",
+"storeLogo": "images/brands/performance-chrysler.png",
+"address": "357 Ontario St, St. Catharines, ON L2R 5L3",
+"phone": "(905) 688-2802",
 "hours": "",
 "lat": 43.17345,
 "lng": -79.2689043,
-"city": "St. Catharines",
+"city": "St. Catharines",
 "brand": "Chrysler/Dodge/Jeep/RAM/Fiat",
 "website": "https://www.performancechryslerdealer.com",
 "services": [
@@ -472,12 +523,13 @@
 },
 {
 "name": "Performance Hyundai",
-"address": "342 Ontario St, St. Catharines, ON L2R 5L8",
-"phone": "(905) 937‑7000",
+"storeLogo": "images/brands/performance-hyundai.png",
+"address": "342 Ontario St, St. Catharines, ON L2R 5L8",
+"phone": "(905) 937-7000",
 "hours": "",
 "lat": 43.1707545,
 "lng": -79.2666203,
-"city": "St. Catharines",
+"city": "St. Catharines",
 "brand": "Hyundai",
 "website": "https://www.performancehyundai.com",
 "services": [
@@ -488,12 +540,13 @@
 },
 {
 "name": "Performance Lexus",
-"address": "262 Lake St, St. Catharines, ON L2N 4H1",
-"phone": "(905) 322‑2063",
+"storeLogo": "images/brands/performance-lexus.png",
+"address": "262 Lake St, St. Catharines, ON L2N 4H1",
+"phone": "(905) 322-2063",
 "hours": "",
 "lat": 43.1797565,
 "lng": -79.2534605,
-"city": "St. Catharines",
+"city": "St. Catharines",
 "brand": "Lexus",
 "website": "https://www.performancelexus.ca",
 "services": [
@@ -504,12 +557,13 @@
 },
 {
 "name": "Performance Toyota",
-"address": "10 YMCA Dr, St. Catharines, ON L2N 7R6",
-"phone": "(905) 934‑3336",
+"storeLogo": "images/brands/performance-toyota.png",
+"address": "10 YMCA Dr, St. Catharines, ON L2N 7R6",
+"phone": "(905) 934-3336",
 "hours": "",
 "lat": 43.1796627,
 "lng": -79.2518026,
-"city": "St. Catharines",
+"city": "St. Catharines",
 "brand": "Toyota",
 "website": "https://www.performancetoyota.ca",
 "services": [
@@ -520,6 +574,7 @@
 },
 {
 "name": "Performance BMW",
+"storeLogo": "images/brands/performance-bmw.png",
 "address": "266 Lake Street, St. Catharines, ON L2N 4H1",
 "phone": "(905) 934-3356",
 "hours": "",
@@ -536,6 +591,7 @@
 },
 {
 "name": "MINI St. Catharines",
+"storeLogo": "images/brands/mini-st-catharines.png",
 "address": "268 Lake St, St. Catharines, ON L2N 4H1",
 "phone": "(905) 934-9894",
 "hours": "",
@@ -552,6 +608,7 @@
 },
 {
 "name": "Performance Acura",
+"storeLogo": "images/brands/performance-acura.png",
 "address": "158 Scott Street, St. Catharines, ON L2N 1H1",
 "phone": "(905) 937-1811",
 "hours": "",
@@ -568,6 +625,7 @@
 },
 {
 "name": "Grimsby Hyundai",
+"storeLogo": "images/brands/grimsby-hyundai.png",
 "address": "569 Main Street, West, Grimsby, ON L3M 1V1",
 "phone": "(905) 643-1221",
 "hours": "",
@@ -584,6 +642,7 @@
 },
 {
 "name": "Genesis Niagara",
+"storeLogo": "images/brands/genesis-niagara.png",
 "address": "332 Ontario St, St. Catharines, ON L2R 5L8",
 "phone": "1-888-571-8180",
 "hours": "",
@@ -600,6 +659,7 @@
 },
 {
 "name": "St. Catharines Volkswagen",
+"storeLogo": "images/brands/st-catharines-volkswagen.png",
 "address": "363 Lake Street, St. Catharines, ON L2N 4H5",
 "phone": "(905) 688-5230",
 "hours": "",
@@ -616,6 +676,7 @@
 },
 {
 "name": "Audi Niagara",
+"storeLogo": "images/brands/audi-niagara.png",
 "address": "365 Lake Street, St. Catharines, ON L2N 4H5",
 "phone": "(905) 688-3337",
 "hours": "",
@@ -632,6 +693,7 @@
 },
 {
 "name": "AutoPlanet Brampton",
+"storeLogo": "images/brands/autoplanet-brampton.png",
 "address": "2830 Queen St. East, Brampton, ON L6S 6E8",
 "phone": "(905) 459-0699",
 "hours": "",
@@ -648,6 +710,7 @@
 },
 {
 "name": "AutoPlanet Durham",
+"storeLogo": "images/brands/autoplanet-durham.png",
 "address": "205 Baseline Road West, Bowmanville, ON L1C 7E6",
 "phone": "(289) 485-5555",
 "hours": "",
