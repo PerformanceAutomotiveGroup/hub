@@ -1,35 +1,5 @@
 const DEALERSHIPS_DATA_URL = 'https://performanceautomotivegroup.github.io/hub/dealership-locations.json';
 
-// Brand logos lookup map
-const BRAND_LOGOS = {
-"Acura": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Acura-1.png",
-"Audi": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Audi.png",
-"BMW": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/BMW.png",
-"Chrysler": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Chrysler-1.png",
-"Dodge": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Dodge.png",
-"Fiat": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/03-logo-06-fiat.png",
-"Ford": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Ford.png",
-"Genesis": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Genesis.png",
-"Honda": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Honda.png",
-"Hyundai": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/02-logo-10-hyundai.png",
-"INFINITI": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2023/06/INFINITI-Brampton.png",
-"Jeep": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Jeep.png",
-"Kia": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/KIA-175_175.png",
-"Lexus": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Lexus.png",
-"MINI": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/MINI.png",
-"Mazda": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/LOGO-15.png",
-"Mercedes-Benz": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Mercedes-Benz.png",
-"Mercedez-Benz": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Mercedes-Benz.png",
-"Mitsubishi": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Mitsbusihi.png",
-"Nissan": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Nissan.png",
-"RAM": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/RAM.png",
-"Subaru": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/logo-21-subaru.png",
-"Toyota": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/02-logo-22-toyota.png",
-"Volkswagen": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2019/10/Volkswagen.png",
-"AutoPlanet": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2020/11/Auto-Planet-Direct-Locations.png",
-"Performance Collision": "https://performanceautoprod-com.cdn-convertus.com/uploads/sites/24/2025/12/PERF-COLLISION-HORZ-RGB.png"
-};
-
 let locations = [];
 let markers = [];
 let map = null;
@@ -38,16 +8,6 @@ let userCoords = null;
 let currentFacilityType = 'all';
 let directionsService = null;
 let directionsRenderer = null;
-
-// Helper to resolve brand logo URL
-function getBrandLogoUrl(brandString) {
-if (!brandString) return '';
-if (brandString.includes('Performance Collision')) {
-return BRAND_LOGOS['Performance Collision'];
-}
-const primaryBrand = brandString.split('/')[0].trim();
-return BRAND_LOGOS[primaryBrand] || BRAND_LOGOS['AutoPlanet'] || '';
-}
 
 // Distance calculation (Haversine km)
 function calculateDistance(lat1, lon1, lat2, lon2) {
@@ -314,7 +274,7 @@ const bounds = new google.maps.LatLngBounds();
 locations.forEach((loc, index) => {
 // 1. Build Card
 const isCollision = loc.brand === "Performance Collision";
-const brandLogoUrl = getBrandLogoUrl(loc.brand);
+const brandLogoUrl = loc.brandLogo || '';
 
 const card = document.createElement('div');
 card.className = 'dealer-location-card';
@@ -401,12 +361,22 @@ activeCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 // InfoWindow popup
 if (activeInfoWindow) activeInfoWindow.close();
 
+const storeLogo = loc.storeLogo || '';
+
 activeInfoWindow = new google.maps.InfoWindow({
 content: `
 <div class="dealer-info-bubble">
-<h4>${loc.name}</h4>
-<p>${loc.address}<br><strong>${loc.phone || ''}</strong></p>
-<a href="${loc.website}" target="_blank" rel="noopener" class="dealer-bubble-btn">Visit Website</a>
+<div class="dealer-bubble-logo-container" style="margin-bottom: 8px; display: flex; align-items: center; min-height: 40px;">
+${storeLogo ? `<img src="${storeLogo}" alt="${loc.name}" style="max-height: 40px; max-width: 175px; object-fit: contain;">` : `<h4 style="font-size: 14px; font-weight: 700; color: var(--pag-blue, #0668B3); margin: 0;">${loc.name}</h4>`}
+</div>
+<p style="font-size: 11.5px; color: #555; margin-bottom: 6px; line-height: 1.3;">
+${loc.address}<br>
+<strong>${loc.phone || ''}</strong>
+</p>
+<div style="display: flex; gap: 6px; margin-top: 6px;">
+<a href="${loc.website}" target="_blank" rel="noopener" class="dealer-bubble-btn" style="padding: 5px 9px; font-size: 11px; text-decoration: none; border-radius: 4px; background: var(--pag-blue, #0668B3); color: #fff; font-weight: 700;">Visit Website</a>
+<button type="button" onclick="calculateRoute(${index})" style="padding: 5px 9px; font-size: 11px; border: 1px solid #ccc; border-radius: 4px; background: #fff; color: #333; font-weight: 600; cursor: pointer;">Directions</button>
+</div>
 </div>
 `
 });
@@ -416,26 +386,33 @@ map.panTo(marker.getPosition());
 map.setZoom(14);
 }
 
-// Populate Brand & City Dropdowns + Floating Flyout
+// Populate Brand & City Dropdowns + Floating Flyout dynamically from JSON
 function populateFilterControls() {
 const brandSelect = document.getElementById('brandSelectFilter');
 const citySelect = document.getElementById('citySelectFilter');
 const brandFlyoutContainer = document.getElementById('brand-logos-container');
 
-const brandSet = new Set();
+const brandMap = new Map(); // brandName -> brandLogoUrl
 const citySet = new Set();
 
 locations.forEach(loc => {
 if (loc.city) citySet.add(loc.city.trim());
 if (loc.brand) {
-loc.brand.split('/').forEach(b => brandSet.add(b.trim()));
+loc.brand.split('/').forEach(b => {
+const brandName = b.trim();
+if (!brandMap.has(brandName) && loc.brandLogo) {
+brandMap.set(brandName, loc.brandLogo);
+} else if (!brandMap.has(brandName)) {
+brandMap.set(brandName, '');
+}
+});
 }
 });
 
 // 1. Populate Brand Select
 if (brandSelect) {
 brandSelect.innerHTML = '<option value="">All Brands</option>';
-Array.from(brandSet).sort().forEach(brand => {
+Array.from(brandMap.keys()).sort().forEach(brand => {
 const opt = document.createElement('option');
 opt.value = brand;
 opt.textContent = brand;
@@ -463,17 +440,21 @@ citySelect.appendChild(opt);
 citySelect.addEventListener('change', applyFilters);
 }
 
-// 3. Populate Floating Brand Flyout Modal
+// 3. Populate Floating Brand Flyout Modal from JSON brand mapping
 if (brandFlyoutContainer) {
 brandFlyoutContainer.innerHTML = '';
-const sortedBrands = Object.keys(BRAND_LOGOS).filter(b => b !== "Mercedez-Benz"); // Deduplicate
+const sortedBrands = Array.from(brandMap.keys()).sort();
 
 sortedBrands.forEach(brand => {
+const logoUrl = brandMap.get(brand);
+if (!logoUrl) return; // Skip brands without a logo
+
 const tile = document.createElement('div');
 tile.className = 'brand-logo-tile';
 tile.dataset.brand = brand;
 tile.innerHTML = `
-<img src="${BRAND_LOGOS[brand]}" alt="${brand}" loading="lazy">
+<img src="${logoUrl}" alt="${brand}" loading="lazy">
+<span>${brand}</span>
 `;
 
 tile.addEventListener('click', () => {
@@ -510,7 +491,7 @@ if (countCollision) countCollision.innerText = collisionCount;
 
 // Setup Event Listeners
 function setupEventListeners() {
-// Search input with debounce
+// Search input
 const searchInput = document.getElementById('dealer-places-search-bar');
 if (searchInput) {
 searchInput.addEventListener('input', applyFilters);
