@@ -1,4 +1,16 @@
 const DEALERSHIPS_DATA_URL = 'https://performanceautomotivegroup.github.io/hub/dealership-locations.json';
+const GITHUB_ASSETS_BASE = 'https://performanceautomotivegroup.github.io/hub/';
+
+// Helper to normalize store and brand logo paths
+function resolveAssetUrl(url) {
+if (!url) return '';
+if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('//')) {
+return url;
+}
+// Remove leading slash if present and append to GitHub base
+const cleanPath = url.replace(/^\/+/, '');
+return GITHUB_ASSETS_BASE + cleanPath;
+}
 
 let locations = [];
 let markers = [];
@@ -361,13 +373,21 @@ activeCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 // InfoWindow popup
 if (activeInfoWindow) activeInfoWindow.close();
 
-const storeLogo = loc.storeLogo || '';
+const storeLogo = resolveAssetUrl(loc.storeLogo);
+const brandLogo = resolveAssetUrl(loc.brandLogo);
 
 activeInfoWindow = new google.maps.InfoWindow({
 content: `
 <div class="dealer-info-bubble">
 <div class="dealer-bubble-logo-container" style="margin-bottom: 8px; display: flex; align-items: center; min-height: 40px;">
-${storeLogo ? `<img src="${storeLogo}" alt="${loc.name}" style="max-height: 40px; max-width: 175px; object-fit: contain;">` : `<h4 style="font-size: 14px; font-weight: 700; color: var(--pag-blue, #0668B3); margin: 0;">${loc.name}</h4>`}
+${storeLogo ? `
+<img src="${storeLogo}" alt="${loc.name}" 
+style="max-height: 40px; max-width: 175px; object-fit: contain;" 
+onerror="this.onerror=null; ${brandLogo ? `this.src='${brandLogo}';` : `this.style.display='none'; this.nextElementSibling.style.display='block';`}">
+<h4 style="display: none; font-size: 14px; font-weight: 700; color: var(--pag-blue, #0668B3); margin: 0;">${loc.name}</h4>
+` : `
+<h4 style="font-size: 14px; font-weight: 700; color: var(--pag-blue, #0668B3); margin: 0;">${loc.name}</h4>
+`}
 </div>
 <p style="font-size: 11.5px; color: #555; margin-bottom: 6px; line-height: 1.3;">
 ${loc.address}<br>
