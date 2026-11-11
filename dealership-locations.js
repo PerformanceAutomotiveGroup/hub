@@ -389,7 +389,7 @@ onerror="this.onerror=null; ${brandLogo ? `this.src='${brandLogo}';` : `this.sty
 <h4 style="font-size: 14px; font-weight: 700; color: var(--pag-blue, #0668B3); margin: 0;">${loc.name}</h4>
 `}
 </div>
-<p style="font-size: 11.5px; color: #555; margin-bottom: 6px; line-height: 1.3;">
+<p style="font-size: 13px; color: #555; margin-bottom: 6px; line-height: 1.3;">
 ${loc.address}<br>
 <strong>${loc.phone || ''}</strong>
 </p>
