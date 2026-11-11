@@ -395,7 +395,7 @@ ${loc.address}<br>
 </p>
 <div style="display: flex; gap: 6px; margin-top: 6px;">
 <a href="${loc.website}" target="_blank" rel="noopener" class="dealer-bubble-btn" style="padding: 7px 9px; font-size: 13px; text-decoration: none; border-radius: 4px; background: var(--pag-blue, #0668B3); color: #fff; font-weight: 700;">Visit Website</a>
-<button type="button" onclick="calculateRoute(${index})" style="padding: 5px 9px; font-size: 11px; border: 1px solid #ccc; border-radius: 4px; background: #fff; color: #333; font-weight: 600; cursor: pointer;">Directions</button>
+<button type="button" onclick="calculateRoute(${index})" style="padding: 7px 9px; font-size: 13px; border: 1px solid #ccc; border-radius: 4px; background: #fff; color: #333; font-weight: 600; cursor: pointer;">Directions</button>
 </div>
 </div>
 `
