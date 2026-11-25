@@ -474,7 +474,6 @@ tile.className = 'brand-logo-tile';
 tile.dataset.brand = brand;
 tile.innerHTML = `
 <img src="${logoUrl}" alt="${brand}" loading="lazy">
-<span>${brand}</span>
 `;
 
 tile.addEventListener('click', () => {
