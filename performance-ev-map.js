@@ -440,6 +440,16 @@ card.style.background = '#f2f8fd';
 card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 };
 
+if (window.innerWidth <= 768) {
+const sidebar = document.getElementById('ev-sidebar');
+const label = document.getElementById('toggle-label');
+if (sidebar && !sidebar.classList.contains('collapsed')) {
+sidebar.classList.add('collapsed');
+if (label) label.innerText = 'View Listings';
+}
+}
+};
+
 marker.addListener('gmp-click', (e) => select(e));
 card.onclick = (e) => select(e);
 list.appendChild(card);
