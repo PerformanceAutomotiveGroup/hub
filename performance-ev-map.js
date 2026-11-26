@@ -26,13 +26,18 @@ bounds: { north: 43.280, south: 43.140, west: -79.550, east: -78.980 }
 
 function formatConnector(type) {
 if (!type) return "Unknown";
+const cleanType = type.replace('EV_CONNECTOR_TYPE_', '');
 const types = { 
-'EV_CONNECTOR_TYPE_J1772': 'J1772', 
-'EV_CONNECTOR_TYPE_CCS_COMBO_1': 'CCS', 
-'EV_CONNECTOR_TYPE_CHADEMO': 'CHAdeMO', 
-'EV_CONNECTOR_TYPE_TESLA': 'Tesla' 
+'J1772': 'J1772', 
+'CCS_COMBO_1': 'CCS', 
+'CCS_COMBO_2': 'CCS2',
+'CHADEMO': 'CHAdeMO', 
+'TESLA': 'Tesla',
+'NACS': 'NACS (Tesla)',
+'TYPE_2': 'Type 2',
+'OTHER': 'Other'
 };
-return types[type] || type.replace('EV_CONNECTOR_TYPE_', '').replace(/_/g, ' ');
+return types[cleanType] || cleanType.replace(/_/g, ' ');
 }
 
 // Custom #2c68b5 SVG pin
@@ -127,8 +132,8 @@ ev_Markers.forEach(m => m.map = null);
 
 // Ensure sidebar is open to display directions
 if (sidebar && sidebar.classList.contains('collapsed')) {
-    sidebar.classList.remove('collapsed');
-    if (label) label.innerText = 'View Map';
+sidebar.classList.remove('collapsed');
+if (label) label.innerText = 'View Map';
 }
 
 // Swap views inside the sidebar
