@@ -436,9 +436,8 @@ ev_InfoWindow.setOptions({ content: infoHtml, headerDisabled: true });
 ev_InfoWindow.open({ anchor: marker, map: ev_Map, shouldFocus: false });
 
 document.querySelectorAll('.ev-location-card').forEach(c => c.style.background = '#fff');
-card.style.background = '#f2f8fd';
+card.style.background = PAG_COLORS.lightBlue;
 card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-};
 
 if (window.innerWidth <= 768) {
 const sidebar = document.getElementById('ev-sidebar');
