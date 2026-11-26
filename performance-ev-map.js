@@ -95,7 +95,7 @@ const panel = document.getElementById('ev-directions-panel');
 const resultsList = document.getElementById('ev-results-list');
 const title = document.getElementById('ev-sidebar-title');
 const sidebar = document.getElementById('ev-sidebar');
-const icon = document.getElementById('toggle-icon');
+const label = document.getElementById('toggle-label');
 
 if (!navigator.geolocation) {
 alert("Location services are not supported by your browser. Please enter a starting point manually.");
@@ -127,8 +127,8 @@ ev_Markers.forEach(m => m.map = null);
 
 // Ensure sidebar is open to display directions
 if (sidebar && sidebar.classList.contains('collapsed')) {
-sidebar.classList.remove('collapsed');
-if (icon) icon.innerText = '❮';
+    sidebar.classList.remove('collapsed');
+    if (label) label.innerText = 'View Map';
 }
 
 // Swap views inside the sidebar
