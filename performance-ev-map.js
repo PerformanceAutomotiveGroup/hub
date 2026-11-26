@@ -3,6 +3,18 @@ let ev_Map, ev_InfoWindow, directionsService, directionsRenderer;
 let ev_Markers = [];
 let isPanning = false;
 
+const PAG_COLORS = {
+blue: '#0668B3',
+darkBlue: '#04487D',
+lightBlue: '#DFF1FE',
+silver: '#E0E1E2',
+darkGrey: '#6D6E71',
+white: '#FFFFFF',
+alertRed: '#E21F2F',
+webGreen: '#1E923C',
+gold: '#FFC20E'
+};
+
 // Discrete Geographic Sectors to force independent 20-result queries across regions
 // Expanded & overlapping sectors to eliminate coverage gaps along the QEW/403/401 corridors
 const REGIONAL_SECTORS = [
