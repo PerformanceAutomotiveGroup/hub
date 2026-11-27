@@ -551,6 +551,11 @@ async function initDealerDirectory() {
 const mapCanvas = document.getElementById("dealer-map-canvas");
 if (!mapCanvas) return;
 
+if (window.innerWidth > 768) {
+const flyout = document.getElementById('brand-flyout-panel');
+if (flyout) flyout.classList.add('open');
+}
+
 // Initialize Map
 map = new google.maps.Map(mapCanvas, {
 center: { lat: 43.6532, lng: -79.3832 },
