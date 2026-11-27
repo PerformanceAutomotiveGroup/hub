@@ -36,10 +36,12 @@ return (R * c).toFixed(1);
 // Global toggle functions
 window.toggleSidebar = function() {
 const sidebar = document.getElementById('dealer-sidebar');
-const icon = document.getElementById('toggle-icon');
+const label = document.getElementById('toggle-label');
 if (!sidebar) return;
-sidebar.classList.toggle('collapsed');
-if (icon) icon.innerText = sidebar.classList.contains('collapsed') ? '❯' : '❮';
+
+const isCollapsed = sidebar.classList.toggle('collapsed');
+if (label) label.innerText = isCollapsed ? 'View Listings' : 'View Map';
+
 if (map) {
 setTimeout(() => google.maps.event.trigger(map, 'resize'), 320);
 }
@@ -404,6 +406,16 @@ ${loc.address}<br>
 activeInfoWindow.open(map, marker);
 map.panTo(marker.getPosition());
 map.setZoom(14);
+
+// Auto-collapse drawer on mobile so the map and InfoWindow are immediately visible
+if (window.innerWidth <= 768) {
+const sidebar = document.getElementById('dealer-sidebar');
+const label = document.getElementById('toggle-label');
+if (sidebar && !sidebar.classList.contains('collapsed')) {
+sidebar.classList.add('collapsed');
+if (label) label.innerText = 'View Listings';
+}
+}
 }
 
 // Populate Brand & City Dropdowns + Floating Flyout dynamically from JSON
