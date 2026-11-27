@@ -144,6 +144,13 @@ if (!dirPanel || !resultsList) return;
 resultsList.style.display = 'none';
 dirPanel.style.display = 'block';
 
+const sidebar = document.getElementById('dealer-sidebar');
+const label = document.getElementById('toggle-label');
+if (sidebar && sidebar.classList.contains('collapsed')) {
+sidebar.classList.remove('collapsed');
+if (label) label.innerText = 'View Map';
+}
+
 dirPanel.innerHTML = `
 <div class="route-actions-group">
 <a class="gmaps-launch-btn" href="${loc.googleMapsUrl || `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(loc.address)}`}" target="_blank" rel="noopener">
